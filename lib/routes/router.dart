@@ -1,7 +1,7 @@
-import 'package:dash_santos/pages/clients/clients.dart';
-import 'package:dash_santos/pages/drivers/drivers.dart';
-import 'package:dash_santos/pages/overview/overview.dart';
-import 'package:dash_santos/routes/routes.dart';
+import 'package:whaloo_genuinity/pages/clients/clients.dart';
+import 'package:whaloo_genuinity/pages/drivers/drivers.dart';
+import 'package:whaloo_genuinity/pages/overview/overview.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {

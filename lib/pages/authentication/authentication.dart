@@ -1,5 +1,5 @@
-import 'package:dash_santos/constants/style.dart';
-import 'package:dash_santos/routes/routes.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

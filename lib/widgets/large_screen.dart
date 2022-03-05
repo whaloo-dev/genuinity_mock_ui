@@ -1,7 +1,7 @@
-import 'package:dash_santos/constants/style.dart';
-import 'package:dash_santos/helpers/local_navigator.dart';
-import 'package:dash_santos/widgets/side_menu.dart';
-import 'package:dash_santos/widgets/top_nav.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/local_navigator.dart';
+import 'package:whaloo_genuinity/widgets/side_menu.dart';
+import 'package:whaloo_genuinity/widgets/top_nav.dart';
 import 'package:flutter/material.dart';
 
 largeScreen(BuildContext context, GlobalKey<ScaffoldState> key) {

@@ -1,6 +1,6 @@
-import 'package:dash_santos/constants/style.dart';
-import 'package:dash_santos/pages/overview/widgets/chart.dart';
-import 'package:dash_santos/pages/overview/widgets/revenue_info.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/pages/overview/widgets/chart.dart';
+import 'package:whaloo_genuinity/pages/overview/widgets/revenue_info.dart';
 import 'package:flutter/material.dart';
 
 class RevenueSectionLarge extends StatelessWidget {

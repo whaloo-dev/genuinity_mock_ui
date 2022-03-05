@@ -1,5 +1,5 @@
-import 'package:dash_santos/constants/controllers.dart';
-import 'package:dash_santos/constants/style.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:flutter/material.dart';
 
 const rootRoute = "/home";

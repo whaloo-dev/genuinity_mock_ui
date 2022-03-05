@@ -1,11 +1,11 @@
-import 'package:dash_santos/constants/style.dart';
-import 'package:dash_santos/helpers/responsiveness.dart';
-import 'package:dash_santos/pages/overview/widgets/available_drivers.dart';
-import 'package:dash_santos/pages/overview/widgets/overview_cards_large.dart';
-import 'package:dash_santos/pages/overview/widgets/overview_cards_medium.dart';
-import 'package:dash_santos/pages/overview/widgets/overview_cards_small.dart';
-import 'package:dash_santos/pages/overview/widgets/revenue_section_large.dart';
-import 'package:dash_santos/pages/overview/widgets/revenue_section_small.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/responsiveness.dart';
+import 'package:whaloo_genuinity/pages/overview/widgets/available_drivers.dart';
+import 'package:whaloo_genuinity/pages/overview/widgets/overview_cards_large.dart';
+import 'package:whaloo_genuinity/pages/overview/widgets/overview_cards_medium.dart';
+import 'package:whaloo_genuinity/pages/overview/widgets/overview_cards_small.dart';
+import 'package:whaloo_genuinity/pages/overview/widgets/revenue_section_large.dart';
+import 'package:whaloo_genuinity/pages/overview/widgets/revenue_section_small.dart';
 import 'package:flutter/widgets.dart';
 
 class OverviewPage extends StatelessWidget {

@@ -1,6 +1,6 @@
-import 'package:dash_santos/helpers/responsiveness.dart';
-import 'package:dash_santos/widgets/large_screen.dart';
-import 'package:dash_santos/widgets/small_screen.dart';
+import 'package:whaloo_genuinity/helpers/responsiveness.dart';
+import 'package:whaloo_genuinity/widgets/large_screen.dart';
+import 'package:whaloo_genuinity/widgets/small_screen.dart';
 import 'package:flutter/material.dart';
 
 class SiteLayout extends StatelessWidget {

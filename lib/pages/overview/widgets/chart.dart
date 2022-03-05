@@ -4,7 +4,7 @@
 /// be used together in this way. Choosing [end] as the position does not
 /// require the justification to also be [endDrawArea].
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:dash_santos/helpers/responsiveness.dart';
+import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:flutter/material.dart';
 
 class ChartRevenue extends StatelessWidget {

@@ -1,10 +1,10 @@
-import 'package:dash_santos/constants/style.dart';
-import 'package:dash_santos/controllers/menu_controller.dart';
-import 'package:dash_santos/controllers/navigation_controller.dart';
-import 'package:dash_santos/layout.dart';
-import 'package:dash_santos/pages/authentication/authentication.dart';
-import 'package:dash_santos/pages/errors/error_404.dart';
-import 'package:dash_santos/routes/routes.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/controllers/menu_controller.dart';
+import 'package:whaloo_genuinity/controllers/navigation_controller.dart';
+import 'package:whaloo_genuinity/layout.dart';
+import 'package:whaloo_genuinity/pages/authentication/authentication.dart';
+import 'package:whaloo_genuinity/pages/errors/error_404.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

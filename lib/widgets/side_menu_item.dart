@@ -1,7 +1,7 @@
-import 'package:dash_santos/helpers/responsiveness.dart';
-import 'package:dash_santos/routes/routes.dart';
-import 'package:dash_santos/widgets/horizontal_menu_item.dart';
-import 'package:dash_santos/widgets/vertical_menu_item.dart';
+import 'package:whaloo_genuinity/helpers/responsiveness.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
+import 'package:whaloo_genuinity/widgets/horizontal_menu_item.dart';
+import 'package:whaloo_genuinity/widgets/vertical_menu_item.dart';
 import 'package:flutter/widgets.dart';
 
 class SideMenuItemWidget extends StatelessWidget {

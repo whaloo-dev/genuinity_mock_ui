@@ -1,4 +1,4 @@
-import 'package:dash_santos/routes/routes.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 import 'package:get/get.dart';
 
 class MenuController extends GetxController {

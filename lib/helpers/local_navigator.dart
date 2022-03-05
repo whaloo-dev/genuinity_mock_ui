@@ -1,6 +1,6 @@
-import 'package:dash_santos/constants/controllers.dart';
-import 'package:dash_santos/routes/router.dart';
-import 'package:dash_santos/routes/routes.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/routes/router.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 import 'package:flutter/widgets.dart';
 
 Navigator localNavigator() => Navigator(

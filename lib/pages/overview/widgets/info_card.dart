@@ -1,4 +1,4 @@
-import 'package:dash_santos/constants/style.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:flutter/material.dart';
 
 class InfoCard extends StatelessWidget {

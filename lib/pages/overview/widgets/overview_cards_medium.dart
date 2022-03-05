@@ -1,5 +1,5 @@
-import 'package:dash_santos/constants/style.dart';
-import 'package:dash_santos/pages/overview/widgets/info_card.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/pages/overview/widgets/info_card.dart';
 import 'package:flutter/material.dart';
 
 class OverviewCardsMedium extends StatelessWidget {

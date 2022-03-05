@@ -1,4 +1,4 @@
-import 'package:dash_santos/pages/clients/widgets/clients_table.dart';
+import 'package:whaloo_genuinity/pages/clients/widgets/clients_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
