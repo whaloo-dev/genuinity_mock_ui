@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.15)
-project(flutter_admin_portal LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.14)
+project(flutter_application_santos LANGUAGES CXX)
 
-set(BINARY_NAME "FAP")
+set(BINARY_NAME "flutter_application_santos")
 
 cmake_policy(SET CMP0063 NEW)
 
