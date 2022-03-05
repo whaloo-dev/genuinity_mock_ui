@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_application_santos">
+    package="dev.whaloo.genuinity">
    <application
-        android:label="flutter_application_santos"
+        android:label="whaloo_genuinity"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

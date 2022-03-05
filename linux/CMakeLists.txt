@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_application_santos")
-set(APPLICATION_ID "com.example.flutter_application_santos")
+set(BINARY_NAME "whaloo_genuinity")
+set(APPLICATION_ID "dev.whaloo.genuinity")
 
 cmake_policy(SET CMP0063 NEW)
 

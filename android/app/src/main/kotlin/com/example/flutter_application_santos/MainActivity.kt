@@ -1,4 +1,4 @@
-package com.example.flutter_application_santos
+package dev.whaloo.genuinity
 
 import io.flutter.embedding.android.FlutterActivity
 

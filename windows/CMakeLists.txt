@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(flutter_application_santos LANGUAGES CXX)
+project(whaloo_genuinity LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_application_santos")
+set(BINARY_NAME "whaloo_genuinity")
 
 cmake_policy(SET CMP0063 NEW)
 
