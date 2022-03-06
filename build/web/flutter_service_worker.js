@@ -17,15 +17,15 @@ const RESOURCES = {
 "assets/fonts/MaterialIcons-Regular.otf": "7e7a6cccddf6d7b20012a548461d5d81",
 "manifest.json": "12fa2854a79c7b25ba9a5c23e7322429",
 "main.dart.js": "b84a5fbd6ae57577a637beb0bb5407f2",
-"index.html": "1b6907c9d4b6bdd92d41daaac7cf4eb1",
-"/": "1b6907c9d4b6bdd92d41daaac7cf4eb1",
+"index.html": "3100088cca1ce5783b08242f65b013f4",
+"/": "3100088cca1ce5783b08242f65b013f4",
 "canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba",
 "canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
 "canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
 "canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
 "icons/whale-icon-192.png": "a7a77e029f71c70ec7917d3922445c78",
-"icons/logo-192.png": "f1581a124c37d73bd2e011d1e6ef9909",
-"icons/logo-512.png": "8c76be06b6b21d0e80b394c1f414cd1b",
+"icons/logo-192.png": "1a29ef466ee6bb1d1fd4973cfaee7483",
+"icons/logo-512.png": "a452076a2ed8e1eccb6de66b7bae9a3f",
 "icons/whale-icon-512.png": "1e33eaffec4d7b200ba0d0e3d098fcc7"
 };
 
