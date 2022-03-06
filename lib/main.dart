@@ -6,7 +6,6 @@ import 'package:whaloo_genuinity/controllers/globals_controller.dart';
 import 'package:whaloo_genuinity/controllers/menu_controller.dart';
 import 'package:whaloo_genuinity/controllers/navigation_controller.dart';
 import 'package:whaloo_genuinity/layout.dart';
-import 'package:whaloo_genuinity/pages/authentication/authentication.dart';
 import 'package:whaloo_genuinity/pages/errors/error_404.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "${globals.appName} v${globals.appVersion}",
       theme: themeData,
-      initialRoute: authenticationPageRoute,
+      initialRoute: rootRoute,
       unknownRoute: GetPage(
         name: "/404",
         page: () => const PageNotFound(),
@@ -34,9 +33,6 @@ class MyApp extends StatelessWidget {
       ),
       getPages: [
         GetPage(name: rootRoute, page: () => SiteLayout()),
-        GetPage(
-            name: authenticationPageRoute,
-            page: () => const AuthenticationPage()),
       ],
     );
   }

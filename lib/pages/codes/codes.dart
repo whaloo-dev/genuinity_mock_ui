@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/drivers/widgets/drivers_table.dart';
+import 'package:whaloo_genuinity/pages/codes/widgets/codes_table.dart';
 
-class DriversPage extends StatelessWidget {
-  const DriversPage({Key? key}) : super(key: key);
+class CodesPage extends StatelessWidget {
+  const CodesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class DriversPage extends StatelessWidget {
           ],
         ),
         //  SizedBox(height: kSpacing),
-        const Expanded(child: DriversTable()),
+        const Expanded(child: CodesTable()),
         SizedBox(height: kSpacing),
       ],
     );

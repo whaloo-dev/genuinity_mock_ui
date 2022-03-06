@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class MenuController extends GetxController {
   static MenuController instance = Get.find();
 
-  var activeItem = driversPageDisplayName.obs;
+  var activeItem = codesPageDisplayName.obs;
   var hoverItem = "".obs;
 
   changeActiveItemTo(String itemName) {

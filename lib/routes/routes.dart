@@ -2,16 +2,14 @@ import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:flutter/material.dart';
 
-const rootRoute = "/home";
+const rootRoute = "/main";
 
-const overviewPageRoute = "/overview";
-const overviewPageDisplayName = "Overview";
-const driversPageRoute = "/drivers";
-const driversPageDisplayName = "Drivers";
-const clientsPageRoute = "/clients";
-const clientsPageDisplayName = "Clients";
-const authenticationPageRoute = "/auth";
-const authenticationPageDisplayName = "Log Out";
+const dashboardPageRoute = "/main/dashboard";
+const dashboardPageDisplayName = "Dashboard";
+const codesPageRoute = "/main/codes";
+const codesPageDisplayName = "Codes";
+const settingsPageRoute = "/main/settings";
+const settingsPageDisplayName = "Settings";
 
 class MenuItem {
   final String name;
@@ -32,20 +30,18 @@ class MenuItem {
 
 List<MenuItem> siteMenuItems = [
   MenuItem(
-    overviewPageRoute,
-    overviewPageDisplayName,
+    dashboardPageRoute,
+    dashboardPageDisplayName,
     Icons.trending_up_rounded,
   ),
   MenuItem(
-    driversPageRoute,
-    driversPageDisplayName,
-    Icons.drive_eta_rounded,
+    codesPageRoute,
+    codesPageDisplayName,
+    Icons.qr_code_rounded,
   ),
   MenuItem(
-    clientsPageRoute,
-    clientsPageDisplayName,
-    Icons.people_alt_rounded,
+    settingsPageRoute,
+    settingsPageDisplayName,
+    Icons.settings_outlined,
   ),
-  MenuItem(authenticationPageRoute, authenticationPageDisplayName,
-      Icons.logout_rounded),
 ];

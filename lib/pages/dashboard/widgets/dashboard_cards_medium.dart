@@ -1,13 +1,12 @@
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/overview/widgets/info_card.dart';
 import 'package:flutter/material.dart';
+import 'package:whaloo_genuinity/pages/dashboard/widgets/info_card.dart';
 
-class OverviewCardsMedium extends StatelessWidget {
-  const OverviewCardsMedium({Key? key}) : super(key: key);
+class DashboardCardsMedium extends StatelessWidget {
+  const DashboardCardsMedium({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // double width = MediaQuery.of(context).size.width;
     return Column(mainAxisSize: MainAxisSize.min, children: [
       Row(
         children: [

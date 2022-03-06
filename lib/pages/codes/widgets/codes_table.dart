@@ -1,12 +1,10 @@
-import 'dart:math';
-
-import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
 
-class DriversTable extends StatelessWidget {
+class CodesTable extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
-  const DriversTable();
+  const CodesTable();
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +21,18 @@ class DriversTable extends StatelessWidget {
         smRatio: 0.75,
         lmRatio: 1.5,
         columns: const [
-          DataColumn2(size: ColumnSize.S, label: Text('Name')),
-          DataColumn(label: Text('Location')),
-          DataColumn(label: Text('Rating')),
-          DataColumn2(label: Text(''), size: ColumnSize.S),
+          DataColumn2(size: ColumnSize.S, label: Text('Product')),
+          DataColumn(label: Text('Supplier')),
+          DataColumn(label: Text('Date')),
+          DataColumn2(label: SizedBox(), size: ColumnSize.S),
         ],
         rows: List<DataRow>.generate(
           50,
           (index) => DataRow(
             cells: [
-              DataCell(Text("Driver$index")),
-              const DataCell(Text("Guelma")),
-              DataCell(
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.star, color: Colors.deepOrange, size: 18),
-                    SizedBox(width: kSpacing),
-                    Text("${Random.secure().nextInt(50) / 10}")
-                  ],
-                ),
-              ),
+              DataCell(Text("Product$index")),
+              DataCell(Text("Supplier$index")),
+              const DataCell(Text("01/04/2022")),
               DataCell(
                 Container(),
                 showEditIcon: true,

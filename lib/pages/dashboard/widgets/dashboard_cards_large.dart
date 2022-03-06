@@ -1,9 +1,9 @@
-import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/overview/widgets/info_card.dart';
 import 'package:flutter/material.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/pages/dashboard/widgets/info_card.dart';
 
-class OverviewCardsLarge extends StatelessWidget {
-  const OverviewCardsLarge({Key? key}) : super(key: key);
+class DashboardCardsLarge extends StatelessWidget {
+  const DashboardCardsLarge({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

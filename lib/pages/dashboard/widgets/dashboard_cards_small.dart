@@ -1,9 +1,9 @@
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/overview/widgets/info_card_small.dart';
+import 'package:whaloo_genuinity/pages/dashboard/widgets/info_card_small.dart';
 import 'package:flutter/material.dart';
 
-class OverviewCardsSmall extends StatelessWidget {
-  const OverviewCardsSmall({Key? key}) : super(key: key);
+class DashboardCardsSmall extends StatelessWidget {
+  const DashboardCardsSmall({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

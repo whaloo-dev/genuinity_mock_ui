@@ -16,17 +16,15 @@ const RESOURCES = {
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/fonts/MaterialIcons-Regular.otf": "7e7a6cccddf6d7b20012a548461d5d81",
 "manifest.json": "12fa2854a79c7b25ba9a5c23e7322429",
-"main.dart.js": "b84a5fbd6ae57577a637beb0bb5407f2",
-"index.html": "3100088cca1ce5783b08242f65b013f4",
-"/": "3100088cca1ce5783b08242f65b013f4",
+"main.dart.js": "402dda541166708fcc234cda36e39c1a",
+"index.html": "39e4d1bbcea3fc04628af141ac95d487",
+"/": "39e4d1bbcea3fc04628af141ac95d487",
 "canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba",
 "canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
 "canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
 "canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
-"icons/whale-icon-192.png": "a7a77e029f71c70ec7917d3922445c78",
 "icons/logo-192.png": "1a29ef466ee6bb1d1fd4973cfaee7483",
-"icons/logo-512.png": "a452076a2ed8e1eccb6de66b7bae9a3f",
-"icons/whale-icon-512.png": "1e33eaffec4d7b200ba0d0e3d098fcc7"
+"icons/logo-512.png": "a452076a2ed8e1eccb6de66b7bae9a3f"
 };
 
 // The application shell files that are downloaded before a service worker can

@@ -1,21 +1,22 @@
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/overview/widgets/chart.dart';
-import 'package:whaloo_genuinity/pages/overview/widgets/revenue_info.dart';
+import 'package:whaloo_genuinity/pages/dashboard/widgets/chart.dart';
+import 'package:whaloo_genuinity/pages/dashboard/widgets/revenue_info.dart';
 import 'package:flutter/material.dart';
 
-class RevenueSectionLarge extends StatelessWidget {
-  const RevenueSectionLarge({Key? key}) : super(key: key);
+class RevenueSectionSmall extends StatelessWidget {
+  const RevenueSectionSmall({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
         padding: const EdgeInsets.all(24),
-        child: Row(
+        child: Column(
           children: [
-            Expanded(
+            SizedBox(
+              height: 260,
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
                     "Revenue Chart",
@@ -34,11 +35,12 @@ class RevenueSectionLarge extends StatelessWidget {
               ),
             ),
             Container(
-              width: 1,
-              height: 120,
+              width: 120,
+              height: 1,
               color: kLightGreyColor,
             ),
-            Expanded(
+            SizedBox(
+              height: 260,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

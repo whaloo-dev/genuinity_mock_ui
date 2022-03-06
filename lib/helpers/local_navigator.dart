@@ -5,6 +5,6 @@ import 'package:flutter/widgets.dart';
 
 Navigator localNavigator() => Navigator(
       key: navigationController.navigationKey,
-      initialRoute: driversPageRoute,
+      initialRoute: codesPageRoute,
       onGenerateRoute: generateRoute,
     );

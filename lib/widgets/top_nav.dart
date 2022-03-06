@@ -29,10 +29,10 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
             ),
           ),
           Expanded(child: Container()),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.settings, color: kDarkColor.withOpacity(.7)),
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: Icon(Icons.settings, color: kDarkColor.withOpacity(.7)),
+          // ),
           Badge(
             elevation: kElevation,
             toAnimate: true,
