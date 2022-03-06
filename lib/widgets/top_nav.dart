@@ -34,6 +34,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
             icon: Icon(Icons.settings, color: kDarkColor.withOpacity(.7)),
           ),
           Badge(
+            elevation: kElevation,
             toAnimate: true,
             shape: BadgeShape.square,
             borderRadius: BorderRadius.circular(10),
@@ -45,7 +46,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
                 fontWeight: FontWeight.bold,
               ),
             ),
-            badgeColor: kActiveColor.withOpacity(.7),
+            badgeColor: kActiveColor,
             position: const BadgePosition(
               isCenter: false,
               end: 0,

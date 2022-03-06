@@ -1,32 +1,30 @@
 {
-    "name": "Dash",
-    "short_name": "Dash",
+    "name": "Whaloo Genuinity",
+    "short_name": "Genuinity",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "Dashboard Template",
-     "orientation": "any",
+    "description": "Product Authentication And Tracking",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "icons/whale-icon-192.png",
+            "src": "icons/logo-192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "icons/whale-icon-512.png",
+            "src": "icons/logo-512.png",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "icons/whale-icon-192.png",
+            "src": "icons/logo-192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "icons/whale-icon-512.png",
+            "src": "icons/logo-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"

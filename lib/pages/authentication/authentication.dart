@@ -1,3 +1,4 @@
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -21,21 +22,17 @@ class AuthenticationPage extends StatelessWidget {
             child: ListView(
               children: [
                 Center(
-                  child: Stack(
+                  child: Column(
                     children: [
-                      Image.asset("assets/icons/whale-icon.png"),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Text(
-                          "Dash v0.1",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: kLightGreyColor,
-                          ),
+                      Image.asset("assets/icons/logo.png"),
+                      Text(
+                        "${globals.appName}\n${globals.appVersion}",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: kDarkColor,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

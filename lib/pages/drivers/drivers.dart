@@ -1,7 +1,7 @@
-import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/drivers/widgets/drivers_table.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/pages/drivers/widgets/drivers_table.dart';
 
 class DriversPage extends StatelessWidget {
   const DriversPage({Key? key}) : super(key: key);
@@ -17,22 +17,12 @@ class DriversPage extends StatelessWidget {
             Row(
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    Get.showSnackbar(const GetSnackBar(
-                      message: "Action 1 Clicked",
-                      duration: Duration(seconds: 5),
-                    ));
-                  },
+                  onPressed: () {},
                   child: const Text("Action 1"),
                 ),
                 SizedBox(width: kSpacing),
                 ElevatedButton(
-                  onPressed: () {
-                    Get.showSnackbar(const GetSnackBar(
-                      message: "Action 2 Clicked",
-                      duration: Duration(seconds: 5),
-                    ));
-                  },
+                  onPressed: () {},
                   child: const Text("Action 2"),
                 ),
               ],

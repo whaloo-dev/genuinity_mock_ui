@@ -19,15 +19,16 @@ class SideMenu extends StatelessWidget {
             SizedBox(height: kSpacing),
             Container(
               padding: const EdgeInsets.only(right: 12),
-              child: Image.asset("assets/icons/whale-icon-small.png"),
+              child: Image.asset("assets/icons/logo-small.png"),
             ),
             Flexible(
               child: Text(
-                "Dash v0.1",
+                "${globals.appName} v${globals.appVersion}",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: kLogoColor,
+                  color: kDarkColor.withOpacity(0.7),
                 ),
               ),
             ),
@@ -49,9 +50,6 @@ class SideMenu extends StatelessWidget {
                       Get.offAllNamed(authenticationPageRoute);
                     } else if (!menuController.isActive(item.name)) {
                       menuController.changeActiveItemTo(item.name);
-                      /*if (!ResponsiveWidget.isScreenSmall(context)) {
-                        Get.back();
-                      }*/
                       navigationController.navigateTo(item.route);
                     }
                   },
