@@ -2,14 +2,38 @@ import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:flutter/material.dart';
 
+//Routes
 const rootRoute = "/main";
-
 const dashboardPageRoute = "/main/dashboard";
-const dashboardPageDisplayName = "Dashboard";
-const codesPageRoute = "/main/codes";
-const codesPageDisplayName = "Codes";
+const productsPageRoute = "/main/products";
 const settingsPageRoute = "/main/settings";
-const settingsPageDisplayName = "Settings";
+
+//Menu Items
+final dashboardPageItem = MenuItem(
+  dashboardPageRoute,
+  "Dashboard",
+  Icons.bar_chart_rounded,
+);
+
+final productsPageItem = MenuItem(
+  productsPageRoute,
+  "Codes",
+  Icons.qr_code_rounded,
+);
+
+final settingsPageItem = MenuItem(
+  settingsPageRoute,
+  "Settings",
+  Icons.settings_rounded,
+);
+
+final nonePageItem = MenuItem("", "", Icons.not_accessible);
+
+List<MenuItem> siteMenuItems = [
+  dashboardPageItem,
+  productsPageItem,
+  settingsPageItem,
+];
 
 class MenuItem {
   final String name;
@@ -17,7 +41,7 @@ class MenuItem {
   final IconData iconData;
 
   bool _isSelected() {
-    return menuController.isActive(name) || menuController.isHovering(name);
+    return menuController.isActive(this) || menuController.isHovering(this);
   }
 
   Widget icon() {
@@ -27,21 +51,3 @@ class MenuItem {
 
   MenuItem(this.route, this.name, this.iconData);
 }
-
-List<MenuItem> siteMenuItems = [
-  MenuItem(
-    dashboardPageRoute,
-    dashboardPageDisplayName,
-    Icons.trending_up_rounded,
-  ),
-  MenuItem(
-    codesPageRoute,
-    codesPageDisplayName,
-    Icons.qr_code_rounded,
-  ),
-  MenuItem(
-    settingsPageRoute,
-    settingsPageDisplayName,
-    Icons.settings_outlined,
-  ),
-];

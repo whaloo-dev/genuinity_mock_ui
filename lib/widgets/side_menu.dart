@@ -24,8 +24,8 @@ class SideMenu extends StatelessWidget {
                 (item) => SideMenuItemWidget(
                   menuItem: item,
                   onTap: () {
-                    if (!menuController.isActive(item.name)) {
-                      menuController.changeActiveItemTo(item.name);
+                    if (!menuController.isActive(item)) {
+                      menuController.changeActiveItemTo(item);
                       navigationController.navigateTo(item.route);
                     }
                   },

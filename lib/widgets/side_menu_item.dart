@@ -23,34 +23,23 @@ class SideMenuItemWidget extends StatelessWidget {
       }
     }
 
-    // if (ResponsiveWidget.isScreenCustom(context)) {
-    //   return VerticalMenuItemWidget(
-    //     menuItem: menuItem,
-    //     onTap: _onTap,
-    //   );
-    // }
-    // return HorziontalMenuItem(
-    //   menuItem: menuItem,
-    //   onTap: _onTap,
-    // );
-
     return InkWell(
       onTap: _onTap,
       onHover: (value) {
         value
-            ? menuController.onHover(menuItem.name)
-            : menuController.onHover("not hovering");
+            ? menuController.onHover(menuItem)
+            : menuController.onHover(nonePageItem);
       },
       child: Obx(
         () => Container(
-          color: menuController.isHovering(menuItem.name)
+          color: menuController.isHovering(menuItem)
               ? kLightGreyColor.withOpacity(.1)
               : Colors.transparent,
           child: Row(
             children: [
               Visibility(
-                visible: menuController.isHovering(menuItem.name) ||
-                    menuController.isActive(menuItem.name),
+                visible: menuController.isHovering(menuItem) ||
+                    menuController.isActive(menuItem),
                 child: Container(
                   width: 6,
                   height: 40,
@@ -72,12 +61,12 @@ class SideMenuItemWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       child: menuItem.icon(),
                     ),
-                    if (!menuController.isActive(menuItem.name))
+                    if (!menuController.isActive(menuItem))
                       Flexible(
                         child: Text(
                           menuItem.name,
                           style: TextStyle(
-                            color: menuController.isHovering(menuItem.name)
+                            color: menuController.isHovering(menuItem)
                                 ? kDarkColor
                                 : kLightGreyColor,
                           ),

@@ -4,20 +4,20 @@ import 'package:get/get.dart';
 class MenuController extends GetxController {
   static MenuController instance = Get.find();
 
-  var activeItem = codesPageDisplayName.obs;
-  var hoverItem = "".obs;
+  var activeItem = dashboardPageItem.obs;
+  var hoverItem = nonePageItem.obs;
 
-  changeActiveItemTo(String itemName) {
-    activeItem.value = itemName;
+  changeActiveItemTo(MenuItem item) {
+    activeItem.value = item;
   }
 
-  onHover(String itemName) {
-    if (!isActive(itemName)) {
-      hoverItem.value = itemName;
+  onHover(MenuItem item) {
+    if (!isActive(item)) {
+      hoverItem.value = item;
     }
   }
 
-  isActive(String itemName) => activeItem.value == itemName;
+  isActive(MenuItem item) => activeItem.value == item;
 
-  isHovering(String itemName) => hoverItem.value == itemName;
+  isHovering(MenuItem item) => hoverItem.value == item;
 }
