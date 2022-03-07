@@ -28,6 +28,7 @@ class NotificationWidget extends StatelessWidget {
       ),
       child: IconButton(
         onPressed: () {},
+        splashRadius: kIconButtonSplashRadius,
         icon: Icon(
           Icons.notifications,
           color: kDarkColor.withOpacity(.7),

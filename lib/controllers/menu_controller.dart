@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class MenuController extends GetxController {
   static MenuController instance = Get.find();
 
-  var activeItem = dashboardPageItem.obs;
+  var activeItem = productsPageItem.obs;
   var hoverItem = nonePageItem.obs;
 
   changeActiveItemTo(MenuItem item) {

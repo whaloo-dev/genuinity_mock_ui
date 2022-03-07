@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 Color kSurfaceColor = Colors.white; //Color(0xFFF7F8FC);
 Color kLightColor = Colors.grey.shade100; //Color(0xFFF7F8FC);
@@ -20,11 +21,15 @@ double kElevation = 5;
 
 double kSpacing = 10;
 
+double kIconButtonSplashRadius = 25;
+
+NumberFormat numberFormat = NumberFormat("###,###", "en_US");
+DateFormat dateFormat = DateFormat.yMEd("en_US").add_Hms();
+
 //blue light #93dbe9
 //blue dark #689cc5
 
 // Theme
-
 ThemeData themeData = ThemeData(
   inputDecorationTheme: _inputDecorationTheme,
   elevatedButtonTheme: _elevatedButtonTheme,

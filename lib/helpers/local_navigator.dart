@@ -5,6 +5,6 @@ import 'package:whaloo_genuinity/routes/routes.dart';
 
 Navigator localNavigator() => Navigator(
       key: navigationController.navigationKey,
-      initialRoute: dashboardPageRoute,
+      initialRoute: productsPageRoute,
       onGenerateRoute: generateRoute,
     );

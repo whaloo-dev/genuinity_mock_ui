@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class GlobalsController {
+class GlobalsController extends GetxController implements DisposableInterface {
   static GlobalsController instance = Get.find();
 
   var appName = "Genuinity";

@@ -24,7 +24,7 @@ class ProfileWidget extends StatelessWidget {
                       SizedBox(width: kSpacing),
                       Text(
                         storeController.store!.name,
-                        style: TextStyle(color: kLightGreyColor),
+                        style: TextStyle(color: kLightGreyColor, fontSize: 12),
                       ),
                       SizedBox(width: kSpacing),
                     ]),
@@ -35,10 +35,9 @@ class ProfileWidget extends StatelessWidget {
                       backgroundColor: kLightGreyColor.withOpacity(0.5),
                       child: IconButton(
                         onPressed: () {},
+                        splashRadius: kIconButtonSplashRadius,
                         icon: Image.network(
                           storeController.store!.imageUrl,
-                          width: 20,
-                          height: 20,
                         ),
                       ),
                     ),
