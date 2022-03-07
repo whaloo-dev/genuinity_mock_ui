@@ -14,7 +14,7 @@ class ProfileWidget extends StatelessWidget {
         return storeController.isStoreLoaded.value
             ? Row(
                 children: [
-                  if (!ResponsiveWidget.isScreenSmall(context))
+                  if (!Responsive.isScreenSmall(context))
                     Row(children: [
                       Container(
                         width: 1,

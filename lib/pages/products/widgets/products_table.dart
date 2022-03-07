@@ -14,6 +14,7 @@ class ProductsTable extends StatelessWidget {
     return Obx(
       () => Card(
         child: DataTable2(
+          empty: const Center(child: Text("Add Products")),
           columnSpacing: 10,
           showCheckboxColumn: true,
           showBottomBorder: true,
@@ -26,18 +27,24 @@ class ProductsTable extends StatelessWidget {
           smRatio: 0.75,
           lmRatio: 1.5,
           columns: const [
-            DataColumn2(size: ColumnSize.S, label: Text('Number of codes')),
-            DataColumn2(size: ColumnSize.S, label: Text('Last Update')),
-            DataColumn2(size: ColumnSize.L, label: Text('Product')),
-            // DataColumn(label: Text('Date')),
-            // DataColumn2(size: ColumnSize.S, label: SizedBox()),
+            DataColumn2(
+                label: Text('Codes'),
+                size: ColumnSize.S,
+                tooltip: "Number of codes generated for this product"),
+            DataColumn2(
+                label: Text('Product'),
+                size: ColumnSize.L,
+                tooltip: "Product's details"),
+            DataColumn2(
+              label: Text('Modified'),
+              size: ColumnSize.S,
+              tooltip: "Last update date",
+            ),
           ],
           rows: codesController.generateFromProducts(
             (p) => DataRow(
               cells: [
-                DataCell(Text(numberFormat.format(p.codesCount))),
-                DataCell(Text(
-                    ResponsiveWidget.formatDate(context, (DateTime.now())))),
+                DataCell(Text(Responsive.formatNumber(context, p.codesCount))),
                 DataCell(
                   Row(
                     children: [
@@ -52,11 +59,7 @@ class ProductsTable extends StatelessWidget {
                     ],
                   ),
                 ),
-                // DataCell(
-                //   Container(),
-                //   showEditIcon: true,
-                //   onTap: () {},
-                // ),
+                DataCell(Text(Responsive.formatDate(context, DateTime.now()))),
               ],
             ),
             // accept: (p) => p.codesCount > 0,

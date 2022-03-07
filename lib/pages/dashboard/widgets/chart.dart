@@ -30,7 +30,7 @@ class ChartRevenue extends StatelessWidget {
           // For rtl, "start" and "end" will be right and left respectively.
           // Since this example has directionality of ltr, the legend is
           // positioned on the right side of the chart.
-          position: ResponsiveWidget.isScreenLarge(context)
+          position: Responsive.isScreenLarge(context)
               ? charts.BehaviorPosition.end
               : charts.BehaviorPosition.top,
           // For a legend that is positioned on the left or right of the chart,

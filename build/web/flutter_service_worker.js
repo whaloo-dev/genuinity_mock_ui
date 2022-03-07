@@ -17,13 +17,9 @@ const RESOURCES = {
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/fonts/MaterialIcons-Regular.otf": "7e7a6cccddf6d7b20012a548461d5d81",
 "manifest.json": "12fa2854a79c7b25ba9a5c23e7322429",
-"main.dart.js": "e5eecce744a009c46563cd7dc4a5a31f",
-"index.html": "c6adabaa2bffdc20d6ede0dece116816",
-"/": "c6adabaa2bffdc20d6ede0dece116816",
-"canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba",
-"canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
-"canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
-"canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
+"main.dart.js": "ddfbd58a12a189c458003697cc62663b",
+"index.html": "3501163917414effff4d080f38cf6e27",
+"/": "3501163917414effff4d080f38cf6e27",
 "icons/logo-192.png": "1a29ef466ee6bb1d1fd4973cfaee7483",
 "icons/logo-512.png": "a452076a2ed8e1eccb6de66b7bae9a3f"
 };

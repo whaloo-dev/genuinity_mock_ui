@@ -18,27 +18,6 @@ class ResponsiveWidget extends StatelessWidget {
   final Widget? mediumWidget;
   final Widget? smallWidget;
 
-  static bool isScreenSmall(BuildContext context) =>
-      MediaQuery.of(context).size.width < mediumScreenSize;
-  static bool isScreenMedium(BuildContext context) =>
-      MediaQuery.of(context).size.width >= mediumScreenSize &&
-      MediaQuery.of(context).size.width < largeScreenSize;
-  static bool isScreenLarge(BuildContext context) =>
-      MediaQuery.of(context).size.width >= largeScreenSize;
-  static bool isScreenCustom(BuildContext context) =>
-      MediaQuery.of(context).size.width >= mediumScreenSize &&
-      MediaQuery.of(context).size.width < customScreenSize;
-
-  static String formatDate(BuildContext context, DateTime dateTime) =>
-      isScreenSmall(context)
-          ? compactDateFormat.format(dateTime)
-          : dateFormat.format(dateTime);
-
-  // static String formatNumber(BuildContext context, num number) =>
-  //     isScreenSmall(context)
-  //         ? smallDateFormat.format(dateTime)
-  //         : dateFormat.format(dateTime);
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -55,4 +34,27 @@ class ResponsiveWidget extends StatelessWidget {
       },
     );
   }
+}
+
+class Responsive {
+  static bool isScreenSmall(BuildContext context) =>
+      MediaQuery.of(context).size.width < mediumScreenSize;
+  static bool isScreenMedium(BuildContext context) =>
+      MediaQuery.of(context).size.width >= mediumScreenSize &&
+      MediaQuery.of(context).size.width < largeScreenSize;
+  static bool isScreenLarge(BuildContext context) =>
+      MediaQuery.of(context).size.width >= largeScreenSize;
+  static bool isScreenCustom(BuildContext context) =>
+      MediaQuery.of(context).size.width >= mediumScreenSize &&
+      MediaQuery.of(context).size.width < customScreenSize;
+
+  static String formatDate(BuildContext context, DateTime dateTime) =>
+      isScreenSmall(context)
+          ? compactDateFormat.format(dateTime)
+          : dateFormat.format(dateTime);
+
+  static String formatNumber(BuildContext context, num number) =>
+      isScreenSmall(context)
+          ? compactNumberFormat.format(number)
+          : numberFormat.format(number);
 }
