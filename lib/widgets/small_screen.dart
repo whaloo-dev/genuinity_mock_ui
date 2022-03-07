@@ -11,7 +11,7 @@ Widget smallScreen(BuildContext context, GlobalKey<ScaffoldState> key) {
     drawer: const Drawer(child: SideMenu()),
     body: Container(
       color: Colors.transparent,
-      padding: EdgeInsets.all(kSpacing),
+      padding: EdgeInsets.symmetric(horizontal: kSpacing),
       child: localNavigator(),
     ),
   );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 
 class ProductsTable extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -35,7 +36,8 @@ class ProductsTable extends StatelessWidget {
             (p) => DataRow(
               cells: [
                 DataCell(Text(numberFormat.format(p.codesCount))),
-                DataCell(Text(dateFormat.format(DateTime.now()))),
+                DataCell(Text(
+                    ResponsiveWidget.formatDate(context, (DateTime.now())))),
                 DataCell(
                   Row(
                     children: [

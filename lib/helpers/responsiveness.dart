@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
 
 const int largeScreenSize = 1366;
 const int mediumScreenSize = 768;
@@ -27,6 +28,16 @@ class ResponsiveWidget extends StatelessWidget {
   static bool isScreenCustom(BuildContext context) =>
       MediaQuery.of(context).size.width >= mediumScreenSize &&
       MediaQuery.of(context).size.width < customScreenSize;
+
+  static String formatDate(BuildContext context, DateTime dateTime) =>
+      isScreenSmall(context)
+          ? compactDateFormat.format(dateTime)
+          : dateFormat.format(dateTime);
+
+  // static String formatNumber(BuildContext context, num number) =>
+  //     isScreenSmall(context)
+  //         ? smallDateFormat.format(dateTime)
+  //         : dateFormat.format(dateTime);
 
   @override
   Widget build(BuildContext context) {

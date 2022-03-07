@@ -24,6 +24,7 @@ double kSpacing = 10;
 double kIconButtonSplashRadius = 25;
 
 NumberFormat numberFormat = NumberFormat("###,###", "en_US");
+DateFormat compactDateFormat = DateFormat("yyyy-MM-dd", "en_US");
 DateFormat dateFormat = DateFormat.yMEd("en_US").add_Hms();
 
 //blue light #93dbe9
