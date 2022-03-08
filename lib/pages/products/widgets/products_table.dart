@@ -15,15 +15,8 @@ class ProductsTable extends StatelessWidget {
       child: Obx(
         () => DataTable2(
           empty: productsController.isDataLoading.value
-              ? Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.cloud_download_rounded),
-                      SizedBox(width: kSpacing),
-                      const Text("Loading..."),
-                    ],
-                  ),
+              ? const Center(
+                  child: Text("Loading..."),
                 )
               : (productsController.searchFilter.isEmpty
                   ? const Center(child: Text("Add Products"))

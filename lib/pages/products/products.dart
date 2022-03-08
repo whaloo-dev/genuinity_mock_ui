@@ -44,7 +44,7 @@ class ProductsPage extends StatelessWidget {
                                       // color: kLightColor.withOpacity(0.5),
                                     ),
                                     child: Text(
-                                      "${productsController.products.length.toString()} products found",
+                                      "${productsController.products.length.toString()} products",
                                       style: TextStyle(color: kLightGreyColor),
                                     ),
                                   ),
