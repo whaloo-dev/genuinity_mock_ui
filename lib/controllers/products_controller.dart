@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -10,10 +11,11 @@ class ProductsController extends GetxController {
   final _allProducts = <Product>[].obs;
 
   var isDataLoaded = false.obs;
+  var isDataLoading = true.obs;
   var products = <Product>[].obs;
   var codes = <ProductId, List<Code>>{}.obs;
   var allProductsNames = <String>[].obs;
-  var searchFilter = "".obs;
+  var searchFilter = <String>[].obs;
 
   @override
   void onReady() async {
@@ -46,27 +48,44 @@ class ProductsController extends GetxController {
 
     this.products.addAll(_allProducts);
     isDataLoaded.value = true;
+    // isDataLoading.value = false;
   }
 
   Future<void> changeSearchFilter(String searchText) async {
+    isDataLoading.value = true;
     products.clear();
-    searchFilter.value = searchText.trim().toLowerCase();
-    for (int i = 0; i < _allProducts.length; i++) {
-      final _product = _allProducts[i];
-      if (_product.title.toLowerCase().contains(searchFilter)) {
-        products.add(_product);
+    searchFilter.clear();
+    final searchTextSplitted = searchText.toLowerCase().split(' ');
+    for (int i = 0; i < searchTextSplitted.length; i++) {
+      final keyword = searchTextSplitted[i].trim();
+      if (keyword.isNotEmpty) {
+        searchFilter.add(keyword);
       }
     }
+    Timer(const Duration(seconds: 2), () {
+      for (int i = 0; i < _allProducts.length; i++) {
+        final _product = _allProducts[i];
+        var accepted = true;
+        for (int i = 0; i < searchFilter.length; i++) {
+          final keyword = searchFilter[i];
+          accepted = accepted && _product.title.toLowerCase().contains(keyword);
+        }
+        if (accepted) {
+          products.add(_product);
+        }
+      }
+      isDataLoading.value = false;
+    });
   }
 
-  List<E> generateFromProducts<E>(E Function(Product p) convert,
-      {bool Function(Product p)? isAccepted}) {
+  List<E> generateFromProducts<E>(E Function(Product p) converter,
+      {bool Function(Product p)? filter}) {
     var rows = <E>[];
-    var _isAccepted = isAccepted ?? (Product p) => true;
+    var _filter = filter ?? (Product p) => true;
     for (int i = 0; i < products.length; i++) {
       var product = products[i];
-      if (_isAccepted(product)) {
-        rows.add(convert(product));
+      if (_filter(product)) {
+        rows.add(converter(product));
       }
     }
     return rows;

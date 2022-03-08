@@ -14,9 +14,29 @@ class ProductsTable extends StatelessWidget {
     return Card(
       child: Obx(
         () => DataTable2(
-          empty: productsController.searchFilter.value.isEmpty
-              ? const Center(child: Text("Add Products"))
-              : const Center(child: Text("No Result Found")),
+          empty: productsController.isDataLoading.value
+              ? Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.cloud_download_rounded),
+                      SizedBox(width: kSpacing),
+                      const Text("Loading..."),
+                    ],
+                  ),
+                )
+              : (productsController.searchFilter.isEmpty
+                  ? const Center(child: Text("Add Products"))
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.warning_rounded),
+                          SizedBox(height: kSpacing),
+                          const Text("No Results Found"),
+                        ],
+                      ),
+                    )),
           columnSpacing: 10,
           showCheckboxColumn: true,
           showBottomBorder: true,
@@ -28,20 +48,21 @@ class ProductsTable extends StatelessWidget {
           dataRowHeight: 50,
           smRatio: 0.75,
           lmRatio: 1.5,
-          columns: const [
-            DataColumn2(
+          columns: [
+            const DataColumn2(
                 label: Text('Codes'),
                 size: ColumnSize.S,
                 tooltip: "Number of codes generated for this product"),
-            DataColumn2(
+            const DataColumn2(
                 label: Text('Product'),
                 size: ColumnSize.L,
                 tooltip: "Product's details"),
-            DataColumn2(
-              label: Text('Modified'),
-              size: ColumnSize.S,
-              tooltip: "Last update date",
-            ),
+            if (!Responsive.isScreenSmall(context))
+              const DataColumn2(
+                label: Text('Modified'),
+                size: ColumnSize.S,
+                tooltip: "Last update date",
+              ),
           ],
           rows: productsController.generateFromProducts(
             (p) => DataRow(
@@ -61,26 +82,13 @@ class ProductsTable extends StatelessWidget {
                     ],
                   ),
                 ),
-                DataCell(Text(Responsive.formatDate(context, DateTime.now()))),
+                if (!Responsive.isScreenSmall(context))
+                  DataCell(
+                      Text(Responsive.formatDate(context, DateTime.now()))),
               ],
             ),
-            // accept: (p) => p.codesCount > 0,
+            filter: (p) => p.codesCount > 0,
           ),
-          // List<DataRow>.generate(
-          //   ,
-          //   (index) => DataRow(
-          //     cells: [
-          //       DataCell(Text("Product$index")),
-          //       DataCell(Text("Supplier$index")),
-          //       const DataCell(Text("01/04/2022")),
-          //       DataCell(
-          //         Container(),
-          //         showEditIcon: true,
-          //         onTap: () {},
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ),
       ),
     );

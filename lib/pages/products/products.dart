@@ -10,6 +10,7 @@ class ProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var searchFieldCtrl = TextEditingController();
+    var searchFieldFocusNode = FocusNode();
     return Column(
       children: [
         Row(
@@ -18,25 +19,45 @@ class ProductsPage extends StatelessWidget {
             Expanded(
               child: Obx(
                 () => TextField(
-                  // enableSuggestions: true,
-                  // autofillHints:
-                  //     productsController.allProductsNames.reactive.value,
                   onSubmitted: (searchInput) {
                     productsController.changeSearchFilter(searchInput);
                   },
                   controller: searchFieldCtrl,
                   decoration: InputDecoration(
-                    label: const Text("Search"),
-                    suffixIcon: productsController.searchFilter.value.isEmpty
-                        ? const Icon(Icons.search_rounded)
-                        : IconButton(
-                            icon: const Icon(Icons.cancel_rounded),
-                            onPressed: () {
-                              searchFieldCtrl.text = "";
-                              productsController.changeSearchFilter("");
-                            },
-                          ),
-                  ),
+                      label: const Text("Search"),
+                      suffixIcon: productsController.searchFilter.isEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.search_rounded),
+                              onPressed: () {
+                                searchFieldFocusNode.unfocus();
+                                productsController
+                                    .changeSearchFilter(searchFieldCtrl.text);
+                              },
+                            )
+                          : Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (!productsController.isDataLoading.value)
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: kBorderRadius,
+                                      // color: kLightColor.withOpacity(0.5),
+                                    ),
+                                    child: Text(
+                                      "${productsController.products.length.toString()} products found",
+                                      style: TextStyle(color: kLightGreyColor),
+                                    ),
+                                  ),
+                                IconButton(
+                                  icon: const Icon(Icons.cancel_rounded),
+                                  onPressed: () {
+                                    searchFieldCtrl.text = "";
+                                    productsController.changeSearchFilter("");
+                                    // FocusScope.of(context).unfocus();
+                                  },
+                                ),
+                              ],
+                            )),
                 ),
               ),
             ),
