@@ -12,6 +12,7 @@ class ProductsController extends GetxController {
 
   var isDataLoaded = false.obs;
   var isDataLoading = true.obs;
+  var isEditingSearch = false.obs;
   var products = <Product>[].obs;
   var codes = <ProductId, List<Code>>{}.obs;
   var allProductsNames = <String>[].obs;
@@ -62,7 +63,7 @@ class ProductsController extends GetxController {
         searchFilter.add(keyword);
       }
     }
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(microseconds: 2), () {
       for (int i = 0; i < _allProducts.length; i++) {
         final _product = _allProducts[i];
         var accepted = true;
@@ -76,6 +77,10 @@ class ProductsController extends GetxController {
       }
       isDataLoading.value = false;
     });
+  }
+
+  void changeIsEditingSearch(bool newValue) {
+    isEditingSearch.value = newValue;
   }
 
   List<E> generateFromProducts<E>(E Function(Product p) converter,

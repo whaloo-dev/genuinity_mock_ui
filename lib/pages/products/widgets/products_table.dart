@@ -69,7 +69,10 @@ class ProductsTable extends StatelessWidget {
                         margin: const EdgeInsets.all(1),
                         child: Image.network(
                           p.image,
-                          fit: BoxFit.scaleDown,
+                          errorBuilder: (context, error, stackTrace) => Icon(
+                            Icons.broken_image_rounded,
+                            color: kLightGreyColor,
+                          ),
                         ),
                       ),
                     ],

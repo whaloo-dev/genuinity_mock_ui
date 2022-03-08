@@ -10,7 +10,6 @@ class ProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var searchFieldCtrl = TextEditingController();
-    var searchFieldFocusNode = FocusNode();
     return Column(
       children: [
         Row(
@@ -19,45 +18,51 @@ class ProductsPage extends StatelessWidget {
             Expanded(
               child: Obx(
                 () => TextField(
+                  // enabled: productsController.isDataLoading.value,
+                  onChanged: (value) {
+                    productsController.isEditingSearch(true);
+                  },
                   onSubmitted: (searchInput) {
                     productsController.changeSearchFilter(searchInput);
+                    productsController.changeIsEditingSearch(false);
                   },
                   controller: searchFieldCtrl,
                   decoration: InputDecoration(
-                      label: const Text("Search"),
-                      suffixIcon: productsController.searchFilter.isEmpty
-                          ? IconButton(
-                              icon: const Icon(Icons.search_rounded),
-                              onPressed: () {
-                                searchFieldFocusNode.unfocus();
-                                productsController
-                                    .changeSearchFilter(searchFieldCtrl.text);
-                              },
-                            )
-                          : Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (!productsController.isDataLoading.value)
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: kBorderRadius,
-                                      // color: kLightColor.withOpacity(0.5),
-                                    ),
-                                    child: Text(
-                                      "${productsController.products.length.toString()} products",
-                                      style: TextStyle(color: kLightGreyColor),
-                                    ),
+                    label: const Text("Search by product"),
+                    suffixIcon: (productsController.isEditingSearch.value ||
+                            productsController.searchFilter.isEmpty)
+                        ? IconButton(
+                            icon: const Icon(Icons.search_rounded),
+                            onPressed: () {
+                              productsController
+                                  .changeSearchFilter(searchFieldCtrl.text);
+                              productsController.changeIsEditingSearch(false);
+                            },
+                          )
+                        : Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (!productsController.isDataLoading.value)
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: kBorderRadius,
+                                    // color: kLightColor.withOpacity(0.5),
                                   ),
-                                IconButton(
-                                  icon: const Icon(Icons.cancel_rounded),
-                                  onPressed: () {
-                                    searchFieldCtrl.text = "";
-                                    productsController.changeSearchFilter("");
-                                    // FocusScope.of(context).unfocus();
-                                  },
+                                  child: Text(
+                                    "${productsController.products.length.toString()} products",
+                                    style: TextStyle(color: kLightGreyColor),
+                                  ),
                                 ),
-                              ],
-                            )),
+                              IconButton(
+                                icon: const Icon(Icons.cancel_rounded),
+                                onPressed: () {
+                                  searchFieldCtrl.text = "";
+                                  productsController.changeSearchFilter("");
+                                },
+                              ),
+                            ],
+                          ),
+                  ),
                 ),
               ),
             ),
@@ -79,7 +84,32 @@ class ProductsPage extends StatelessWidget {
           ],
         ),
         //  SizedBox(height: kSpacing),
-        const Expanded(child: ProductsTable()),
+        Obx(() {
+          if (productsController.isEditingSearch.value) {
+            return SizedBox(
+              height: 100,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Launch search "),
+                    // SizedBox(width: kSpacing),
+                    IconButton(
+                        splashRadius: kIconButtonSplashRadius,
+                        color: kActiveColor,
+                        onPressed: () {
+                          productsController
+                              .changeSearchFilter(searchFieldCtrl.text);
+                          productsController.changeIsEditingSearch(false);
+                        },
+                        icon: const Icon(Icons.search_rounded))
+                  ],
+                ),
+              ),
+            );
+          }
+          return const Expanded(child: ProductsTable());
+        }),
         SizedBox(height: kSpacing),
       ],
     );
