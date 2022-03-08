@@ -1,15 +1,12 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
-import 'package:whaloo_genuinity/controllers/codes_controller.dart';
 
 class StoreController extends GetxController {
   static StoreController get instance => Get.find();
 
-  var isStoreLoaded = false.obs;
+  var isDataLoaded = false.obs;
   Store? store;
 
   @override
@@ -19,11 +16,9 @@ class StoreController extends GetxController {
   }
 
   Future<void> loadDemoStoreData() async {
-    var asset = "assets/demo/store.json";
-    rootBundle.evict(asset);
-    // print("loading : $asset");
+    const asset = "assets/demo/huel_store.json";
+    print("loading : $asset");
     final String response = await rootBundle.loadString(asset);
-    // print("loading : $response");
     final storeData = await json.decode(response);
     store = Store(
       id: storeData['id'],
@@ -31,23 +26,7 @@ class StoreController extends GetxController {
       imageUrl: storeData['icon'],
       website: storeData['url'],
     );
-
-    // Loading products and codes :
-    List products = storeData['products'];
-    codesController.products.clear();
-
-    for (var i = 0; i < products.length; i++) {
-      var product = products[i];
-      List codes = product['codes'];
-
-      codesController.products.add(Product(
-        id: ProductId(product['id']),
-        title: product['title'],
-        image: product['image'],
-        codesCount: Random().nextInt(500000000), //codes.length,
-      ));
-    }
-    isStoreLoaded.value = true;
+    isDataLoaded.value = true;
   }
 }
 

@@ -1,6 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
@@ -11,10 +11,12 @@ class ProductsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Card(
-        child: DataTable2(
-          empty: const Center(child: Text("Add Products")),
+    return Card(
+      child: Obx(
+        () => DataTable2(
+          empty: productsController.searchFilter.value.isEmpty
+              ? const Center(child: Text("Add Products"))
+              : const Center(child: Text("No Result Found")),
           columnSpacing: 10,
           showCheckboxColumn: true,
           showBottomBorder: true,
@@ -41,7 +43,7 @@ class ProductsTable extends StatelessWidget {
               tooltip: "Last update date",
             ),
           ],
-          rows: codesController.generateFromProducts(
+          rows: productsController.generateFromProducts(
             (p) => DataRow(
               cells: [
                 DataCell(Text(Responsive.formatNumber(context, p.codesCount))),

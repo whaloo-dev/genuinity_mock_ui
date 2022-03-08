@@ -11,7 +11,7 @@ class ProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        return storeController.isStoreLoaded.value
+        return storeController.isDataLoaded.value
             ? Row(
                 children: [
                   if (!Responsive.isScreenSmall(context))
