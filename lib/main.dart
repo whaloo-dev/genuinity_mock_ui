@@ -11,6 +11,8 @@ import 'package:whaloo_genuinity/layout.dart';
 import 'package:whaloo_genuinity/pages/errors/error_404.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 
+// ignore: constant_identifier_names
+const DEMO_STORE = "ruesco";
 void main() {
   Get.put(MenuController());
   Get.put(NavigationController());

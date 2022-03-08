@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
+import 'package:whaloo_genuinity/pages/products/widgets/products_table_empty.dart';
 
 class ProductsTable extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -14,22 +15,7 @@ class ProductsTable extends StatelessWidget {
     return Card(
       child: Obx(
         () => DataTable2(
-          empty: productsController.isDataLoading.value
-              ? const Center(
-                  child: Text("Loading..."),
-                )
-              : (productsController.searchFilter.isEmpty
-                  ? const Center(child: Text("Add Products"))
-                  : Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.warning_rounded),
-                          SizedBox(height: kSpacing),
-                          const Text("No Results Found"),
-                        ],
-                      ),
-                    )),
+          empty: const ProductsTableEmptyWidget(),
           columnSpacing: 10,
           showCheckboxColumn: true,
           showBottomBorder: true,
@@ -57,34 +43,47 @@ class ProductsTable extends StatelessWidget {
                 tooltip: "Last update date",
               ),
           ],
-          rows: productsController.generateFromProducts(
-            (p) => DataRow(
-              cells: [
-                DataCell(Text(Responsive.formatNumber(context, p.codesCount))),
-                DataCell(
-                  Row(
-                    children: [
-                      Expanded(child: Text(p.title)),
-                      Container(
-                        margin: const EdgeInsets.all(1),
-                        child: Image.network(
-                          p.image,
-                          errorBuilder: (context, error, stackTrace) => Icon(
-                            Icons.broken_image_rounded,
-                            color: kLightGreyColor,
+          rows: productsController.products
+              .map<DataRow>(
+                (p) => DataRow(
+                  cells: [
+                    DataCell(
+                      Text(
+                        Responsive.formatNumber(context, p.codesCount),
+                      ),
+                    ),
+                    DataCell(
+                      Row(
+                        children: [
+                          Expanded(child: Text(p.title)),
+                          Container(
+                            margin: const EdgeInsets.all(1),
+                            child: Image.network(
+                              p.image,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Icon(
+                                Icons.broken_image_rounded,
+                                color: kLightGreyColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (!Responsive.isScreenSmall(context))
+                      DataCell(
+                        Text(
+                          Responsive.formatDate(
+                            context,
+                            DateTime.now(),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                  ],
                 ),
-                if (!Responsive.isScreenSmall(context))
-                  DataCell(
-                      Text(Responsive.formatDate(context, DateTime.now()))),
-              ],
-            ),
-            filter: (p) => p.codesCount > 0,
-          ),
+                // filter: (p) => p.codesCount > 0,
+              )
+              .toList(),
         ),
       ),
     );

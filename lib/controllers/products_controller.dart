@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/main.dart';
 
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
@@ -25,7 +26,7 @@ class ProductsController extends GetxController {
   }
 
   Future<void> loadDemoProductsData() async {
-    const asset = "assets/demo/huel_products.json";
+    const asset = "assets/demo/${DEMO_STORE}_products.json";
     print("Loading '$asset' ...");
     String response = await rootBundle.loadString(asset);
     final productsData = await json.decode(response);
@@ -47,9 +48,9 @@ class ProductsController extends GetxController {
       );
     }
 
-    this.products.addAll(_allProducts);
+    //this.products.addAll(_allProducts);
     isDataLoaded.value = true;
-    // isDataLoading.value = false;
+    isDataLoading.value = false;
   }
 
   Future<void> changeSearchFilter(String searchText) async {
@@ -63,7 +64,7 @@ class ProductsController extends GetxController {
         searchFilter.add(keyword);
       }
     }
-    Timer(const Duration(microseconds: 2), () {
+    Timer(const Duration(seconds: 2), () {
       for (int i = 0; i < _allProducts.length; i++) {
         final _product = _allProducts[i];
         var accepted = true;
@@ -81,19 +82,6 @@ class ProductsController extends GetxController {
 
   void changeIsEditingSearch(bool newValue) {
     isEditingSearch.value = newValue;
-  }
-
-  List<E> generateFromProducts<E>(E Function(Product p) converter,
-      {bool Function(Product p)? filter}) {
-    var rows = <E>[];
-    var _filter = filter ?? (Product p) => true;
-    for (int i = 0; i < products.length; i++) {
-      var product = products[i];
-      if (_filter(product)) {
-        rows.add(converter(product));
-      }
-    }
-    return rows;
   }
 }
 

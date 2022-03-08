@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/main.dart';
 
 class StoreController extends GetxController {
   static StoreController get instance => Get.find();
@@ -16,7 +17,7 @@ class StoreController extends GetxController {
   }
 
   Future<void> loadDemoStoreData() async {
-    const asset = "assets/demo/huel_store.json";
+    const asset = "assets/demo/${DEMO_STORE}_store.json";
     print("loading : $asset");
     final String response = await rootBundle.loadString(asset);
     final storeData = await json.decode(response);
