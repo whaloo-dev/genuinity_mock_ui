@@ -9,7 +9,7 @@ import 'package:whaloo_genuinity/main.dart';
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
 
-  static int maxProducsLoaded = 100;
+  static int maxProducsLoaded = 1000;
 
   final _allProducts = <Product>[].obs;
 
@@ -48,6 +48,7 @@ class ProductsController extends GetxController {
           title: product['title'],
           image: product['image'],
           codesCount: Random().nextInt(5000), //codes.length,
+          inventoryQuantity: Random().nextInt(100), //codes.length,
         ),
       );
     }
@@ -109,12 +110,14 @@ class Product {
   final String title;
   final String image;
   final int codesCount;
+  final int inventoryQuantity;
 
   const Product({
     required this.id,
     required this.title,
     required this.image,
     required this.codesCount,
+    required this.inventoryQuantity,
   });
 }
 

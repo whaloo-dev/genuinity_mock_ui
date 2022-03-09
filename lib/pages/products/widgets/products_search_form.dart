@@ -18,9 +18,6 @@ class ProductsSearchForm extends StatelessWidget {
               SizedBox(
                 width: 150,
                 child: ElevatedButton(
-                  style: ButtonStyle(
-                      padding:
-                          MaterialStateProperty.all(const EdgeInsets.all(15))),
                   onPressed: () {
                     productsController.changeSearchFilter(
                         productsController.searchText.value);

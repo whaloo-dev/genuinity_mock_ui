@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_search_bar.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_search_form.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_table.dart';
@@ -15,14 +14,8 @@ class ProductsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Expanded(child: ProductsSearchBar()),
-            ProductsMenu(),
-          ],
-        ),
-        //  SizedBox(height: kSpacing),
+        const ProductsSearchBar(),
+        SizedBox(height: kSpacing),
         Obx(() {
           if (productsController.isEditingSearch.value) {
             return const Expanded(child: ProductsSearchForm());
