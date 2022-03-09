@@ -9,6 +9,8 @@ import 'package:whaloo_genuinity/main.dart';
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
 
+  static int maxProducsLoaded = 100;
+
   final _allProducts = <Product>[].obs;
 
   var isDataLoaded = false.obs;
@@ -36,6 +38,7 @@ class ProductsController extends GetxController {
     final products = productsData['products'];
     // this.products.clear();
     for (var i = 0; i < products.length; i++) {
+      if (i >= maxProducsLoaded) break;
       var product = products[i];
       // List codes = product['codes'];
       allProductsNames.add(product['title']);
@@ -49,7 +52,7 @@ class ProductsController extends GetxController {
       );
     }
 
-    //this.products.addAll(_allProducts);
+    this.products.addAll(_allProducts);
     isDataLoaded.value = true;
     isDataLoading.value = false;
   }
@@ -67,7 +70,7 @@ class ProductsController extends GetxController {
         searchFilter.add(keyword);
       }
     }
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 1), () {
       for (int i = 0; i < _allProducts.length; i++) {
         final _product = _allProducts[i];
         var accepted = true;

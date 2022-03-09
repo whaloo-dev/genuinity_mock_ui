@@ -23,39 +23,37 @@ class ProductsSearchBar extends StatelessWidget {
         controller: searchFieldCtrl,
         decoration: InputDecoration(
           label: const Text("Search by product"),
-          suffixIcon: (productsController.isEditingSearch.value ||
-                  productsController.searchFilter.isEmpty)
-              ? IconButton(
-                  icon: const Icon(Icons.search_rounded),
-                  onPressed: () {
-                    productsController.changeSearchFilter(searchFieldCtrl.text);
-                  },
-                )
-              : Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (!productsController.isDataLoading.value)
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: kBorderRadius,
-                          // color: kLightColor.withOpacity(0.5),
-                        ),
-                        child: Text(
-                          "${productsController.products.length.toString()} products",
-                          style: TextStyle(color: kLightGreyColor),
-                        ),
-                      ),
-                    IconButton(
-                      icon: const Icon(Icons.cancel_rounded),
-                      onPressed: () {
-                        searchFieldCtrl.text = "";
-                        productsController.changeSearchFilter("");
-                      },
-                    ),
-                  ],
-                ),
+          suffixIcon: _suffixWidget(searchFieldCtrl),
         ),
       ),
     );
+  }
+
+  Widget _suffixWidget(TextEditingController seachFieldController) {
+    return (productsController.isEditingSearch.value ||
+            productsController.searchFilter.isEmpty)
+        ? IconButton(
+            icon: const Icon(Icons.search_rounded),
+            onPressed: () {
+              productsController.changeSearchFilter(seachFieldController.text);
+            },
+          )
+        : Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (!productsController.isDataLoading.value)
+                Text(
+                  "${productsController.products.length} products",
+                  style: TextStyle(color: kLightGreyColor, fontSize: 12),
+                ),
+              IconButton(
+                icon: const Icon(Icons.cancel_rounded),
+                onPressed: () {
+                  seachFieldController.text = "";
+                  productsController.changeSearchFilter("");
+                },
+              ),
+            ],
+          );
   }
 }
