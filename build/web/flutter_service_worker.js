@@ -8,7 +8,7 @@ const RESOURCES = {
 "assets/assets/images/notfound.png": "103205647c1743a3ed5786f255587616",
 "assets/assets/images/loading.svg": "5f0814b624e361da1c6a418643e5a009",
 "assets/assets/demo/ruesco_codes.json": "d41d8cd98f00b204e9800998ecf8427e",
-"assets/assets/demo/ruesco_products.json": "88d866ee3fd00bc11076a0ba7bb0df18",
+"assets/assets/demo/ruesco_products.json": "ea09459c95d108180257c4e437aca9ee",
 "assets/assets/demo/list.txt": "5ac17a0c7161d6b2524af3bc709e3307",
 "assets/assets/demo/huel_codes.json": "055037a724666edc801053f09049366c",
 "assets/assets/demo/huel_store.json": "863ff7d927108f9d2053c6b83af28396",
@@ -23,9 +23,9 @@ const RESOURCES = {
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/fonts/MaterialIcons-Regular.otf": "7e7a6cccddf6d7b20012a548461d5d81",
 "manifest.json": "12fa2854a79c7b25ba9a5c23e7322429",
-"main.dart.js": "312451a502fb25165c2ed5f78f70a70e",
-"index.html": "3f5b2bf6cd85db0731e4803360c2b070",
-"/": "3f5b2bf6cd85db0731e4803360c2b070",
+"main.dart.js": "215794a4890735c287f93f5bd0a64333",
+"index.html": "6c91090b81d44d7cacdbae00f0c7b67b",
+"/": "6c91090b81d44d7cacdbae00f0c7b67b",
 "icons/logo-192.png": "1a29ef466ee6bb1d1fd4973cfaee7483",
 "icons/logo-512.png": "a452076a2ed8e1eccb6de66b7bae9a3f"
 };
