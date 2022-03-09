@@ -22,9 +22,9 @@ const RESOURCES = {
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/fonts/MaterialIcons-Regular.otf": "7e7a6cccddf6d7b20012a548461d5d81",
 "manifest.json": "12fa2854a79c7b25ba9a5c23e7322429",
-"main.dart.js": "8920d278246fa483aae705eebe0c3bef",
-"index.html": "9133897abae1253b91f1fdfa8318aa79",
-"/": "9133897abae1253b91f1fdfa8318aa79",
+"main.dart.js": "5ab20ea9a1e2a1621a4859dd5f99a59e",
+"index.html": "4dd4022b359d7ff0e0f8317575864bc6",
+"/": "4dd4022b359d7ff0e0f8317575864bc6",
 "icons/logo-192.png": "1a29ef466ee6bb1d1fd4973cfaee7483",
 "icons/logo-512.png": "a452076a2ed8e1eccb6de66b7bae9a3f"
 };
