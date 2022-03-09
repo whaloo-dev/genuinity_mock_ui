@@ -14,7 +14,7 @@ class ProductsTableEmptyWidget extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: kSpacing * 4),
-                productsController.isDataLoading.value
+                productsController.isLoadingData.value
                     ? const Center(
                         child: Text("Loading..."),
                       )

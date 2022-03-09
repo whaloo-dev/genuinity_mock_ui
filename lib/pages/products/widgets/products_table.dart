@@ -4,7 +4,7 @@ import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/product_tile_large.dart';
-import 'package:whaloo_genuinity/pages/products/widgets/product_tile_small.dart';
+import 'package:whaloo_genuinity/pages/products/widgets/product_tile.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
 
 class ProductsTable extends StatelessWidget {

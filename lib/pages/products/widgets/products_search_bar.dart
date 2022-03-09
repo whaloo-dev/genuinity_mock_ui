@@ -12,7 +12,7 @@ class ProductsSearchBar extends StatelessWidget {
         TextEditingController(text: productsController.searchText.value);
     return Obx(
       () => TextField(
-        enabled: !productsController.isDataLoading.value,
+        enabled: !productsController.isLoadingData.value,
         onChanged: (value) {
           productsController.isEditingSearch(true);
           productsController.searchText.value = value;
@@ -41,7 +41,7 @@ class ProductsSearchBar extends StatelessWidget {
         : Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (!productsController.isDataLoading.value)
+              if (!productsController.isLoadingData.value)
                 Text(
                   "${productsController.products.length} "
                   "product${productsController.products.length == 1 ? '' : 's'}",

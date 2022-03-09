@@ -13,9 +13,11 @@ class ProductsController extends GetxController {
 
   final _allProducts = <Product>[].obs;
 
-  var isDataLoaded = false.obs;
-  var isDataLoading = true.obs;
   var isEditingSearch = false.obs;
+  var isLoadingData = true.obs;
+  var isDataLoaded = false.obs;
+  var hasMoreData = true.obs;
+
   var products = <Product>[].obs;
   var codes = <ProductId, List<Code>>{}.obs;
   var allProductsNames = <String>[].obs;
@@ -55,7 +57,7 @@ class ProductsController extends GetxController {
 
     this.products.addAll(_allProducts);
     isDataLoaded.value = true;
-    isDataLoading.value = false;
+    isLoadingData.value = false;
   }
 
   Future<void> changeSearchFilter(String searchText) async {
@@ -64,7 +66,7 @@ class ProductsController extends GetxController {
       return;
     }
     this.searchText.value = searchText;
-    isDataLoading.value = true;
+    isLoadingData.value = true;
     products.clear();
     searchFilter.clear();
     final searchTextSplitted = searchText.toLowerCase().split(' ');
@@ -86,7 +88,7 @@ class ProductsController extends GetxController {
           products.add(_product);
         }
       }
-      isDataLoading.value = false;
+      isLoadingData.value = false;
     });
   }
 

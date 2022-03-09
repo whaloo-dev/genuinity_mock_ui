@@ -11,7 +11,6 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
-      // mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -34,10 +33,12 @@ class ProductTile extends StatelessWidget {
         SizedBox(height: kSpacing * 2),
         Row(
           children: [
-            SizedBox(
-              width: 100,
+            Card(
+              elevation: 0,
+              clipBehavior: Clip.antiAlias,
               child: Image.network(
                 product.image,
+                width: 100,
                 errorBuilder: (context, error, stackTrace) => Icon(
                   Icons.broken_image_rounded,
                   color: kLightGreyColor,
