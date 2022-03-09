@@ -9,7 +9,7 @@ import 'package:whaloo_genuinity/widgets/profile.dart';
 AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
     AppBar(
       elevation: 0,
-      leading: Responsive.isScreenSmall(context)
+      leading: Responsiveness.isScreenSmall(context)
           ? IconButton(
               onPressed: () {
                 key.currentState!.openDrawer();

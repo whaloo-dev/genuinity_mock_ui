@@ -10,7 +10,7 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Flex(
-        direction: Responsive.isScreenCustom(context)
+        direction: Responsiveness.isScreenCustom(context)
             ? Axis.vertical
             : Axis.horizontal,
         mainAxisSize: MainAxisSize.min,

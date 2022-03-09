@@ -14,7 +14,7 @@ class ProfileWidget extends StatelessWidget {
         return storeController.isDataLoaded.value
             ? Row(
                 children: [
-                  if (!Responsive.isScreenSmall(context))
+                  if (!Responsiveness.isScreenSmall(context))
                     Row(children: [
                       Container(
                         width: 1,
@@ -24,7 +24,11 @@ class ProfileWidget extends StatelessWidget {
                       SizedBox(width: kSpacing),
                       Text(
                         storeController.store!.name,
-                        style: TextStyle(color: kLightGreyColor, fontSize: 12),
+                        style: TextStyle(
+                          color: kLightGreyColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(width: kSpacing),
                     ]),

@@ -15,7 +15,7 @@ class SideMenuItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _onTap() {
-      if (Responsive.isScreenSmall(context)) {
+      if (Responsiveness.isScreenSmall(context)) {
         Navigator.of(context).pop();
       }
       if (onTap != null) {
@@ -51,7 +51,7 @@ class SideMenuItemWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Flex(
-                  direction: Responsive.isScreenCustom(context)
+                  direction: Responsiveness.isScreenCustom(context)
                       ? Axis.vertical
                       : Axis.horizontal,
                   mainAxisSize: MainAxisSize.min,

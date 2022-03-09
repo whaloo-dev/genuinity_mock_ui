@@ -13,6 +13,8 @@ import 'package:whaloo_genuinity/routes/routes.dart';
 
 // ignore: constant_identifier_names
 const DEMO_STORE = "ruesco";
+// const DEMO_STORE = "huel";
+
 void main() {
   Get.put(MenuController());
   Get.put(NavigationController());

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_search_bar.dart';
+import 'package:whaloo_genuinity/pages/products/widgets/products_search_form.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_table.dart';
+import 'package:whaloo_genuinity/pages/products/widgets/products_table_empty.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({Key? key}) : super(key: key);
@@ -14,47 +17,18 @@ class ProductsPage extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Expanded(child: ProductsSearchBar()),
-            Row(
-              children: [
-                PopupMenuButton<Widget>(
-                  // enabled: false,
-                  elevation: kElevation,
-                  shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
-                  icon: const Icon(Icons.more_vert_rounded),
-                  itemBuilder: (context) => <PopupMenuItem<Widget>>[
-                    const PopupMenuItem(child: Text("Action1")),
-                    const PopupMenuItem(child: Text("Action2")),
-                    const PopupMenuItem(child: Text("Action3")),
-                  ],
-                ),
-              ],
-            ),
+          children: const [
+            Expanded(child: ProductsSearchBar()),
+            ProductsMenu(),
           ],
         ),
         //  SizedBox(height: kSpacing),
         Obx(() {
           if (productsController.isEditingSearch.value) {
-            return SizedBox(
-              height: 100,
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Launch search "),
-                    IconButton(
-                        splashRadius: kIconButtonSplashRadius,
-                        color: kActiveColor,
-                        onPressed: () {
-                          productsController.changeSearchFilter(
-                              productsController.searchText.value);
-                        },
-                        icon: const Icon(Icons.search_rounded))
-                  ],
-                ),
-              ),
-            );
+            return const Expanded(child: ProductsSearchForm());
+          }
+          if (productsController.products.isEmpty) {
+            return const Expanded(child: ProductsTableEmptyWidget());
           }
           return const Expanded(child: ProductsTable());
         }),

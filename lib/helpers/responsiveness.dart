@@ -36,7 +36,7 @@ class ResponsiveWidget extends StatelessWidget {
   }
 }
 
-class Responsive {
+class Responsiveness {
   static bool isScreenSmall(BuildContext context) =>
       MediaQuery.of(context).size.width < mediumScreenSize;
   static bool isScreenMedium(BuildContext context) =>
@@ -49,9 +49,9 @@ class Responsive {
       MediaQuery.of(context).size.width < customScreenSize;
 
   static String formatDate(BuildContext context, DateTime dateTime) =>
-      isScreenSmall(context)
-          ? compactDateFormat.format(dateTime)
-          : dateFormat.format(dateTime);
+      isScreenLarge(context)
+          ? dateFormat.format(dateTime)
+          : compactDateFormat.format(dateTime);
 
   static String formatNumber(BuildContext context, num number) =>
       isScreenSmall(context)

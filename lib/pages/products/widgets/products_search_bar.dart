@@ -8,7 +8,7 @@ class ProductsSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var searchFieldCtrl =
+    var searchFieldController =
         TextEditingController(text: productsController.searchText.value);
     return Obx(
       () => TextField(
@@ -17,13 +17,13 @@ class ProductsSearchBar extends StatelessWidget {
           productsController.isEditingSearch(true);
           productsController.searchText.value = value;
         },
-        onSubmitted: (searchInput) {
-          productsController.changeSearchFilter(searchInput);
+        onSubmitted: (value) {
+          productsController.changeSearchFilter(value);
         },
-        controller: searchFieldCtrl,
+        controller: searchFieldController,
         decoration: InputDecoration(
           label: const Text("Search by product"),
-          suffixIcon: _suffixWidget(searchFieldCtrl),
+          suffixIcon: _suffixWidget(searchFieldController),
         ),
       ),
     );
@@ -43,7 +43,8 @@ class ProductsSearchBar extends StatelessWidget {
             children: [
               if (!productsController.isDataLoading.value)
                 Text(
-                  "${productsController.products.length} products",
+                  "${productsController.products.length} "
+                  "product${productsController.products.length == 1 ? '' : 's'}",
                   style: TextStyle(color: kLightGreyColor, fontSize: 12),
                 ),
               IconButton(
