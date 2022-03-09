@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/pages/products/widgets/products_search_bar.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_table.dart';
 
 class ProductsPage extends StatelessWidget {
@@ -9,64 +10,12 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var searchFieldCtrl =
-        TextEditingController(text: productsController.searchText.value);
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Obx(
-                () => TextField(
-                  // enabled: productsController.isDataLoading.value,
-                  onChanged: (value) {
-                    productsController.isEditingSearch(true);
-                  },
-                  onSubmitted: (searchInput) {
-                    productsController.changeSearchFilter(searchInput);
-                    productsController.changeIsEditingSearch(false);
-                  },
-                  controller: searchFieldCtrl,
-                  decoration: InputDecoration(
-                    label: const Text("Search by product"),
-                    suffixIcon: (productsController.isEditingSearch.value ||
-                            productsController.searchFilter.isEmpty)
-                        ? IconButton(
-                            icon: const Icon(Icons.search_rounded),
-                            onPressed: () {
-                              productsController
-                                  .changeSearchFilter(searchFieldCtrl.text);
-                              productsController.changeIsEditingSearch(false);
-                            },
-                          )
-                        : Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (!productsController.isDataLoading.value)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: kBorderRadius,
-                                    // color: kLightColor.withOpacity(0.5),
-                                  ),
-                                  child: Text(
-                                    "${productsController.products.length.toString()} products",
-                                    style: TextStyle(color: kLightGreyColor),
-                                  ),
-                                ),
-                              IconButton(
-                                icon: const Icon(Icons.cancel_rounded),
-                                onPressed: () {
-                                  searchFieldCtrl.text = "";
-                                  productsController.changeSearchFilter("");
-                                },
-                              ),
-                            ],
-                          ),
-                  ),
-                ),
-              ),
-            ),
+            const Expanded(child: ProductsSearchBar()),
             Row(
               children: [
                 PopupMenuButton<Widget>(
@@ -94,14 +43,12 @@ class ProductsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Launch search "),
-                    // SizedBox(width: kSpacing),
                     IconButton(
                         splashRadius: kIconButtonSplashRadius,
                         color: kActiveColor,
                         onPressed: () {
-                          productsController
-                              .changeSearchFilter(searchFieldCtrl.text);
-                          productsController.changeIsEditingSearch(false);
+                          productsController.changeSearchFilter(
+                              productsController.searchText.value);
                         },
                         icon: const Icon(Icons.search_rounded))
                   ],

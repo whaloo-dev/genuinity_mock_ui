@@ -55,6 +55,7 @@ class ProductsController extends GetxController {
   }
 
   Future<void> changeSearchFilter(String searchText) async {
+    isEditingSearch.value = false;
     this.searchText.value = searchText;
     isDataLoading.value = true;
     products.clear();
