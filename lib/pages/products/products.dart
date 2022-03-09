@@ -9,7 +9,8 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var searchFieldCtrl = TextEditingController();
+    var searchFieldCtrl =
+        TextEditingController(text: productsController.searchText.value);
     return Column(
       children: [
         Row(

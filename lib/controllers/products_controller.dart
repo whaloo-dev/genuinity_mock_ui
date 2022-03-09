@@ -18,6 +18,7 @@ class ProductsController extends GetxController {
   var codes = <ProductId, List<Code>>{}.obs;
   var allProductsNames = <String>[].obs;
   var searchFilter = <String>[].obs;
+  var searchText = "".obs;
 
   @override
   void onReady() async {
@@ -43,7 +44,7 @@ class ProductsController extends GetxController {
           id: ProductId(product['id']),
           title: product['title'],
           image: product['image'],
-          codesCount: Random().nextInt(10000), //codes.length,
+          codesCount: Random().nextInt(5000), //codes.length,
         ),
       );
     }
@@ -54,6 +55,7 @@ class ProductsController extends GetxController {
   }
 
   Future<void> changeSearchFilter(String searchText) async {
+    this.searchText.value = searchText;
     isDataLoading.value = true;
     products.clear();
     searchFilter.clear();
