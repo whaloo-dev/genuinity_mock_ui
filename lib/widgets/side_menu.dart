@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
@@ -25,6 +26,11 @@ class SideMenu extends StatelessWidget {
                   menuItem: item,
                   onTap: () {
                     if (!menuController.isActive(item)) {
+                      if (item.route == shopifyPageRoute) {
+                        launchURL(
+                            "https://${storeController.store!.name}.myshopify.com/");
+                        return;
+                      }
                       menuController.changeActiveItemTo(item);
                       navigationController.navigateTo(item.route);
                     }
@@ -35,5 +41,13 @@ class SideMenu extends StatelessWidget {
         )
       ]),
     );
+  }
+}
+
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

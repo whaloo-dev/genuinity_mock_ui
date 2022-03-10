@@ -7,6 +7,7 @@ const rootRoute = "/main";
 const dashboardPageRoute = "/main/dashboard";
 const productsPageRoute = "/main/products";
 const settingsPageRoute = "/main/settings";
+const shopifyPageRoute = "/main/shopify";
 
 //Menu Items
 final dashboardPageItem = MenuItem(
@@ -27,12 +28,19 @@ final settingsPageItem = MenuItem(
   Icons.settings_rounded,
 );
 
+final shopifyPageItem = MenuItem(
+  shopifyPageRoute,
+  "Shopify Admin",
+  Icons.shopify_rounded,
+);
+
 final nonePageItem = MenuItem("", "", Icons.not_accessible);
 
 List<MenuItem> siteMenuItems = [
   dashboardPageItem,
   productsPageItem,
   settingsPageItem,
+  shopifyPageItem,
 ];
 
 class MenuItem {
