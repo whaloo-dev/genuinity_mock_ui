@@ -25,9 +25,9 @@ const RESOURCES = {
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/fonts/MaterialIcons-Regular.otf": "7e7a6cccddf6d7b20012a548461d5d81",
 "manifest.json": "12fa2854a79c7b25ba9a5c23e7322429",
-"main.dart.js": "0a7991b0378b99fd847d3f3b9130e464",
-"index.html": "d4368d0730f2f34a558ffc4885147999",
-"/": "d4368d0730f2f34a558ffc4885147999",
+"main.dart.js": "38c19c01e1dd2df60b120a753c9be4fe",
+"index.html": "cf296ac92c5cf00cc402c104076b6d62",
+"/": "cf296ac92c5cf00cc402c104076b6d62",
 "icons/logo-192.png": "1a29ef466ee6bb1d1fd4973cfaee7483",
 "icons/logo-512.png": "a452076a2ed8e1eccb6de66b7bae9a3f"
 };
