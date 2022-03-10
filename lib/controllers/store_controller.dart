@@ -17,8 +17,7 @@ class StoreController extends GetxController {
   }
 
   Future<void> loadDemoStoreData() async {
-    const asset = "assets/demo/${DEMO_STORE}_store.json";
-    print("loading : $asset");
+    const asset = "assets/demo/${demoStore}_store.json";
     final String response = await rootBundle.loadString(asset);
     final storeData = await json.decode(response);
     store = Store(

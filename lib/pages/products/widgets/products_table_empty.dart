@@ -18,7 +18,7 @@ class ProductsTableEmptyWidget extends StatelessWidget {
                     ? const Center(
                         child: Text("Loading..."),
                       )
-                    : productsController.searchFilter.isEmpty
+                    : productsController.textFilter.isEmpty
                         ? const Center(child: Text("Add Products"))
                         : Center(
                             child: Column(

@@ -31,8 +31,9 @@ class ProductsSearchBar extends StatelessWidget {
   }
 
   Widget _suffixWidget(TextEditingController seachFieldController) {
+    int productsCount = productsController.productsCount();
     return (productsController.isEditingSearch.value ||
-            productsController.searchFilter.isEmpty)
+            productsController.textFilter.isEmpty)
         ? IconButton(
             icon: const Icon(Icons.search_rounded),
             onPressed: () {
@@ -44,8 +45,8 @@ class ProductsSearchBar extends StatelessWidget {
             children: [
               if (!productsController.isLoadingData.value)
                 Text(
-                  "${productsController.products.length} "
-                  "product${productsController.products.length == 1 ? '' : 's'}",
+                  "$productsCount "
+                  "product${productsCount == 1 ? '' : 's'}",
                   style: TextStyle(color: kLightGreyColor, fontSize: 12),
                 ),
               IconButton(

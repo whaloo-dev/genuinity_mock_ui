@@ -10,21 +10,22 @@ class ProductsTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Obx(
-        () => ListView.separated(
+      child: Obx(() {
+        int productsCount = productsController.productsCount();
+        return ListView.separated(
           separatorBuilder: (context, index) => const Divider(thickness: 1),
-          itemCount: productsController.products.length,
+          itemCount: productsCount,
           itemBuilder: (context, index) {
-            print("ListView asking for product N°$index ");
-            final product = productsController.products[index];
+            print("Showing product N°${index + 1}");
+            final product = productsController.product(index);
             return ProductTile(
               product: product,
               productIndex: index + 1,
-              productsCount: productsController.products.length,
+              productsCount: productsCount,
             );
           },
-        ),
-      ),
+        );
+      }),
     );
   }
 }

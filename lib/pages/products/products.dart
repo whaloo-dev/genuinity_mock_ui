@@ -20,7 +20,7 @@ class ProductsPage extends StatelessWidget {
           if (productsController.isEditingSearch.value) {
             return const Expanded(child: ProductsSearchForm());
           }
-          if (productsController.products.isEmpty) {
+          if (productsController.productsCount() == 0) {
             return const Expanded(child: ProductsTableEmptyWidget());
           }
           return const Expanded(child: ProductsTable());

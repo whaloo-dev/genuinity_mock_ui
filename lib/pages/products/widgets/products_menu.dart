@@ -1,31 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/controllers/products_controller.dart';
 
-class ProductsMenu extends StatelessWidget {
-  final Product product;
-  const ProductsMenu({Key? key, required this.product}) : super(key: key);
+Widget productsMenu(BuildContext context, Product product) {
+  final menuItems = <ProductMenuItem>[
+    product.isHidden
+        ? ProductMenuItem(
+            text: "Unhide this product",
+            icon: Icons.visibility_rounded,
+            handler: () {
+              productsController.unhideProduct(product);
+            },
+          )
+        : ProductMenuItem(
+            text: "Hide this product",
+            icon: Icons.visibility_off_rounded,
+            handler: () {
+              productsController.hideProduct(product).then((value) {
+                Get.showSnackbar(
+                  GetSnackBar(
+                    duration: const Duration(seconds: 4),
+                    messageText: Row(
+                      children: [
+                        Text(
+                          "Product hidden. ",
+                          style: TextStyle(color: kLightColor),
+                        ),
+                        SizedBox(width: kSpacing),
+                        ElevatedButton(
+                          onPressed: () {
+                            Get.closeCurrentSnackbar();
+                            productsController.unhideProduct(product);
+                          },
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(color: kLightColor),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+  ];
 
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton<String>(
-      onSelected: (value) {
-        Get.snackbar("", value);
-      },
-      // iconSize: 10,
+  return PopupMenuButton<ProductMenuItem>(
+    onSelected: (item) => item.handler(),
+    elevation: kElevation,
+    icon: const Icon(Icons.more_vert_rounded),
+    itemBuilder: (context) => menuItems
+        .map(
+          (menuItem) => PopupMenuItem(
+            value: menuItem,
+            child: Row(
+              children: [
+                Icon(menuItem.icon),
+                SizedBox(width: kSpacing),
+                Text(menuItem.text),
+              ],
+            ),
+          ),
+        )
+        .toList(),
+  );
+}
 
-      elevation: kElevation,
-      // shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
-      icon: const Icon(Icons.more_vert_rounded),
-      itemBuilder: (context) => <PopupMenuItem<String>>[
-        PopupMenuItem(
-            value: "Action1 on ${product.title}", child: const Text("Action1")),
-        PopupMenuItem(
-            value: "Action2 on ${product.title}", child: const Text("Action2")),
-        PopupMenuItem(
-            value: "Action3 on ${product.title}", child: const Text("Action3")),
-      ],
-    );
-  }
+class ProductMenuItem {
+  final String text;
+  final IconData icon;
+  final void Function() handler;
+
+  ProductMenuItem({
+    required this.text,
+    required this.icon,
+    required this.handler,
+  });
 }

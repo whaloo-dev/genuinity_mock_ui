@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/url_launcher.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 import 'package:whaloo_genuinity/widgets/logo.dart';
 import 'package:whaloo_genuinity/widgets/side_menu_item.dart';
@@ -41,13 +41,5 @@ class SideMenu extends StatelessWidget {
         )
       ]),
     );
-  }
-}
-
-launchURL(String url) async {
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
   }
 }
