@@ -11277,17 +11277,18 @@ _.a=b
 _.b=!0
 _.c=0
 _.d=!1},
-ob:function ob(a,b,c,d,e,f,g,h,i,j){var _=this
+ob:function ob(a,b,c,d,e,f,g,h,i,j,k){var _=this
 _.c=a
 _.e=b
 _.f=c
 _.fr=d
 _.fx=e
-_.k3=f
-_.ry=g
-_.x2=h
-_.T=i
-_.a=j},
+_.fy=f
+_.k3=g
+_.ry=h
+_.x2=i
+_.T=j
+_.a=k},
 CJ:function CJ(a,b,c,d,e,f,g){var _=this
 _.e=_.d=null
 _.r=_.f=!1
@@ -68194,11 +68195,11 @@ return A.Z(null,r)}})
 return A.a_($async$eY,r)},
 pP(){var s=0,r=A.a0(t.H),q=this,p,o,n,m,l,k,j,i,h,g,f,e,d
 var $async$pP=A.a1(function(a,b){if(a===1)return A.Y(b,r)
-while(true)switch(s){case 0:A.kS("Loading 'assets/demo/ruesco_products.json' ...")
+while(true)switch(s){case 0:A.kS("Loading 'assets/demo/halloweenmakeup_products.json' ...")
 e=J
 d=B.aD
 s=3
-return A.X($.kT().LU("assets/demo/ruesco_products.json"),$async$pP)
+return A.X($.kT().LU("assets/demo/halloweenmakeup_products.json"),$async$pP)
 case 3:s=2
 return A.X(d.de(0,b),$async$pP)
 case 2:p=e.az(b,"products")
@@ -68283,10 +68284,10 @@ return A.Z(null,r)}})
 return A.a_($async$eY,r)},
 pQ(){var s=0,r=A.a0(t.H),q=this,p,o,n,m,l
 var $async$pQ=A.a1(function(a,b){if(a===1)return A.Y(b,r)
-while(true)switch(s){case 0:A.kS("loading : assets/demo/ruesco_store.json")
+while(true)switch(s){case 0:A.kS("loading : assets/demo/halloweenmakeup_store.json")
 l=B.aD
 s=3
-return A.X($.kT().LU("assets/demo/ruesco_store.json"),$async$pQ)
+return A.X($.kT().LU("assets/demo/halloweenmakeup_store.json"),$async$pQ)
 case 3:s=2
 return A.X(l.de(0,b),$async$pQ)
 case 2:p=b
@@ -68386,7 +68387,7 @@ $0(){var s,r,q=null,p=$.di().dy
 p=p.gl(p)
 s=this.b
 r=A.ame(q,q,q,q,q,q,q,q,!0,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,!1,q,B.PW,q,q,q,q,q,q,q,q,q,q,this.a.a47(s),q,q,q,q)
-return new A.ob(s,r,B.Mv,B.Lw,B.Lx,B.Qb,new A.a2g(),new A.a2h(),!p,q)},
+return new A.ob(s,r,B.Mv,B.Lw,B.Lx,!0,B.Qb,new A.a2g(),new A.a2h(),!p,q)},
 $S:424}
 A.a2g.prototype={
 $1(a){$.di().dx.$1(!0)

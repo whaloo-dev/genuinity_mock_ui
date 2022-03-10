@@ -12,6 +12,7 @@ class ProductsSearchBar extends StatelessWidget {
         TextEditingController(text: productsController.searchText.value);
     return Obx(
       () => TextField(
+        enableSuggestions: true,
         enabled: !productsController.isLoadingData.value,
         onChanged: (value) {
           productsController.isEditingSearch(true);
