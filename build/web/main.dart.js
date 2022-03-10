@@ -68318,7 +68318,7 @@ $.agB().toString
 s=$.asN()
 r=t.z
 q=A.ahr(p,p,p,B.ni,B.nk,B.E,p,!1,p,!0,p,"/404",!0,new A.a0u(),p,p,p,!0,!0,p,B.w_,p,p,r)
-return new A.w6("/main","Genuinity v2.2",s,!1,A.b([A.ahr(p,p,p,B.ni,B.nk,B.E,p,!1,p,!0,p,"/main",!0,new A.a0v(),p,p,p,!0,!0,p,B.w_,p,p,r)],t.RT),q,p)}}
+return new A.w6("/main","Genuinity v0.2",s,!1,A.b([A.ahr(p,p,p,B.ni,B.nk,B.E,p,!1,p,!0,p,"/main",!0,new A.a0v(),p,p,p,!0,!0,p,B.w_,p,p,r)],t.RT),q,p)}}
 A.a0u.prototype={
 $0(){return B.Jy},
 $S:419}
