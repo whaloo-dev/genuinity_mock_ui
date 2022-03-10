@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/controllers/products_controller.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
+import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
-  const ProductTile({Key? key, required this.product}) : super(key: key);
+  final int productIndex;
+  final int productsCount;
+  const ProductTile({
+    Key? key,
+    required this.product,
+    required this.productIndex,
+    required this.productsCount,
+  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _productTileBody(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -81,7 +89,59 @@ class ProductTile extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(height: 2 * kSpacing),
+        Row(
+          children: [
+            Expanded(child: Container()),
+            Text(
+              "$productIndex / $productsCount",
+              style: TextStyle(
+                color: kLightGreyColor,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      hoverColor: Colors.transparent,
+      dense: true,
+      title: _productTileBody(context),
+      contentPadding: EdgeInsets.only(
+        top: 20,
+        //   bottom: 20,
+        left: kSpacing,
+        right: kSpacing,
+      ),
+      trailing: ProductsMenu(product: product),
+      onTap: () {
+        Get.showSnackbar(
+          GetSnackBar(
+            snackPosition: SnackPosition.TOP,
+            titleText: Text(
+              product.title,
+              style: TextStyle(color: kLightColor),
+            ),
+            duration: const Duration(seconds: 1),
+            messageText: SizedBox(
+              width: 200,
+              height: 200,
+              child: Image.network(
+                product.image,
+                errorBuilder: (context, error, stackTrace) => Icon(
+                  Icons.broken_image_rounded,
+                  color: kLightGreyColor,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

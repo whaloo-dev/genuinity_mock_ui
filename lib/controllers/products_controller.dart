@@ -9,7 +9,7 @@ import 'package:whaloo_genuinity/main.dart';
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
 
-  static int maxProducsLoaded = 1000;
+  static int maxProducsLoaded = 10000;
 
   final _allProducts = <Product>[].obs;
 
