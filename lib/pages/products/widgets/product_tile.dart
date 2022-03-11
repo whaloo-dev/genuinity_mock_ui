@@ -38,7 +38,7 @@ class ProductTile extends StatelessWidget {
                   " code${product.codesCount == 1 ? '' : 's'}",
                   style: TextStyle(
                     color: kDarkColor,
-                    fontSize: 14,
+                    // fontSize: 14,
                   ),
                 ),
               ],
@@ -86,8 +86,10 @@ class ProductTile extends StatelessWidget {
                           SizedBox(width: kSpacing),
                           Text(
                             "Inventory : ${Responsiveness.formatNumber(context, product.inventoryQuantity)}",
-                            style:
-                                TextStyle(color: kLightGreyColor, fontSize: 14),
+                            style: TextStyle(
+                              color: kLightGreyColor,
+                              // fontSize: 14,
+                            ),
                           ),
                         ],
                       ),
@@ -127,29 +129,7 @@ class ProductTile extends StatelessWidget {
         right: kSpacing,
       ),
       trailing: productsMenu(context, product),
-      onTap: () {
-        // Get.showSnackbar(
-        //   GetSnackBar(
-        //     snackPosition: SnackPosition.TOP,
-        //     titleText: Text(
-        //       product.title,
-        //       style: TextStyle(color: kLightColor),
-        //     ),
-        //     duration: const Duration(seconds: 1),
-        //     messageText: SizedBox(
-        //       width: 200,
-        //       height: 200,
-        //       child: Image.network(
-        //         product.image,
-        //         errorBuilder: (context, error, stackTrace) => Icon(
-        //           Icons.broken_image_rounded,
-        //           color: kLightGreyColor,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // );
-      },
+      onTap: () {},
     );
   }
 }

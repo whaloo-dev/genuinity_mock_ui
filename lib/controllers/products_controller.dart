@@ -2,31 +2,28 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/main.dart';
 
-enum HiddenFilterMode {
-  showAll,
-  showHidenOnly,
-  showVisibleOnly,
-}
-
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
 
+  //demo
   final _demoBackend = <Product>[].obs;
 
   var isEditingSearch = false.obs;
+  var isFormVisible = false.obs;
   var isLoadingData = true.obs;
-  var isDataLoaded = false.obs;
 
   final _products = <Product>[].obs;
-  final _visibleProducts = <Product>[].obs;
-  // final _codes = <ProductId, List<Code>>{}.obs;
+  final maxInventorySize = 0.obs;
+  final totalProductsCount = 0.obs;
 
-  var textFilter = <String>[].obs;
-  var hiddenFilter = HiddenFilterMode.showVisibleOnly.obs;
+  var searchKeywords = <String>[].obs;
+  var inventorySizeRange = const RangeValues(0, 500.0).obs;
+  RangeValues defaultInventoryRange = const RangeValues(0, 500.0);
   var searchText = "".obs;
 
   @override
@@ -35,46 +32,56 @@ class ProductsController extends GetxController {
     super.onReady();
   }
 
+  //demo
   Future<void> loadDemoProductsData() async {
     const asset = "assets/demo/${demoStore}_products.json";
     String response = await rootBundle.loadString(asset);
     final productsData = await json.decode(response);
 
     // Loading products and codes :
+    maxInventorySize.value = 0;
     final products = productsData['products'];
     for (var i = 0; i < products.length; i++) {
-      var product = products[i];
-      _demoBackend.add(
-        Product(
-          id: ProductId(product['id']),
-          title: product['title'],
-          image: product['image'],
-          isHidden: false,
-          codesCount: Random().nextInt(5000),
-          inventoryQuantity: Random().nextInt(100),
-        ),
+      var productData = products[i];
+      var product = Product(
+        id: ProductId(productData['id']),
+        title: productData['title'],
+        image: productData['image'],
+        isHidden: false,
+        codesCount: Random().nextInt(5000),
+        inventoryQuantity:
+            Random().nextInt(10) == 0 ? 0 : Random().nextInt(250),
       );
+      _demoBackend.add(product);
+      maxInventorySize.value =
+          max(maxInventorySize.value, product.inventoryQuantity + 1);
     }
 
+    defaultInventoryRange = RangeValues(0, maxInventorySize.value.toDouble());
+    inventorySizeRange.value = defaultInventoryRange;
     _products.addAll(_demoBackend);
-    _updateVisibleProducts();
-
-    isDataLoaded.value = true;
+    totalProductsCount.value = _demoBackend.length;
     isLoadingData.value = false;
   }
 
-  void changeSearchFilter(String searchText) {
-    this.searchText.value = searchText;
+  void applyFilter() {
     isEditingSearch.value = false;
-    textFilter.clear();
+    isFormVisible.value = false;
+    searchKeywords.clear();
     final _searchTextSplitted = searchText.toLowerCase().split(' ');
     for (int i = 0; i < _searchTextSplitted.length; i++) {
       final keyword = _searchTextSplitted[i].trim();
       if (keyword.isNotEmpty) {
-        textFilter.add(keyword);
+        searchKeywords.add(keyword);
       }
     }
     _applyFilter();
+  }
+
+  void resetFilters() {
+    searchText.value = "";
+    inventorySizeRange.value = defaultInventoryRange;
+    applyFilter();
   }
 
   void changeIsEditingSearch(bool newValue) {
@@ -82,11 +89,25 @@ class ProductsController extends GetxController {
   }
 
   Product product(int index) {
-    return _visibleProducts[index];
+    return _products[index];
   }
 
   int productsCount() {
-    return _visibleProducts.length;
+    return _products.length;
+  }
+
+  bool isFiltered() {
+    return productsCount() != totalProductsCount.value;
+  }
+
+  bool isInventorySizeRangeSet() {
+    return inventorySizeRange.value !=
+        RangeValues(0, maxInventorySize.toDouble());
+  }
+
+  void resetInventorySizeRange() {
+    inventorySizeRange.value = RangeValues(0, maxInventorySize.toDouble());
+    applyFilter();
   }
 
   Future<void> hideProduct(Product product) async {
@@ -95,7 +116,6 @@ class ProductsController extends GetxController {
       product.isHidden = true;
       //local modification
       _products[_products.indexOf(product)] = product;
-      _updateVisibleProducts();
     });
   }
 
@@ -103,21 +123,12 @@ class ProductsController extends GetxController {
     return Future.delayed(Duration(milliseconds: _randomInt()), () {
       //backend modification
       product.isHidden = false;
-      //local modification
+      //local modification500
       _products[_products.indexOf(product)] = product;
-      _updateVisibleProducts();
     });
   }
 
-  void _updateVisibleProducts() {
-    _visibleProducts.clear();
-    _visibleProducts.addAll(_products.where((p) {
-      // var visible =
-      // hiddenFilter.value == HiddenFilterMode.showAll ? true : false;
-      return !p.isHidden;
-    }));
-  }
-
+  //demo
   int _randomInt() {
     return Random.secure().nextInt(1000);
   }
@@ -125,21 +136,34 @@ class ProductsController extends GetxController {
   Future<void> _applyFilter() async {
     isLoadingData.value = true;
     _products.clear();
-    _updateVisibleProducts();
 
-    Timer(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       for (int i = 0; i < _demoBackend.length; i++) {
         final _product = _demoBackend[i];
         var accepted = true;
-        for (int i = 0; i < textFilter.length; i++) {
-          final keyword = textFilter[i];
+
+        //inventory filter :
+        bool inRange =
+            _product.inventoryQuantity >= inventorySizeRange.value.start &&
+                _product.inventoryQuantity <= inventorySizeRange.value.end;
+        if (!inRange) {
+          continue;
+        }
+
+        //text filter
+        for (int i = 0; i < searchKeywords.length; i++) {
+          final keyword = searchKeywords[i];
           accepted = accepted && _product.title.toLowerCase().contains(keyword);
+          if (!accepted) {
+            break;
+          }
         }
-        if (accepted) {
-          _products.add(_product);
+        if (!accepted) {
+          continue;
         }
+
+        _products.add(_product);
       }
-      _updateVisibleProducts();
       isLoadingData.value = false;
     });
   }

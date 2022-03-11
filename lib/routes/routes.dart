@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ List<MenuItem> siteMenuItems = [
   dashboardPageItem,
   productsPageItem,
   settingsPageItem,
-  shopifyPageItem,
+  if (kIsWeb) shopifyPageItem,
 ];
 
 class MenuItem {

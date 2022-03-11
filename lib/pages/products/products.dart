@@ -12,21 +12,25 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const ProductsSearchBar(),
-        SizedBox(height: kSpacing),
-        Obx(() {
-          if (productsController.isEditingSearch.value) {
-            return const Expanded(child: ProductsSearchForm());
-          }
-          if (productsController.productsCount() == 0) {
-            return const Expanded(child: ProductsTableEmptyWidget());
-          }
-          return const Expanded(child: ProductsTable());
-        }),
-        SizedBox(height: kSpacing),
-      ],
+    return Obx(
+      () => Column(
+        children: [
+          if (productsController.totalProductsCount.value != 0)
+            const ProductsSearchBar(),
+          SizedBox(height: kSpacing),
+          Obx(() {
+            if (productsController.isFormVisible.value ||
+                productsController.isEditingSearch.value) {
+              return const Expanded(child: ProductsSearchForm());
+            }
+            if (productsController.productsCount() == 0) {
+              return const Expanded(child: ProductsTableEmptyWidget());
+            }
+            return const Expanded(child: ProductsTable());
+          }),
+          SizedBox(height: kSpacing),
+        ],
+      ),
     );
   }
 }

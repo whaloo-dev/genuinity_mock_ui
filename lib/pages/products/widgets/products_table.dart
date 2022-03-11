@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
@@ -16,7 +17,7 @@ class ProductsTable extends StatelessWidget {
           separatorBuilder: (context, index) => const Divider(thickness: 1),
           itemCount: productsCount,
           itemBuilder: (context, index) {
-            print("Showing product N°${index + 1}");
+            if (kDebugMode) print("Showing product N°${index + 1}");
             final product = productsController.product(index);
             return ProductTile(
               product: product,
