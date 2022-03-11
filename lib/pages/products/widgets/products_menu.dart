@@ -6,63 +6,55 @@ import 'package:whaloo_genuinity/controllers/products_controller.dart';
 
 Widget productsMenu(BuildContext context, Product product) {
   final menuItems = <ProductMenuItem>[
-    product.isHidden
-        ? ProductMenuItem(
-            text: "Unhide this product",
-            icon: Icons.visibility_rounded,
-            handler: () {
-              productsController.unhideProduct(product);
-            },
-          )
-        : ProductMenuItem(
-            text: "Hide this product",
-            icon: Icons.visibility_off_rounded,
-            handler: () {
-              Get.closeAllSnackbars();
-              productsController.hideProduct(product).then((value) {
-                Get.showSnackbar(
-                  GetSnackBar(
-                    shouldIconPulse: true,
-                    duration: const Duration(seconds: 3),
-                    backgroundColor: kLightGreyColor.withOpacity(0.5),
-                    messageText: Row(
-                      children: [
-                        Card(
-                          elevation: 0,
-                          clipBehavior: Clip.antiAlias,
-                          child: Image.network(
-                            product.image,
-                            width: 100,
-                            errorBuilder: (context, error, stackTrace) => Icon(
-                              Icons.broken_image_rounded,
-                              color: kLightGreyColor,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: kSpacing),
-                        Text(
-                          "Product hidden. ",
-                          style: TextStyle(color: kDarkColor),
-                        ),
-                        SizedBox(width: kSpacing),
-                        ElevatedButton(
-                          onPressed: () {
-                            Get.closeAllSnackbars();
-                            Get.clearRouteTree();
-                            productsController.unhideProduct(product);
-                          },
-                          child: Text(
-                            "Cancel",
-                            style: TextStyle(color: kLightColor),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              });
-            },
-          ),
+    // ProductMenuItem(
+    //     text: "Hide this product",
+    //     icon: Icons.visibility_off_rounded,
+    //     handler: () {
+    //       Get.closeAllSnackbars();
+    //       productsController.hideProduct(product).then((value) {
+    //         Get.showSnackbar(
+    //           GetSnackBar(
+    //             shouldIconPulse: true,
+    //             duration: const Duration(seconds: 3),
+    //             backgroundColor: kLightGreyColor.withOpacity(0.5),
+    //             messageText: Row(
+    //               children: [
+    //                 Card(
+    //                   elevation: 0,
+    //                   clipBehavior: Clip.antiAlias,
+    //                   child: Image.network(
+    //                     product.image,
+    //                     width: 100,
+    //                     errorBuilder: (context, error, stackTrace) => Icon(
+    //                       Icons.broken_image_rounded,
+    //                       color: kLightGreyColor,
+    //                     ),
+    //                   ),
+    //                 ),
+    //                 SizedBox(width: kSpacing),
+    //                 Text(
+    //                   "Product hidden. ",
+    //                   style: TextStyle(color: kDarkColor),
+    //                 ),
+    //                 SizedBox(width: kSpacing),
+    //                 ElevatedButton(
+    //                   onPressed: () {
+    //                     Get.closeAllSnackbars();
+    //                     Get.clearRouteTree();
+    //                     productsController.unhideProduct(product);
+    //                   },
+    //                   child: Text(
+    //                     "Cancel",
+    //                     style: TextStyle(color: kLightColor),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         );
+    //       });
+    //     },
+    //   ),
   ];
 
   return PopupMenuButton<ProductMenuItem>(

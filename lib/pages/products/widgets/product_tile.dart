@@ -16,100 +16,91 @@ class ProductTile extends StatelessWidget {
   }) : super(key: key);
 
   Widget _productTileBody(BuildContext context) {
-    return Stack(
+    return Column(
+      mainAxisSize: MainAxisSize.max,
       children: [
-        if (product.isHidden)
-          const Center(
-            child: Icon(Icons.visibility_off_rounded),
-          ),
-        Column(
-          mainAxisSize: MainAxisSize.max,
+        Row(
           children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.qr_code_rounded,
-                  size: 16,
-                  color: kDarkColor,
-                ),
-                SizedBox(width: kSpacing),
-                Text(
-                  "${Responsiveness.formatNumber(context, product.codesCount)}"
-                  " code${product.codesCount == 1 ? '' : 's'}",
-                  style: TextStyle(
-                    color: kDarkColor,
-                    // fontSize: 14,
-                  ),
-                ),
-              ],
+            Icon(
+              Icons.qr_code_rounded,
+              size: 16,
+              color: kDarkColor,
             ),
-            SizedBox(height: kSpacing * 2),
-            Row(
-              children: [
-                Card(
-                  elevation: 0,
-                  clipBehavior: Clip.antiAlias,
-                  child: Image.network(
-                    product.image,
-                    width: 100,
-                    errorBuilder: (context, error, stackTrace) => Icon(
-                      Icons.broken_image_rounded,
-                      color: kLightGreyColor,
-                    ),
-                  ),
+            SizedBox(width: kSpacing),
+            Text(
+              "${Responsiveness.formatNumber(context, product.codesCount)}"
+              " code${product.codesCount == 1 ? '' : 's'}",
+              style: TextStyle(
+                color: kDarkColor,
+                // fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: kSpacing * 2),
+        Row(
+          children: [
+            Card(
+              elevation: 0,
+              clipBehavior: Clip.antiAlias,
+              child: Image.network(
+                product.image,
+                width: 100,
+                errorBuilder: (context, error, stackTrace) => Icon(
+                  Icons.broken_image_rounded,
+                  color: kLightGreyColor,
                 ),
-                SizedBox(width: kSpacing),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
+              ),
+            ),
+            SizedBox(width: kSpacing),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              product.title,
-                              style:
-                                  TextStyle(color: kDarkColor.withOpacity(0.6)),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: kSpacing),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.shopping_cart_rounded,
-                            size: 14,
-                            color: kLightGreyColor,
-                          ),
-                          SizedBox(width: kSpacing),
-                          Text(
-                            "Inventory : ${Responsiveness.formatNumber(context, product.inventoryQuantity)}",
-                            style: TextStyle(
-                              color: kLightGreyColor,
-                              // fontSize: 14,
-                            ),
-                          ),
-                        ],
+                      Flexible(
+                        child: Text(
+                          product.title,
+                          style: TextStyle(color: kDarkColor.withOpacity(0.6)),
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 2 * kSpacing),
-            Row(
-              children: [
-                Expanded(child: Container()),
-                Text(
-                  "$productIndex / $productsCount",
-                  style: TextStyle(
-                    color: kLightGreyColor,
-                    fontSize: 12,
+                  SizedBox(height: kSpacing),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.shopping_cart_rounded,
+                        size: 14,
+                        color: kLightGreyColor,
+                      ),
+                      SizedBox(width: kSpacing),
+                      Text(
+                        "Inventory : ${Responsiveness.formatNumber(context, product.inventoryQuantity)}",
+                        style: TextStyle(
+                          color: kLightGreyColor,
+                          // fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 2 * kSpacing),
+        Row(
+          children: [
+            Expanded(child: Container()),
+            Text(
+              "$productIndex / $productsCount",
+              style: TextStyle(
+                color: kLightGreyColor,
+                fontSize: 12,
+              ),
             ),
           ],
         ),

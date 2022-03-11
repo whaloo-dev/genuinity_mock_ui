@@ -47,7 +47,6 @@ class ProductsController extends GetxController {
         id: ProductId(productData['id']),
         title: productData['title'],
         image: productData['image'],
-        isHidden: false,
         codesCount: Random().nextInt(5000),
         inventoryQuantity:
             Random().nextInt(10) == 0 ? 0 : Random().nextInt(250),
@@ -110,29 +109,6 @@ class ProductsController extends GetxController {
     applyFilter();
   }
 
-  Future<void> hideProduct(Product product) async {
-    return Future.delayed(Duration(milliseconds: _randomInt()), () {
-      //backend modification
-      product.isHidden = true;
-      //local modification
-      _products[_products.indexOf(product)] = product;
-    });
-  }
-
-  Future<void> unhideProduct(Product product, {int? index}) async {
-    return Future.delayed(Duration(milliseconds: _randomInt()), () {
-      //backend modification
-      product.isHidden = false;
-      //local modification500
-      _products[_products.indexOf(product)] = product;
-    });
-  }
-
-  //demo
-  int _randomInt() {
-    return Random.secure().nextInt(1000);
-  }
-
   Future<void> _applyFilter() async {
     isLoadingData.value = true;
     _products.clear();
@@ -183,7 +159,6 @@ class Product {
   final ProductId id;
   final String title;
   final String image;
-  bool isHidden;
   final int codesCount;
   final int inventoryQuantity;
 
@@ -191,7 +166,6 @@ class Product {
     required this.id,
     required this.title,
     required this.image,
-    required this.isHidden,
     required this.codesCount,
     required this.inventoryQuantity,
   });
