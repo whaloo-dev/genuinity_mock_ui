@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/main.dart';
+import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
@@ -49,11 +50,11 @@ class ProductsController extends GetxController {
         image: productData['image'],
         codesCount: Random().nextInt(5000),
         inventoryQuantity:
-            Random().nextInt(10) == 0 ? 0 : Random().nextInt(250),
+            Random().nextInt(10) == 0 ? 0 : Random().nextInt(5000),
       );
       _demoBackend.add(product);
       maxInventorySize.value =
-          max(maxInventorySize.value, product.inventoryQuantity + 1);
+          max(maxInventorySize.value, product.inventoryQuantity);
     }
 
     defaultInventoryRange = RangeValues(0, maxInventorySize.value.toDouble());
@@ -66,14 +67,7 @@ class ProductsController extends GetxController {
   void applyFilter() {
     isEditingSearch.value = false;
     isFormVisible.value = false;
-    searchKeywords.clear();
-    final _searchTextSplitted = searchText.toLowerCase().split(' ');
-    for (int i = 0; i < _searchTextSplitted.length; i++) {
-      final keyword = _searchTextSplitted[i].trim();
-      if (keyword.isNotEmpty) {
-        searchKeywords.add(keyword);
-      }
-    }
+    searchKeywords.value = searchText.value.tokenize();
     _applyFilter();
   }
 
@@ -113,6 +107,7 @@ class ProductsController extends GetxController {
     isLoadingData.value = true;
     _products.clear();
 
+    //demo
     Future.delayed(const Duration(seconds: 1), () {
       for (int i = 0; i < _demoBackend.length; i++) {
         final _product = _demoBackend[i];
@@ -127,13 +122,9 @@ class ProductsController extends GetxController {
         }
 
         //text filter
-        for (int i = 0; i < searchKeywords.length; i++) {
-          final keyword = searchKeywords[i];
-          accepted = accepted && _product.title.toLowerCase().contains(keyword);
-          if (!accepted) {
-            break;
-          }
-        }
+        final tokens = _product.title.tokenize();
+        accepted = accepted && tokens.startsWithAll(searchKeywords);
+
         if (!accepted) {
           continue;
         }

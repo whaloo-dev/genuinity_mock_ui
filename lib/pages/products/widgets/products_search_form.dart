@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class ProductsSearchForm extends StatelessWidget {
   const ProductsSearchForm({Key? key}) : super(key: key);
@@ -66,38 +67,38 @@ class ProductsSearchForm extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 100,
+                    child: Text("Inventory Size :\n "),
+                  ),
+                  Expanded(
                     child: Column(
                       children: [
-                        const Text("Inventory Size :"),
+                        RangeSlider(
+                          divisions: maxInventory.toInt(),
+                          activeColor: kActiveColor,
+                          inactiveColor: kActiveColor.withOpacity(0.5),
+                          labels: RangeLabels(
+                            inventorySizeRange.start.toString(),
+                            inventorySizeRange.end.toString(),
+                          ),
+                          min: 0,
+                          max: maxInventory.toDouble(),
+                          values: inventorySizeRange,
+                          onChanged: (value) {
+                            productsController.inventorySizeRange.value =
+                                RangeValues(value.start.roundToDouble(),
+                                    value.end.roundToDouble());
+                            productsController.changeIsEditingSearch(true);
+                          },
+                        ),
                         Text(
-                          "[${inventorySizeRange.start}, ${inventorySizeRange.end}]",
+                          inventorySizeRange.toText(),
                           style: TextStyle(
                             color: kLightGreyColor,
                           ),
                         )
                       ],
-                    ),
-                  ),
-                  Expanded(
-                    child: RangeSlider(
-                      divisions: maxInventory.toInt(),
-                      activeColor: kActiveColor,
-                      inactiveColor: kActiveColor.withOpacity(0.5),
-                      labels: RangeLabels(
-                        inventorySizeRange.start.toString(),
-                        inventorySizeRange.end.toString(),
-                      ),
-                      min: 0,
-                      max: maxInventory.toDouble(),
-                      values: inventorySizeRange,
-                      onChanged: (value) {
-                        productsController.inventorySizeRange.value =
-                            RangeValues(value.start.roundToDouble(),
-                                value.end.roundToDouble());
-                        productsController.changeIsEditingSearch(true);
-                      },
                     ),
                   ),
                 ],

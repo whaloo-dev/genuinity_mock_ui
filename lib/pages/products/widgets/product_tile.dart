@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/controllers/products_controller.dart';
-import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
 
 class ProductTile extends StatelessWidget {
@@ -28,7 +27,7 @@ class ProductTile extends StatelessWidget {
             ),
             SizedBox(width: kSpacing),
             Text(
-              "${Responsiveness.formatNumber(context, product.codesCount)}"
+              "${numberFormat.format(product.codesCount)}"
               " code${product.codesCount == 1 ? '' : 's'}",
               style: TextStyle(
                 color: kDarkColor,
@@ -77,7 +76,7 @@ class ProductTile extends StatelessWidget {
                       ),
                       SizedBox(width: kSpacing),
                       Text(
-                        "Inventory : ${Responsiveness.formatNumber(context, product.inventoryQuantity)}",
+                        "Inventory : ${numberFormat.format(product.inventoryQuantity)}",
                         style: TextStyle(
                           color: kLightGreyColor,
                         ),
@@ -94,7 +93,7 @@ class ProductTile extends StatelessWidget {
           children: [
             Expanded(child: Container()),
             Text(
-              "$productIndex / $productsCount",
+              "${numberFormat.format(productIndex)} of ${numberFormat.format(productsCount)}",
               style: TextStyle(
                 color: kLightGreyColor,
                 fontSize: 12,

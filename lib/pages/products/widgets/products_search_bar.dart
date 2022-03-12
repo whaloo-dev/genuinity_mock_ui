@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class ProductsSearchBar extends StatelessWidget {
   const ProductsSearchBar({Key? key}) : super(key: key);
@@ -51,8 +52,7 @@ class ProductsSearchBar extends StatelessWidget {
   }
 
   Widget _inventoryRangeWidget() {
-    var start = productsController.inventorySizeRange.value.start;
-    var end = productsController.inventorySizeRange.value.end;
+    var inventoryRange = productsController.inventorySizeRange.value;
     return Chip(
       elevation: kElevation,
       onDeleted: () {
@@ -63,7 +63,7 @@ class ProductsSearchBar extends StatelessWidget {
         size: 14,
       ),
       label: Text(
-        "Inventory : [$start, $end]",
+        "Inventory : ${inventoryRange.toText()} ",
         style: const TextStyle(fontSize: 12),
       ),
     );
@@ -90,7 +90,7 @@ class ProductsSearchBar extends StatelessWidget {
           ),
         if (showResultsCount)
           Text(
-            "$productsCount "
+            "${numberFormat.format(productsCount)} "
             "product${productsCount == 1 ? '' : 's'}",
             style: TextStyle(color: kLightGreyColor, fontSize: 12),
           ),
