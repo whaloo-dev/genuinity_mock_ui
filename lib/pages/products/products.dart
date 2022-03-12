@@ -17,7 +17,6 @@ class ProductsPage extends StatelessWidget {
         children: [
           if (productsController.totalProductsCount.value != 0)
             const ProductsSearchBar(),
-          SizedBox(height: kSpacing),
           Obx(() {
             if (productsController.isFormVisible.value ||
                 productsController.isEditingSearch.value) {

@@ -32,7 +32,6 @@ class ProductTile extends StatelessWidget {
               " code${product.codesCount == 1 ? '' : 's'}",
               style: TextStyle(
                 color: kDarkColor,
-                // fontSize: 14,
               ),
             ),
           ],
@@ -72,8 +71,8 @@ class ProductTile extends StatelessWidget {
                   Row(
                     children: [
                       Icon(
-                        Icons.shopping_cart_rounded,
-                        size: 14,
+                        Icons.warehouse_rounded,
+                        size: 15,
                         color: kLightGreyColor,
                       ),
                       SizedBox(width: kSpacing),
@@ -81,7 +80,6 @@ class ProductTile extends StatelessWidget {
                         "Inventory : ${Responsiveness.formatNumber(context, product.inventoryQuantity)}",
                         style: TextStyle(
                           color: kLightGreyColor,
-                          // fontSize: 14,
                         ),
                       ),
                     ],

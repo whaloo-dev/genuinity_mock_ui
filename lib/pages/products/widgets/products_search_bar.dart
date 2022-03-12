@@ -30,13 +30,16 @@ class ProductsSearchBar extends StatelessWidget {
             controller: searchFieldController,
             decoration: InputDecoration(
               label: const Text("Search by product"),
-              // prefixIcon: _prefixWidget(),
               suffixIcon: _suffixWidget(searchFieldController),
             ),
           ),
           const SizedBox(height: 2),
-          if (!productsController.isEditingSearch.value)
-            Row(
+          if (!productsController.isLoadingData.value &&
+              !productsController.isEditingSearch.value &&
+              productsController.isFiltered())
+            Wrap(
+              spacing: kSpacing,
+              runSpacing: kSpacing,
               children: [
                 if (productsController.isInventorySizeRangeSet())
                   _inventoryRangeWidget(),
@@ -50,34 +53,20 @@ class ProductsSearchBar extends StatelessWidget {
   Widget _inventoryRangeWidget() {
     var start = productsController.inventorySizeRange.value.start;
     var end = productsController.inventorySizeRange.value.end;
-    return Container(
-        padding: const EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-          color: kLightGreyColor.withOpacity(.2),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Inventory : [$start, $end]",
-              style: TextStyle(
-                color: kDarkColor.withOpacity(0.8),
-                fontSize: 12,
-              ),
-            ),
-            const SizedBox(width: 5),
-            InkWell(
-              onTap: () {
-                productsController.resetInventorySizeRange();
-              },
-              child: const Icon(
-                Icons.cancel,
-                size: 12,
-              ),
-            ),
-          ],
-        ));
+    return Chip(
+      elevation: kElevation,
+      onDeleted: () {
+        productsController.resetInventorySizeRange();
+      },
+      deleteIcon: const Icon(
+        Icons.cancel,
+        size: 14,
+      ),
+      label: Text(
+        "Inventory : [$start, $end]",
+        style: const TextStyle(fontSize: 12),
+      ),
+    );
   }
 
   Widget _suffixWidget(TextEditingController seachFieldController) {
