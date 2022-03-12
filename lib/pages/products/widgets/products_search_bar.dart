@@ -20,9 +20,9 @@ class ProductsSearchBar extends StatelessWidget {
         children: [
           TextField(
             enableSuggestions: true,
-            enabled: !productsController.isLoadingData.value,
+            enabled: !productsController.isLoadingData(),
             onChanged: (value) {
-              productsController.isEditingSearch(true);
+              productsController.changeIsEditingSearch(true);
               productsController.searchText.value = value;
             },
             onSubmitted: (value) {
@@ -35,8 +35,8 @@ class ProductsSearchBar extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 2),
-          if (!productsController.isLoadingData.value &&
-              !productsController.isEditingSearch.value &&
+          if (!productsController.isLoadingData() &&
+              !productsController.isEditingSearch() &&
               productsController.isFiltered())
             Wrap(
               spacing: kSpacing,
@@ -71,12 +71,11 @@ class ProductsSearchBar extends StatelessWidget {
 
   Widget _suffixWidget(TextEditingController seachFieldController) {
     int productsCount = productsController.productsCount();
-    bool showSearch = (productsController.isEditingSearch.value ||
+    bool showSearch = (productsController.isEditingSearch() ||
         !productsController.isFiltered());
-    bool showResultsCount =
-        !showSearch && !productsController.isLoadingData.value;
-    bool showCancel = productsController.isFiltered() &&
-        !productsController.isLoadingData.value;
+    bool showResultsCount = !showSearch && !productsController.isLoadingData();
+    bool showCancel =
+        productsController.isFiltered() && !productsController.isLoadingData();
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -103,18 +102,18 @@ class ProductsSearchBar extends StatelessWidget {
             },
           ),
         Visibility(
-          visible: !productsController.isEditingSearch.value,
+          visible: !productsController.isEditingSearch(),
           maintainSize: true,
           maintainAnimation: true,
           maintainState: true,
           child: IconButton(
             splashRadius: kIconButtonSplashRadius,
-            icon: (productsController.isFormVisible.value)
+            icon: (productsController.isFormVisible())
                 ? const Icon(Icons.arrow_drop_up_rounded)
                 : const Icon(Icons.arrow_drop_down_rounded),
             onPressed: () {
-              productsController.isFormVisible.value =
-                  !productsController.isFormVisible.value;
+              productsController
+                  .changeIsFormVisible(!productsController.isFormVisible());
             },
           ),
         ),

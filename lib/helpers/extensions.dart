@@ -41,7 +41,7 @@ extension RangeValuesText on RangeValues {
   String toText() {
     final s = numberFormat.format(start);
     final e = numberFormat.format(end);
-    final m = productsController.maxInventorySize.value;
+    final m = productsController.maxInventorySize();
     if (start == end) {
       return s;
     }

@@ -1,7 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/product_tile.dart';
 
 class ProductsTable extends StatelessWidget {
@@ -12,15 +14,35 @@ class ProductsTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Obx(() {
+        int visibleProductsCount = productsController.visibleProductsCount();
         int productsCount = productsController.productsCount();
         return ListView.separated(
           separatorBuilder: (context, index) => const Divider(thickness: 1),
-          itemCount: productsCount,
+          itemCount: min(visibleProductsCount + 1, productsCount),
           itemBuilder: (context, index) {
-            if (kDebugMode) print("Showing product N°${index + 1}");
-            final product = productsController.product(index);
+            if (index == visibleProductsCount) {
+              productsController.loadMore();
+              return ListTile(
+                hoverColor: Colors.transparent,
+                dense: true,
+                title: Center(
+                  child: Container(
+                    padding: EdgeInsets.all(kSpacing),
+                    child: Container(
+                      padding: EdgeInsets.all(kSpacing),
+                      child: const Text("Loading..."),
+                    ),
+                  ),
+                ),
+                contentPadding: EdgeInsets.only(
+                  top: 20,
+                  left: kSpacing,
+                  right: kSpacing,
+                ),
+              );
+            }
             return ProductTile(
-              product: product,
+              product: productsController.product(index),
               productIndex: index + 1,
               productsCount: productsCount,
             );

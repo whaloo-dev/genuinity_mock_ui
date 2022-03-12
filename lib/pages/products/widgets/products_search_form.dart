@@ -11,7 +11,7 @@ class ProductsSearchForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Obx(() {
-        final maxInventory = productsController.maxInventorySize.value;
+        final maxInventory = productsController.maxInventorySize();
         final inventorySizeRange = productsController.inventorySizeRange.value;
         return Column(
           children: [

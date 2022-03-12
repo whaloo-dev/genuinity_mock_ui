@@ -11,16 +11,19 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
 
+  static const int _loadingStep = 10;
+
   //demo
   final _demoBackend = <Product>[].obs;
 
-  var isEditingSearch = false.obs;
-  var isFormVisible = false.obs;
-  var isLoadingData = true.obs;
+  final _isEditingSearch = false.obs;
+  final _isFormVisible = false.obs;
+  final _isLoadingData = true.obs;
 
   final _products = <Product>[].obs;
-  final maxInventorySize = 0.obs;
-  final totalProductsCount = 0.obs;
+  final _maxInventorySize = 0.obs;
+  final _totalProductsCount = 0.obs;
+  final _visibleProductsCount = 0.obs;
 
   var searchKeywords = <String>[].obs;
   var inventorySizeRange = const RangeValues(0, 500.0).obs;
@@ -40,7 +43,7 @@ class ProductsController extends GetxController {
     final productsData = await json.decode(response);
 
     // Loading products and codes :
-    maxInventorySize.value = 0;
+    _maxInventorySize.value = 0;
     final products = productsData['products'];
     for (var i = 0; i < products.length; i++) {
       var productData = products[i];
@@ -53,22 +56,32 @@ class ProductsController extends GetxController {
             Random().nextInt(10) == 0 ? 0 : Random().nextInt(5000),
       );
       _demoBackend.add(product);
-      maxInventorySize.value =
-          max(maxInventorySize.value, product.inventoryQuantity);
+      _maxInventorySize.value =
+          max(_maxInventorySize.value, product.inventoryQuantity);
     }
 
-    defaultInventoryRange = RangeValues(0, maxInventorySize.value.toDouble());
+    defaultInventoryRange = RangeValues(0, _maxInventorySize.value.toDouble());
     inventorySizeRange.value = defaultInventoryRange;
     _products.addAll(_demoBackend);
-    totalProductsCount.value = _demoBackend.length;
-    isLoadingData.value = false;
+    _visibleProductsCount.value = min(_loadingStep, productsCount());
+    _totalProductsCount.value = _demoBackend.length;
+    _isLoadingData.value = false;
   }
 
   void applyFilter() {
-    isEditingSearch.value = false;
-    isFormVisible.value = false;
+    _isEditingSearch.value = false;
+    _isFormVisible.value = false;
     searchKeywords.value = searchText.value.tokenize();
     _applyFilter();
+  }
+
+  Future<void> loadMore() async {
+    // _isLoadingMoreData.value = true;
+    //demo
+    return Future.delayed(const Duration(seconds: 1), () {
+      _visibleProductsCount.value =
+          min(_visibleProductsCount.value + _loadingStep, productsCount());
+    });
   }
 
   void resetFilters() {
@@ -78,33 +91,61 @@ class ProductsController extends GetxController {
   }
 
   void changeIsEditingSearch(bool newValue) {
-    isEditingSearch.value = newValue;
+    _isEditingSearch.value = newValue;
+  }
+
+  void changeIsFormVisible(bool newValue) {
+    _isFormVisible.value = newValue;
   }
 
   Product product(int index) {
     return _products[index];
   }
 
+  int visibleProductsCount() {
+    return _visibleProductsCount.value;
+  }
+
   int productsCount() {
     return _products.length;
   }
 
+  int maxInventorySize() {
+    return _maxInventorySize.value;
+  }
+
   bool isFiltered() {
-    return productsCount() != totalProductsCount.value;
+    return productsCount() != _totalProductsCount.value;
   }
 
   bool isInventorySizeRangeSet() {
     return inventorySizeRange.value !=
-        RangeValues(0, maxInventorySize.toDouble());
+        RangeValues(0, _maxInventorySize.toDouble());
+  }
+
+  bool isProductCatalogEmpty() {
+    return _totalProductsCount.value == 0;
+  }
+
+  bool isEditingSearch() {
+    return _isEditingSearch.value;
+  }
+
+  bool isFormVisible() {
+    return _isFormVisible.value;
+  }
+
+  bool isLoadingData() {
+    return _isLoadingData.value;
   }
 
   void resetInventorySizeRange() {
-    inventorySizeRange.value = RangeValues(0, maxInventorySize.toDouble());
+    inventorySizeRange.value = RangeValues(0, _maxInventorySize.toDouble());
     applyFilter();
   }
 
   Future<void> _applyFilter() async {
-    isLoadingData.value = true;
+    _isLoadingData.value = true;
     _products.clear();
 
     //demo
@@ -131,7 +172,10 @@ class ProductsController extends GetxController {
 
         _products.add(_product);
       }
-      isLoadingData.value = false;
+
+      _visibleProductsCount.value = min(_loadingStep, productsCount());
+
+      _isLoadingData.value = false;
     });
   }
 }
