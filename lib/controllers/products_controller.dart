@@ -181,7 +181,7 @@ class ProductsController extends GetxController {
 }
 
 class ProductId implements Comparable<ProductId> {
-  String value;
+  int value;
   ProductId(this.value);
 
   @override

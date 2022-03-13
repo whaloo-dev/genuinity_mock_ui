@@ -3,7 +3,7 @@ import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/controllers/products_controller.dart';
 
 Widget productsMenu(BuildContext context, Product product) {
-  final menuItems = <ProductMenuItem>[
+  final _menuItems = <_ProductMenuItem>[
     // ProductMenuItem(
     //     text: "Hide this product",
     //     icon: Icons.visibility_off_rounded,
@@ -55,11 +55,11 @@ Widget productsMenu(BuildContext context, Product product) {
     //   ),
   ];
 
-  return PopupMenuButton<ProductMenuItem>(
+  return PopupMenuButton<_ProductMenuItem>(
     onSelected: (item) => item.handler(),
     elevation: kElevation,
     icon: const Icon(Icons.more_vert_rounded),
-    itemBuilder: (context) => menuItems
+    itemBuilder: (context) => _menuItems
         .map(
           (menuItem) => PopupMenuItem(
             value: menuItem,
@@ -76,12 +76,12 @@ Widget productsMenu(BuildContext context, Product product) {
   );
 }
 
-class ProductMenuItem {
+class _ProductMenuItem {
   final String text;
   final IconData icon;
   final void Function() handler;
 
-  ProductMenuItem({
+  _ProductMenuItem({
     required this.text,
     required this.icon,
     required this.handler,

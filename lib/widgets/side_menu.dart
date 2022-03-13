@@ -14,9 +14,10 @@ class SideMenu extends StatelessWidget {
     return Container(
       color: kLightColor,
       child: ListView(children: [
+        SizedBox(height: kSpacing),
         const Logo(),
         SizedBox(height: kSpacing),
-        Divider(color: kLightGreyColor.withOpacity(.2)),
+        Divider(color: kLightGreyColor.withOpacity(.2), thickness: 2),
         SizedBox(height: kSpacing),
         Column(
           mainAxisSize: MainAxisSize.min,

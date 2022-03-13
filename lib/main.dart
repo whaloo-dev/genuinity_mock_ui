@@ -11,10 +11,10 @@ import 'package:whaloo_genuinity/layout.dart';
 import 'package:whaloo_genuinity/pages/errors/error_404.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 
-// ignore: constant_identifier_names
 // const demoStore = "ruesco";
 // const demoStore = "huel";
-const demoStore = "halloweenmakeup";
+// const demoStore = "halloweenmakeup";
+const demoStore = "signatureveda";
 
 void main() {
   Get.put(MenuController());

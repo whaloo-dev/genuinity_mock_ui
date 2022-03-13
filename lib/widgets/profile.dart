@@ -38,12 +38,11 @@ class ProfileWidget extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundColor: kLightGreyColor.withOpacity(0.5),
                       child: IconButton(
-                        onPressed: () {},
-                        splashRadius: kIconButtonSplashRadius,
-                        icon: Image.network(
-                          storeController.store!.imageUrl,
-                        ),
-                      ),
+                          onPressed: () {},
+                          splashRadius: kIconButtonSplashRadius,
+                          icon: storeController.store!.imageUrl != null
+                              ? Image.network(storeController.store!.imageUrl!)
+                              : const Icon(Icons.person)),
                     ),
                   ),
                 ],

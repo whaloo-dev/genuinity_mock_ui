@@ -23,7 +23,8 @@ class StoreController extends GetxController {
     store = Store(
       id: storeData['id'],
       name: storeData['name'],
-      imageUrl: storeData['icon'],
+      imageUrl:
+          (storeData as Map).containsKey('icon') ? storeData['icon'] : null,
       website: storeData['url'],
     );
     isDataLoaded.value = true;
@@ -33,12 +34,12 @@ class StoreController extends GetxController {
 class Store {
   String id;
   String name;
-  String imageUrl;
+  String? imageUrl;
   String website;
   Store({
     required this.id,
     required this.name,
-    required this.imageUrl,
+    this.imageUrl,
     required this.website,
   }) : super();
 }

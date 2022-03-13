@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 
 class Logo extends StatelessWidget {
   const Logo({Key? key}) : super(key: key);
@@ -9,17 +8,17 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Flex(
-        direction: Responsiveness.isScreenCustom(context)
-            ? Axis.vertical
-            : Axis.horizontal,
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(width: kSpacing),
           Container(
             margin: EdgeInsets.only(top: kSpacing),
-            child: Image.asset("assets/icons/logo-small.png"),
+            child: SizedBox(
+              width: 25,
+              child: Image.asset("assets/icons/logo-small.png"),
+            ),
           ),
+          SizedBox(height: kSpacing),
           Flexible(
             child: Text(
               globals.appName,
