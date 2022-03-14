@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
@@ -17,11 +18,16 @@ class MockBackend extends GetConnect implements Backend {
   static const _demoStore = "decathlon";
 
   final _demoBackend = <Product>[];
+  late String _basePath;
+
+  MockBackend() {
+    _basePath = kReleaseMode ? "assets/assets" : "assets";
+  }
 
   @override
   Future<Store> getCurrentStore() async {
-    const asset = "assets/demo/${_demoStore}_store.json";
-    var response = await get(asset);
+    var url = "$_basePath/demo/${_demoStore}_store.json";
+    var response = await get(url);
     final storeData = await json.decode(response.bodyString!);
     var store = Store(
       id: storeData['id'],
@@ -39,7 +45,7 @@ class MockBackend extends GetConnect implements Backend {
     RangeValues? inventoryRange,
   }) async {
     if (_demoBackend.isEmpty) {
-      const url = "assets/demo/${_demoStore}_products.json";
+      var url = "$_basePath/demo/${_demoStore}_products.json";
       var response = await get(url);
       var productsData = await json.decode(response.bodyString!);
       productsData = productsData['products'];

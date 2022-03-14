@@ -19820,10 +19820,10 @@ _.hB$=i
 _.v$=j
 _.cx$=k
 _.cy$=l
-_.f$=m
-_.r$=n
-_.x$=o
-_.y$=p},
+_.a$=m
+_.b$=n
+_.c$=o
+_.d$=p},
 YK:function YK(){},
 aB1(a){var s,r=$.z6
 if(r==null)return
@@ -20173,57 +20173,57 @@ _.y=!1
 _.$ti=e},
 aB4(a){return new A.hi(new A.dI(A.b([],a.i("o<hU<0>>")),a.i("dI<0>")),A.w(t.HE,t.d_),a.i("hi<0>"))},
 a5r(a){var s=new A.Kd($,!0,!1,new A.dI(A.b([],t.Lh),t.EL),A.w(t.HE,t.d_))
-s.a$=a
+s.e$=a
 return s},
 ajT(a,b){var s=new A.fg($,!0,!1,new A.dI(A.b([],b.i("o<hU<0>>")),b.i("dI<0>")),A.w(t.HE,t.d_),b.i("fg<0>"))
-s.a$=a
+s.e$=a
 return s},
 ajU(a){var s=new A.Ke($,!0,!1,new A.dI(A.b([],t.F_),t.FS),A.w(t.HE,t.d_))
-s.a$=a
+s.e$=a
 return s},
 apt(a,b){var s=new A.z9($,!0,!1,new A.dI(A.b([],b.i("o<hU<u<0>>>")),b.i("dI<u<0>>")),A.w(t.HE,t.d_),b.i("z9<0>"))
-s.a$=A.eF(a,!0,b)
+s.e$=A.eF(a,!0,b)
 return s},
 dT:function dT(){},
-hi:function hi(a,b,c){this.d$=a
-this.e$=b
+hi:function hi(a,b,c){this.x$=a
+this.y$=b
 this.$ti=c},
 dO:function dO(){},
 a1T:function a1T(a){this.a=a},
 a1U:function a1U(){},
 CA:function CA(){},
 Kd:function Kd(a,b,c,d,e){var _=this
-_.a$=a
-_.b$=b
-_.c$=c
-_.d$=d
-_.e$=e},
+_.e$=a
+_.f$=b
+_.r$=c
+_.x$=d
+_.y$=e},
 fg:function fg(a,b,c,d,e,f){var _=this
-_.a$=a
-_.b$=b
-_.c$=c
-_.d$=d
-_.e$=e
+_.e$=a
+_.f$=b
+_.r$=c
+_.x$=d
+_.y$=e
 _.$ti=f},
 Kf:function Kf(){},
 Ke:function Ke(a,b,c,d,e){var _=this
-_.a$=a
-_.b$=b
-_.c$=c
-_.d$=d
-_.e$=e},
+_.e$=a
+_.f$=b
+_.r$=c
+_.x$=d
+_.y$=e},
 Kg:function Kg(a,b,c,d,e){var _=this
-_.a$=a
-_.b$=b
-_.c$=c
-_.d$=d
-_.e$=e},
+_.e$=a
+_.f$=b
+_.r$=c
+_.x$=d
+_.y$=e},
 z9:function z9(a,b,c,d,e,f){var _=this
-_.a$=a
-_.b$=b
-_.c$=c
-_.d$=d
-_.e$=e
+_.e$=a
+_.f$=b
+_.r$=c
+_.x$=d
+_.y$=e
 _.$ti=f},
 CB:function CB(){},
 CC:function CC(){},
@@ -20494,39 +20494,40 @@ dB:function dB(a){this.a=a},
 iq:function iq(a){this.a=a},
 I7:function I7(a,b,c,d,e){var _=this
 _.r1=a
+_.r2=$
 _.fx=_.fr=null
 _.go=!1
 _.a=null
-_.f$=b
-_.r$=c
-_.x$=d
-_.y$=e},
+_.a$=b
+_.b$=c
+_.c$=d
+_.d$=e},
 a1f:function a1f(a){this.a=a},
 a1g:function a1g(a){this.a=a},
 wB:function wB(a,b,c,d,e,f){var _=this
 _.cx$=a
 _.cy$=b
-_.f$=c
-_.r$=d
-_.x$=e
-_.y$=f},
+_.a$=c
+_.b$=d
+_.c$=e
+_.d$=f},
 xC:function xC(a,b,c,d,e,f,g,h){var _=this
 _.db=a
 _.dx=b
 _.cx$=c
 _.cy$=d
-_.f$=e
-_.r$=f
-_.x$=g
-_.y$=h},
+_.a$=e
+_.b$=f
+_.c$=g
+_.d$=h},
 xS:function xS(a,b,c,d,e,f,g){var _=this
 _.db=a
 _.cx$=b
 _.cy$=c
-_.f$=d
-_.r$=e
-_.x$=f
-_.y$=g},
+_.a$=d
+_.b$=e
+_.c$=f
+_.d$=g},
 yr:function yr(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q){var _=this
 _.db=a
 _.dx=b
@@ -20541,10 +20542,10 @@ _.k2=j
 _.k3=k
 _.cx$=l
 _.cy$=m
-_.f$=n
-_.r$=o
-_.x$=p
-_.y$=q},
+_.a$=n
+_.b$=o
+_.c$=p
+_.d$=q},
 a3i:function a3i(a){this.a=a},
 a3j:function a3j(a){this.a=a},
 a3h:function a3h(a){this.a=a},
@@ -20558,10 +20559,10 @@ _.db=a
 _.dx=null
 _.cx$=b
 _.cy$=c
-_.f$=d
-_.r$=e
-_.x$=f
-_.y$=g},
+_.a$=d
+_.b$=e
+_.c$=f
+_.d$=g},
 a8h:function a8h(a){this.a=a},
 m4:function m4(a,b){this.b=a
 this.c=b},
@@ -21144,6 +21145,7 @@ c=t._V
 d=t.Wo
 e=new A.I7(A.b([],c),new A.e2(d),new A.e2(d),!1,!1)
 e.kS()
+e.r2="assets/assets"
 A.wW(f,e,t.MQ)
 e=t.Dy
 o=t.EH
@@ -21169,7 +21171,7 @@ j=A.ajU(0)
 i=A.ajU(0)
 h=A.ajU(0)
 g=new A.Kg($,!0,!1,new A.dI(A.b([],t.pM),t.Di),A.w(t.HE,t.d_))
-g.a$=""
+g.e$=""
 d=new A.yr(e,l,k,c,j,i,h,g,A.apt(A.b([],t.s),t.N),A.ajT(B.ue,t.v_),B.ue,A.b([],o),A.du(n,m),new A.e2(d),new A.e2(d),!1,!1)
 d.kS()
 A.wW(f,d,t.W9)
@@ -68610,7 +68612,7 @@ if(s==null){r='Class "'+A.aI(c).j(0)+'" is not registered'
 throw A.c(r)}m=n.hY(0,A.aI(c),b)
 if(!$.dc.h(0,m).f){q=n.hY(0,A.aI(c),b)
 p=c.a($.dc.h(0,q).Da())
-if(t.DL.b(p)){p.f$.$0()
+if(t.DL.b(p)){p.a$.$0()
 r=$.aT()
 o='Instance "'+A.aI(c).j(0)+'" has been initialized'
 r.e.$1(o)
@@ -68630,7 +68632,7 @@ if(q==null)return!1
 if(q.x){p=q.r
 if(p==null)p=q}else p=q
 o=p.c
-if(t.DL.b(o)){o.r$.$0()
+if(t.DL.b(o)){o.b$.$0()
 s=$.aT()
 r='"'+m+'" onDelete() called'
 s.e.$1(r)}if(q.r!=null){q.r=null
@@ -68665,16 +68667,16 @@ A.d2.prototype={
 qh(){},
 f6(){},
 qf(a){},
-a3f(){if(this.x$)return
+a3f(){if(this.c$)return
 this.qh()
-this.x$=!0},
-a35(){if(this.y$)return
-this.y$=!0
+this.c$=!0},
+a35(){if(this.d$)return
+this.d$=!0
 this.qf(0)},
 kS(){var s=this
-if(s.x$)A.P("You can only call configureLifeCycle once. \nThe proper place to insert it is in your class's constructor \nthat inherits GetLifeCycle.")
-s.f$.a=s.ga3e()
-s.r$.a=s.ga34()}}
+if(s.c$)A.P("You can only call configureLifeCycle once. \nThe proper place to insert it is in your class's constructor \nthat inherits GetLifeCycle.")
+s.a$.a=s.ga3e()
+s.b$.a=s.ga34()}}
 A.H8.prototype={}
 A.O9.prototype={}
 A.YM.prototype={
@@ -69311,35 +69313,35 @@ s=A.p(r)
 if(s.i("dT.T").b(b))return J.f(r.gl(r),b)
 if(s.i("dT<dT.T>").b(b))return J.f(r.gl(r),b.gl(b))
 return!1},
-gw(a){return J.bE(A.a(this.a$,"_value"))},
-sl(a,b){var s,r=this,q=r.d$
+gw(a){return J.bE(A.a(this.e$,"_value"))},
+sl(a,b){var s,r=this,q=r.x$
 if(q.e==null)return
-r.c$=!1
-if(J.f(A.a(r.a$,"_value"),b)&&!r.b$)return
-r.b$=!1
-r.a$=b
-r.c$=!0
+r.r$=!1
+if(J.f(A.a(r.e$,"_value"),b)&&!r.f$)return
+r.f$=!1
+r.e$=b
+r.r$=!0
 s=A.a(b,"_value")
 q.r=s
 q.i0(s)},
 gl(a){var s=$.rf
-if(s!=null)s.ab(0,this.d$)
-return A.a(this.a$,"_value")}}
+if(s!=null)s.ab(0,this.x$)
+return A.a(this.e$,"_value")}}
 A.hi.prototype={}
 A.dO.prototype={
-ab(a,b){var s,r,q=this.e$
+ab(a,b){var s,r,q=this.y$
 if(!q.ai(0,b)){s=b.abP(new A.a1T(this))
 r=q.h(0,b)
 if(r==null){r=A.b([],t.aU)
 q.n(0,b,r)}r.push(s)}},
-bf(a){var s=this.e$
+bf(a){var s=this.y$
 s.af(0,new A.a1U())
 s.aF(0)
-s=this.d$
+s=this.x$
 s.a2X()
 s.r=s.f=s.e=null}}
 A.a1T.prototype={
-$1(a){var s=this.a.d$
+$1(a){var s=this.a.x$
 if(s.e!=null){s.r=a
 s.i0(a)}},
 $S(){return A.p(this.a).i("~(dO.T)")}}
@@ -69370,14 +69372,14 @@ $ibM:1}
 A.z9.prototype={
 gY(a){return J.aA(this.gl(this))},
 n(a,b,c){var s,r,q=this
-J.eW(A.a(q.a$,"_value"),b,c)
-s=q.d$
+J.eW(A.a(q.e$,"_value"),b,c)
+s=q.x$
 r=q.gl(q)
 s.r=r
 s.i0(r)},
 U(a,b){var s,r,q=this
-J.Eg(A.a(q.a$,"_value"),b)
-s=q.d$
+J.Eg(A.a(q.e$,"_value"),b)
+s=q.x$
 r=q.gl(q)
 s.r=r
 s.i0(r)
@@ -69387,24 +69389,24 @@ s.i0(r)
 return q},
 h(a,b){return J.aF(this.gl(this),b)},
 D(a,b){var s,r,q=this
-J.iE(A.a(q.a$,"_value"),b)
-s=q.d$
+J.iE(A.a(q.e$,"_value"),b)
+s=q.x$
 r=q.gl(q)
 s.r=r
 s.i0(r)},
 J(a,b){var s,r,q=this
-J.Eg(A.a(q.a$,"_value"),b)
-s=q.d$
+J.Eg(A.a(q.e$,"_value"),b)
+s=q.x$
 r=q.gl(q)
 s.r=r
 s.i0(r)},
 gp(a){return J.b3(this.gl(this))},
 gl(a){var s=$.rf
-if(s!=null)s.ab(0,this.d$)
-return A.a(this.a$,"_value")},
+if(s!=null)s.ab(0,this.x$)
+return A.a(this.e$,"_value")},
 sp(a,b){var s,r,q=this
-J.amO(A.a(q.a$,"_value"),b)
-s=q.d$
+J.amO(A.a(q.e$,"_value"),b)
+s=q.x$
 r=q.gl(q)
 s.r=r
 s.i0(r)}}
@@ -69426,7 +69428,7 @@ aH(){return new A.C1(A.aB4(t.z),B.k)}}
 A.C1.prototype={
 b7(){var s=this
 s.bB()
-s.e=s.d.d$.eP(s.ga6L(),!1,null,null)},
+s.e=s.d.x$.eP(s.ga6L(),!1,null,null)},
 a6M(a){if(this.c!=null)this.aK(new A.ads())},
 m(a){A.a(this.e,"subs").aE(0)
 this.d.bf(0)
@@ -69436,7 +69438,7 @@ p=p.gKH(p)
 s=$.rf
 $.rf=q
 r=p.$0()
-q=q.e$
+q=q.y$
 if(!q.gbi(q)){$.rf=s
 A.P("      [Get] the improper use of a GetX has been detected. \n      You should only use GetX or Obx for the specific widget that will be updated.\n      If you are seeing this error, you probably did not insert any observable variables into GetX/Obx \n      or insert them outside the scope that GetX considers suitable for an update \n      (example: GetX => HeavyWidget => variableObservable).\n      If you need to update a parent widget and a child widget, wrap each one in an Obx/GetX.\n      ")}$.rf=s
 return r}}
@@ -70509,7 +70511,7 @@ A.I7.prototype={
 o_(){var s=0,r=A.Z(t.RE),q,p=this,o,n,m
 var $async$o_=A.a_(function(a,b){if(a===1)return A.W(b,r)
 while(true)switch(s){case 0:s=3
-return A.V(p.D6(0,"assets/demo/decathlon_store.json",t.z),$async$o_)
+return A.V(p.D6(0,A.a(p.r2,"_basePath")+"/demo/decathlon_store.json",t.z),$async$o_)
 case 3:m=b.f
 m.toString
 s=4
@@ -70533,7 +70535,7 @@ while(true)switch(s){case 0:d=p.r1
 s=d.length===0?3:4
 break
 case 3:s=5
-return A.V(p.D6(0,"assets/demo/decathlon_products.json",t.z),$async$nr)
+return A.V(p.D6(0,A.a(p.r2,"_basePath")+"/demo/decathlon_products.json",t.z),$async$nr)
 case 5:o=a1.f
 o.toString
 c=J
@@ -70612,12 +70614,12 @@ $1(a){var s,r,q,p=this.a,o=p.fx
 o.sl(0,0)
 for(s=J.aA(a);s.t();){r=s.gC(s)
 q=$.rf
-if(q!=null)q.ab(0,o.d$)
-q=A.a(o.a$,"_value")
+if(q!=null)q.ab(0,o.x$)
+q=A.a(o.e$,"_value")
 r=r.e
 o.sl(0,Math.max(A.dn(q),r))}s=p.fr
-J.Eg(A.a(s.a$,"_value"),a)
-r=s.d$
+J.Eg(A.a(s.e$,"_value"),a)
+r=s.x$
 q=s.gl(s)
 r.r=q
 r.i0(q)
@@ -70635,8 +70637,8 @@ r.sl(0,Math.min(r.gl(r)+10,J.b3(s.gl(s))))},
 $S:11}
 A.a3h.prototype={
 $1(a){var s,r,q=this.a,p=q.fr
-J.Eg(A.a(p.a$,"_value"),a)
-s=p.d$
+J.Eg(A.a(p.e$,"_value"),a)
+s=p.x$
 r=p.gl(p)
 s.r=r
 s.i0(r)
