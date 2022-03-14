@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/backend/backend.dart';
+import 'package:whaloo_genuinity/backend/mock_backend.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/controllers/products_controller.dart';
@@ -11,12 +13,9 @@ import 'package:whaloo_genuinity/layout.dart';
 import 'package:whaloo_genuinity/pages/errors/error_404.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 
-// const demoStore = "ruesco";
-// const demoStore = "huel";
-// const demoStore = "halloweenmakeup";
-const demoStore = "signatureveda";
-
 void main() {
+  // ignore: unnecessary_cast
+  Get.put(MockBackend() as Backend);
   Get.put(MenuController());
   Get.put(NavigationController());
   Get.put(GlobalsController());

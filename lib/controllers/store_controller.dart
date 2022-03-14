@@ -1,8 +1,5 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:whaloo_genuinity/main.dart';
+import 'package:whaloo_genuinity/backend/backend.dart';
 
 class StoreController extends GetxController {
   static StoreController get instance => Get.find();
@@ -17,17 +14,12 @@ class StoreController extends GetxController {
   }
 
   Future<void> loadDemoStoreData() async {
-    const asset = "assets/demo/${demoStore}_store.json";
-    final String response = await rootBundle.loadString(asset);
-    final storeData = await json.decode(response);
-    store = Store(
-      id: storeData['id'],
-      name: storeData['name'],
-      imageUrl:
-          (storeData as Map).containsKey('icon') ? storeData['icon'] : null,
-      website: storeData['url'],
-    );
-    isDataLoaded.value = true;
+    var backend = Backend.instance;
+    var future = backend.getCurrentStore();
+    future.then((value) {
+      store = value;
+      isDataLoaded.value = true;
+    });
   }
 }
 

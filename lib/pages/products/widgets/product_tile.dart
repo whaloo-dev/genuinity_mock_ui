@@ -48,8 +48,6 @@ class ProductTile extends StatelessWidget {
                   _productTitleWidget(context),
                   SizedBox(height: kSpacing),
                   _productInventoryWidget(context),
-                  _productInventoryWidget(context),
-                  _productInventoryWidget(context),
                 ],
               ),
             ),
@@ -89,8 +87,6 @@ class ProductTile extends StatelessWidget {
             ),
           ],
         ),
-        // Text('test'),
-        // Text('test2'),
       ],
     );
   }

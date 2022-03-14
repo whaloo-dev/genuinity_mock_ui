@@ -12,7 +12,7 @@ class ProductsSearchForm extends StatelessWidget {
     return Card(
       child: Obx(() {
         final maxInventory = productsController.maxInventorySize();
-        final inventorySizeRange = productsController.inventorySizeRange.value;
+        final inventorySizeRange = productsController.inventorySizeRange();
         return Column(
           children: [
             SizedBox(height: kSpacing),
@@ -86,9 +86,9 @@ class ProductsSearchForm extends StatelessWidget {
                           max: maxInventory.toDouble(),
                           values: inventorySizeRange,
                           onChanged: (value) {
-                            productsController.inventorySizeRange.value =
+                            productsController.changeInventorySizeRange(
                                 RangeValues(value.start.roundToDouble(),
-                                    value.end.roundToDouble());
+                                    value.end.roundToDouble()));
                             productsController.changeIsEditingSearch(true);
                           },
                         ),

@@ -10,11 +10,11 @@ class ProductsSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var searchFieldController =
-        TextEditingController(text: productsController.searchText.value);
+        TextEditingController(text: productsController.searchText());
     return Obx(() {
-      if (productsController.searchText.isEmpty) {
+      if (productsController.searchText().isEmpty) {
         searchFieldController =
-            TextEditingController(text: productsController.searchText.value);
+            TextEditingController(text: productsController.searchText());
       }
       return Column(
         children: [
@@ -23,7 +23,7 @@ class ProductsSearchBar extends StatelessWidget {
             enabled: !productsController.isLoadingData(),
             onChanged: (value) {
               productsController.changeIsEditingSearch(true);
-              productsController.searchText.value = value;
+              productsController.changeSearchText(value);
             },
             onSubmitted: (value) {
               productsController.applyFilter();
@@ -52,7 +52,7 @@ class ProductsSearchBar extends StatelessWidget {
   }
 
   Widget _inventoryRangeWidget() {
-    var inventoryRange = productsController.inventorySizeRange.value;
+    var inventoryRange = productsController.inventorySizeRange();
     return Chip(
       elevation: kElevation,
       onDeleted: () {

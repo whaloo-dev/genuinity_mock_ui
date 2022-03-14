@@ -1,20 +1,15 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:whaloo_genuinity/main.dart';
+import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
 
   static const int _loadingStep = 10;
-
-  //demo
-  final _demoBackend = <Product>[].obs;
 
   final _isEditingSearch = false.obs;
   final _isFormVisible = false.obs;
@@ -25,68 +20,53 @@ class ProductsController extends GetxController {
   final _totalProductsCount = 0.obs;
   final _visibleProductsCount = 0.obs;
 
-  var searchKeywords = <String>[].obs;
-  var inventorySizeRange = const RangeValues(0, 500.0).obs;
-  RangeValues defaultInventoryRange = const RangeValues(0, 500.0);
-  var searchText = "".obs;
+  final _searchText = "".obs;
+  final _searchKeywords = <String>[].obs;
+  final _inventorySizeRange = const RangeValues(0, 500.0).obs;
+  var _defaultInventoryRange = const RangeValues(0, 500.0);
 
   @override
   void onReady() async {
-    await loadDemoProductsData();
+    await loadInit();
     super.onReady();
   }
 
-  //demo
-  Future<void> loadDemoProductsData() async {
-    const asset = "assets/demo/${demoStore}_products.json";
-    String response = await rootBundle.loadString(asset);
-    final productsData = await json.decode(response);
+  Future<void> loadInit() async {
+    Backend.instance.loadProducts().then((products) {
+      _maxInventorySize.value = 0;
+      for (var product in products) {
+        _maxInventorySize.value =
+            max(_maxInventorySize.value, product.inventoryQuantity);
+      }
 
-    // Loading products and codes :
-    _maxInventorySize.value = 0;
-    final products = productsData['products'];
-    for (var i = 0; i < products.length; i++) {
-      var productData = products[i];
-      var product = Product(
-        id: ProductId(productData['id']),
-        title: productData['title'],
-        image: productData['image'],
-        codesCount: Random().nextInt(5000),
-        inventoryQuantity:
-            Random().nextInt(10) == 0 ? 0 : Random().nextInt(5000),
-      );
-      _demoBackend.add(product);
-      _maxInventorySize.value =
-          max(_maxInventorySize.value, product.inventoryQuantity);
-    }
+      _products.addAll(products);
 
-    defaultInventoryRange = RangeValues(0, _maxInventorySize.value.toDouble());
-    inventorySizeRange.value = defaultInventoryRange;
-    _products.addAll(_demoBackend);
-    _visibleProductsCount.value = min(_loadingStep, productsCount());
-    _totalProductsCount.value = _demoBackend.length;
-    _isLoadingData.value = false;
+      _defaultInventoryRange =
+          RangeValues(0, _maxInventorySize.value.toDouble());
+      _inventorySizeRange.value = _defaultInventoryRange;
+      _visibleProductsCount.value = min(_loadingStep, productsCount());
+      _totalProductsCount.value = _products.length;
+      _isLoadingData.value = false;
+    });
   }
 
   void applyFilter() {
     _isEditingSearch.value = false;
     _isFormVisible.value = false;
-    searchKeywords.value = searchText.value.tokenize();
+    _searchKeywords.value = _searchText.value.tokenize();
     _applyFilter();
   }
 
   Future<void> loadMore() async {
-    // _isLoadingMoreData.value = true;
-    //demo
-    return Future.delayed(const Duration(seconds: 1), () {
+    return Future.delayed(const Duration(milliseconds: 1), () {
       _visibleProductsCount.value =
           min(_visibleProductsCount.value + _loadingStep, productsCount());
     });
   }
 
   void resetFilters() {
-    searchText.value = "";
-    inventorySizeRange.value = defaultInventoryRange;
+    _searchText.value = "";
+    _inventorySizeRange.value = _defaultInventoryRange;
     applyFilter();
   }
 
@@ -96,6 +76,14 @@ class ProductsController extends GetxController {
 
   void changeIsFormVisible(bool newValue) {
     _isFormVisible.value = newValue;
+  }
+
+  void changeInventorySizeRange(RangeValues newValue) {
+    _inventorySizeRange.value = newValue;
+  }
+
+  void changeSearchText(String newValue) {
+    _searchText.value = newValue;
   }
 
   Product product(int index) {
@@ -114,12 +102,20 @@ class ProductsController extends GetxController {
     return _maxInventorySize.value;
   }
 
+  RangeValues inventorySizeRange() {
+    return _inventorySizeRange.value;
+  }
+
+  String searchText() {
+    return _searchText.value;
+  }
+
   bool isFiltered() {
     return productsCount() != _totalProductsCount.value;
   }
 
   bool isInventorySizeRangeSet() {
-    return inventorySizeRange.value !=
+    return _inventorySizeRange.value !=
         RangeValues(0, _maxInventorySize.toDouble());
   }
 
@@ -140,7 +136,7 @@ class ProductsController extends GetxController {
   }
 
   void resetInventorySizeRange() {
-    inventorySizeRange.value = RangeValues(0, _maxInventorySize.toDouble());
+    _inventorySizeRange.value = RangeValues(0, _maxInventorySize.toDouble());
     applyFilter();
   }
 
@@ -148,33 +144,14 @@ class ProductsController extends GetxController {
     _isLoadingData.value = true;
     _products.clear();
 
-    //demo
-    Future.delayed(const Duration(seconds: 1), () {
-      for (int i = 0; i < _demoBackend.length; i++) {
-        final _product = _demoBackend[i];
-        var accepted = true;
-
-        //inventory filter :
-        bool inRange =
-            _product.inventoryQuantity >= inventorySizeRange.value.start &&
-                _product.inventoryQuantity <= inventorySizeRange.value.end;
-        if (!inRange) {
-          continue;
-        }
-
-        //text filter
-        final tokens = _product.title.tokenize();
-        accepted = accepted && tokens.startsWithAll(searchKeywords);
-
-        if (!accepted) {
-          continue;
-        }
-
-        _products.add(_product);
-      }
-
+    Backend.instance
+        .loadProducts(
+      searchKeywords: _searchKeywords,
+      inventoryRange: _inventorySizeRange.value,
+    )
+        .then((products) {
+      _products.addAll(products);
       _visibleProductsCount.value = min(_loadingStep, productsCount());
-
       _isLoadingData.value = false;
     });
   }

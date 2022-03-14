@@ -43,7 +43,7 @@ extension RangeValuesText on RangeValues {
     final e = numberFormat.format(end);
     final m = productsController.maxInventorySize();
     if (start == end) {
-      return s;
+      return "= $s";
     }
     if (start == 0) {
       if (end < m) {
@@ -54,6 +54,6 @@ extension RangeValuesText on RangeValues {
     if (end == m) {
       return "≥ $s";
     }
-    return "≥ $s and ≤ $e";
+    return "between $s and $e";
   }
 }
