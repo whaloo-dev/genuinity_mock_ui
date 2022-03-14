@@ -1,8 +1,11 @@
-small catalogue +60 : 
+small catalog +60 : 
 https://eu.huel.com
 
-medium catalogue +500 : 
+medium catalog +500 : 
 https://ruesco.com/
 
-huge catalogue +4500 : 
+big catalog +4500 : 
 https://www.halloweenmakeup.com/
+
+extremly large catalog +46 000 : 
+https://www.cettire.com/
