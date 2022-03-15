@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class ProductsSearchBar extends StatelessWidget {
@@ -9,13 +10,10 @@ class ProductsSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var searchFieldController =
-        TextEditingController(text: productsController.searchText());
     return Obx(() {
-      if (productsController.searchText().isEmpty) {
-        searchFieldController =
-            TextEditingController(text: productsController.searchText());
-      }
+      var searchFieldController =
+          textEditingController(text: productsController.searchText());
+
       return Column(
         children: [
           TextField(

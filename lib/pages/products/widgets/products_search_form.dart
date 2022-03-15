@@ -2,47 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class ProductsSearchForm extends StatelessWidget {
   const ProductsSearchForm({Key? key}) : super(key: key);
 
+  final kOptionsMaxHeight = 200.0;
+
   @override
   Widget build(BuildContext context) {
-    final sku = productsController.sku();
-    final productType = productsController.productType();
-    final vendor = productsController.vendor();
-    final barcode = productsController.barcode();
     return Card(
-      child: Obx(() {
-        return Column(
-          children: [
-            SizedBox(height: kSpacing * 2),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _searchButton(),
-                SizedBox(width: kSpacing),
-                _resetButton(),
-              ],
-            ),
-            SizedBox(height: kSpacing * 2),
-            const Divider(thickness: 1),
-            SizedBox(height: kSpacing * 2),
-            _inventoryRangeField(context),
-            SizedBox(height: kSpacing),
-            _skuField(context, sku),
-            SizedBox(height: kSpacing),
-            _barcodeField(context, barcode),
-            SizedBox(height: kSpacing),
-            _vendorField(context, vendor),
-            SizedBox(height: kSpacing),
-            _productTypeField(context, productType),
-            SizedBox(height: 4 * kSpacing),
-          ],
-        );
-      }),
+      child: SingleChildScrollView(
+        child: Obx(() {
+          final productType = productsController.productType();
+          final vendor = productsController.vendor();
+          final sku = productsController.sku();
+          final barcode = productsController.barcode();
+          return Column(
+            children: [
+              SizedBox(height: kSpacing * 2),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _searchButton(),
+                  SizedBox(width: kSpacing),
+                  _resetButton(),
+                ],
+              ),
+              SizedBox(height: kSpacing * 2),
+              const Divider(thickness: 1),
+              SizedBox(height: kSpacing * 2),
+              _inventoryRangeField(context),
+              SizedBox(height: kSpacing),
+              _skuField(context, sku),
+              SizedBox(height: kSpacing),
+              _barcodeField(context, barcode),
+              SizedBox(height: kSpacing),
+              _vendorField(context, vendor),
+              SizedBox(height: kSpacing),
+              _productTypeField(context, productType),
+              SizedBox(height: kOptionsMaxHeight),
+            ],
+          );
+        }),
+      ),
     );
   }
 
@@ -92,9 +97,9 @@ class ProductsSearchForm extends StatelessWidget {
     final maxInventory = productsController.maxInventorySize();
     final minInventory = productsController.minInventorySize();
     final inventorySizeRange = productsController.inventorySizeRange();
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Column(
+    return ListTile(
+      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
+      title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -126,10 +131,10 @@ class ProductsSearchForm extends StatelessWidget {
   }
 
   Widget _skuField(BuildContext context, String sku) {
-    TextEditingController controller = TextEditingController(text: sku);
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: kSpacing),
-      child: TextField(
+    final TextEditingController controller = textEditingController(text: sku);
+    return ListTile(
+      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
+      title: TextField(
         controller: controller,
         onChanged: (value) {
           productsController.changeSku(value);
@@ -143,10 +148,13 @@ class ProductsSearchForm extends StatelessWidget {
   }
 
   Widget _barcodeField(BuildContext context, String barcode) {
-    TextEditingController controller = TextEditingController(text: barcode);
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: kSpacing),
-      child: TextField(
+    TextEditingController controller = textEditingController(text: barcode);
+    //to counter cursor reset due to obx refresh
+    controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: controller.text.length));
+    return ListTile(
+      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
+      title: TextField(
         controller: controller,
         onChanged: (value) {
           productsController.changeBarcode(value);
@@ -160,9 +168,10 @@ class ProductsSearchForm extends StatelessWidget {
   }
 
   Widget _productTypeField(BuildContext context, String productType) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Autocomplete<String>(
+    return ListTile(
+      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
+      title: Autocomplete<String>(
+        optionsMaxHeight: kOptionsMaxHeight,
         fieldViewBuilder:
             (context, textEditingController, focusNode, onFieldSubmitted) {
           textEditingController.text = productType;
@@ -188,9 +197,9 @@ class ProductsSearchForm extends StatelessWidget {
   }
 
   Widget _vendorField(BuildContext context, String vendor) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Autocomplete<String>(
+    return ListTile(
+      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
+      title: Autocomplete<String>(
         fieldViewBuilder:
             (context, textEditingController, focusNode, onFieldSubmitted) {
           textEditingController.text = vendor;
