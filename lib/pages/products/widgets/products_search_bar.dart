@@ -30,40 +30,99 @@ class ProductsSearchBar extends StatelessWidget {
             },
             controller: searchFieldController,
             decoration: InputDecoration(
-              label: const Text("Search by product"),
+              counter: (!productsController.isLoadingData() &&
+                      !productsController.isEditingSearch() &&
+                      productsController.isFiltered())
+                  ? Wrap(
+                      spacing: kSpacing,
+                      runSpacing: kSpacing,
+                      children: [
+                        if (productsController.isInventorySizeRangeSet())
+                          _inventoryRangeChip(),
+                        if (productsController.sku().isNotEmpty) _skuChip(),
+                        if (productsController.barcode().isNotEmpty)
+                          _barcodeChip(),
+                        if (productsController.productType().isNotEmpty)
+                          _productTypeChip(),
+                        if (productsController.vendor().isNotEmpty)
+                          _vendorChip(),
+                      ],
+                    )
+                  : null,
+              label: const Text("Search by product title"),
               suffixIcon: _suffixWidget(searchFieldController),
             ),
           ),
-          const SizedBox(height: 2),
-          if (!productsController.isLoadingData() &&
-              !productsController.isEditingSearch() &&
-              productsController.isFiltered())
-            Wrap(
-              spacing: kSpacing,
-              runSpacing: kSpacing,
-              children: [
-                if (productsController.isInventorySizeRangeSet())
-                  _inventoryRangeWidget(),
-              ],
-            ),
         ],
       );
     });
   }
 
-  Widget _inventoryRangeWidget() {
-    var inventoryRange = productsController.inventorySizeRange();
-    return Chip(
-      elevation: kElevation,
+  Widget _inventoryRangeChip() {
+    final inventoryRange = productsController.inventorySizeRange();
+    final minInventory = productsController.minInventorySize();
+    final maxInventory = productsController.maxInventorySize();
+    return _chip(
       onDeleted: () {
         productsController.resetInventorySizeRange();
       },
+      text: "Inventory ${inventoryRange.toText(minInventory, maxInventory)} ",
+    );
+  }
+
+  Widget _skuChip() {
+    final sku = productsController.sku();
+    return _chip(
+      onDeleted: () {
+        productsController.resetSku();
+      },
+      text: "SKU = '$sku' ",
+    );
+  }
+
+  Widget _barcodeChip() {
+    final barcode = productsController.barcode();
+    return _chip(
+      onDeleted: () {
+        productsController.resetBarcode();
+      },
+      text: "Barcode = '$barcode' ",
+    );
+  }
+
+  Widget _vendorChip() {
+    final vendor = productsController.vendor();
+    return _chip(
+      onDeleted: () {
+        productsController.resetVendor();
+      },
+      text: "Vendor = '$vendor' ",
+    );
+  }
+
+  Widget _productTypeChip() {
+    final productType = productsController.productType();
+    return _chip(
+      onDeleted: () {
+        productsController.resetProductType();
+      },
+      text: "Product Type = '$productType' ",
+    );
+  }
+
+  Widget _chip({
+    required void Function() onDeleted,
+    required String text,
+  }) {
+    return Chip(
+      elevation: kElevation,
+      onDeleted: onDeleted,
       deleteIcon: const Icon(
         Icons.cancel,
         size: 14,
       ),
       label: Text(
-        "Inventory : ${inventoryRange.toText()} ",
+        text,
         style: const TextStyle(fontSize: 12),
       ),
     );

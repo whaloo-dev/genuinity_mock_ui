@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 
 extension Tokenizer on String {
@@ -38,20 +37,19 @@ extension Search on List<String> {
 }
 
 extension RangeValuesText on RangeValues {
-  String toText() {
+  String toText(int min, int max) {
     final s = numberFormat.format(start);
     final e = numberFormat.format(end);
-    final m = productsController.maxInventorySize();
     if (start == end) {
       return "= $s";
     }
-    if (start == 0) {
-      if (end < m) {
+    if (start == min) {
+      if (end < max) {
         return "≤ $e";
       }
       return "";
     }
-    if (end == m) {
+    if (end == max) {
       return "≥ $s";
     }
     return "between $s and $e";

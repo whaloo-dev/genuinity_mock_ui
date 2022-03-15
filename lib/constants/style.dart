@@ -17,9 +17,9 @@ BorderRadius kBorderRadius = BorderRadius.only(
   bottomRight: Radius.circular(radius),
 );
 
-double kElevation = 2;
+double kElevation = 5;
 
-double kSpacing = 10;
+double kSpacing = 5;
 
 double kIconButtonSplashRadius = 25;
 

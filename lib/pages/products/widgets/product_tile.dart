@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/controllers/products_controller.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
 
 class ProductTile extends StatelessWidget {

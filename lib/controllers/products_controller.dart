@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
+import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class ProductsController extends GetxController {
@@ -17,13 +18,19 @@ class ProductsController extends GetxController {
 
   final _products = <Product>[].obs;
   final _maxInventorySize = 0.obs;
+  final _minInventorySize = 0.obs;
   final _totalProductsCount = 0.obs;
+  final _productTypes = <String>[].obs;
+  final _vendors = <String>[].obs;
   final _visibleProductsCount = 0.obs;
 
   final _searchText = "".obs;
   final _searchKeywords = <String>[].obs;
+  final _sku = "".obs;
+  final _vendor = "".obs;
+  final _productType = "".obs;
+  final _barcode = "".obs;
   final _inventorySizeRange = const RangeValues(0, 500.0).obs;
-  var _defaultInventoryRange = const RangeValues(0, 500.0);
 
   @override
   void onReady() async {
@@ -34,16 +41,24 @@ class ProductsController extends GetxController {
   Future<void> loadInit() async {
     Backend.instance.loadProducts().then((products) {
       _maxInventorySize.value = 0;
+      _minInventorySize.value = 0;
+
       for (var product in products) {
         _maxInventorySize.value =
             max(_maxInventorySize.value, product.inventoryQuantity);
+        _minInventorySize.value =
+            min(_minInventorySize.value, product.inventoryQuantity);
+        if (!_productTypes.contains(product.type)) {
+          _productTypes.add(product.type);
+        }
+        if (!_vendors.contains(product.vendor)) {
+          _vendors.add(product.vendor);
+        }
       }
-
       _products.addAll(products);
-
-      _defaultInventoryRange =
-          RangeValues(0, _maxInventorySize.value.toDouble());
-      _inventorySizeRange.value = _defaultInventoryRange;
+      _inventorySizeRange.value = RangeValues(
+          _minInventorySize.value.toDouble(),
+          _maxInventorySize.value.toDouble());
       _visibleProductsCount.value = min(_loadingStep, productsCount());
       _totalProductsCount.value = _products.length;
       _isLoadingData.value = false;
@@ -66,7 +81,12 @@ class ProductsController extends GetxController {
 
   void resetFilters() {
     _searchText.value = "";
-    _inventorySizeRange.value = _defaultInventoryRange;
+    _sku.value = "";
+    _barcode.value = "";
+    _vendor.value = "";
+    _productType.value = "";
+    _inventorySizeRange.value = RangeValues(
+        _minInventorySize.value.toDouble(), _maxInventorySize.value.toDouble());
     applyFilter();
   }
 
@@ -83,7 +103,23 @@ class ProductsController extends GetxController {
   }
 
   void changeSearchText(String newValue) {
-    _searchText.value = newValue;
+    _searchText.value = newValue.trim();
+  }
+
+  void changeSku(String newValue) {
+    _sku.value = newValue.trim();
+  }
+
+  void changeProductType(String newValue) {
+    _productType.value = newValue.trim();
+  }
+
+  void changeVendor(String newValue) {
+    _vendor.value = newValue.trim();
+  }
+
+  void changeBarcode(String newValue) {
+    _barcode.value = newValue.trim();
   }
 
   Product product(int index) {
@@ -102,6 +138,10 @@ class ProductsController extends GetxController {
     return _maxInventorySize.value;
   }
 
+  int minInventorySize() {
+    return _minInventorySize.value;
+  }
+
   RangeValues inventorySizeRange() {
     return _inventorySizeRange.value;
   }
@@ -110,13 +150,37 @@ class ProductsController extends GetxController {
     return _searchText.value;
   }
 
+  String sku() {
+    return _sku.value;
+  }
+
+  String productType() {
+    return _productType.value;
+  }
+
+  String vendor() {
+    return _vendor.value;
+  }
+
+  List<String> vendors() {
+    return _vendors;
+  }
+
+  List<String> productTypes() {
+    return _productTypes;
+  }
+
+  String barcode() {
+    return _barcode.value;
+  }
+
   bool isFiltered() {
     return productsCount() != _totalProductsCount.value;
   }
 
   bool isInventorySizeRangeSet() {
     return _inventorySizeRange.value !=
-        RangeValues(0, _maxInventorySize.toDouble());
+        RangeValues(_minInventorySize.toDouble(), _maxInventorySize.toDouble());
   }
 
   bool isProductCatalogEmpty() {
@@ -136,7 +200,28 @@ class ProductsController extends GetxController {
   }
 
   void resetInventorySizeRange() {
-    _inventorySizeRange.value = RangeValues(0, _maxInventorySize.toDouble());
+    _inventorySizeRange.value =
+        RangeValues(_minInventorySize.toDouble(), _maxInventorySize.toDouble());
+    applyFilter();
+  }
+
+  void resetSku() {
+    _sku.value = "";
+    applyFilter();
+  }
+
+  void resetProductType() {
+    _productType.value = "";
+    applyFilter();
+  }
+
+  void resetVendor() {
+    _vendor.value = "";
+    applyFilter();
+  }
+
+  void resetBarcode() {
+    _barcode.value = "";
     applyFilter();
   }
 
@@ -146,8 +231,13 @@ class ProductsController extends GetxController {
 
     Backend.instance
         .loadProducts(
-      searchKeywords: _searchKeywords,
-      inventoryRange: _inventorySizeRange.value,
+      searchKeywords: _searchKeywords.isNotEmpty ? _searchKeywords : null,
+      sku: _sku.isNotEmpty ? _sku.value : null,
+      barcode: _barcode.isNotEmpty ? _barcode.value : null,
+      vendor: _vendor.isNotEmpty ? _vendor.value : null,
+      productType: _productType.isNotEmpty ? _productType.value : null,
+      inventoryRange:
+          isInventorySizeRangeSet() ? _inventorySizeRange.value : null,
     )
         .then((products) {
       _products.addAll(products);
@@ -155,42 +245,4 @@ class ProductsController extends GetxController {
       _isLoadingData.value = false;
     });
   }
-}
-
-class ProductId implements Comparable<ProductId> {
-  int value;
-  ProductId(this.value);
-
-  @override
-  int compareTo(ProductId other) {
-    return value.compareTo(other.value);
-  }
-}
-
-class Product {
-  final ProductId id;
-  final String title;
-  final String image;
-  final int codesCount;
-  final int inventoryQuantity;
-
-  Product({
-    required this.id,
-    required this.title,
-    required this.image,
-    required this.codesCount,
-    required this.inventoryQuantity,
-  });
-}
-
-class Code {
-  final String shortCode;
-  final String serial;
-  final DateTime creationDate;
-
-  const Code({
-    required this.shortCode,
-    required this.serial,
-    required this.creationDate,
-  });
 }
