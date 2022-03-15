@@ -6,8 +6,6 @@ import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class ProductsSearchForm extends StatelessWidget {
-  const ProductsSearchForm({Key? key}) : super(key: key);
-
   final kOptionsMaxHeight = 200.0;
 
   @override
@@ -33,16 +31,12 @@ class ProductsSearchForm extends StatelessWidget {
               ),
               SizedBox(height: kSpacing * 2),
               const Divider(thickness: 1),
-              SizedBox(height: kSpacing * 2),
-              _inventoryRangeField(context),
-              SizedBox(height: kSpacing),
-              _skuField(context, sku),
-              SizedBox(height: kSpacing),
-              _barcodeField(context, barcode),
-              SizedBox(height: kSpacing),
-              _vendorField(context, vendor),
-              SizedBox(height: kSpacing),
-              _productTypeField(context, productType),
+              _inventoryRangeField(),
+              _skuField(sku),
+              _barcodeField(barcode),
+              if (productsController.vendors().length > 1) _vendorField(vendor),
+              if (productsController.productTypes().length > 1)
+                _productTypeField(productType),
               SizedBox(height: kOptionsMaxHeight),
             ],
           );
@@ -93,12 +87,11 @@ class ProductsSearchForm extends StatelessWidget {
     );
   }
 
-  Widget _inventoryRangeField(BuildContext context) {
+  Widget _inventoryRangeField() {
     final maxInventory = productsController.maxInventorySize();
     final minInventory = productsController.minInventorySize();
     final inventorySizeRange = productsController.inventorySizeRange();
     return ListTile(
-      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -122,7 +115,6 @@ class ProductsSearchForm extends StatelessWidget {
             onChanged: (value) {
               productsController.changeInventorySizeRange(RangeValues(
                   value.start.roundToDouble(), value.end.roundToDouble()));
-              productsController.changeIsEditingSearch(true);
             },
           ),
         ],
@@ -130,46 +122,48 @@ class ProductsSearchForm extends StatelessWidget {
     );
   }
 
-  Widget _skuField(BuildContext context, String sku) {
+  Widget _skuField(String sku) {
     final TextEditingController controller = textEditingController(text: sku);
     return ListTile(
-      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
       title: TextField(
         controller: controller,
         onChanged: (value) {
           productsController.changeSku(value);
-          productsController.changeIsEditingSearch(true);
         },
-        decoration: const InputDecoration(
-          label: Text("SKU"),
+        decoration: InputDecoration(
+          label: const Text("SKU"),
+          suffixIcon: sku.isNotEmpty
+              ? _clearTextFieldWidget(() {
+                  productsController.changeSku("");
+                })
+              : null,
         ),
       ),
     );
   }
 
-  Widget _barcodeField(BuildContext context, String barcode) {
+  Widget _barcodeField(String barcode) {
     TextEditingController controller = textEditingController(text: barcode);
-    //to counter cursor reset due to obx refresh
-    controller.selection = TextSelection.fromPosition(
-        TextPosition(offset: controller.text.length));
     return ListTile(
-      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
       title: TextField(
         controller: controller,
         onChanged: (value) {
           productsController.changeBarcode(value);
-          productsController.changeIsEditingSearch(true);
         },
-        decoration: const InputDecoration(
-          label: Text("Barcode (ISBN, UPC, GTIN, etc.)"),
+        decoration: InputDecoration(
+          label: const Text("Barcode (ISBN, UPC, GTIN, etc.)"),
+          suffixIcon: barcode.isNotEmpty
+              ? _clearTextFieldWidget(() {
+                  productsController.changeBarcode("");
+                })
+              : null,
         ),
       ),
     );
   }
 
-  Widget _productTypeField(BuildContext context, String productType) {
+  Widget _productTypeField(String productType) {
     return ListTile(
-      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
       title: Autocomplete<String>(
         optionsMaxHeight: kOptionsMaxHeight,
         fieldViewBuilder:
@@ -178,27 +172,38 @@ class ProductsSearchForm extends StatelessWidget {
           return TextField(
             controller: textEditingController,
             focusNode: focusNode,
-            decoration: const InputDecoration(
-              label: Text("Product Type"),
+            onChanged: (value) {
+              if (value.trim().isEmpty) {
+                productsController.changeProductType(value);
+              }
+            },
+            decoration: InputDecoration(
+              label: const Text("Product Type"),
+              suffixIcon: productType.isNotEmpty
+                  ? _clearTextFieldWidget(() {
+                      productsController.changeProductType("");
+                    })
+                  : null,
             ),
           );
         },
         onSelected: (value) {
           productsController.changeProductType(value);
-          productsController.changeIsEditingSearch(true);
         },
         optionsBuilder: (textEditingValue) {
+          var text = textEditingValue.text.trim().toUpperCase();
           return productsController
               .productTypes()
-              .where((element) => element.contains(textEditingValue.text));
+              .where((element) => element.trim().toUpperCase().contains(text))
+              .toList()
+            ..insert(0, "");
         },
       ),
     );
   }
 
-  Widget _vendorField(BuildContext context, String vendor) {
+  Widget _vendorField(String vendor) {
     return ListTile(
-      // padding: EdgeInsets.symmetric(horizontal: kSpacing),
       title: Autocomplete<String>(
         fieldViewBuilder:
             (context, textEditingController, focusNode, onFieldSubmitted) {
@@ -206,21 +211,43 @@ class ProductsSearchForm extends StatelessWidget {
           return TextField(
             controller: textEditingController,
             focusNode: focusNode,
-            decoration: const InputDecoration(
-              label: Text("Vendor"),
+            onChanged: (value) {
+              if (value.trim().isEmpty) {
+                productsController.changeVendor(value);
+              }
+            },
+            decoration: InputDecoration(
+              label: const Text("Vendor"),
+              suffixIcon: vendor.isNotEmpty
+                  ? _clearTextFieldWidget(() {
+                      productsController.changeVendor("");
+                    })
+                  : null,
             ),
           );
         },
         onSelected: (value) {
           productsController.changeVendor(value);
-          productsController.changeIsEditingSearch(true);
         },
         optionsBuilder: (textEditingValue) {
-          return productsController.vendors().where((element) => element
-              .tokenize()
-              .startsWithAll(textEditingValue.text.tokenize()));
+          var text = textEditingValue.text.trim().toUpperCase();
+          return productsController
+              .vendors()
+              .where((element) => element.trim().toUpperCase().contains(text))
+              .toList()
+            ..insert(0, "");
         },
       ),
+    );
+  }
+
+  Widget _clearTextFieldWidget(void Function() handler) {
+    return IconButton(
+      splashRadius: kIconButtonSplashRadius,
+      icon: const Icon(Icons.cancel_rounded),
+      onPressed: () {
+        handler();
+      },
     );
   }
 }

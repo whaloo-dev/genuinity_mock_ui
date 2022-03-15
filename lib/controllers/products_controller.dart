@@ -55,6 +55,10 @@ class ProductsController extends GetxController {
           _vendors.add(product.vendor);
         }
       }
+
+      if (_maxInventorySize.value == _minInventorySize.value) {
+        _maxInventorySize.value = _maxInventorySize.value + 1;
+      }
       _products.addAll(products);
       _inventorySizeRange.value = RangeValues(
           _minInventorySize.value.toDouble(),
@@ -100,26 +104,32 @@ class ProductsController extends GetxController {
 
   void changeInventorySizeRange(RangeValues newValue) {
     _inventorySizeRange.value = newValue;
+    changeIsEditingSearch(true);
   }
 
   void changeSearchText(String newValue) {
     _searchText.value = newValue.trim();
+    changeIsEditingSearch(true);
   }
 
   void changeSku(String newValue) {
     _sku.value = newValue.trim();
+    changeIsEditingSearch(true);
   }
 
   void changeProductType(String newValue) {
     _productType.value = newValue.trim();
+    changeIsEditingSearch(true);
   }
 
   void changeVendor(String newValue) {
     _vendor.value = newValue.trim();
+    changeIsEditingSearch(true);
   }
 
   void changeBarcode(String newValue) {
     _barcode.value = newValue.trim();
+    changeIsEditingSearch(true);
   }
 
   Product product(int index) {

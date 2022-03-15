@@ -10,8 +10,8 @@ import 'package:whaloo_genuinity/controllers/store_controller.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class MockBackend extends GetConnect implements Backend {
-  // static const _demoStore = "halloweenmakeup";
-  static const _demoStore = "ruesco";
+  static const _demoStore = "halloweenmakeup";
+  // static const _demoStore = "ruesco";
   // static const _demoStore = "huel";
   // static const _demoStore = "signatureveda";
   // static const _demoStore = "locknloadairsoft";

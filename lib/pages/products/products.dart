@@ -20,7 +20,7 @@ class ProductsPage extends StatelessWidget {
           Obx(() {
             if (productsController.isFormVisible() ||
                 productsController.isEditingSearch()) {
-              return const Expanded(child: ProductsSearchForm());
+              return Expanded(child: ProductsSearchForm());
             }
             if (productsController.productsCount() == 0) {
               return const Expanded(child: ProductsTableEmptyWidget());
