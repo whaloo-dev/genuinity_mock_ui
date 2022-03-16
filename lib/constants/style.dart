@@ -17,7 +17,7 @@ BorderRadius kBorderRadius = BorderRadius.only(
   bottomRight: Radius.circular(radius),
 );
 
-double kElevation = 1;
+double kElevation = 2;
 
 double kSpacing = 5;
 

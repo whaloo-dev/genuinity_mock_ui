@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
@@ -44,6 +45,11 @@ class ProductsSearchBar extends StatelessWidget {
                           _productTypeChip(),
                         if (productsController.vendorFilter().isNotEmpty)
                           _vendorChip(),
+                        ...ProductStatus.values
+                            .where((status) =>
+                                !productsController.statusFilter()[status]!)
+                            .map((status) => _statusChip(status))
+                            .toList()
                       ],
                     )
                   : null,
@@ -57,7 +63,7 @@ class ProductsSearchBar extends StatelessWidget {
   }
 
   Widget _inventoryRangeChip() {
-    final inventoryRange = productsController.inventorySizeRange();
+    final inventoryRange = productsController.inventorySizeRangeFilter();
     final minInventory = productsController.minInventorySize();
     final maxInventory = productsController.maxInventorySize();
     return _chip(
@@ -108,11 +114,27 @@ class ProductsSearchBar extends StatelessWidget {
     );
   }
 
+  Widget _statusChip(ProductStatus status) {
+    return _chip(
+      onDeleted: () {
+        productsController.resetStatusFilter(status: status);
+      },
+      text: status.name(),
+      textDecoration: TextDecoration.lineThrough,
+      textColor: kLightGreyColor,
+      backgroundColor: status.color().withOpacity(0.5),
+    );
+  }
+
   Widget _chip({
     required void Function() onDeleted,
     required String text,
+    TextDecoration? textDecoration,
+    Color? textColor,
+    Color? backgroundColor,
   }) {
     return Chip(
+      backgroundColor: backgroundColor,
       elevation: kElevation,
       onDeleted: onDeleted,
       deleteIcon: const Icon(
@@ -121,7 +143,11 @@ class ProductsSearchBar extends StatelessWidget {
       ),
       label: Text(
         text,
-        style: const TextStyle(fontSize: 12),
+        style: TextStyle(
+          color: textColor,
+          fontSize: 12,
+          decoration: textDecoration,
+        ),
       ),
     );
   }

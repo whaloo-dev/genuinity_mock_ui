@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
@@ -20,6 +21,7 @@ class ProductsSearchForm extends StatelessWidget {
           final vendor = productsController.vendorFilter();
           final sku = productsController.skuFilter();
           final barcode = productsController.barcodeFilter();
+          final status = productsController.statusFilter();
           return Column(
             children: [
               SizedBox(height: kSpacing * 2),
@@ -34,6 +36,7 @@ class ProductsSearchForm extends StatelessWidget {
               ),
               SizedBox(height: kSpacing * 2),
               const Divider(thickness: 1),
+              _statusField(status),
               _inventoryRangeField(),
               _skuField(sku),
               _barcodeField(barcode),
@@ -93,7 +96,7 @@ class ProductsSearchForm extends StatelessWidget {
   Widget _inventoryRangeField() {
     final maxInventory = productsController.maxInventorySize();
     final minInventory = productsController.minInventorySize();
-    final inventorySizeRange = productsController.inventorySizeRange();
+    final inventorySizeRange = productsController.inventorySizeRangeFilter();
     if (maxInventory == minInventory) {
       return Container();
     }
@@ -266,6 +269,46 @@ class ProductsSearchForm extends StatelessWidget {
           }).toList()
             ..insert(0, "");
         },
+      ),
+    );
+  }
+
+  Widget _statusField(Map<ProductStatus, bool> statusFilter) {
+    return ListTile(
+      leading: const Text("Status"),
+      title: Wrap(
+        children: ProductStatus.values
+            .map((status) => _statusChip(status, statusFilter[status]!))
+            .toList(),
+      ),
+    );
+  }
+
+  Widget _statusChip(ProductStatus status, bool selected) {
+    return Container(
+      margin: EdgeInsets.all(kSpacing),
+      child: ChoiceChip(
+        pressElevation: kElevation,
+        selected: selected,
+        backgroundColor: status.color().withOpacity(0.5),
+        selectedColor: status.color(),
+        onSelected: (newValue) {
+          productsController.changeStatusFilter(status, newValue);
+        },
+        label: Text(
+          status.name(),
+          style: TextStyle(
+            color: selected ? kDarkColor : kDarkColor.withOpacity(0.5),
+            fontSize: 12,
+            decoration: selected ? null : TextDecoration.lineThrough,
+          ),
+        ),
+        avatar: selected
+            ? const Icon(
+                FontAwesomeIcons.check,
+                size: 10,
+              )
+            : null,
       ),
     );
   }

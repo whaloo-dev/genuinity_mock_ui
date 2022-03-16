@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Product {
   final ProductId id;
   final String title;
@@ -6,6 +8,7 @@ class Product {
   int inventoryQuantity;
   final String type;
   final String vendor;
+  final ProductStatus status;
   final List<Variant> variants = <Variant>[];
   final List<Option> options = <Option>[];
 
@@ -17,6 +20,7 @@ class Product {
     required this.vendor,
     required this.codesCount,
     required this.inventoryQuantity,
+    required this.status,
   });
 }
 
@@ -27,6 +31,36 @@ class ProductId implements Comparable<ProductId> {
   @override
   int compareTo(ProductId other) {
     return value.compareTo(other.value);
+  }
+}
+
+enum ProductStatus {
+  active,
+  draft,
+  archived,
+}
+
+extension ProductStatusExtension on ProductStatus {
+  String name() {
+    switch (this) {
+      case ProductStatus.active:
+        return "Active";
+      case ProductStatus.draft:
+        return "Draft";
+      case ProductStatus.archived:
+        return "Archived";
+    }
+  }
+
+  Color color() {
+    switch (this) {
+      case ProductStatus.active: //rgba(228, 229, 231, 1)
+        return const Color.fromRGBO(174, 233, 209, 1);
+      case ProductStatus.draft:
+        return const Color.fromRGBO(164, 232, 242, 1);
+      case ProductStatus.archived:
+        return const Color.fromRGBO(228, 229, 231, 1);
+    }
   }
 }
 

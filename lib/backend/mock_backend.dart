@@ -15,9 +15,9 @@ class MockBackend extends GetConnect implements Backend {
   // static const _demoStore = "huel";
   // static const _demoStore = "signatureveda";
   // static const _demoStore = "locknloadairsoft";
-  // static const _demoStore = "decathlon";
+  static const _demoStore = "decathlon";
   // static const _demoStore = "thebookbundler";
-  static const _demoStore = "commonfarmflowers";
+  // static const _demoStore = "commonfarmflowers";
   // static const _demoStore = "atelierdubraceletparisien";
 
   final _demoBackend = <Product>[];
@@ -44,12 +44,13 @@ class MockBackend extends GetConnect implements Backend {
 
   @override
   Future<List<Product>> loadProducts({
-    List<String>? searchKeywords,
-    String? sku,
-    String? barcode,
-    String? vendor,
-    String? productType,
-    RangeValues? inventoryRange,
+    Map<ProductStatus, bool>? statusFilter,
+    List<String>? productTitleFilter,
+    String? skuFilter,
+    String? barcodeFilter,
+    String? vendorFilter,
+    String? productTypeFilter,
+    RangeValues? inventoryRangeFilter,
   }) async {
     if (_demoBackend.isEmpty) {
       var url = "$_basePath/demo/${_demoStore}_products.json";
@@ -58,6 +59,7 @@ class MockBackend extends GetConnect implements Backend {
       productsData = productsData['products'];
 
       for (var i = 0; i < productsData.length; i++) {
+        var mod3 = i % 3;
         var productData = productsData[i];
         var product = Product(
           id: ProductId(productData['id']),
@@ -67,6 +69,11 @@ class MockBackend extends GetConnect implements Backend {
           vendor: productData['vendor'],
           codesCount: Random().nextInt(10000),
           inventoryQuantity: 0,
+          status: mod3 == 0
+              ? ProductStatus.active
+              : mod3 == 1
+                  ? ProductStatus.draft
+                  : ProductStatus.archived,
         );
         var variantsData = productData['variants'];
         for (var i2 = 0; i2 < variantsData.length; i2++) {
@@ -92,28 +99,27 @@ class MockBackend extends GetConnect implements Backend {
     }
 
     final _products = <Product>[];
-    if (sku != null) {
-      sku = sku.trim().toUpperCase();
+    if (skuFilter != null) {
+      skuFilter = skuFilter.trim().toUpperCase();
     }
-    if (barcode != null) {
-      barcode = barcode.trim().toUpperCase();
-    }
-    if (vendor != null) {
-      vendor = vendor.trim().toUpperCase();
-    }
-    if (productType != null) {
-      productType = productType.trim().toUpperCase();
+    if (barcodeFilter != null) {
+      barcodeFilter = barcodeFilter.trim().toUpperCase();
     }
 
     for (int i = 0; i < _demoBackend.length; i++) {
       final _product = _demoBackend[i];
 
+      // Product status filter
+      if (statusFilter != null && !statusFilter[_product.status]!) {
+        continue;
+      }
+
       //SKU filter
-      if (sku != null) {
+      if (skuFilter != null) {
         var skuOk = false;
         for (Variant v in _product.variants) {
           final variantSku = v.sku.trim().toUpperCase();
-          if (variantSku == sku) {
+          if (variantSku == skuFilter) {
             skuOk = true;
             break;
           }
@@ -124,11 +130,11 @@ class MockBackend extends GetConnect implements Backend {
       }
 
       //Barecode filter
-      if (barcode != null) {
+      if (barcodeFilter != null) {
         var barcodeOk = false;
         for (Variant v in _product.variants) {
           final variantBarcode = v.barcode.trim().toUpperCase();
-          if (variantBarcode == barcode) {
+          if (variantBarcode == barcodeFilter) {
             barcodeOk = true;
             break;
           }
@@ -139,23 +145,24 @@ class MockBackend extends GetConnect implements Backend {
       }
 
       //Vendor filter
-      if (vendor != null) {
-        if (vendor != _product.vendor.trim().toUpperCase()) {
+      if (vendorFilter != null) {
+        if (vendorFilter != _product.vendor) {
           continue;
         }
       }
 
       //ProductType filter
-      if (productType != null) {
-        if (productType != _product.type.trim().toUpperCase()) {
+      if (productTypeFilter != null) {
+        if (productTypeFilter != _product.type) {
           continue;
         }
       }
 
-      //inventory filter :
-      if (inventoryRange != null) {
-        bool inRange = _product.inventoryQuantity >= inventoryRange.start &&
-            _product.inventoryQuantity <= inventoryRange.end;
+      // Inventory filter :
+      if (inventoryRangeFilter != null) {
+        bool inRange =
+            _product.inventoryQuantity >= inventoryRangeFilter.start &&
+                _product.inventoryQuantity <= inventoryRangeFilter.end;
         if (!inRange) {
           continue;
         }
@@ -163,9 +170,9 @@ class MockBackend extends GetConnect implements Backend {
 
       //Product title filter
       var accepted = true;
-      if (searchKeywords != null) {
+      if (productTitleFilter != null) {
         final tokens = _product.title.tokenize();
-        accepted = accepted && tokens.startsWithAll(searchKeywords);
+        accepted = accepted && tokens.startsWithAll(productTitleFilter);
         if (!accepted) {
           continue;
         }

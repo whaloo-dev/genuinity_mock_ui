@@ -8,11 +8,12 @@ abstract class Backend {
 
   Future<Store> getCurrentStore();
   Future<List<Product>> loadProducts({
-    List<String>? searchKeywords,
-    String? sku,
-    String? barcode,
-    String? vendor,
-    String? productType,
-    RangeValues? inventoryRange,
+    Map<ProductStatus, bool>? statusFilter,
+    List<String>? productTitleFilter,
+    String? skuFilter,
+    String? barcodeFilter,
+    String? vendorFilter,
+    String? productTypeFilter,
+    RangeValues? inventoryRangeFilter,
   });
 }

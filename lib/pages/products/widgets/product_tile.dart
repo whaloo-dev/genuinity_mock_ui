@@ -63,6 +63,7 @@ class ProductTile extends StatelessWidget {
                       if (vendorsCount > 1 && product.vendor.isNotEmpty)
                         _vendorWidget(),
                       _productInventoryWidget(),
+                      _productStatusWidget(),
                       const SizedBox(),
                     ],
                   ),
@@ -207,6 +208,22 @@ class ProductTile extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _productStatusWidget() {
+    return Container(
+      margin: EdgeInsets.all(kSpacing),
+      child: Chip(
+        backgroundColor: product.status.color(),
+        label: Text(
+          product.status.name(),
+          style: TextStyle(
+            color: kLightGreyColor,
+            fontSize: 12,
+          ),
+        ),
       ),
     );
   }
