@@ -8,6 +8,8 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 class ProductsSearchForm extends StatelessWidget {
   final kOptionsMaxHeight = 200.0;
 
+  const ProductsSearchForm({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(

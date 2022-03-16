@@ -56,8 +56,7 @@ class ProductsTableEmptyWidget extends StatelessWidget {
                                 SizedBox(height: kSpacing),
                                 ElevatedButton(
                                   onPressed: () {
-                                    launchURL(
-                                        "https://${storeController.store!.name}.myshopify.com/");
+                                    goToShopify();
                                   },
                                   child: const Text("Go To Shopify Admin"),
                                 ),

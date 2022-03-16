@@ -14,7 +14,7 @@ class Logo extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: kSpacing),
             child: SizedBox(
-              width: 25,
+              width: 40,
               child: Image.asset("assets/icons/logo-small.png"),
             ),
           ),

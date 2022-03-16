@@ -28,8 +28,7 @@ class SideMenu extends StatelessWidget {
                   onTap: () {
                     if (!menuController.isActive(item)) {
                       if (item.route == shopifyPageRoute) {
-                        launchURL(
-                            "https://${storeController.store!.name}.myshopify.com/");
+                        goToShopify();
                         return;
                       }
                       menuController.changeActiveItemTo(item);
