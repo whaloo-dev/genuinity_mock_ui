@@ -14,8 +14,10 @@ class ProductsTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Obx(() {
-        int visibleProductsCount = productsController.visibleProductsCount();
-        int productsCount = productsController.productsCount();
+        final visibleProductsCount = productsController.visibleProductsCount();
+        final productsCount = productsController.productsCount();
+        final vendorsCount = productsController.vendors().length;
+        final productTypesCount = productsController.productTypes().length;
         return ListView.separated(
           separatorBuilder: (context, index) => const Divider(thickness: 1),
           itemCount: min(visibleProductsCount + 1, productsCount),
@@ -45,6 +47,8 @@ class ProductsTable extends StatelessWidget {
               product: productsController.product(index),
               productIndex: index + 1,
               productsCount: productsCount,
+              vendorsCount: vendorsCount,
+              productTypesCount: productTypesCount,
             );
           },
         );

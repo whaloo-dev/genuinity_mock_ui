@@ -19,8 +19,8 @@ class ProductsPage extends StatelessWidget {
             const ProductsSearchBar(),
           Obx(() {
             if (productsController.isFormVisible() ||
-                productsController.isEditingSearch()) {
-              return Expanded(child: ProductsSearchForm());
+                productsController.isEditingFilters()) {
+              return const Expanded(child: ProductsSearchForm());
             }
             if (productsController.productsCount() == 0) {
               return const Expanded(child: ProductsTableEmptyWidget());

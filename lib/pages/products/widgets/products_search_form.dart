@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
@@ -15,10 +16,10 @@ class ProductsSearchForm extends StatelessWidget {
     return Card(
       child: SingleChildScrollView(
         child: Obx(() {
-          final productType = productsController.productType();
-          final vendor = productsController.vendor();
-          final sku = productsController.sku();
-          final barcode = productsController.barcode();
+          final productType = productsController.productTypeFilter();
+          final vendor = productsController.vendorFilter();
+          final sku = productsController.skuFilter();
+          final barcode = productsController.barcodeFilter();
           return Column(
             children: [
               SizedBox(height: kSpacing * 2),
@@ -36,9 +37,9 @@ class ProductsSearchForm extends StatelessWidget {
               _inventoryRangeField(),
               _skuField(sku),
               _barcodeField(barcode),
-              if (productsController.vendors().length > 1) _vendorField(vendor),
               if (productsController.productTypes().length > 1)
                 _productTypeField(productType),
+              if (productsController.vendors().length > 1) _vendorField(vendor),
               SizedBox(height: kOptionsMaxHeight),
             ],
           );
@@ -93,15 +94,17 @@ class ProductsSearchForm extends StatelessWidget {
     final maxInventory = productsController.maxInventorySize();
     final minInventory = productsController.minInventorySize();
     final inventorySizeRange = productsController.inventorySizeRange();
+    if (maxInventory == minInventory) {
+      return Container();
+    }
     return ListTile(
+      leading: const Icon(FontAwesomeIcons.boxes),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Inventory ${inventorySizeRange.toText(minInventory, maxInventory)}",
-            style: TextStyle(
-              color: kLightGreyColor,
-            ),
+            style: TextStyle(color: kLightGreyColor),
           ),
           RangeSlider(
             divisions: maxInventory - minInventory,
@@ -115,7 +118,7 @@ class ProductsSearchForm extends StatelessWidget {
             max: maxInventory.toDouble(),
             values: inventorySizeRange,
             onChanged: (value) {
-              productsController.changeInventorySizeRange(RangeValues(
+              productsController.changeInventorySizeRangeFilter(RangeValues(
                   value.start.roundToDouble(), value.end.roundToDouble()));
             },
           ),
@@ -127,16 +130,37 @@ class ProductsSearchForm extends StatelessWidget {
   Widget _skuField(String sku) {
     final TextEditingController controller = textEditingController(text: sku);
     return ListTile(
+      leading: Stack(
+        children: [
+          const Icon(FontAwesomeIcons.fingerprint),
+          Positioned(
+            right: 3,
+            bottom: -2,
+            child: Container(
+              padding: const EdgeInsets.all(2),
+              color: kSurfaceColor,
+              child: Text(
+                "SKU",
+                style: TextStyle(
+                  color: kLightGreyColor,
+                  fontSize: 7,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       title: TextField(
         controller: controller,
         onChanged: (value) {
-          productsController.changeSku(value);
+          productsController.changeSkuFilter(value);
         },
         decoration: InputDecoration(
           label: const Text("SKU"),
           suffixIcon: sku.isNotEmpty
-              ? _clearTextFieldWidget(() {
-                  productsController.changeSku("");
+              ? _clearFieldWidget(() {
+                  productsController.changeSkuFilter("");
                 })
               : null,
         ),
@@ -147,16 +171,17 @@ class ProductsSearchForm extends StatelessWidget {
   Widget _barcodeField(String barcode) {
     TextEditingController controller = textEditingController(text: barcode);
     return ListTile(
+      leading: const Icon(FontAwesomeIcons.barcode),
       title: TextField(
         controller: controller,
         onChanged: (value) {
-          productsController.changeBarcode(value);
+          productsController.changeBarcodeFilter(value);
         },
         decoration: InputDecoration(
           label: const Text("Barcode (ISBN, UPC, GTIN, etc.)"),
           suffixIcon: barcode.isNotEmpty
-              ? _clearTextFieldWidget(() {
-                  productsController.changeBarcode("");
+              ? _clearFieldWidget(() {
+                  productsController.changeBarcodeFilter("");
                 })
               : null,
         ),
@@ -166,6 +191,7 @@ class ProductsSearchForm extends StatelessWidget {
 
   Widget _productTypeField(String productType) {
     return ListTile(
+      leading: const Icon(FontAwesomeIcons.folder),
       title: Autocomplete<String>(
         optionsMaxHeight: kOptionsMaxHeight,
         fieldViewBuilder:
@@ -176,28 +202,28 @@ class ProductsSearchForm extends StatelessWidget {
             focusNode: focusNode,
             onChanged: (value) {
               if (value.trim().isEmpty) {
-                productsController.changeProductType(value);
+                productsController.changeProductTypeFilter(value);
               }
             },
             decoration: InputDecoration(
               label: const Text("Product Type"),
               suffixIcon: productType.isNotEmpty
-                  ? _clearTextFieldWidget(() {
-                      productsController.changeProductType("");
+                  ? _clearFieldWidget(() {
+                      productsController.changeProductTypeFilter("");
                     })
                   : null,
             ),
           );
         },
         onSelected: (value) {
-          productsController.changeProductType(value);
+          productsController.changeProductTypeFilter(value);
         },
         optionsBuilder: (textEditingValue) {
           var text = textEditingValue.text.trim().toUpperCase();
-          return productsController
-              .productTypes()
-              .where((element) => element.trim().toUpperCase().contains(text))
-              .toList()
+          return productsController.productTypes().where((element) {
+            final e = element.trim().toUpperCase();
+            return e.contains(text) && e.isNotEmpty;
+          }).toList()
             ..insert(0, "");
         },
       ),
@@ -206,6 +232,7 @@ class ProductsSearchForm extends StatelessWidget {
 
   Widget _vendorField(String vendor) {
     return ListTile(
+      leading: const Icon(FontAwesomeIcons.store),
       title: Autocomplete<String>(
         fieldViewBuilder:
             (context, textEditingController, focusNode, onFieldSubmitted) {
@@ -215,35 +242,35 @@ class ProductsSearchForm extends StatelessWidget {
             focusNode: focusNode,
             onChanged: (value) {
               if (value.trim().isEmpty) {
-                productsController.changeVendor(value);
+                productsController.changeVendorFilter(value);
               }
             },
             decoration: InputDecoration(
               label: const Text("Vendor"),
               suffixIcon: vendor.isNotEmpty
-                  ? _clearTextFieldWidget(() {
-                      productsController.changeVendor("");
+                  ? _clearFieldWidget(() {
+                      productsController.changeVendorFilter("");
                     })
                   : null,
             ),
           );
         },
         onSelected: (value) {
-          productsController.changeVendor(value);
+          productsController.changeVendorFilter(value);
         },
         optionsBuilder: (textEditingValue) {
           var text = textEditingValue.text.trim().toUpperCase();
-          return productsController
-              .vendors()
-              .where((element) => element.trim().toUpperCase().contains(text))
-              .toList()
+          return productsController.vendors().where((element) {
+            final e = element.trim().toUpperCase();
+            return e.contains(text) && e.isNotEmpty;
+          }).toList()
             ..insert(0, "");
         },
       ),
     );
   }
 
-  Widget _clearTextFieldWidget(void Function() handler) {
+  Widget _clearFieldWidget(void Function() handler) {
     return IconButton(
       splashRadius: kIconButtonSplashRadius,
       icon: const Icon(Icons.cancel_rounded),

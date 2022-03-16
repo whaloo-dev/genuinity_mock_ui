@@ -16,7 +16,9 @@ class MockBackend extends GetConnect implements Backend {
   // static const _demoStore = "signatureveda";
   // static const _demoStore = "locknloadairsoft";
   // static const _demoStore = "decathlon";
-  static const _demoStore = "thebookbundler";
+  // static const _demoStore = "thebookbundler";
+  static const _demoStore = "commonfarmflowers";
+  // static const _demoStore = "atelierdubraceletparisien";
 
   final _demoBackend = <Product>[];
   late String _basePath;

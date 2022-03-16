@@ -12,7 +12,7 @@ class ProductsSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var searchFieldController =
-          textEditingController(text: productsController.searchText());
+          textEditingController(text: productsController.productTitleFilter());
 
       return Column(
         children: [
@@ -20,8 +20,7 @@ class ProductsSearchBar extends StatelessWidget {
             enableSuggestions: true,
             enabled: !productsController.isLoadingData(),
             onChanged: (value) {
-              productsController.changeIsEditingSearch(true);
-              productsController.changeSearchText(value);
+              productsController.changeProductTitleFilter(value);
             },
             onSubmitted: (value) {
               productsController.applyFilter();
@@ -29,20 +28,21 @@ class ProductsSearchBar extends StatelessWidget {
             controller: searchFieldController,
             decoration: InputDecoration(
               counter: (!productsController.isLoadingData() &&
-                      !productsController.isEditingSearch() &&
+                      !productsController.isEditingFilters() &&
                       productsController.isFiltered())
                   ? Wrap(
                       spacing: kSpacing,
                       runSpacing: kSpacing,
                       children: [
-                        if (productsController.isInventorySizeRangeSet())
+                        if (productsController.isInventorySizeRangeFilterSet())
                           _inventoryRangeChip(),
-                        if (productsController.sku().isNotEmpty) _skuChip(),
-                        if (productsController.barcode().isNotEmpty)
+                        if (productsController.skuFilter().isNotEmpty)
+                          _skuChip(),
+                        if (productsController.barcodeFilter().isNotEmpty)
                           _barcodeChip(),
-                        if (productsController.productType().isNotEmpty)
+                        if (productsController.productTypeFilter().isNotEmpty)
                           _productTypeChip(),
-                        if (productsController.vendor().isNotEmpty)
+                        if (productsController.vendorFilter().isNotEmpty)
                           _vendorChip(),
                       ],
                     )
@@ -62,47 +62,47 @@ class ProductsSearchBar extends StatelessWidget {
     final maxInventory = productsController.maxInventorySize();
     return _chip(
       onDeleted: () {
-        productsController.resetInventorySizeRange();
+        productsController.resetInventorySizeRangeFilter();
       },
       text: "Inventory ${inventoryRange.toText(minInventory, maxInventory)} ",
     );
   }
 
   Widget _skuChip() {
-    final sku = productsController.sku();
+    final sku = productsController.skuFilter();
     return _chip(
       onDeleted: () {
-        productsController.resetSku();
+        productsController.resetSkuFilter();
       },
       text: "SKU = '$sku' ",
     );
   }
 
   Widget _barcodeChip() {
-    final barcode = productsController.barcode();
+    final barcode = productsController.barcodeFilter();
     return _chip(
       onDeleted: () {
-        productsController.resetBarcode();
+        productsController.resetBarcodeFilter();
       },
       text: "Barcode = '$barcode' ",
     );
   }
 
   Widget _vendorChip() {
-    final vendor = productsController.vendor();
+    final vendor = productsController.vendorFilter();
     return _chip(
       onDeleted: () {
-        productsController.resetVendor();
+        productsController.resetVendorFilter();
       },
       text: "Vendor = '$vendor' ",
     );
   }
 
   Widget _productTypeChip() {
-    final productType = productsController.productType();
+    final productType = productsController.productTypeFilter();
     return _chip(
       onDeleted: () {
-        productsController.resetProductType();
+        productsController.resetProductTypeFilter();
       },
       text: "Product Type = '$productType' ",
     );
@@ -128,7 +128,7 @@ class ProductsSearchBar extends StatelessWidget {
 
   Widget _suffixWidget(TextEditingController seachFieldController) {
     int productsCount = productsController.productsCount();
-    bool showSearch = (productsController.isEditingSearch() ||
+    bool showSearch = (productsController.isEditingFilters() ||
         !productsController.isFiltered());
     bool showResultsCount = !showSearch && !productsController.isLoadingData();
     bool showCancel =
@@ -159,7 +159,7 @@ class ProductsSearchBar extends StatelessWidget {
             },
           ),
         Visibility(
-          visible: !productsController.isEditingSearch(),
+          visible: !productsController.isEditingFilters(),
           maintainSize: true,
           maintainAnimation: true,
           maintainState: true,

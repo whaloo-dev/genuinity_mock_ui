@@ -32,18 +32,21 @@ class ProfileWidget extends StatelessWidget {
                       ),
                       SizedBox(width: kSpacing),
                     ]),
-                  Container(
-                    padding: const EdgeInsets.all(2),
-                    margin: const EdgeInsets.all(2),
-                    child: CircleAvatar(
-                      backgroundColor: kLightGreyColor.withOpacity(0.5),
-                      child: IconButton(
-                          onPressed: () {},
-                          splashRadius: kIconButtonSplashRadius,
-                          icon: storeController.store!.imageUrl != null
-                              ? Image.network(storeController.store!.imageUrl!)
-                              : const Icon(Icons.person)),
+                  Card(
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
+                    clipBehavior: Clip.antiAlias,
+                    child: IconButton(
+                        onPressed: () {},
+                        iconSize: 30,
+                        icon: storeController.store!.imageUrl != null
+                            ? Ink.image(
+                                image: NetworkImage(
+                                    storeController.store!.imageUrl!),
+                              )
+                            : const Icon(Icons.person)),
                   ),
                 ],
               )

@@ -12,7 +12,7 @@ class ProductsController extends GetxController {
 
   static const int _loadingStep = 10;
 
-  final _isEditingSearch = false.obs;
+  final _isEditingFilters = false.obs;
   final _isFormVisible = false.obs;
   final _isLoadingData = true.obs;
 
@@ -24,13 +24,12 @@ class ProductsController extends GetxController {
   final _vendors = <String>[].obs;
   final _visibleProductsCount = 0.obs;
 
-  final _searchText = "".obs;
-  final _searchKeywords = <String>[].obs;
-  final _sku = "".obs;
-  final _vendor = "".obs;
-  final _productType = "".obs;
-  final _barcode = "".obs;
-  final _inventorySizeRange = const RangeValues(0, 500.0).obs;
+  final _productTitleFilter = "".obs;
+  final _skuFilter = "".obs;
+  final _vendorFilter = "".obs;
+  final _productTypeFilter = "".obs;
+  final _barcodeFilter = "".obs;
+  final _inventorySizeRangeFilter = const RangeValues(0, 500.0).obs;
 
   @override
   void onReady() async {
@@ -55,12 +54,8 @@ class ProductsController extends GetxController {
           _vendors.add(product.vendor);
         }
       }
-
-      if (_maxInventorySize.value == _minInventorySize.value) {
-        _maxInventorySize.value = _maxInventorySize.value + 1;
-      }
       _products.addAll(products);
-      _inventorySizeRange.value = RangeValues(
+      _inventorySizeRangeFilter.value = RangeValues(
           _minInventorySize.value.toDouble(),
           _maxInventorySize.value.toDouble());
       _visibleProductsCount.value = min(_loadingStep, productsCount());
@@ -70,9 +65,8 @@ class ProductsController extends GetxController {
   }
 
   void applyFilter() {
-    _isEditingSearch.value = false;
+    _changeIsEditingFilters(false);
     _isFormVisible.value = false;
-    _searchKeywords.value = _searchText.value.tokenize();
     _applyFilter();
   }
 
@@ -84,52 +78,48 @@ class ProductsController extends GetxController {
   }
 
   void resetFilters() {
-    _searchText.value = "";
-    _sku.value = "";
-    _barcode.value = "";
-    _vendor.value = "";
-    _productType.value = "";
-    _inventorySizeRange.value = RangeValues(
+    _productTitleFilter.value = "";
+    _skuFilter.value = "";
+    _barcodeFilter.value = "";
+    _vendorFilter.value = "";
+    _productTypeFilter.value = "";
+    _inventorySizeRangeFilter.value = RangeValues(
         _minInventorySize.value.toDouble(), _maxInventorySize.value.toDouble());
     applyFilter();
-  }
-
-  void changeIsEditingSearch(bool newValue) {
-    _isEditingSearch.value = newValue;
   }
 
   void changeIsFormVisible(bool newValue) {
     _isFormVisible.value = newValue;
   }
 
-  void changeInventorySizeRange(RangeValues newValue) {
-    _inventorySizeRange.value = newValue;
-    changeIsEditingSearch(true);
+  void changeInventorySizeRangeFilter(RangeValues newValue) {
+    _inventorySizeRangeFilter.value = newValue;
+    _changeIsEditingFilters(true);
   }
 
-  void changeSearchText(String newValue) {
-    _searchText.value = newValue.trim();
-    changeIsEditingSearch(true);
+  void changeProductTitleFilter(String newValue) {
+    _productTitleFilter.value = newValue.trim();
+    _changeIsEditingFilters(true);
   }
 
-  void changeSku(String newValue) {
-    _sku.value = newValue.trim();
-    changeIsEditingSearch(true);
+  void changeSkuFilter(String newValue) {
+    _skuFilter.value = newValue.trim();
+    _changeIsEditingFilters(true);
   }
 
-  void changeProductType(String newValue) {
-    _productType.value = newValue.trim();
-    changeIsEditingSearch(true);
+  void changeProductTypeFilter(String newValue) {
+    _productTypeFilter.value = newValue.trim();
+    _changeIsEditingFilters(true);
   }
 
-  void changeVendor(String newValue) {
-    _vendor.value = newValue.trim();
-    changeIsEditingSearch(true);
+  void changeVendorFilter(String newValue) {
+    _vendorFilter.value = newValue.trim();
+    _changeIsEditingFilters(true);
   }
 
-  void changeBarcode(String newValue) {
-    _barcode.value = newValue.trim();
-    changeIsEditingSearch(true);
+  void changeBarcodeFilter(String newValue) {
+    _barcodeFilter.value = newValue.trim();
+    _changeIsEditingFilters(true);
   }
 
   Product product(int index) {
@@ -153,23 +143,23 @@ class ProductsController extends GetxController {
   }
 
   RangeValues inventorySizeRange() {
-    return _inventorySizeRange.value;
+    return _inventorySizeRangeFilter.value;
   }
 
-  String searchText() {
-    return _searchText.value;
+  String productTitleFilter() {
+    return _productTitleFilter.value;
   }
 
-  String sku() {
-    return _sku.value;
+  String skuFilter() {
+    return _skuFilter.value;
   }
 
-  String productType() {
-    return _productType.value;
+  String productTypeFilter() {
+    return _productTypeFilter.value;
   }
 
-  String vendor() {
-    return _vendor.value;
+  String vendorFilter() {
+    return _vendorFilter.value;
   }
 
   List<String> vendors() {
@@ -180,16 +170,16 @@ class ProductsController extends GetxController {
     return _productTypes;
   }
 
-  String barcode() {
-    return _barcode.value;
+  String barcodeFilter() {
+    return _barcodeFilter.value;
   }
 
   bool isFiltered() {
     return productsCount() != _totalProductsCount.value;
   }
 
-  bool isInventorySizeRangeSet() {
-    return _inventorySizeRange.value !=
+  bool isInventorySizeRangeFilterSet() {
+    return _inventorySizeRangeFilter.value !=
         RangeValues(_minInventorySize.toDouble(), _maxInventorySize.toDouble());
   }
 
@@ -197,8 +187,8 @@ class ProductsController extends GetxController {
     return _totalProductsCount.value == 0;
   }
 
-  bool isEditingSearch() {
-    return _isEditingSearch.value;
+  bool isEditingFilters() {
+    return _isEditingFilters.value;
   }
 
   bool isFormVisible() {
@@ -209,30 +199,34 @@ class ProductsController extends GetxController {
     return _isLoadingData.value;
   }
 
-  void resetInventorySizeRange() {
-    _inventorySizeRange.value =
+  void resetInventorySizeRangeFilter() {
+    _inventorySizeRangeFilter.value =
         RangeValues(_minInventorySize.toDouble(), _maxInventorySize.toDouble());
     applyFilter();
   }
 
-  void resetSku() {
-    _sku.value = "";
+  void resetSkuFilter() {
+    _skuFilter.value = "";
     applyFilter();
   }
 
-  void resetProductType() {
-    _productType.value = "";
+  void resetProductTypeFilter() {
+    _productTypeFilter.value = "";
     applyFilter();
   }
 
-  void resetVendor() {
-    _vendor.value = "";
+  void resetVendorFilter() {
+    _vendorFilter.value = "";
     applyFilter();
   }
 
-  void resetBarcode() {
-    _barcode.value = "";
+  void resetBarcodeFilter() {
+    _barcodeFilter.value = "";
     applyFilter();
+  }
+
+  void _changeIsEditingFilters(bool newValue) {
+    _isEditingFilters.value = newValue;
   }
 
   Future<void> _applyFilter() async {
@@ -241,13 +235,17 @@ class ProductsController extends GetxController {
 
     Backend.instance
         .loadProducts(
-      searchKeywords: _searchKeywords.isNotEmpty ? _searchKeywords : null,
-      sku: _sku.isNotEmpty ? _sku.value : null,
-      barcode: _barcode.isNotEmpty ? _barcode.value : null,
-      vendor: _vendor.isNotEmpty ? _vendor.value : null,
-      productType: _productType.isNotEmpty ? _productType.value : null,
-      inventoryRange:
-          isInventorySizeRangeSet() ? _inventorySizeRange.value : null,
+      searchKeywords: _productTitleFilter.isNotEmpty
+          ? _productTitleFilter.value.tokenize()
+          : null,
+      sku: _skuFilter.isNotEmpty ? _skuFilter.value : null,
+      barcode: _barcodeFilter.isNotEmpty ? _barcodeFilter.value : null,
+      vendor: _vendorFilter.isNotEmpty ? _vendorFilter.value : null,
+      productType:
+          _productTypeFilter.isNotEmpty ? _productTypeFilter.value : null,
+      inventoryRange: isInventorySizeRangeFilterSet()
+          ? _inventorySizeRangeFilter.value
+          : null,
     )
         .then((products) {
       _products.addAll(products);
