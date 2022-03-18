@@ -16,7 +16,7 @@ class DashboardCardsMedium extends StatelessWidget {
             onTap: () {},
             topColor: Colors.orange,
           ),
-          SizedBox(width: kSpacing),
+          const SizedBox(width: kSpacing),
           InfoCard(
             title: "Packages delivered",
             value: "17",
@@ -25,7 +25,7 @@ class DashboardCardsMedium extends StatelessWidget {
           ),
         ],
       ),
-      SizedBox(height: kSpacing),
+      const SizedBox(height: kSpacing),
       Row(
         children: [
           InfoCard(
@@ -34,7 +34,7 @@ class DashboardCardsMedium extends StatelessWidget {
             onTap: () {},
             topColor: Colors.redAccent,
           ),
-          SizedBox(width: kSpacing),
+          const SizedBox(width: kSpacing),
           InfoCard(
             title: "Scheduled deliveries",
             value: "3",

@@ -2,37 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-Color kSurfaceColor = Colors.white; //Color(0xFFF7F8FC);
-Color kLightColor = Colors.grey.shade100; //Color(0xFFF7F8FC);
-Color kLightGreyColor = Colors.grey.shade500; //Color(0xFFA4A6B3);
-Color kDarkColor = Colors.black; //Color(0xFF363740);
-Color kActiveColor = Colors.blue.shade500; //Color(0xFF3C19C0);
-Color kLogoColor = Colors.blueAccent.shade200;
+const Color kSurfaceColor = Colors.white; //Color(0xFFF7F8FC);
+final Color kLightColor = Colors.grey.shade200; //Color(0xFFF7F8FC);
+final Color kLightGreyColor = Colors.grey.shade500; //Color(0xFFA4A6B3);
+const Color kDarkColor = Colors.black; //Color(0xFF363740);
+final Color kActiveColor = Colors.blue.shade500; //Color(0xFF3C19C0);
+final Color kLogoColor = Colors.blueAccent.shade200;
+const Color kWarningColor = Colors.orange;
+final Color kErrorColor = Colors.red.shade200;
+final Color kSelectionColor = Color.fromRGBO(
+  kActiveColor.red + 10,
+  kActiveColor.green + 10,
+  kActiveColor.blue + 10,
+  0.1,
+);
+final Color kHeaderColor = Color.fromRGBO(
+  kLightColor.red + 10,
+  kLightColor.red + 10,
+  kLightColor.red + 10,
+  1,
+);
 
-double radius = 10;
-BorderRadius kBorderRadius = BorderRadius.only(
+const double radius = 10;
+BorderRadius kBorderRadius = const BorderRadius.only(
   topLeft: Radius.circular(radius),
   topRight: Radius.circular(radius),
   bottomLeft: Radius.circular(radius),
   bottomRight: Radius.circular(radius),
 );
 
-double kElevation = 2;
+const double kElevation = 3;
 
-double kSpacing = 5;
+const double kSpacing = 7;
 
-double kIconButtonSplashRadius = 25;
+const double kIconButtonSplashRadius = 25;
 
-NumberFormat numberFormat = NumberFormat("###,###", "en_US");
-NumberFormat compactNumberFormat = NumberFormat.compact(locale: "en_US");
-DateFormat dateFormat = DateFormat.yMEd("en_US").add_Hms();
-DateFormat compactDateFormat = DateFormat("yyyy-MM-dd", "en_US");
+final NumberFormat numberFormat = NumberFormat("###,###", "en_US");
+final NumberFormat compactNumberFormat = NumberFormat.compact(locale: "en_US");
+final DateFormat dateFormat = DateFormat.yMEd("en_US").add_Hms();
+final DateFormat compactDateFormat = DateFormat("yyyy-MM-dd", "en_US");
 
 //blue light #93dbe9
 //blue dark #689cc5
 
 // Theme
-ThemeData themeData = ThemeData(
+final ThemeData themeData = ThemeData(
   inputDecorationTheme: _inputDecorationTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   cardTheme: _cardTheme,
@@ -40,9 +54,10 @@ ThemeData themeData = ThemeData(
   textTheme: _textTheme,
   pageTransitionsTheme: _pageTransitionsTheme,
   scrollbarTheme: _scrollbarThemeData,
+  unselectedWidgetColor: kLightGreyColor,
 );
 
-InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
+final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
   filled: true,
   fillColor: kLightColor,
   border: UnderlineInputBorder(
@@ -50,7 +65,7 @@ InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
   ),
 );
 
-ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(
+final ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
     backgroundColor: MaterialStateProperty.all(kActiveColor),
     foregroundColor: MaterialStateProperty.all(kLightColor),
@@ -63,7 +78,7 @@ ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(
   ),
 );
 
-CardTheme _cardTheme = CardTheme(
+final CardTheme _cardTheme = CardTheme(
   shadowColor: kDarkColor,
   color: kSurfaceColor,
   elevation: kElevation,
@@ -72,17 +87,17 @@ CardTheme _cardTheme = CardTheme(
   ),
 );
 
-TextTheme _textTheme = GoogleFonts.latoTextTheme().apply(
+final TextTheme _textTheme = GoogleFonts.latoTextTheme().apply(
   bodyColor: kDarkColor,
 );
 
-PageTransitionsTheme _pageTransitionsTheme = const PageTransitionsTheme(
+const PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(
   builders: {
     TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
     TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
   },
 );
 
-ScrollbarThemeData _scrollbarThemeData = const ScrollbarThemeData(
+const ScrollbarThemeData _scrollbarThemeData = ScrollbarThemeData(
   isAlwaysShown: true,
 );

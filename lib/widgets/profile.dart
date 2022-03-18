@@ -15,23 +15,25 @@ class ProfileWidget extends StatelessWidget {
             ? Row(
                 children: [
                   if (!Responsiveness.isScreenSmall(context))
-                    Row(children: [
-                      Container(
-                        width: 1,
-                        height: 22,
-                        color: kLightGreyColor,
-                      ),
-                      SizedBox(width: kSpacing),
-                      Text(
-                        storeController.store!.name,
-                        style: TextStyle(
+                    Row(
+                      children: [
+                        Container(
+                          width: 1,
+                          height: 22,
                           color: kLightGreyColor,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                      SizedBox(width: kSpacing),
-                    ]),
+                        const SizedBox(width: kSpacing),
+                        Text(
+                          storeController.store!.name,
+                          style: TextStyle(
+                            color: kLightGreyColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: kSpacing),
+                      ],
+                    ),
                   Card(
                     elevation: 1,
                     shape: RoundedRectangleBorder(

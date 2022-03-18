@@ -18,13 +18,13 @@ class PageNotFound extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset("assets/images/notfound.png"),
-              SizedBox(height: kSpacing),
+              const SizedBox(height: kSpacing),
               ElevatedButton(
                 onPressed: () {
                   Get.offAllNamed(rootRoute);
                 },
                 child: Container(
-                  padding: EdgeInsets.all(kSpacing),
+                  padding: const EdgeInsets.all(kSpacing),
                   child: Row(
                     children: const [
                       Icon(Icons.arrow_back),

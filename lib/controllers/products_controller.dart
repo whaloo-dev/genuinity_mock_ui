@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
 
   static const int _loadingStep = 10;
+  static const int _maxInventory = 1000;
 
   final _isEditingFilters = false.obs;
   final _isFormVisible = false.obs;
@@ -52,10 +55,18 @@ class ProductsController extends GetxController {
           _vendors.add(product.vendor);
         }
       }
+      _maxInventorySize.value = min(_maxInventorySize.value, _maxInventory);
       _products.addAll(products);
       _visibleProductsCount.value = min(_loadingStep, productsCount());
       _totalProductsCount.value = _products.length;
       _isLoadingData.value = false;
+
+      // TODO Debug
+      if (productsCount() > 0) {
+        navigationController.navigateTo(codesPageRoute,
+            arguments: product(Random().nextInt(productsCount())));
+      }
+
       resetFilters();
     });
   }
@@ -66,7 +77,7 @@ class ProductsController extends GetxController {
     _applyFilter();
   }
 
-  Future<void> loadMore() async {
+  Future<void> showMore() async {
     return Future.delayed(const Duration(milliseconds: 1), () {
       _visibleProductsCount.value =
           min(_visibleProductsCount.value + _loadingStep, productsCount());

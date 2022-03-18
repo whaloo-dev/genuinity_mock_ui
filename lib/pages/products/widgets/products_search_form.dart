@@ -15,39 +15,46 @@ class ProductsSearchForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: SingleChildScrollView(
-        child: Obx(() {
-          final productType = productsController.productTypeFilter();
-          final vendor = productsController.vendorFilter();
-          final sku = productsController.skuFilter();
-          final barcode = productsController.barcodeFilter();
-          final status = productsController.statusFilter();
-          return Column(
-            children: [
-              SizedBox(height: kSpacing * 2),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _searchButton(),
-                  SizedBox(width: kSpacing),
-                  _resetButton(),
-                ],
+      child: Obx(() {
+        final productType = productsController.productTypeFilter();
+        final vendor = productsController.vendorFilter();
+        final sku = productsController.skuFilter();
+        final barcode = productsController.barcodeFilter();
+        final status = productsController.statusFilter();
+        return Column(
+          children: [
+            const SizedBox(height: kSpacing * 2),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _searchButton(),
+                const SizedBox(width: kSpacing),
+                _resetButton(),
+              ],
+            ),
+            const SizedBox(height: kSpacing * 2),
+            const Divider(thickness: 1),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _skuField(sku),
+                    _barcodeField(barcode),
+                    if (productsController.productTypes().length > 1)
+                      _productTypeField(productType),
+                    if (productsController.vendors().length > 1)
+                      _vendorField(vendor),
+                    _statusField(status),
+                    _inventoryRangeField(),
+                    SizedBox(height: kOptionsMaxHeight),
+                  ],
+                ),
               ),
-              SizedBox(height: kSpacing * 2),
-              const Divider(thickness: 1),
-              _statusField(status),
-              _inventoryRangeField(),
-              _skuField(sku),
-              _barcodeField(barcode),
-              if (productsController.productTypes().length > 1)
-                _productTypeField(productType),
-              if (productsController.vendors().length > 1) _vendorField(vendor),
-              SizedBox(height: kOptionsMaxHeight),
-            ],
-          );
-        }),
-      ),
+            )
+          ],
+        );
+      }),
     );
   }
 
@@ -61,10 +68,10 @@ class ProductsSearchForm extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Search"),
+          children: const [
+            Text("Search"),
             SizedBox(width: kSpacing),
-            const Icon(Icons.search_rounded),
+            Icon(Icons.search_rounded),
           ],
         ),
       ),
@@ -83,10 +90,10 @@ class ProductsSearchForm extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Reset filters"),
+          children: const [
+            Text("Reset filters"),
             SizedBox(width: kSpacing),
-            const Icon(Icons.cancel_rounded),
+            Icon(Icons.cancel_rounded),
           ],
         ),
       ),
@@ -115,7 +122,9 @@ class ProductsSearchForm extends StatelessWidget {
             inactiveColor: kActiveColor.withOpacity(0.5),
             labels: RangeLabels(
               numberFormat.format(inventorySizeRange.start),
-              numberFormat.format(inventorySizeRange.end),
+              inventorySizeRange.end == productsController.maxInventorySize()
+                  ? "∞"
+                  : numberFormat.format(inventorySizeRange.end),
             ),
             min: minInventory.toDouble(),
             max: maxInventory.toDouble(),
@@ -227,7 +236,7 @@ class ProductsSearchForm extends StatelessWidget {
             final e = element.trim().toUpperCase();
             return e.contains(text) && e.isNotEmpty;
           }).toList()
-            ..insert(0, "");
+            ..insert(0, " ");
         },
       ),
     );
@@ -267,7 +276,7 @@ class ProductsSearchForm extends StatelessWidget {
             final e = element.trim().toUpperCase();
             return e.contains(text) && e.isNotEmpty;
           }).toList()
-            ..insert(0, "");
+            ..insert(0, " ");
         },
       ),
     );
@@ -275,7 +284,7 @@ class ProductsSearchForm extends StatelessWidget {
 
   Widget _statusField(Map<ProductStatus, bool> statusFilter) {
     return ListTile(
-      leading: const Text("Status"),
+      leading: const Icon(FontAwesomeIcons.eye),
       title: Wrap(
         children: ProductStatus.values
             .map((status) => _statusChip(status, statusFilter[status]!))
@@ -286,7 +295,7 @@ class ProductsSearchForm extends StatelessWidget {
 
   Widget _statusChip(ProductStatus status, bool selected) {
     return Container(
-      margin: EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.all(kSpacing),
       child: ChoiceChip(
         pressElevation: kElevation,
         selected: selected,

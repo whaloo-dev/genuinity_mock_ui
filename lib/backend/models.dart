@@ -9,7 +9,7 @@ class Product {
   final String type;
   final String vendor;
   final ProductStatus status;
-  final List<Variant> variants = <Variant>[];
+  final List<ProductVariant> variants = <ProductVariant>[];
   final List<Option> options = <Option>[];
 
   Product({
@@ -71,7 +71,8 @@ class Option {
   });
 }
 
-class Variant {
+class ProductVariant {
+  Product product;
   String title;
   String sku;
   String barcode;
@@ -81,7 +82,8 @@ class Variant {
   String option2;
   String option3;
 
-  Variant({
+  ProductVariant({
+    required this.product,
     required this.title,
     required this.sku,
     required this.barcode,
@@ -97,10 +99,22 @@ class Code {
   final String shortCode;
   final String serial;
   final DateTime creationDate;
+  final int scanCount;
+  final int scanErrorsCount;
+  final ProductVariant variant;
+  final DateTime? exportDate;
+  final DateTime? lastScanDate;
+  final bool isSelected;
 
   const Code({
     required this.shortCode,
     required this.serial,
     required this.creationDate,
+    required this.variant,
+    required this.scanCount,
+    required this.scanErrorsCount,
+    this.isSelected = false,
+    this.exportDate,
+    this.lastScanDate,
   });
 }

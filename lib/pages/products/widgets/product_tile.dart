@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -25,15 +27,20 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       hoverColor: Colors.transparent,
-      dense: true,
+      // dense: true,
       title: _productTileBody(context),
-      contentPadding: EdgeInsets.only(
-        top: 20,
+      contentPadding: const EdgeInsets.only(
+        top: kSpacing * 2,
         left: kSpacing,
         right: kSpacing,
       ),
       trailing: productsMenu(context, product),
-      onTap: () {},
+      onTap: () async {
+        navigationController.navigateTo(
+          codesPageRoute,
+          arguments: product,
+        );
+      },
     );
   }
 
@@ -42,17 +49,17 @@ class ProductTile extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         _qrCodesWidget(),
-        SizedBox(height: kSpacing * 2),
+        const SizedBox(height: kSpacing * 2),
         Row(
           children: [
             _productPhotoWidget(context),
-            SizedBox(width: kSpacing),
+            const SizedBox(width: kSpacing),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   _productTitleWidget(),
-                  SizedBox(height: kSpacing * 2),
+                  const SizedBox(height: kSpacing * 2),
                   Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     spacing: kSpacing,
@@ -72,7 +79,7 @@ class ProductTile extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 2 * kSpacing),
+        const SizedBox(height: 2 * kSpacing),
         Row(
           children: [
             Expanded(child: Container()),
@@ -90,16 +97,16 @@ class ProductTile extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(
+            const Icon(
               Icons.qr_code_rounded,
               size: 18,
               color: kDarkColor,
             ),
-            SizedBox(width: kSpacing),
+            const SizedBox(width: kSpacing),
             Text(
               "${numberFormat.format(product.codesCount)}"
               " code${product.codesCount == 1 ? '' : 's'}",
-              style: TextStyle(
+              style: const TextStyle(
                 color: kDarkColor,
                 fontSize: 18,
               ),
@@ -114,12 +121,14 @@ class ProductTile extends StatelessWidget {
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAlias,
-      child: Image.network(
-        product.image,
+      child: SizedBox(
         width: Responsiveness.isScreenSmall(context) ? 75 : 150,
-        errorBuilder: (context, error, stackTrace) => Icon(
-          Icons.broken_image_rounded,
-          color: kLightGreyColor,
+        child: Image.network(
+          product.image,
+          errorBuilder: (context, error, stackTrace) => Icon(
+            Icons.image_not_supported_rounded,
+            color: kLightGreyColor,
+          ),
         ),
       ),
     );
@@ -141,7 +150,7 @@ class ProductTile extends StatelessWidget {
 
   Widget _productInventoryWidget() {
     return Container(
-      margin: EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.all(kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -150,7 +159,7 @@ class ProductTile extends StatelessWidget {
             size: 13,
             color: kLightGreyColor,
           ),
-          SizedBox(width: kSpacing),
+          const SizedBox(width: kSpacing),
           Text(
             "Inventory : ${numberFormat.format(product.inventoryQuantity)}",
             style: TextStyle(
@@ -164,7 +173,7 @@ class ProductTile extends StatelessWidget {
 
   Widget _productTypeWidget() {
     return Container(
-      margin: EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.all(kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -173,7 +182,7 @@ class ProductTile extends StatelessWidget {
             size: 13,
             color: kLightGreyColor,
           ),
-          SizedBox(width: kSpacing),
+          const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
               product.type,
@@ -189,7 +198,7 @@ class ProductTile extends StatelessWidget {
 
   Widget _vendorWidget() {
     return Container(
-      margin: EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.all(kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -198,7 +207,7 @@ class ProductTile extends StatelessWidget {
             size: 13,
             color: kLightGreyColor,
           ),
-          SizedBox(width: kSpacing),
+          const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
               "Vendor : ${product.vendor}",
@@ -214,7 +223,7 @@ class ProductTile extends StatelessWidget {
 
   Widget _productStatusWidget() {
     return Container(
-      margin: EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.all(kSpacing),
       child: Chip(
         backgroundColor: product.status.color(),
         label: Text(

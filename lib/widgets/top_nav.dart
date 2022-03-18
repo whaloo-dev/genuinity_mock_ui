@@ -22,7 +22,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
           Obx(
             () => Text(
               menuController.activeItem.value.name,
-              style: TextStyle(
+              style: const TextStyle(
                 color: kDarkColor,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -31,10 +31,10 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
           ),
           Expanded(child: Container()),
           const NotificationWidget(),
-          SizedBox(width: kSpacing),
+          const SizedBox(width: kSpacing),
           const ProfileWidget(),
         ],
       ),
-      iconTheme: IconThemeData(color: kDarkColor),
+      iconTheme: const IconThemeData(color: kDarkColor),
       backgroundColor: kLightColor,
     );

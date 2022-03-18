@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
@@ -14,7 +15,7 @@ class ProductsTableEmptyWidget extends StatelessWidget {
             height: 100,
             child: Column(
               children: [
-                SizedBox(height: kSpacing * 4),
+                const SizedBox(height: kSpacing * 4),
                 productsController.isLoadingData()
                     ? const Center(
                         child: Text("Loading..."),
@@ -23,10 +24,10 @@ class ProductsTableEmptyWidget extends StatelessWidget {
                         ? Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.warning_rounded),
+                              children: const [
+                                Icon(Icons.warning_rounded),
                                 SizedBox(height: kSpacing),
-                                const Text("No Results Found"),
+                                Text("No Results Found"),
                               ],
                             ),
                           )
@@ -40,20 +41,19 @@ class ProductsTableEmptyWidget extends StatelessWidget {
                                       Icons.shopify_rounded,
                                       size: 30,
                                     ),
-                                    Text(
-                                      "!",
-                                      style: TextStyle(
-                                        color: Colors.orange,
-                                        fontSize: 15,
+                                    Positioned(
+                                      right: 0,
+                                      child: Icon(
+                                        FontAwesomeIcons.exclamationCircle,
+                                        size: 10,
+                                        color: kWarningColor,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
-                                SizedBox(height: kSpacing),
+                                const SizedBox(height: kSpacing),
                                 const Text("Products Catalog Is Empty."),
-                                SizedBox(height: kSpacing),
-                                SizedBox(height: kSpacing),
-                                SizedBox(height: kSpacing),
+                                const SizedBox(height: kSpacing * 3),
                                 ElevatedButton(
                                   onPressed: () {
                                     goToShopify();

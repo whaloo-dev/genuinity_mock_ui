@@ -56,7 +56,7 @@ class SideMenuItemWidget extends StatelessWidget {
                       : Axis.horizontal,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(width: kSpacing),
+                    const SizedBox(width: kSpacing),
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: menuItem.icon(),
@@ -76,7 +76,7 @@ class SideMenuItemWidget extends StatelessWidget {
                       Flexible(
                         child: Text(
                           menuItem.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: kDarkColor,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

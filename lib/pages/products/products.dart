@@ -27,7 +27,7 @@ class ProductsPage extends StatelessWidget {
             }
             return const Expanded(child: ProductsTable());
           }),
-          SizedBox(height: kSpacing),
+          const SizedBox(height: kSpacing),
         ],
       ),
     );

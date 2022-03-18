@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/constants/globals.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 
 class Logo extends StatelessWidget {
@@ -12,16 +12,16 @@ class Logo extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            margin: EdgeInsets.only(top: kSpacing),
+            margin: const EdgeInsets.only(top: kSpacing),
             child: SizedBox(
               width: 40,
               child: Image.asset("assets/icons/logo-small.png"),
             ),
           ),
-          SizedBox(height: kSpacing),
+          const SizedBox(height: kSpacing),
           Flexible(
             child: Text(
-              globals.appName,
+              appName,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15,

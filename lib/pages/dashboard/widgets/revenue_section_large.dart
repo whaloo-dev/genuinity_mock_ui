@@ -54,7 +54,7 @@ class RevenueSectionLarge extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: kSpacing),
+                  const SizedBox(height: kSpacing),
                   Row(
                     children: const [
                       RevenueInfo(

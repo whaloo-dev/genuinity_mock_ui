@@ -14,11 +14,11 @@ class SideMenu extends StatelessWidget {
     return Container(
       color: kLightColor,
       child: ListView(children: [
-        SizedBox(height: kSpacing),
+        const SizedBox(height: kSpacing),
         const Logo(),
-        SizedBox(height: kSpacing),
+        const SizedBox(height: kSpacing),
         Divider(color: kLightGreyColor.withOpacity(.2), thickness: 2),
-        SizedBox(height: kSpacing),
+        const SizedBox(height: kSpacing),
         Column(
           mainAxisSize: MainAxisSize.min,
           children: siteMenuItems
@@ -26,14 +26,12 @@ class SideMenu extends StatelessWidget {
                 (item) => SideMenuItemWidget(
                   menuItem: item,
                   onTap: () {
-                    if (!menuController.isActive(item)) {
-                      if (item.route == shopifyPageRoute) {
-                        goToShopify();
-                        return;
-                      }
-                      menuController.changeActiveItemTo(item);
-                      navigationController.navigateTo(item.route);
+                    if (item.route == shopifyPageRoute) {
+                      goToShopify();
+                      return;
                     }
+                    menuController.changeActiveItemTo(item);
+                    navigationController.navigateTo(item.route);
                   },
                 ),
               )

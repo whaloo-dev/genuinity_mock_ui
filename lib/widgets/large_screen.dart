@@ -13,7 +13,7 @@ largeScreen(BuildContext context, GlobalKey<ScaffoldState> key) {
         child: Scaffold(
           appBar: topNavigationBar(context, key),
           body: Container(
-            padding: EdgeInsets.symmetric(horizontal: kSpacing),
+            padding: const EdgeInsets.symmetric(horizontal: kSpacing),
             child: localNavigator(),
           ),
         ),

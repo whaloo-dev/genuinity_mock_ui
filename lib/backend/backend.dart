@@ -7,6 +7,7 @@ abstract class Backend {
   static Backend instance = Get.find();
 
   Future<Store> getCurrentStore();
+
   Future<List<Product>> loadProducts({
     Map<ProductStatus, bool>? statusFilter,
     List<String>? productTitleFilter,
@@ -15,5 +16,9 @@ abstract class Backend {
     String? vendorFilter,
     String? productTypeFilter,
     RangeValues? inventoryRangeFilter,
+  });
+
+  Future<List<Code>> loadCodes({
+    required Product product,
   });
 }

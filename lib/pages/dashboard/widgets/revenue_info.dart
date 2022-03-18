@@ -25,7 +25,7 @@ class RevenueInfo extends StatelessWidget {
             ),
             TextSpan(
               text: "\$ $amount ",
-              style: TextStyle(
+              style: const TextStyle(
                 color: kDarkColor,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

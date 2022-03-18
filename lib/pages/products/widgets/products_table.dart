@@ -19,27 +19,28 @@ class ProductsTable extends StatelessWidget {
         final vendorsCount = productsController.vendors().length;
         final productTypesCount = productsController.productTypes().length;
         return ListView.separated(
-          separatorBuilder: (context, index) => const Divider(thickness: 1),
+          separatorBuilder: (context, index) =>
+              const Divider(thickness: 1, height: 1),
           itemCount: min(visibleProductsCount + 1, productsCount),
           itemBuilder: (context, index) {
             if (index == visibleProductsCount) {
-              productsController.loadMore();
+              productsController.showMore();
               return ListTile(
                 hoverColor: Colors.transparent,
                 dense: true,
-                title: Center(
-                  child: Container(
-                    padding: EdgeInsets.all(kSpacing),
-                    child: Container(
-                      padding: EdgeInsets.all(kSpacing),
-                      child: const Text("Loading..."),
-                    ),
-                  ),
-                ),
-                contentPadding: EdgeInsets.only(
+                contentPadding: const EdgeInsets.only(
                   top: 20,
                   left: kSpacing,
                   right: kSpacing,
+                ),
+                title: Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(kSpacing),
+                    child: Container(
+                      padding: const EdgeInsets.all(kSpacing),
+                      child: const Text("Loading..."),
+                    ),
+                  ),
                 ),
               );
             }

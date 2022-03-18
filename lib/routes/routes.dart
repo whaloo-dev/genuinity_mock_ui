@@ -7,20 +7,21 @@ import 'package:flutter/material.dart';
 const rootRoute = "/main";
 const dashboardPageRoute = "/main/dashboard";
 const productsPageRoute = "/main/products";
+const codesPageRoute = "/main/shopify";
 const settingsPageRoute = "/main/settings";
 const shopifyPageRoute = "/main/shopify";
 
 //Menu Items
-final dashboardPageItem = MenuItem(
-  dashboardPageRoute,
-  "Dashboard",
-  Icons.bar_chart_rounded,
-);
-
 final productsPageItem = MenuItem(
   productsPageRoute,
   "Codes",
   Icons.qr_code_rounded,
+);
+
+final dashboardPageItem = MenuItem(
+  dashboardPageRoute,
+  "Statistics",
+  Icons.bar_chart_rounded,
 );
 
 final settingsPageItem = MenuItem(
@@ -38,8 +39,8 @@ final shopifyPageItem = MenuItem(
 final nonePageItem = MenuItem("", "", Icons.not_accessible);
 
 List<MenuItem> siteMenuItems = [
-  dashboardPageItem,
   productsPageItem,
+  dashboardPageItem,
   settingsPageItem,
   if (kIsWeb) shopifyPageItem,
 ];

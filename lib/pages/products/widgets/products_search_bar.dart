@@ -121,7 +121,6 @@ class ProductsSearchBar extends StatelessWidget {
       },
       text: status.name(),
       textDecoration: TextDecoration.lineThrough,
-      textColor: kLightGreyColor,
       backgroundColor: status.color().withOpacity(0.5),
     );
   }
