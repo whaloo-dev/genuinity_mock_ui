@@ -16,13 +16,15 @@ class CodesController extends GetxController {
   final _visibleCodes = 0.obs;
 
   Future<void> loadCodes(Product product) async {
-    _codes.clear();
-    _isLoadingData.value = true;
-    _currentProduct.value = product;
-    Backend.instance.loadCodes(product: product).then((codes) {
-      _codes.addAll(codes);
-      _visibleCodes.value = min(loadingSteps, _codes.length);
-      _isLoadingData.value = false;
+    Future.delayed(Duration.zero, () {
+      _codes.clear();
+      _isLoadingData.value = true;
+      _currentProduct.value = product;
+      Backend.instance.loadCodes(product: product).then((codes) {
+        _codes.addAll(codes);
+        _visibleCodes.value = min(loadingSteps, _codes.length);
+        _isLoadingData.value = false;
+      });
     });
   }
 

@@ -39,7 +39,7 @@ class CodesHeader extends StatelessWidget {
                 contentPadding: const EdgeInsets.all(kSpacing),
                 leading: _backWidget(),
                 title: _productTileBody(context),
-                trailing: productsMenu(context, product),
+                trailing: productsMenu(product),
               ),
               // const Divider(thickness: 1, height: 1),
             ],

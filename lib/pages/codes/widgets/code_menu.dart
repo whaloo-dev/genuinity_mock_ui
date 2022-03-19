@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 
-Widget codesMenu(BuildContext context, Code code) {
+Widget codesMenu(Code code) {
   final _menuItems = <_MenuItem>[
     // _MenuItem(
     //     text: "Hide this product",
@@ -58,7 +58,10 @@ Widget codesMenu(BuildContext context, Code code) {
   return PopupMenuButton<_MenuItem>(
     onSelected: (item) => item.handler(),
     elevation: kElevation,
-    icon: const Icon(Icons.more_vert_rounded),
+    icon: const Icon(
+      Icons.more_vert_rounded,
+      color: kDarkColor,
+    ),
     itemBuilder: (context) => _menuItems
         .map(
           (menuItem) => PopupMenuItem(

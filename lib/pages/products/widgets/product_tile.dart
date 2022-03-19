@@ -34,7 +34,6 @@ class ProductTile extends StatelessWidget {
         left: kSpacing,
         right: kSpacing,
       ),
-      trailing: productsMenu(context, product),
       onTap: () async {
         navigationController.navigateTo(
           codesPageRoute,
@@ -78,13 +77,14 @@ class ProductTile extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(width: 30),
           ],
         ),
-        const SizedBox(height: 2 * kSpacing),
+        const SizedBox(height: 4 * kSpacing),
         Row(
           children: [
             Expanded(child: Container()),
-            _footerWidget(),
+            _indexWidget(),
           ],
         ),
       ],
@@ -115,6 +115,8 @@ class ProductTile extends StatelessWidget {
             ),
           ],
         ),
+        Expanded(child: Container()),
+        productsMenu(product)
       ],
     );
   }
@@ -157,11 +159,7 @@ class ProductTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            FontAwesomeIcons.boxes,
-            size: 13,
-            color: kLightGreyColor,
-          ),
+          _stackIcon(icon1: FontAwesomeIcons.boxes),
           const SizedBox(width: kSpacing),
           Text(
             "Inventory : ${numberFormat.format(product.inventoryQuantity)}",
@@ -180,11 +178,7 @@ class ProductTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            FontAwesomeIcons.solidFolder,
-            size: 13,
-            color: kLightGreyColor,
-          ),
+          _stackIcon(icon1: FontAwesomeIcons.solidFolder),
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
@@ -205,11 +199,7 @@ class ProductTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            FontAwesomeIcons.store,
-            size: 13,
-            color: kLightGreyColor,
-          ),
+          _stackIcon(icon1: FontAwesomeIcons.store),
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
@@ -240,13 +230,43 @@ class ProductTile extends StatelessWidget {
     );
   }
 
-  Widget _footerWidget() {
-    return Text(
-      "${numberFormat.format(productIndex)} of ${numberFormat.format(productsCount)}",
-      style: TextStyle(
-        color: kLightGreyColor,
-        fontSize: 12,
+  Widget _indexWidget() {
+    return Container(
+      margin: const EdgeInsets.only(top: 10, right: 10),
+      child: Text(
+        "${numberFormat.format(productIndex)} of ${numberFormat.format(productsCount)}",
+        style: const TextStyle(
+          color: kDarkColor,
+          fontSize: 12,
+        ),
       ),
+    );
+  }
+
+  Widget _stackIcon(
+      {required IconData icon1, IconData? icon2, Color? icon2Color}) {
+    return Stack(
+      children: [
+        Container(
+          margin: const EdgeInsets.all(7),
+          child: Center(
+            child: Icon(
+              icon1,
+              color: kLightGreyColor,
+              size: 13,
+            ),
+          ),
+        ),
+        if (icon2 != null)
+          Positioned(
+            right: 0,
+            child: Icon(
+              icon2,
+              color: icon2Color ?? kLightGreyColor,
+              size: 10,
+            ),
+          )
+      ],
     );
   }
 }

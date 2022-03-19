@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-const Color kSurfaceColor = Colors.white; //Color(0xFFF7F8FC);
-final Color kLightColor = Colors.grey.shade200; //Color(0xFFF7F8FC);
-final Color kLightGreyColor = Colors.grey.shade500; //Color(0xFFA4A6B3);
-const Color kDarkColor = Colors.black; //Color(0xFF363740);
-final Color kActiveColor = Colors.blue.shade500; //Color(0xFF3C19C0);
+const Color kSurfaceColor = Colors.white;
+final Color kLightColor = Colors.grey.shade200;
+final Color kLightGreyColor = Colors.grey.shade500;
+const Color kDarkColor = Colors.black;
+final Color kActiveColor = Colors.blue.shade500;
 final Color kLogoColor = Colors.blueAccent.shade200;
 const Color kWarningColor = Colors.orange;
 final Color kErrorColor = Colors.red.shade200;
@@ -54,7 +54,7 @@ final ThemeData themeData = ThemeData(
   textTheme: _textTheme,
   pageTransitionsTheme: _pageTransitionsTheme,
   scrollbarTheme: _scrollbarThemeData,
-  unselectedWidgetColor: kLightGreyColor,
+  unselectedWidgetColor: kDarkColor,
 );
 
 final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(

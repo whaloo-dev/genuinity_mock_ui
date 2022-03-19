@@ -131,6 +131,7 @@ class Code {
   final ProductVariant variant;
   final DateTime? exportDate;
   final DateTime? lastScanDate;
+  final DateTime? expirationDate;
   final List<String> tags;
   bool isSelected;
 
@@ -145,5 +146,6 @@ class Code {
     this.tags = const <String>[],
     this.exportDate,
     this.lastScanDate,
+    this.expirationDate,
   });
 }

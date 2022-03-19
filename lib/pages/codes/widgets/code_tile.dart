@@ -26,7 +26,6 @@ class CodeTile extends StatelessWidget {
       selectedTileColor: kSelectionColor,
       dense: true,
       title: _codeTileBody(context),
-      trailing: codesMenu(context, code),
       onTap: () {
         final newValue = !code.isSelected;
         if (newValue) {
@@ -41,10 +40,25 @@ class CodeTile extends StatelessWidget {
   Widget _codeTileBody(BuildContext context) {
     return Column(
       children: [
-        _selectionWidget(),
+        // Header
+        Column(
+          children: [
+            const SizedBox(height: kSpacing * 3),
+            Row(
+              children: [
+                _selectionWidget(),
+                Expanded(child: Container()),
+                codesMenu(code),
+              ],
+            )
+          ],
+        ),
+        // Body
         Row(
           children: [
+            const SizedBox(width: kSpacing),
             _qrCodeWidget(context),
+            const SizedBox(width: kSpacing),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,6 +75,9 @@ class CodeTile extends StatelessWidget {
                       code.lastScanDate != null
                           ? _lastScanningDateWidget()
                           : const SizedBox(),
+                      code.expirationDate != null
+                          ? _expirationDateWidget()
+                          : const SizedBox(),
                       code.scanCount > 0
                           ? _codeScanCountWidget()
                           : const SizedBox(),
@@ -73,9 +90,11 @@ class CodeTile extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(width: 30),
           ],
         ),
         const SizedBox(height: kSpacing),
+        // Footer
         Row(
           children: [
             Expanded(
@@ -89,26 +108,19 @@ class CodeTile extends StatelessWidget {
   }
 
   Widget _selectionWidget() {
-    return Row(
-      children: [
-        Column(
-          children: [
-            const SizedBox(height: kSpacing * 3),
-            Checkbox(
-              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
-              splashRadius: kIconButtonSplashRadius,
-              value: code.isSelected,
-              onChanged: (newValue) {
-                if (newValue!) {
-                  codesController.select(code);
-                } else {
-                  codesController.unselect(code);
-                }
-              },
-            )
-          ],
-        ),
-      ],
+    return Checkbox(
+      shape: RoundedRectangleBorder(
+        borderRadius: kBorderRadius,
+      ),
+      splashRadius: kIconButtonSplashRadius,
+      value: code.isSelected,
+      onChanged: (newValue) {
+        if (newValue!) {
+          codesController.select(code);
+        } else {
+          codesController.unselect(code);
+        }
+      },
     );
   }
 
@@ -132,7 +144,7 @@ class CodeTile extends StatelessWidget {
           "N° ${code.serial}",
           style: TextStyle(
             color: kDarkColor,
-            fontSize: isSmall ? 8 : 12,
+            fontSize: isSmall ? 8 : 10,
           ),
         ),
         const SizedBox(height: kSpacing),
@@ -140,7 +152,7 @@ class CodeTile extends StatelessWidget {
           "Short : ${code.shortCode}",
           style: TextStyle(
             color: kDarkColor,
-            fontSize: isSmall ? 8 : 12,
+            fontSize: isSmall ? 8 : 10,
           ),
         ),
       ],
@@ -221,7 +233,7 @@ class CodeTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _stackIcon(
-            icon1: Icons.calendar_today_rounded,
+            icon1: Icons.calendar_month_rounded,
             icon2: Icons.add_rounded,
           ),
           const SizedBox(width: kSpacing),
@@ -245,7 +257,7 @@ class CodeTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _stackIcon(
-            icon1: Icons.calendar_today_rounded,
+            icon1: Icons.calendar_month_rounded,
             icon2: Icons.download_rounded,
           ),
           const SizedBox(width: kSpacing),
@@ -269,7 +281,7 @@ class CodeTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _stackIcon(
-            icon1: Icons.calendar_today_rounded,
+            icon1: Icons.calendar_month_rounded,
             icon2: Icons.qr_code_scanner_rounded,
           ),
           const SizedBox(width: kSpacing),
@@ -286,12 +298,38 @@ class CodeTile extends StatelessWidget {
     );
   }
 
+  Widget _expirationDateWidget() {
+    return Container(
+      margin: const EdgeInsets.all(kSpacing),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _stackIcon(
+              icon1: Icons.calendar_month_rounded,
+              icon2: Icons.recycling_rounded),
+          const SizedBox(width: kSpacing),
+          Flexible(
+            child: Text(
+              "Expires : ${dateFormat.format(code.expirationDate!)}",
+              style: TextStyle(
+                color: kLightGreyColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _indexWidget() {
-    return Text(
-      "${numberFormat.format(index)} of ${numberFormat.format(totalCount)}",
-      style: TextStyle(
-        color: kLightGreyColor,
-        fontSize: 12,
+    return Container(
+      margin: const EdgeInsets.only(top: 10, right: 10),
+      child: Text(
+        "${numberFormat.format(index)} of ${numberFormat.format(totalCount)}",
+        style: const TextStyle(
+          color: kDarkColor,
+          fontSize: 12,
+        ),
       ),
     );
   }
@@ -301,11 +339,13 @@ class CodeTile extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          margin: const EdgeInsets.only(top: 7, right: 9),
-          child: Icon(
-            icon1,
-            color: kLightGreyColor,
-            size: 18,
+          margin: const EdgeInsets.all(7),
+          child: Center(
+            child: Icon(
+              icon1,
+              color: kLightGreyColor,
+              size: 18,
+            ),
           ),
         ),
         if (icon2 != null)

@@ -17,9 +17,9 @@ class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
-  static const _demoStoreName = "decathlon";
+  // static const _demoStoreName = "decathlon";
   // static const _demoStoreName = "thebookbundler";
-  // static const _demoStoreName = "commonfarmflowers";
+  static const _demoStoreName = "commonfarmflowers";
   // static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";
 
@@ -32,10 +32,11 @@ class DemoBackend extends GetConnect implements Backend {
   Store? _demoStore;
   final _products = <Product>[];
   // final _codes = <ProductId, List<Code>>{};
-  bool _isDemoDataInitialised = false;
+  bool _isStoreDataInitialized = false;
+  bool _isProductDataInitialized = false;
 
-  Future<void> initDemoData() async {
-    if (_isDemoDataInitialised) {
+  Future<void> initStoreData() async {
+    if (_isStoreDataInitialized) {
       return;
     }
     //load store demo data:
@@ -50,9 +51,16 @@ class DemoBackend extends GetConnect implements Backend {
           (storeData as Map).containsKey('icon') ? storeData['icon'] : null,
     );
 
+    _isStoreDataInitialized = true;
+  }
+
+  Future<void> initProductsData() async {
+    if (_isProductDataInitialized) {
+      return;
+    }
     //loading products
-    url = "$_basePath/demo/data/${_demoStoreName}_products.json";
-    response = await get(url);
+    final url = "$_basePath/demo/data/${_demoStoreName}_products.json";
+    final response = await get(url);
     var productsData = await json.decode(response.bodyString!);
     productsData = productsData['products'];
 
@@ -96,12 +104,12 @@ class DemoBackend extends GetConnect implements Backend {
 
       _products.add(product);
     }
-    _isDemoDataInitialised = true;
+    _isProductDataInitialized = true;
   }
 
   @override
   Future<Store> getCurrentStore() async {
-    await initDemoData();
+    await initStoreData();
     return Future<Store>(() => _demoStore!);
   }
 
@@ -115,7 +123,7 @@ class DemoBackend extends GetConnect implements Backend {
     String? productTypeFilter,
     RangeValues? inventoryRangeFilter,
   }) async {
-    await initDemoData();
+    await initProductsData();
 
     final products = <Product>[];
     if (skuFilter != null) {
@@ -212,7 +220,6 @@ class DemoBackend extends GetConnect implements Backend {
   Future<List<Code>> loadCodes({
     required Product product,
   }) async {
-    await initDemoData();
     return Future.delayed(const Duration(milliseconds: 100), () {
       final codes = <Code>[];
       for (int i = 0; i < product.codesCount; i++) {
@@ -238,6 +245,9 @@ class DemoBackend extends GetConnect implements Backend {
             minutes: Random().nextInt(60),
           ),
         );
+        final expirationDate = creationDate.add(
+          const Duration(days: 365 * 10),
+        );
         final variant = product.variants[i % product.variants.length];
         final serial = ("$variant $i").hashCode.toString();
         codes.add(
@@ -258,13 +268,12 @@ class DemoBackend extends GetConnect implements Backend {
                     ? exportDate
                     : null,
             lastScanDate: scanCount == 0 ? null : scanDate,
+            expirationDate: Random().nextInt(100) == 0 ? expirationDate : null,
           ),
         );
-        // _codes[product.id] = codes;
       }
 
       return codes;
-      // return <Code>[];
     });
   }
 
