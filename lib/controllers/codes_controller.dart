@@ -16,13 +16,10 @@ class CodesController extends GetxController {
   final _visibleCodes = 0.obs;
 
   Future<void> loadCodes(Product product) async {
-    print("loading codes for ${product.title}");
     _codes.clear();
     _isLoadingData.value = true;
     _currentProduct.value = product;
     Backend.instance.loadCodes(product: product).then((codes) {
-      print("loaded codes for ${product.title}");
-
       _codes.addAll(codes);
       _visibleCodes.value = min(loadingSteps, _codes.length);
       _isLoadingData.value = false;
@@ -38,6 +35,18 @@ class CodesController extends GetxController {
 
   Code code(Product product, int index) {
     return _codes[index];
+  }
+
+  void select(Code code) {
+    code.isSelected = true;
+    int index = _codes.indexOf(code);
+    _codes[index] = code;
+  }
+
+  void unselect(Code code) {
+    code.isSelected = false;
+    int index = _codes.indexOf(code);
+    _codes[index] = code;
   }
 
   bool isLoadingData() {

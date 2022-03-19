@@ -33,7 +33,7 @@ BorderRadius kBorderRadius = const BorderRadius.only(
 
 const double kElevation = 3;
 
-const double kSpacing = 7;
+const double kSpacing = 3;
 
 const double kIconButtonSplashRadius = 25;
 

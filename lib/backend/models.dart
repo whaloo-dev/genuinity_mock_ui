@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiver/core.dart';
 
 class Product {
   final ProductId id;
@@ -22,6 +23,14 @@ class Product {
     required this.inventoryQuantity,
     required this.status,
   });
+
+  @override
+  bool operator ==(other) {
+    return other is Product && id == other.id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class ProductId implements Comparable<ProductId> {
@@ -32,6 +41,14 @@ class ProductId implements Comparable<ProductId> {
   int compareTo(ProductId other) {
     return value.compareTo(other.value);
   }
+
+  @override
+  bool operator ==(other) {
+    return other is ProductId && value == other.value;
+  }
+
+  @override
+  int get hashCode => value.hashCode;
 }
 
 enum ProductStatus {
@@ -93,6 +110,16 @@ class ProductVariant {
     required this.option2,
     required this.option3,
   });
+
+  @override
+  bool operator ==(other) {
+    return other is ProductVariant &&
+        product == other.product &&
+        title == other.title;
+  }
+
+  @override
+  int get hashCode => hash2(product.hashCode, title.hashCode);
 }
 
 class Code {
@@ -104,9 +131,10 @@ class Code {
   final ProductVariant variant;
   final DateTime? exportDate;
   final DateTime? lastScanDate;
-  final bool isSelected;
+  final List<String> tags;
+  bool isSelected;
 
-  const Code({
+  Code({
     required this.shortCode,
     required this.serial,
     required this.creationDate,
@@ -114,6 +142,7 @@ class Code {
     required this.scanCount,
     required this.scanErrorsCount,
     this.isSelected = false,
+    this.tags = const <String>[],
     this.exportDate,
     this.lastScanDate,
   });

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
 
 class CodesHeader extends StatelessWidget {
@@ -81,7 +82,8 @@ class CodesHeader extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width: 75,
+        width: Responsiveness.isScreenSmall(context) ? 50 : 70,
+        height: Responsiveness.isScreenSmall(context) ? 50 : 70,
         child: Image.network(
           product.image,
           errorBuilder: (context, error, stackTrace) => Icon(
@@ -103,7 +105,8 @@ class CodesHeader extends StatelessWidget {
             product.title,
             style: TextStyle(
               color: kDarkColor.withOpacity(0.8),
-              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              // fontSize: 18,
             ),
           ),
         ),

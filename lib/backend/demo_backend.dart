@@ -12,16 +12,16 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 import 'package:crypto/crypto.dart';
 
 class DemoBackend extends GetConnect implements Backend {
-  // static const _demoStore = "halloweenmakeup";
-  // static const _demoStore = "ruesco";
-  // static const _demoStore = "huel";
-  // static const _demoStore = "signatureveda";
-  // static const _demoStore = "locknloadairsoft";
-  // static const _demoStore = "decathlon";
-  // static const _demoStore = "thebookbundler";
-  // static const _demoStore = "commonfarmflowers";
-  // static const _demoStore = "atelierdubraceletparisien";
-  static const _demoStoreName = "nixon";
+  // static const _demoStoreName = "halloweenmakeup";
+  // static const _demoStoreName = "ruesco";
+  // static const _demoStoreName = "huel";
+  // static const _demoStoreName = "signatureveda";
+  // static const _demoStoreName = "locknloadairsoft";
+  static const _demoStoreName = "decathlon";
+  // static const _demoStoreName = "thebookbundler";
+  // static const _demoStoreName = "commonfarmflowers";
+  // static const _demoStoreName = "atelierdubraceletparisien";
+  // static const _demoStoreName = "nixon";
 
   late String _basePath;
 
@@ -31,16 +31,15 @@ class DemoBackend extends GetConnect implements Backend {
 
   Store? _demoStore;
   final _products = <Product>[];
-  final _codes = <ProductId, List<Code>>{};
+  // final _codes = <ProductId, List<Code>>{};
   bool _isDemoDataInitialised = false;
 
   Future<void> initDemoData() async {
     if (_isDemoDataInitialised) {
       return;
     }
-    print("loading demo data");
     //load store demo data:
-    var url = "$_basePath/demo/${_demoStoreName}_store.json";
+    var url = "$_basePath/demo/data/${_demoStoreName}_store.json";
     var response = await get(url);
     final storeData = await json.decode(response.bodyString!);
     _demoStore = Store(
@@ -52,7 +51,7 @@ class DemoBackend extends GetConnect implements Backend {
     );
 
     //loading products
-    url = "$_basePath/demo/${_demoStoreName}_products.json";
+    url = "$_basePath/demo/data/${_demoStoreName}_products.json";
     response = await get(url);
     var productsData = await json.decode(response.bodyString!);
     productsData = productsData['products'];
@@ -66,7 +65,7 @@ class DemoBackend extends GetConnect implements Backend {
         image: productData['image']['src'],
         type: productData['product_type'],
         vendor: productData['vendor'],
-        codesCount: Random().nextInt(100),
+        codesCount: Random().nextInt(1000),
         inventoryQuantity: 0,
         status: mod3 == 0
             ? ProductStatus.active
@@ -213,7 +212,8 @@ class DemoBackend extends GetConnect implements Backend {
   Future<List<Code>> loadCodes({
     required Product product,
   }) async {
-    return Future.delayed(const Duration(seconds: 1), () {
+    await initDemoData();
+    return Future.delayed(const Duration(milliseconds: 100), () {
       final codes = <Code>[];
       for (int i = 0; i < product.codesCount; i++) {
         final scanCount = Random().nextInt(3) == 0 ? Random().nextInt(1000) : 0;
@@ -226,7 +226,7 @@ class DemoBackend extends GetConnect implements Backend {
         );
         final exportDate = creationDate.add(
           Duration(
-            days: Random().nextInt(30),
+            days: Random().nextInt(3),
             hours: Random().nextInt(24),
             minutes: Random().nextInt(60),
           ),
@@ -238,16 +238,20 @@ class DemoBackend extends GetConnect implements Backend {
             minutes: Random().nextInt(60),
           ),
         );
+        final variant = product.variants[i % product.variants.length];
+        final serial = ("$variant $i").hashCode.toString();
         codes.add(
           Code(
             creationDate: creationDate,
             scanCount: scanCount,
-            scanErrorsCount:
-                scanCount == 0 ? 0 : Random().nextInt((scanCount / 10).round()),
-            serial: Random().nextInt(99999999).toString(),
-            shortCode: md5.convert(utf8.encode(product.title)).toString(),
-            variant:
-                product.variants[Random().nextInt(product.variants.length)],
+            scanErrorsCount: scanCount == 0
+                ? 0
+                : Random().nextInt(3) == 0
+                    ? Random().nextInt(scanCount)
+                    : 0,
+            serial: serial,
+            shortCode: computeShortCode(serial, 7),
+            variant: variant,
             exportDate: scanCount != 0
                 ? exportDate
                 : Random().nextBool()
@@ -256,9 +260,18 @@ class DemoBackend extends GetConnect implements Backend {
             lastScanDate: scanCount == 0 ? null : scanDate,
           ),
         );
-        _codes[product.id] = codes;
+        // _codes[product.id] = codes;
       }
+
       return codes;
+      // return <Code>[];
     });
+  }
+
+  String computeShortCode(String serial, int codeLength) {
+    final md5code = md5.convert(utf8.encode(serial)).toString();
+    final start = (md5code.length - codeLength) % serial.hashCode;
+    final shortCode = md5code.substring(start, start + codeLength);
+    return shortCode;
   }
 }

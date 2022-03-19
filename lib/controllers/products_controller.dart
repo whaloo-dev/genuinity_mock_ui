@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
-import 'package:whaloo_genuinity/routes/routes.dart';
 
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
@@ -62,10 +60,10 @@ class ProductsController extends GetxController {
       _isLoadingData.value = false;
 
       // TODO Debug
-      if (productsCount() > 0) {
-        navigationController.navigateTo(codesPageRoute,
-            arguments: product(Random().nextInt(productsCount())));
-      }
+      // if (productsCount() > 0) {
+      //   navigationController.navigateTo(codesPageRoute,
+      //       arguments: product(Random().nextInt(productsCount())));
+      // }
 
       resetFilters();
     });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/code_menu.dart';
@@ -24,38 +25,48 @@ class CodeTile extends StatelessWidget {
       selected: code.isSelected,
       selectedTileColor: kSelectionColor,
       dense: true,
-      title: _productTileBody(context),
+      title: _codeTileBody(context),
       trailing: codesMenu(context, code),
-      onTap: () {},
+      onTap: () {
+        final newValue = !code.isSelected;
+        if (newValue) {
+          codesController.select(code);
+        } else {
+          codesController.unselect(code);
+        }
+      },
     );
   }
 
-  Widget _productTileBody(BuildContext context) {
+  Widget _codeTileBody(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.max,
       children: [
         _selectionWidget(),
-        // SizedBox(height: kSpacing),
         Row(
           children: [
             _qrCodeWidget(context),
-            const SizedBox(width: kSpacing),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // _codeTitleWidget(),
-                  // const SizedBox(height: kSpacing * 2),
                   Wrap(
                     alignment: WrapAlignment.spaceBetween,
-                    // spacing: kSpacing,
-                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      _variantWidget(),
+                      if (code.variant.product.variants.length > 1)
+                        _variantWidget(),
                       _creationDateWidget(),
-                      if (code.lastScanDate != null) _lastScanningDateWidget(),
-                      if (code.scanCount > 0) _codeScanCountWidget(),
-                      if (code.scanErrorsCount > 0) _codeScanErrorCountWidget(),
+                      code.exportDate != null
+                          ? _exportDateWidget()
+                          : const SizedBox(),
+                      code.lastScanDate != null
+                          ? _lastScanningDateWidget()
+                          : const SizedBox(),
+                      code.scanCount > 0
+                          ? _codeScanCountWidget()
+                          : const SizedBox(),
+                      code.scanErrorsCount > 0
+                          ? _codeScanErrorCountWidget()
+                          : const SizedBox(),
                       const SizedBox(),
                     ],
                   ),
@@ -64,11 +75,13 @@ class CodeTile extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 2 * kSpacing),
+        const SizedBox(height: kSpacing),
         Row(
           children: [
-            Expanded(child: Container()),
-            _footerWidget(),
+            Expanded(
+              child: Container(),
+            ),
+            _indexWidget(),
           ],
         ),
       ],
@@ -78,32 +91,56 @@ class CodeTile extends StatelessWidget {
   Widget _selectionWidget() {
     return Row(
       children: [
-        Checkbox(
-          shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
-          splashRadius: kIconButtonSplashRadius,
-          value: code.isSelected,
-          onChanged: (newValue) {},
-        )
+        Column(
+          children: [
+            const SizedBox(height: kSpacing * 3),
+            Checkbox(
+              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+              splashRadius: kIconButtonSplashRadius,
+              value: code.isSelected,
+              onChanged: (newValue) {
+                if (newValue!) {
+                  codesController.select(code);
+                } else {
+                  codesController.unselect(code);
+                }
+              },
+            )
+          ],
+        ),
       ],
     );
   }
 
   Widget _qrCodeWidget(BuildContext context) {
-    return SizedBox(
-      width: Responsiveness.isScreenSmall(context) ? 75 : 150,
-      height: Responsiveness.isScreenSmall(context) ? 75 : 150,
-      child: const Icon(FontAwesomeIcons.qrcode),
-    );
-  }
-
-  Widget _codeTitleWidget() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    bool isSmall = Responsiveness.isScreenSmall(context);
+    double size = isSmall ? 50 : 70;
+    return Column(
       children: [
-        Flexible(
-          child: Text(
-            code.variant.title,
-            style: TextStyle(color: kDarkColor.withOpacity(0.8)),
+        Card(
+          color: Colors.transparent,
+          elevation: 0,
+          clipBehavior: Clip.antiAlias,
+          child: SizedBox(
+            width: size,
+            height: size,
+            child:
+                Image.asset("assets/demo/images/qrcode${(index % 7) + 1}.png"),
+          ),
+        ),
+        Text(
+          "N° ${code.serial}",
+          style: TextStyle(
+            color: kDarkColor,
+            fontSize: isSmall ? 8 : 12,
+          ),
+        ),
+        const SizedBox(height: kSpacing),
+        Text(
+          "Short : ${code.shortCode}",
+          style: TextStyle(
+            color: kDarkColor,
+            fontSize: isSmall ? 8 : 12,
           ),
         ),
       ],
@@ -116,10 +153,8 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.qr_code_scanner_rounded,
-            size: 18,
-            color: kLightGreyColor,
+          _stackIcon(
+            icon1: Icons.qr_code_scanner_rounded,
           ),
           const SizedBox(width: kSpacing),
           Text(
@@ -139,31 +174,10 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Stack(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 5, right: 5),
-                child: Icon(
-                  Icons.qr_code_scanner_rounded,
-                  color: kLightGreyColor,
-                  size: 18,
-                ),
-              ),
-              Positioned(
-                right: 0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: kSurfaceColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(
-                    FontAwesomeIcons.exclamationCircle,
-                    color: kErrorColor,
-                    size: 12,
-                  ),
-                ),
-              )
-            ],
+          _stackIcon(
+            icon1: Icons.qr_code_scanner_rounded,
+            icon2: FontAwesomeIcons.exclamationCircle,
+            icon2Color: kErrorColor,
           ),
           const SizedBox(width: kSpacing),
           Text(
@@ -183,10 +197,8 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.collections_rounded,
-            color: kLightGreyColor,
-            size: 18,
+          _stackIcon(
+            icon1: Icons.collections_rounded,
           ),
           const SizedBox(width: kSpacing),
           Flexible(
@@ -208,30 +220,38 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Stack(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 6, right: 6),
-                child: Icon(
-                  Icons.calendar_today_rounded,
-                  color: kLightGreyColor,
-                  size: 18,
-                ),
-              ),
-              Positioned(
-                right: 0,
-                child: Icon(
-                  Icons.add_rounded,
-                  color: kLightGreyColor,
-                  size: 12,
-                ),
-              )
-            ],
+          _stackIcon(
+            icon1: Icons.calendar_today_rounded,
+            icon2: Icons.add_rounded,
           ),
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
               "Created : ${dateFormat.format(code.creationDate)}",
+              style: TextStyle(
+                color: kLightGreyColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _exportDateWidget() {
+    return Container(
+      margin: const EdgeInsets.all(kSpacing),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _stackIcon(
+            icon1: Icons.calendar_today_rounded,
+            icon2: Icons.download_rounded,
+          ),
+          const SizedBox(width: kSpacing),
+          Flexible(
+            child: Text(
+              "First Exported : ${dateFormat.format(code.exportDate!)}",
               style: TextStyle(
                 color: kLightGreyColor,
               ),
@@ -248,25 +268,9 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Stack(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 5, right: 5),
-                child: Icon(
-                  Icons.calendar_today_rounded,
-                  color: kLightGreyColor,
-                  size: 18,
-                ),
-              ),
-              Positioned(
-                right: 0,
-                child: Icon(
-                  Icons.qr_code_scanner_rounded,
-                  color: kLightGreyColor,
-                  size: 12,
-                ),
-              )
-            ],
+          _stackIcon(
+            icon1: Icons.calendar_today_rounded,
+            icon2: Icons.qr_code_scanner_rounded,
           ),
           const SizedBox(width: kSpacing),
           Flexible(
@@ -282,13 +286,38 @@ class CodeTile extends StatelessWidget {
     );
   }
 
-  Widget _footerWidget() {
+  Widget _indexWidget() {
     return Text(
       "${numberFormat.format(index)} of ${numberFormat.format(totalCount)}",
       style: TextStyle(
         color: kLightGreyColor,
         fontSize: 12,
       ),
+    );
+  }
+
+  Widget _stackIcon(
+      {required IconData icon1, IconData? icon2, Color? icon2Color}) {
+    return Stack(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 7, right: 9),
+          child: Icon(
+            icon1,
+            color: kLightGreyColor,
+            size: 18,
+          ),
+        ),
+        if (icon2 != null)
+          Positioned(
+            right: 0,
+            child: Icon(
+              icon2,
+              color: icon2Color ?? kLightGreyColor,
+              size: 12,
+            ),
+          )
+      ],
     );
   }
 }

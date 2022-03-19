@@ -65,13 +65,14 @@ class ProductTile extends StatelessWidget {
                     spacing: kSpacing,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      if (productTypesCount > 1 && product.type.isNotEmpty)
-                        _productTypeWidget(),
-                      if (vendorsCount > 1 && product.vendor.isNotEmpty)
-                        _vendorWidget(),
+                      (productTypesCount > 1 && product.type.isNotEmpty)
+                          ? _productTypeWidget()
+                          : const SizedBox(),
+                      (vendorsCount > 1 && product.vendor.isNotEmpty)
+                          ? _vendorWidget()
+                          : const SizedBox(),
                       _productInventoryWidget(),
                       _productStatusWidget(),
-                      const SizedBox(),
                     ],
                   ),
                 ],
@@ -99,7 +100,7 @@ class ProductTile extends StatelessWidget {
           children: [
             const Icon(
               Icons.qr_code_rounded,
-              size: 18,
+              // size: 18,
               color: kDarkColor,
             ),
             const SizedBox(width: kSpacing),
@@ -108,7 +109,8 @@ class ProductTile extends StatelessWidget {
               " code${product.codesCount == 1 ? '' : 's'}",
               style: const TextStyle(
                 color: kDarkColor,
-                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                // fontSize: 18,
               ),
             ),
           ],
@@ -122,7 +124,8 @@ class ProductTile extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width: Responsiveness.isScreenSmall(context) ? 75 : 150,
+        width: Responsiveness.isScreenSmall(context) ? 50 : 100,
+        height: Responsiveness.isScreenSmall(context) ? 50 : 100,
         child: Image.network(
           product.image,
           errorBuilder: (context, error, stackTrace) => Icon(

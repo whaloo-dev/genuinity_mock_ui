@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/codes_table.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/codes_header.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/codes_table_empty.dart';
@@ -13,22 +14,29 @@ class CodesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     codesController.loadCodes(product);
-    return Card(
-      child: Obx(
-        () => Column(
-          children: [
-            CodesHeader(product: product),
-            (codesController.codesCount() == 0 ||
-                    codesController.isLoadingData())
-                ? const Expanded(child: CodesTableEmptyWidget())
-                : Expanded(
-                    child: CodesTable(
-                      product: product,
-                    ),
-                  ),
-          ],
+    return Column(
+      children: [
+        Expanded(
+          child: Card(
+            child: Obx(
+              () => Column(
+                children: [
+                  CodesHeader(product: product),
+                  (codesController.codesCount() == 0 ||
+                          codesController.isLoadingData())
+                      ? const Expanded(child: CodesTableEmptyWidget())
+                      : Expanded(
+                          child: CodesTable(
+                            product: product,
+                          ),
+                        ),
+                ],
+              ),
+            ),
+          ),
         ),
-      ),
+        const SizedBox(height: kSpacing),
+      ],
     );
   }
 }
