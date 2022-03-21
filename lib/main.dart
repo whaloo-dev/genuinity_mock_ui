@@ -8,6 +8,7 @@ import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/controllers/codes_controller.dart';
 import 'package:whaloo_genuinity/controllers/menu_controller.dart';
 import 'package:whaloo_genuinity/controllers/navigation_controller.dart';
+import 'package:whaloo_genuinity/controllers/new_codes_controller.dart';
 import 'package:whaloo_genuinity/controllers/products_controller.dart';
 import 'package:whaloo_genuinity/controllers/store_controller.dart';
 import 'package:whaloo_genuinity/layout.dart';
@@ -22,9 +23,11 @@ void main() {
   Get.put(StoreController());
   Get.put(ProductsController());
   Get.put(CodesController());
+  Get.put(NewCodesController());
   runApp(const MyApp());
   storeController.onReady();
   productsController.onReady();
+  codesController.onReady();
 }
 
 class MyApp extends StatelessWidget {

@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,17 +11,16 @@ import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/controllers/store_controller.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
-import 'package:crypto/crypto.dart';
 
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
-  // static const _demoStoreName = "ruesco";
+  static const _demoStoreName = "ruesco";
   // static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
   // static const _demoStoreName = "decathlon";
   // static const _demoStoreName = "thebookbundler";
-  static const _demoStoreName = "commonfarmflowers";
+  // static const _demoStoreName = "commonfarmflowers";
   // static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";
 
@@ -29,13 +30,14 @@ class DemoBackend extends GetConnect implements Backend {
     _basePath = kReleaseMode ? "assets/assets" : "assets";
   }
 
+  final _callbacks = <BackendEvent, List<BackendCallback>>{};
   Store? _demoStore;
   final _products = <Product>[];
-  // final _codes = <ProductId, List<Code>>{};
+  final _codes = <ProductId, List<Code>>{};
   bool _isStoreDataInitialized = false;
   bool _isProductDataInitialized = false;
 
-  Future<void> initStoreData() async {
+  Future<void> _initStoreData() async {
     if (_isStoreDataInitialized) {
       return;
     }
@@ -54,7 +56,7 @@ class DemoBackend extends GetConnect implements Backend {
     _isStoreDataInitialized = true;
   }
 
-  Future<void> initProductsData() async {
+  Future<void> _initProductsData() async {
     if (_isProductDataInitialized) {
       return;
     }
@@ -73,7 +75,7 @@ class DemoBackend extends GetConnect implements Backend {
         image: productData['image']['src'],
         type: productData['product_type'],
         vendor: productData['vendor'],
-        codesCount: Random().nextInt(1000),
+        codesCount: 0, //Random().nextInt(100),
         inventoryQuantity: 0,
         status: mod3 == 0
             ? ProductStatus.active
@@ -109,7 +111,7 @@ class DemoBackend extends GetConnect implements Backend {
 
   @override
   Future<Store> getCurrentStore() async {
-    await initStoreData();
+    await _initStoreData();
     return Future<Store>(() => _demoStore!);
   }
 
@@ -123,7 +125,7 @@ class DemoBackend extends GetConnect implements Backend {
     String? productTypeFilter,
     RangeValues? inventoryRangeFilter,
   }) async {
-    await initProductsData();
+    await _initProductsData();
 
     final products = <Product>[];
     if (skuFilter != null) {
@@ -221,63 +223,74 @@ class DemoBackend extends GetConnect implements Backend {
     required Product product,
   }) async {
     return Future.delayed(const Duration(milliseconds: 100), () {
-      final codes = <Code>[];
-      for (int i = 0; i < product.codesCount; i++) {
-        final scanCount = Random().nextInt(3) == 0 ? Random().nextInt(1000) : 0;
-        final creationDate = DateTime.utc(2022, 1, 1).add(
-          Duration(
-            days: Random().nextInt(30),
-            hours: Random().nextInt(24),
-            minutes: Random().nextInt(60),
-          ),
-        );
-        final exportDate = creationDate.add(
-          Duration(
-            days: Random().nextInt(3),
-            hours: Random().nextInt(24),
-            minutes: Random().nextInt(60),
-          ),
-        );
-        final scanDate = exportDate.add(
-          Duration(
-            days: Random().nextInt(30),
-            hours: Random().nextInt(24),
-            minutes: Random().nextInt(60),
-          ),
-        );
-        final expirationDate = creationDate.add(
-          const Duration(days: 365 * 10),
-        );
-        final variant = product.variants[i % product.variants.length];
-        final serial = ("$variant $i").hashCode.toString();
-        codes.add(
-          Code(
-            creationDate: creationDate,
-            scanCount: scanCount,
-            scanErrorsCount: scanCount == 0
-                ? 0
-                : Random().nextInt(3) == 0
-                    ? Random().nextInt(scanCount)
-                    : 0,
-            serial: serial,
-            shortCode: computeShortCode(serial, 7),
-            variant: variant,
-            exportDate: scanCount != 0
-                ? exportDate
-                : Random().nextBool()
-                    ? exportDate
-                    : null,
-            lastScanDate: scanCount == 0 ? null : scanDate,
-            expirationDate: Random().nextInt(100) == 0 ? expirationDate : null,
-          ),
-        );
+      if (!_codes.containsKey(product.id)) {
+        return <Code>[];
       }
-
+      final codes = _codes[product.id]!;
+      codes.sort(
+        (a, b) => -a.creationDate.compareTo(b.creationDate),
+      );
       return codes;
     });
   }
 
-  String computeShortCode(String serial, int codeLength) {
+  @override
+  Future<void> createCode(
+    ProductVariant variant, {
+    int blukSize = 1,
+    Map<String, String> tags = const <String, String>{},
+  }) async {
+    Future.delayed(
+      Duration.zero,
+      () {
+        final product = variant.product;
+        for (int i = 0; i < blukSize; i++) {
+          final creationDate = DateTime.now();
+          final serial =
+              ("${variant.title} ${creationDate.microsecondsSinceEpoch} ${Random().nextInt(1000)}")
+                  .hashCode
+                  .toString();
+          final code = Code(
+            creationDate: creationDate,
+            scanCount: 0,
+            scanErrorsCount: 0,
+            serial: serial,
+            shortCode: _computeShortCode(serial, 7),
+            variant: variant,
+            expirationDate: creationDate.add(const Duration(days: 365 * 5)),
+          );
+
+          if (!_codes.containsKey(product.id)) {
+            _codes[product.id] = <Code>[];
+          }
+          _codes[product.id]!.add(code);
+        }
+        _doCallbacks(BackendEvent.codeAdded);
+        variant.product.codesCount = variant.product.codesCount + blukSize;
+        _products[_products.indexOf(product)] = product;
+        _doCallbacks(BackendEvent.productUpdated);
+      },
+    );
+  }
+
+  @override
+  void addListener<T>(BackendEvent event, BackendCallback<T> callback) {
+    if (!_callbacks.containsKey(event)) {
+      _callbacks[event] = <BackendCallback>[];
+    }
+    _callbacks[event]!.add(callback as BackendCallback);
+  }
+
+  void _doCallbacks<T>(BackendEvent event, {T? argmuments}) {
+    if (!_callbacks.containsKey(event)) {
+      return;
+    }
+    for (BackendCallback callback in _callbacks[event]!) {
+      callback(arguments: argmuments);
+    }
+  }
+
+  String _computeShortCode(String serial, int codeLength) {
     final md5code = md5.convert(utf8.encode(serial)).toString();
     final start = (md5code.length - codeLength) % serial.hashCode;
     final shortCode = md5code.substring(start, start + codeLength);

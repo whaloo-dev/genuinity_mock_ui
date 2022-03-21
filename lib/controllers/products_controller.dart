@@ -5,21 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
 
   static const int _loadingStep = 10;
-  static const int _maxInventory = 1000;
+  static const int _absoluteMaxInventory = 1000;
 
   final _isEditingFilters = false.obs;
   final _isFormVisible = false.obs;
   final _isLoadingData = true.obs;
 
   final _products = <Product>[].obs;
-  final _maxInventorySize = 0.obs;
-  final _minInventorySize = 0.obs;
+
   final _totalProductsCount = 0.obs;
   final _productTypes = <String>[].obs;
   final _vendors = <String>[].obs;
@@ -30,22 +31,33 @@ class ProductsController extends GetxController {
   final _vendorFilter = "".obs;
   final _productTypeFilter = "".obs;
   final _barcodeFilter = "".obs;
+
+  var _defaultInventorySizeRangeFilter = const RangeValues(0, 500.0);
   final _inventorySizeRangeFilter = const RangeValues(0, 500.0).obs;
-  final _statusFilter = <ProductStatus, bool>{}.obs;
+
+  static const _defaultStatusFilter = <ProductStatus, bool>{
+    ProductStatus.active: true,
+    ProductStatus.draft: true,
+    ProductStatus.archived: true,
+  };
+  final _statusFilter = _defaultStatusFilter.obs;
 
   @override
   void onReady() async {
-    await loadInit();
     super.onReady();
+    await loadInit();
+    Backend.instance.addListener(BackendEvent.productUpdated, ({arguments}) {
+      applyFilter(showDataLoading: false);
+    });
   }
 
   Future<void> loadInit() async {
     Backend.instance.loadProducts().then((products) {
+      int _maxInventorySize = 0;
+      int _minInventorySize = 0;
       for (var product in products) {
-        _maxInventorySize.value =
-            max(_maxInventorySize.value, product.inventoryQuantity);
-        _minInventorySize.value =
-            min(_minInventorySize.value, product.inventoryQuantity);
+        _maxInventorySize = max(_maxInventorySize, product.inventoryQuantity);
+        _minInventorySize = min(_minInventorySize, product.inventoryQuantity);
         if (!_productTypes.contains(product.type)) {
           _productTypes.add(product.type);
         }
@@ -53,26 +65,29 @@ class ProductsController extends GetxController {
           _vendors.add(product.vendor);
         }
       }
-      _maxInventorySize.value = min(_maxInventorySize.value, _maxInventory);
+      _maxInventorySize = min(_maxInventorySize, _absoluteMaxInventory);
+      _defaultInventorySizeRangeFilter = RangeValues(
+          _minInventorySize.toDouble(), _maxInventorySize.toDouble());
       _products.addAll(products);
       _visibleProductsCount.value = min(_loadingStep, productsCount());
       _totalProductsCount.value = _products.length;
       _isLoadingData.value = false;
 
       // TODO Debug
-      // if (productsCount() > 0) {
-      //   navigationController.navigateTo(codesPageRoute,
-      //       arguments: product(Random().nextInt(productsCount())));
-      // }
+      if (productsCount() > 0) {
+        navigationController.navigateTo(codesPageRoute, arguments: product(0));
+        navigationController.navigateTo(newCodesPageRoute,
+            arguments: product(0));
+      }
 
       resetFilters();
     });
   }
 
-  void applyFilter() {
+  void applyFilter({bool showDataLoading = true}) {
     _changeIsEditingFilters(false);
     _isFormVisible.value = false;
-    _applyFilter();
+    _applyFilter(refresh: showDataLoading);
   }
 
   Future<void> showMore() async {
@@ -145,11 +160,11 @@ class ProductsController extends GetxController {
   }
 
   int maxInventorySize() {
-    return _maxInventorySize.value;
+    return _defaultInventorySizeRangeFilter.end.toInt();
   }
 
   int minInventorySize() {
-    return _minInventorySize.value;
+    return _defaultInventorySizeRangeFilter.start.toInt();
   }
 
   RangeValues inventorySizeRangeFilter() {
@@ -189,12 +204,46 @@ class ProductsController extends GetxController {
   }
 
   bool isFiltered() {
-    return productsCount() != _totalProductsCount.value;
+    return isInventorySizeRangeFilterSet() ||
+        isProductTitleFilterSet() ||
+        isSkuFilterSet() ||
+        isProductTypeFilterSet() ||
+        isVendorFilterSet() ||
+        isBarcodeFilterSet() ||
+        isStatusFilterSet();
   }
 
   bool isInventorySizeRangeFilterSet() {
-    return _inventorySizeRangeFilter.value !=
-        RangeValues(_minInventorySize.toDouble(), _maxInventorySize.toDouble());
+    return _inventorySizeRangeFilter.value != _defaultInventorySizeRangeFilter;
+  }
+
+  bool isProductTitleFilterSet() {
+    return _productTitleFilter.value.isNotEmpty;
+  }
+
+  bool isStatusFilterSet() {
+    for (ProductStatus status in ProductStatus.values) {
+      if (_statusFilter[status] != _defaultStatusFilter[status]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool isSkuFilterSet() {
+    return _skuFilter.value.isNotEmpty;
+  }
+
+  bool isProductTypeFilterSet() {
+    return _productTypeFilter.value.isNotEmpty;
+  }
+
+  bool isVendorFilterSet() {
+    return _vendorFilter.value.isNotEmpty;
+  }
+
+  bool isBarcodeFilterSet() {
+    return _barcodeFilter.value.isNotEmpty;
   }
 
   bool isProductCatalogEmpty() {
@@ -221,8 +270,7 @@ class ProductsController extends GetxController {
   }
 
   void resetInventorySizeRangeFilter({bool apply = true}) {
-    _inventorySizeRangeFilter.value =
-        RangeValues(_minInventorySize.toDouble(), _maxInventorySize.toDouble());
+    _inventorySizeRangeFilter.value = _defaultInventorySizeRangeFilter;
     if (apply) {
       applyFilter();
     }
@@ -230,15 +278,19 @@ class ProductsController extends GetxController {
 
   void resetStatusFilter({ProductStatus? status, bool apply = true}) {
     if (status != null) {
-      _statusFilter[status] = true;
+      _statusFilter[status] = _defaultStatusFilter[status]!;
     } else {
       for (ProductStatus status in ProductStatus.values) {
-        _statusFilter[status] = true;
+        _statusFilter[status] = _defaultStatusFilter[status]!;
       }
     }
     if (apply) {
       applyFilter();
     }
+  }
+
+  bool defaultStatusFilter(ProductStatus status) {
+    return _defaultStatusFilter[status]!;
   }
 
   void resetSkuFilter({bool apply = true}) {
@@ -273,10 +325,10 @@ class ProductsController extends GetxController {
     _isEditingFilters.value = newValue;
   }
 
-  Future<void> _applyFilter() async {
-    _isLoadingData.value = true;
-    _products.clear();
-
+  Future<void> _applyFilter({required bool refresh}) async {
+    if (refresh) {
+      _isLoadingData.value = true;
+    }
     Backend.instance
         .loadProducts(
       statusFilter: statusFilter(),
@@ -293,9 +345,14 @@ class ProductsController extends GetxController {
     )
         .then(
       (products) {
-        _products.addAll(products);
-        _visibleProductsCount.value = min(_loadingStep, productsCount());
-        _isLoadingData.value = false;
+        _products.value = products;
+        if (refresh) {
+          _visibleProductsCount.value = min(_loadingStep, productsCount());
+          _isLoadingData.value = false;
+        } else {
+          _visibleProductsCount.value =
+              min(_visibleProductsCount.value, productsCount());
+        }
       },
     );
   }

@@ -24,17 +24,6 @@ class ProductsSearchForm extends StatelessWidget {
         return Column(
           children: [
             const SizedBox(height: kSpacing * 2),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _searchButton(),
-                const SizedBox(width: kSpacing),
-                _resetButton(),
-              ],
-            ),
-            const SizedBox(height: kSpacing * 2),
-            const Divider(thickness: 1),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -51,7 +40,18 @@ class ProductsSearchForm extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+            const Divider(thickness: 1),
+            const SizedBox(height: kSpacing * 2),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _resetButton(),
+                _searchButton(),
+              ],
+            ),
+            const SizedBox(height: kSpacing * 2),
           ],
         );
       }),
@@ -83,7 +83,7 @@ class ProductsSearchForm extends StatelessWidget {
       width: 150,
       child: ElevatedButton(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(kLightGreyColor)),
+            backgroundColor: MaterialStateProperty.all(kHeaderColor)),
         onPressed: () {
           productsController.resetFilters();
         },
@@ -91,9 +91,7 @@ class ProductsSearchForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Text("Reset filters"),
-            SizedBox(width: kSpacing),
-            Icon(Icons.cancel_rounded),
+            Text("Reset filters", style: TextStyle(color: kDarkColor)),
           ],
         ),
       ),

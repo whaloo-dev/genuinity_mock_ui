@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 const rootRoute = "/main";
 const dashboardPageRoute = "/main/dashboard";
 const productsPageRoute = "/main/products";
-const codesPageRoute = "/main/shopify";
+const codesPageRoute = "/main/codes";
+const newCodesPageRoute = "/main/new_code";
 const settingsPageRoute = "/main/settings";
 const shopifyPageRoute = "/main/shopify";
 

@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 
+//TODO Codes : add sorting
+//TODO Codes : add search
+//TODO Codes : add delete code
 class CodesController extends GetxController {
   static CodesController instance = Get.find();
 
@@ -14,6 +17,16 @@ class CodesController extends GetxController {
 
   final _codes = <Code>[].obs;
   final _visibleCodes = 0.obs;
+
+  @override
+  void onReady() async {
+    super.onReady();
+    Backend.instance.addListener(BackendEvent.codeAdded, ({arguments}) {
+      if (_currentProduct.value != null) {
+        loadCodes(_currentProduct.value!);
+      }
+    });
+  }
 
   Future<void> loadCodes(Product product) async {
     Future.delayed(Duration.zero, () {
@@ -32,6 +45,13 @@ class CodesController extends GetxController {
     Future.delayed(Duration.zero, () {
       _visibleCodes.value =
           min(_visibleCodes.value + loadingSteps, _codes.length);
+    });
+  }
+
+  Future<void> addCode(Code code) async {
+    //TODO Codes : add validation
+    Future.delayed(Duration.zero, () {
+      _codes.add(code);
     });
   }
 

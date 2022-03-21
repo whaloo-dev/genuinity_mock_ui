@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 
 class CodesTableEmptyWidget extends StatelessWidget {
-  const CodesTableEmptyWidget({Key? key}) : super(key: key);
+  final Product product;
+  const CodesTableEmptyWidget({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,7 @@ class CodesTableEmptyWidget extends StatelessWidget {
                       child: Text("Loading..."),
                     )
 
-                  //TODO result not found widget
+                  //TODO Codes:  result not found widget
 
                   // : productsController.isFiltered()
                   //     ? Center(
@@ -43,16 +49,12 @@ class CodesTableEmptyWidget extends StatelessWidget {
                           const SizedBox(height: kSpacing),
                           const Text("There's no codes for this product."),
                           const SizedBox(height: kSpacing * 3),
-                          ElevatedButton(
+                          FloatingActionButton(
+                            child: const Icon(Icons.add),
                             onPressed: () {
-                              //TODO create code
+                              navigationController.navigateTo(newCodesPageRoute,
+                                  arguments: product);
                             },
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: const [
-                                Text("New Code"),
-                              ],
-                            ),
                           ),
                         ],
                       ),

@@ -37,19 +37,22 @@ class ProductsSearchBar extends StatelessWidget {
                       children: [
                         if (productsController.isInventorySizeRangeFilterSet())
                           _inventoryRangeChip(),
-                        if (productsController.skuFilter().isNotEmpty)
-                          _skuChip(),
-                        if (productsController.barcodeFilter().isNotEmpty)
+                        if (productsController.isSkuFilterSet()) _skuChip(),
+                        if (productsController.isBarcodeFilterSet())
                           _barcodeChip(),
-                        if (productsController.productTypeFilter().isNotEmpty)
+                        if (productsController.isProductTypeFilterSet())
                           _productTypeChip(),
-                        if (productsController.vendorFilter().isNotEmpty)
+                        if (productsController.isVendorFilterSet())
                           _vendorChip(),
-                        ...ProductStatus.values
-                            .where((status) =>
-                                !productsController.statusFilter()[status]!)
-                            .map((status) => _statusChip(status))
-                            .toList()
+                        if (productsController.isStatusFilterSet())
+                          ...ProductStatus.values
+                              .where((status) =>
+                                  productsController.statusFilter()[status] !=
+                                  productsController
+                                      .defaultStatusFilter(status))
+                              .map((status) => _statusChip(status,
+                                  productsController.statusFilter()[status]!))
+                              .toList()
                       ],
                     )
                   : null,
@@ -114,14 +117,13 @@ class ProductsSearchBar extends StatelessWidget {
     );
   }
 
-  Widget _statusChip(ProductStatus status) {
+  Widget _statusChip(ProductStatus status, bool enabled) {
     return _chip(
       onDeleted: () {
         productsController.resetStatusFilter(status: status);
       },
       text: status.name(),
-      textDecoration: TextDecoration.lineThrough,
-      backgroundColor: status.color().withOpacity(0.5),
+      textDecoration: enabled ? null : TextDecoration.lineThrough,
     );
   }
 

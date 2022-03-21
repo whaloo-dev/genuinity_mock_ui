@@ -41,11 +41,14 @@ class CodesTable extends StatelessWidget {
             );
           }
           Code code = codesController.code(product, index);
-          return CodeTile(
-            code: code,
-            index: index + 1,
-            totalCount: product.codesCount,
-          );
+          return Column(children: [
+            CodeTile(
+              code: code,
+              index: index + 1,
+              totalCount: product.codesCount,
+            ),
+            if (index + 1 == product.codesCount) const SizedBox(height: 75),
+          ]);
         },
       );
     });

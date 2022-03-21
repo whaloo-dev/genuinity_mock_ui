@@ -3,8 +3,22 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/controllers/store_controller.dart';
 
+typedef BackendCallback<T> = void Function({T? arguments});
+
+enum BackendEvent {
+  productUpdated,
+  codeAdded,
+  codeUpdated,
+  codeRemoved,
+}
+
 abstract class Backend {
   static Backend instance = Get.find();
+
+  void addListener<T>(
+    BackendEvent event,
+    BackendCallback<T> callback,
+  );
 
   Future<Store> getCurrentStore();
 
@@ -20,5 +34,11 @@ abstract class Backend {
 
   Future<List<Code>> loadCodes({
     required Product product,
+  });
+
+  Future<void> createCode(
+    ProductVariant variant, {
+    int blukSize = 1,
+    Map<String, String> tags = const <String, String>{},
   });
 }

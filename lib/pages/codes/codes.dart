@@ -6,6 +6,7 @@ import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/codes_table.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/codes_header.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/codes_table_empty.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 
 class CodesPage extends StatelessWidget {
   final Product product;
@@ -14,29 +15,48 @@ class CodesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     codesController.loadCodes(product);
-    return Column(
-      children: [
-        Expanded(
-          child: Card(
-            child: Obx(
-              () => Column(
-                children: [
-                  CodesHeader(product: product),
-                  (codesController.codesCount() == 0 ||
-                          codesController.isLoadingData())
-                      ? const Expanded(child: CodesTableEmptyWidget())
-                      : Expanded(
-                          child: CodesTable(
-                            product: product,
+    return Obx(
+      () => Column(
+        children: [
+          Expanded(
+            child: Stack(children: [
+              Card(
+                child: Column(
+                  children: [
+                    CodesHeader(product: product),
+                    (codesController.codesCount() == 0 ||
+                            codesController.isLoadingData())
+                        ? Expanded(
+                            child: CodesTableEmptyWidget(product: product))
+                        : Expanded(
+                            child: CodesTable(
+                              product: product,
+                            ),
                           ),
-                        ),
-                ],
+                  ],
+                ),
               ),
-            ),
+              if (codesController.codesCount() != 0)
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.all(kSpacing),
+                      child: FloatingActionButton(
+                        child: const Icon(Icons.add),
+                        onPressed: () {
+                          navigationController.navigateTo(newCodesPageRoute,
+                              arguments: product);
+                        },
+                      ),
+                    ),
+                  ),
+                )
+            ]),
           ),
-        ),
-        const SizedBox(height: kSpacing),
-      ],
+          const SizedBox(height: kSpacing),
+        ],
+      ),
     );
   }
 }

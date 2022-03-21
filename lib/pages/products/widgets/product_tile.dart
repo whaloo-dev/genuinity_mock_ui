@@ -221,8 +221,8 @@ class ProductTile extends StatelessWidget {
         backgroundColor: product.status.color(),
         label: Text(
           product.status.name(),
-          style: TextStyle(
-            color: kLightGreyColor,
+          style: const TextStyle(
+            color: kDarkColor,
             fontSize: 12,
           ),
         ),
@@ -243,8 +243,11 @@ class ProductTile extends StatelessWidget {
     );
   }
 
-  Widget _stackIcon(
-      {required IconData icon1, IconData? icon2, Color? icon2Color}) {
+  Widget _stackIcon({
+    required IconData icon1,
+    IconData? icon2,
+    Color? icon2Color,
+  }) {
     return Stack(
       children: [
         Container(

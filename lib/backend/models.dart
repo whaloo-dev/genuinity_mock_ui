@@ -132,7 +132,7 @@ class Code {
   final DateTime? exportDate;
   final DateTime? lastScanDate;
   final DateTime? expirationDate;
-  final List<String> tags;
+  final Map<String, String> tags;
   bool isSelected;
 
   Code({
@@ -143,9 +143,17 @@ class Code {
     required this.scanCount,
     required this.scanErrorsCount,
     this.isSelected = false,
-    this.tags = const <String>[],
+    this.tags = const <String, String>{},
     this.exportDate,
     this.lastScanDate,
     this.expirationDate,
   });
+
+  @override
+  bool operator ==(other) {
+    return other is Code && serial == other.serial;
+  }
+
+  @override
+  int get hashCode => hash2(serial.hashCode, serial.hashCode);
 }
