@@ -7,8 +7,7 @@ import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/product_tile.dart';
 
 class ProductsTable extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
-  const ProductsTable();
+  const ProductsTable({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

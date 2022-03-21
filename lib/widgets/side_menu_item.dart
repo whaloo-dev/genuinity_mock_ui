@@ -31,63 +31,48 @@ class SideMenuItemWidget extends StatelessWidget {
             : menuController.onHover(nonePageItem);
       },
       child: Obx(
-        () => Container(
-          color: menuController.isHovering(menuItem)
-              ? kLightGreyColor.withOpacity(.1)
-              : Colors.transparent,
-          child: Row(
-            children: [
-              Visibility(
-                visible: menuController.isHovering(menuItem) ||
-                    menuController.isActive(menuItem),
-                child: Container(
-                  width: 6,
-                  height: 40,
-                  color: kDarkColor,
-                ),
-                maintainSize: true,
-                maintainState: true,
-                maintainAnimation: true,
+        () => Row(
+          children: [
+            Visibility(
+              visible: menuController.isHovering(menuItem) ||
+                  menuController.isActive(menuItem),
+              child: Container(
+                width: 6,
+                height: 40,
+                color: colorScheme.onSurface,
               ),
-              Expanded(
-                child: Flex(
-                  direction: Responsiveness.isScreenCustom(context)
-                      ? Axis.vertical
-                      : Axis.horizontal,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(width: kSpacing),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: menuItem.icon(),
-                    ),
-                    if (!menuController.isActive(menuItem))
-                      Flexible(
-                        child: Text(
-                          menuItem.name,
-                          style: TextStyle(
-                            color: menuController.isHovering(menuItem)
-                                ? kDarkColor
-                                : kLightGreyColor,
-                          ),
-                        ),
-                      )
-                    else
-                      Flexible(
-                        child: Text(
-                          menuItem.name,
-                          style: const TextStyle(
-                            color: kDarkColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                  ],
-                ),
+              maintainSize: true,
+              maintainState: true,
+              maintainAnimation: true,
+            ),
+            Expanded(
+              child: Flex(
+                direction: Responsiveness.isScreenCustom(context)
+                    ? Axis.vertical
+                    : Axis.horizontal,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(width: kSpacing),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: menuItem.icon(),
+                  ),
+                  if (!menuController.isActive(menuItem))
+                    Flexible(
+                      child: Text(menuItem.name),
+                    )
+                  else
+                    Flexible(
+                      child: Text(
+                        menuItem.name,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

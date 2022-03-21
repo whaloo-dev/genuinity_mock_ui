@@ -67,9 +67,15 @@ class NewCodesForm extends StatelessWidget {
       onPressed: () {
         newCodesController.cancel();
       },
-      style:
-          ButtonStyle(backgroundColor: MaterialStateProperty.all(kHeaderColor)),
-      child: const Text("Cancel", style: TextStyle(color: kDarkColor)),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(
+          colorScheme.secondaryContainer,
+        ),
+      ),
+      child: Text("Cancel",
+          style: TextStyle(
+            color: colorScheme.onSecondaryContainer,
+          )),
     );
   }
 
@@ -95,9 +101,8 @@ class NewCodesForm extends StatelessWidget {
               height: Responsiveness.isScreenSmall(context) ? 50 : 70,
               child: Image.network(
                 product.image,
-                errorBuilder: (context, error, stackTrace) => Icon(
+                errorBuilder: (context, error, stackTrace) => const Icon(
                   Icons.image_not_supported_rounded,
-                  color: kLightGreyColor,
                 ),
               ),
             ),
@@ -106,7 +111,6 @@ class NewCodesForm extends StatelessWidget {
           Expanded(
             child: Text(
               product.title,
-              style: TextStyle(color: kDarkColor.withOpacity(0.8)),
             ),
           ),
         ],

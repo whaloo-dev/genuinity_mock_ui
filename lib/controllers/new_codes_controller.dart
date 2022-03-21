@@ -55,8 +55,9 @@ class NewCodesController extends GetxController {
           blukSize: bulkSize,
         )
         .then(
-          (value) => showActionDoneNotification(
-              "$bulkSize new code${bulkSize == 1 ? '' : 's'} created."),
+          (value) =>
+              showActionDoneNotification("${bulkSize == 1 ? 'A' : bulkSize} "
+                  "new code${bulkSize == 1 ? '' : 's'} created."),
         );
 
     _closeForm();

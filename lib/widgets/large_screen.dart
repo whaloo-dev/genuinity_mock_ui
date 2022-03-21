@@ -11,10 +11,14 @@ largeScreen(BuildContext context, GlobalKey<ScaffoldState> key) {
       Expanded(
         flex: 6,
         child: Scaffold(
-          appBar: topNavigationBar(context, key),
           body: Container(
             padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-            child: localNavigator(),
+            child: Column(
+              children: [
+                topNavigationBar(context, key),
+                Expanded(child: localNavigator()),
+              ],
+            ),
           ),
         ),
       ),

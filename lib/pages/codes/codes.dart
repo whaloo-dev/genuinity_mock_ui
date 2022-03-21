@@ -28,11 +28,7 @@ class CodesPage extends StatelessWidget {
                             codesController.isLoadingData())
                         ? Expanded(
                             child: CodesTableEmptyWidget(product: product))
-                        : Expanded(
-                            child: CodesTable(
-                              product: product,
-                            ),
-                          ),
+                        : Expanded(child: CodesTable(product: product)),
                   ],
                 ),
               ),

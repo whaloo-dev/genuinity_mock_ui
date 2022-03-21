@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/constants/localization.dart';
 
 const int largeScreenSize = 1366;
 const int mediumScreenSize = 768;

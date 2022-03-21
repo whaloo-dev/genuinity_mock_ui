@@ -71,12 +71,21 @@ extension ProductStatusExtension on ProductStatus {
 
   Color color() {
     switch (this) {
-      case ProductStatus.active: //rgba(228, 229, 231, 1)
+      case ProductStatus.active:
         return const Color.fromRGBO(174, 233, 209, 1);
       case ProductStatus.draft:
         return const Color.fromRGBO(164, 232, 242, 1);
       case ProductStatus.archived:
         return const Color.fromRGBO(228, 229, 231, 1);
+    }
+  }
+
+  Color onColor() {
+    switch (this) {
+      case ProductStatus.active:
+      case ProductStatus.draft:
+      case ProductStatus.archived:
+        return Colors.black;
     }
   }
 }

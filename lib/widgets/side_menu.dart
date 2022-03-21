@@ -11,13 +11,14 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: kLightColor,
-      child: ListView(children: [
+    return ListView(
+      children: [
         const SizedBox(height: kSpacing),
         const Logo(),
         const SizedBox(height: kSpacing),
-        Divider(color: kLightGreyColor.withOpacity(.2), thickness: 2),
+        const Divider(
+          thickness: 2,
+        ),
         const SizedBox(height: kSpacing),
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -31,13 +32,14 @@ class SideMenu extends StatelessWidget {
                       return;
                     }
                     menuController.changeActiveItemTo(item);
+                    navigationController.goHome();
                     navigationController.navigateTo(item.route);
                   },
                 ),
               )
               .toList(),
         )
-      ]),
+      ],
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/constants/localization.dart';
 
 extension Tokenizer on String {
   List<String> tokenize() {

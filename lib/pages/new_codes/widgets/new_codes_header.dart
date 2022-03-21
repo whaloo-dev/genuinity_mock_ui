@@ -18,12 +18,12 @@ class NewCodesHeader extends StatelessWidget {
         //this will avoid selected CodeTiles to show outside card borders:
         Positioned.fill(
           child: Container(
-            color: kLightColor,
-          ),
+              // color: kLightColor,
+              ),
         ),
         Card(
           margin: const EdgeInsets.all(0),
-          color: kHeaderColor,
+          // color: kHeaderColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(kBorderRadius.topLeft.x),

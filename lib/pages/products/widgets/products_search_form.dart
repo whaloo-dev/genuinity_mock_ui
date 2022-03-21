@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/constants/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
@@ -83,15 +84,20 @@ class ProductsSearchForm extends StatelessWidget {
       width: 150,
       child: ElevatedButton(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(kHeaderColor)),
+          backgroundColor:
+              MaterialStateProperty.all(colorScheme.secondaryContainer),
+        ),
         onPressed: () {
           productsController.resetFilters();
         },
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text("Reset filters", style: TextStyle(color: kDarkColor)),
+          children: [
+            Text(
+              "Reset filters",
+              style: TextStyle(color: colorScheme.onSecondaryContainer),
+            ),
           ],
         ),
       ),
@@ -112,12 +118,9 @@ class ProductsSearchForm extends StatelessWidget {
         children: [
           Text(
             "Inventory ${inventorySizeRange.toText(minInventory, maxInventory)}",
-            style: TextStyle(color: kLightGreyColor),
           ),
           RangeSlider(
             divisions: maxInventory - minInventory,
-            activeColor: kActiveColor,
-            inactiveColor: kActiveColor.withOpacity(0.5),
             labels: RangeLabels(
               numberFormat.format(inventorySizeRange.start),
               inventorySizeRange.end == productsController.maxInventorySize()
@@ -148,11 +151,10 @@ class ProductsSearchForm extends StatelessWidget {
             bottom: -2,
             child: Container(
               padding: const EdgeInsets.all(2),
-              color: kSurfaceColor,
-              child: Text(
+              color: colorScheme.surface,
+              child: const Text(
                 "SKU",
                 style: TextStyle(
-                  color: kLightGreyColor,
                   fontSize: 7,
                   fontWeight: FontWeight.bold,
                 ),
@@ -305,15 +307,17 @@ class ProductsSearchForm extends StatelessWidget {
         label: Text(
           status.name(),
           style: TextStyle(
-            color: selected ? kDarkColor : kDarkColor.withOpacity(0.5),
+            color:
+                selected ? status.onColor() : status.onColor().withOpacity(0.5),
             fontSize: 12,
             decoration: selected ? null : TextDecoration.lineThrough,
           ),
         ),
         avatar: selected
-            ? const Icon(
+            ? Icon(
                 FontAwesomeIcons.check,
                 size: 10,
+                color: status.onColor(),
               )
             : null,
       ),

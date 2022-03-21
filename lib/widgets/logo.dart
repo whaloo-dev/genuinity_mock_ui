@@ -19,14 +19,13 @@ class Logo extends StatelessWidget {
             ),
           ),
           const SizedBox(height: kSpacing),
-          Flexible(
+          const Flexible(
             child: Text(
               appName,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: kDarkColor.withOpacity(0.7),
               ),
             ),
           ),

@@ -20,16 +20,12 @@ class ProfileWidget extends StatelessWidget {
                         Container(
                           width: 1,
                           height: 22,
-                          color: kLightGreyColor,
+                          color: colorScheme.outline,
                         ),
                         const SizedBox(width: kSpacing),
                         Text(
                           storeController.store!.name,
-                          style: TextStyle(
-                            color: kLightGreyColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: const TextStyle(fontSize: 12),
                         ),
                         const SizedBox(width: kSpacing),
                       ],
@@ -41,21 +37,19 @@ class ProfileWidget extends StatelessWidget {
                     ),
                     clipBehavior: Clip.antiAlias,
                     child: IconButton(
-                        onPressed: () {},
-                        iconSize: 30,
-                        icon: storeController.store!.imageUrl != null
-                            ? Ink.image(
-                                image: NetworkImage(
-                                    storeController.store!.imageUrl!),
-                              )
-                            : const Icon(Icons.person)),
+                      onPressed: () {},
+                      iconSize: 30,
+                      icon: storeController.store!.imageUrl != null
+                          ? Ink.image(
+                              image: NetworkImage(
+                                  storeController.store!.imageUrl!),
+                            )
+                          : const Icon(Icons.person),
+                    ),
                   ),
                 ],
               )
-            : Text(
-                "...",
-                style: TextStyle(color: kLightGreyColor),
-              );
+            : const Text("...");
       },
     );
   }

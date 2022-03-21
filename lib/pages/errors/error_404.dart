@@ -9,7 +9,7 @@ class PageNotFound extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kSurfaceColor,
+      // backgroundColor: kSurfaceColor,
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 350),

@@ -6,15 +6,14 @@ import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/widgets/notification.dart';
 import 'package:whaloo_genuinity/widgets/profile.dart';
 
-AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
-    AppBar(
-      elevation: 0,
+Widget topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
+    ListTile(
       leading: Responsiveness.isScreenSmall(context)
           ? IconButton(
               onPressed: () {
                 key.currentState!.openDrawer();
               },
-              icon: Icon(Icons.menu, color: kDarkColor.withOpacity(.7)),
+              icon: const Icon(Icons.menu),
             )
           : null,
       title: Row(
@@ -23,7 +22,6 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
             () => Text(
               menuController.activeItem.value.name,
               style: const TextStyle(
-                color: kDarkColor,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
@@ -35,6 +33,4 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
           const ProfileWidget(),
         ],
       ),
-      iconTheme: const IconThemeData(color: kDarkColor),
-      backgroundColor: kLightColor,
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/constants/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/code_menu.dart';
@@ -23,7 +24,6 @@ class CodeTile extends StatelessWidget {
     return ListTile(
       hoverColor: Colors.transparent,
       selected: code.isSelected,
-      selectedTileColor: kSelectionColor,
       dense: true,
       title: _codeTileBody(context),
       onTap: () {
@@ -143,7 +143,7 @@ class CodeTile extends StatelessWidget {
         Text(
           "N° ${code.serial}",
           style: TextStyle(
-            color: kDarkColor,
+            // color: kDarkColor,
             fontSize: isSmall ? 8 : 10,
           ),
         ),
@@ -151,7 +151,7 @@ class CodeTile extends StatelessWidget {
         Text(
           "Short : ${code.shortCode}",
           style: TextStyle(
-            color: kDarkColor,
+            // color: kDarkColor,
             fontSize: isSmall ? 8 : 10,
           ),
         ),
@@ -171,9 +171,6 @@ class CodeTile extends StatelessWidget {
           const SizedBox(width: kSpacing),
           Text(
             "Scans : ${numberFormat.format(code.scanCount)}",
-            style: TextStyle(
-              color: kLightGreyColor,
-            ),
           ),
         ],
       ),
@@ -194,9 +191,6 @@ class CodeTile extends StatelessWidget {
           const SizedBox(width: kSpacing),
           Text(
             "Scan Errors : ${numberFormat.format(code.scanErrorsCount)}",
-            style: TextStyle(
-              color: kLightGreyColor,
-            ),
           ),
         ],
       ),
@@ -216,9 +210,6 @@ class CodeTile extends StatelessWidget {
           Flexible(
             child: Text(
               "Variant : ${code.variant.title}",
-              style: TextStyle(
-                color: kLightGreyColor,
-              ),
             ),
           ),
         ],
@@ -240,9 +231,6 @@ class CodeTile extends StatelessWidget {
           Flexible(
             child: Text(
               "Created : ${dateFormat.format(code.creationDate)}",
-              style: TextStyle(
-                color: kLightGreyColor,
-              ),
             ),
           ),
         ],
@@ -264,9 +252,6 @@ class CodeTile extends StatelessWidget {
           Flexible(
             child: Text(
               "First Exported : ${dateFormat.format(code.exportDate!)}",
-              style: TextStyle(
-                color: kLightGreyColor,
-              ),
             ),
           ),
         ],
@@ -288,9 +273,6 @@ class CodeTile extends StatelessWidget {
           Flexible(
             child: Text(
               "Last Scanned : ${dateFormat.format(code.lastScanDate!)}",
-              style: TextStyle(
-                color: kLightGreyColor,
-              ),
             ),
           ),
         ],
@@ -311,9 +293,6 @@ class CodeTile extends StatelessWidget {
           Flexible(
             child: Text(
               "Expires : ${dateFormat.format(code.expirationDate!)}",
-              style: TextStyle(
-                color: kLightGreyColor,
-              ),
             ),
           ),
         ],
@@ -327,7 +306,7 @@ class CodeTile extends StatelessWidget {
       child: Text(
         "${numberFormat.format(index)} of ${numberFormat.format(totalCount)}",
         style: const TextStyle(
-          color: kDarkColor,
+          // color: kDarkColor,
           fontSize: 12,
         ),
       ),
@@ -343,7 +322,7 @@ class CodeTile extends StatelessWidget {
           child: Center(
             child: Icon(
               icon1,
-              color: kLightGreyColor,
+              // color: kLightGreyColor,
               size: 18,
             ),
           ),
@@ -353,7 +332,7 @@ class CodeTile extends StatelessWidget {
             right: 0,
             child: Icon(
               icon2,
-              color: icon2Color ?? kLightGreyColor,
+              // color: icon2Color ?? kLightGreyColor,
               size: 12,
             ),
           )

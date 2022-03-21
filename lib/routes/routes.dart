@@ -1,6 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
-import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:flutter/material.dart';
 
 //Routes
@@ -10,6 +8,7 @@ const productsPageRoute = "/main/products";
 const codesPageRoute = "/main/codes";
 const newCodesPageRoute = "/main/new_code";
 const settingsPageRoute = "/main/settings";
+const colorsPageRoute = "/main/colors";
 const shopifyPageRoute = "/main/shopify";
 
 //Menu Items
@@ -31,6 +30,12 @@ final settingsPageItem = MenuItem(
   Icons.settings_rounded,
 );
 
+final colorsPageItem = MenuItem(
+  colorsPageRoute,
+  "Colors (Dev)",
+  Icons.color_lens,
+);
+
 final shopifyPageItem = MenuItem(
   shopifyPageRoute,
   "Shopify Admin",
@@ -43,6 +48,7 @@ List<MenuItem> siteMenuItems = [
   productsPageItem,
   dashboardPageItem,
   settingsPageItem,
+  if (kDebugMode) colorsPageItem,
   if (kIsWeb) shopifyPageItem,
 ];
 
@@ -51,13 +57,11 @@ class MenuItem {
   final String route;
   final IconData iconData;
 
-  bool _isSelected() {
-    return menuController.isActive(this) || menuController.isHovering(this);
-  }
-
   Widget icon() {
-    return Icon(iconData,
-        size: 22, color: _isSelected() ? kDarkColor : kLightGreyColor);
+    return Icon(
+      iconData,
+      size: 22,
+    );
   }
 
   MenuItem(this.route, this.name, this.iconData);

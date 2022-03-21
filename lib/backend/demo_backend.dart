@@ -13,8 +13,8 @@ import 'package:whaloo_genuinity/controllers/store_controller.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class DemoBackend extends GetConnect implements Backend {
-  // static const _demoStoreName = "halloweenmakeup";
-  static const _demoStoreName = "ruesco";
+  static const _demoStoreName = "halloweenmakeup";
+  // static const _demoStoreName = "ruesco";
   // static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
@@ -41,7 +41,7 @@ class DemoBackend extends GetConnect implements Backend {
     if (_isStoreDataInitialized) {
       return;
     }
-    //load store demo data:
+
     var url = "$_basePath/demo/data/${_demoStoreName}_store.json";
     var response = await get(url);
     final storeData = await json.decode(response.bodyString!);
@@ -60,7 +60,7 @@ class DemoBackend extends GetConnect implements Backend {
     if (_isProductDataInitialized) {
       return;
     }
-    //loading products
+
     final url = "$_basePath/demo/data/${_demoStoreName}_products.json";
     final response = await get(url);
     var productsData = await json.decode(response.bodyString!);

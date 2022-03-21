@@ -19,13 +19,10 @@ class CodesHeader extends StatelessWidget {
       children: [
         //this will avoid selected CodeTiles to show outside card borders:
         Positioned.fill(
-          child: Container(
-            color: kLightColor,
-          ),
+          child: Container(),
         ),
         Card(
           margin: const EdgeInsets.all(0),
-          color: kHeaderColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(kBorderRadius.topLeft.x),
@@ -41,7 +38,6 @@ class CodesHeader extends StatelessWidget {
                 title: _productTileBody(context),
                 trailing: productsMenu(product),
               ),
-              // const Divider(thickness: 1, height: 1),
             ],
           ),
         )
@@ -86,9 +82,8 @@ class CodesHeader extends StatelessWidget {
         height: Responsiveness.isScreenSmall(context) ? 50 : 70,
         child: Image.network(
           product.image,
-          errorBuilder: (context, error, stackTrace) => Icon(
+          errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,
-            color: kLightGreyColor,
           ),
         ),
       ),
@@ -103,11 +98,7 @@ class CodesHeader extends StatelessWidget {
         Flexible(
           child: Text(
             product.title,
-            style: TextStyle(
-              color: kDarkColor.withOpacity(0.8),
-              fontWeight: FontWeight.bold,
-              // fontSize: 18,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],

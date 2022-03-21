@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/constants/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
@@ -101,14 +102,14 @@ class ProductTile extends StatelessWidget {
             const Icon(
               Icons.qr_code_rounded,
               // size: 18,
-              color: kDarkColor,
+              // color: kDarkColor,
             ),
             const SizedBox(width: kSpacing),
             Text(
               "${numberFormat.format(product.codesCount)}"
               " code${product.codesCount == 1 ? '' : 's'}",
               style: const TextStyle(
-                color: kDarkColor,
+                // color: kDarkColor,
                 fontWeight: FontWeight.bold,
                 // fontSize: 18,
               ),
@@ -130,9 +131,8 @@ class ProductTile extends StatelessWidget {
         height: Responsiveness.isScreenSmall(context) ? 50 : 100,
         child: Image.network(
           product.image,
-          errorBuilder: (context, error, stackTrace) => Icon(
+          errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,
-            color: kLightGreyColor,
           ),
         ),
       ),
@@ -146,7 +146,6 @@ class ProductTile extends StatelessWidget {
         Flexible(
           child: Text(
             product.title,
-            style: TextStyle(color: kDarkColor.withOpacity(0.8)),
           ),
         ),
       ],
@@ -163,9 +162,6 @@ class ProductTile extends StatelessWidget {
           const SizedBox(width: kSpacing),
           Text(
             "Inventory : ${numberFormat.format(product.inventoryQuantity)}",
-            style: TextStyle(
-              color: kLightGreyColor,
-            ),
           ),
         ],
       ),
@@ -183,9 +179,6 @@ class ProductTile extends StatelessWidget {
           Flexible(
             child: Text(
               product.type,
-              style: TextStyle(
-                color: kLightGreyColor,
-              ),
             ),
           ),
         ],
@@ -204,9 +197,6 @@ class ProductTile extends StatelessWidget {
           Flexible(
             child: Text(
               "Vendor : ${product.vendor}",
-              style: TextStyle(
-                color: kLightGreyColor,
-              ),
             ),
           ),
         ],
@@ -221,8 +211,8 @@ class ProductTile extends StatelessWidget {
         backgroundColor: product.status.color(),
         label: Text(
           product.status.name(),
-          style: const TextStyle(
-            color: kDarkColor,
+          style: TextStyle(
+            color: product.status.onColor(),
             fontSize: 12,
           ),
         ),
@@ -236,7 +226,7 @@ class ProductTile extends StatelessWidget {
       child: Text(
         "${numberFormat.format(productIndex)} of ${numberFormat.format(productsCount)}",
         style: const TextStyle(
-          color: kDarkColor,
+          // color: kDarkColor,
           fontSize: 12,
         ),
       ),
@@ -255,7 +245,6 @@ class ProductTile extends StatelessWidget {
           child: Center(
             child: Icon(
               icon1,
-              color: kLightGreyColor,
               size: 13,
             ),
           ),
@@ -265,7 +254,7 @@ class ProductTile extends StatelessWidget {
             right: 0,
             child: Icon(
               icon2,
-              color: icon2Color ?? kLightGreyColor,
+              color: icon2Color,
               size: 10,
             ),
           )

@@ -17,4 +17,8 @@ class NavigationController extends GetxController {
   goBack() {
     return navigationKey.currentState!.pop();
   }
+
+  goHome() {
+    navigationKey.currentState!.popUntil((route) => route.isFirst);
+  }
 }
