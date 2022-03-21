@@ -21,9 +21,11 @@ const double kIconButtonSplashRadius = 25;
 
 // Theme
 // const colorScheme = lightColorScheme;
-const colorScheme = darkColorScheme;
-// final colorScheme =
-//     ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark);
+// const colorScheme = darkColorScheme;
+final colorScheme = ColorScheme.fromSeed(
+  seedColor: const Color(0x0077a4bd),
+  // brightness: Brightness.dark,
+);
 // final colorScheme = ColorScheme.fromSwatch(
 //     primarySwatch: Colors.brown, brightness: Brightness.dark);
 
