@@ -76,9 +76,9 @@ class _WhalooAutoCompleteState<T extends Object>
         optionsViewBuilder: (context, onSelected, options) => Align(
           alignment: Alignment.topLeft,
           child: Material(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(4.0)),
-            ),
+            // shape: const RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.vertical(bottom: Radius.circular(4.0)),
+            // ),
             child: SizedBox(
               height: widget.optionsHeight,
               width: constraints.biggest.width,
