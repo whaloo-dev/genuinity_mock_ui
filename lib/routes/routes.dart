@@ -12,39 +12,39 @@ const colorsPageRoute = "/main/colors";
 const shopifyPageRoute = "/main/shopify";
 
 //Menu Items
-final productsPageItem = MenuItem(
+final productsPageItem = MainMenuItem(
   productsPageRoute,
   "Codes",
   Icons.qr_code_rounded,
 );
 
-final dashboardPageItem = MenuItem(
+final dashboardPageItem = MainMenuItem(
   dashboardPageRoute,
   "Statistics",
   Icons.bar_chart_rounded,
 );
 
-final settingsPageItem = MenuItem(
+final settingsPageItem = MainMenuItem(
   settingsPageRoute,
   "Settings",
   Icons.settings_rounded,
 );
 
-final colorsPageItem = MenuItem(
+final colorsPageItem = MainMenuItem(
   colorsPageRoute,
   "Colors (Dev)",
   Icons.color_lens,
 );
 
-final shopifyPageItem = MenuItem(
+final shopifyPageItem = MainMenuItem(
   shopifyPageRoute,
   "Shopify Admin",
   Icons.shopify_rounded,
 );
 
-final nonePageItem = MenuItem("", "", Icons.not_accessible);
+final nonePageItem = MainMenuItem("", "", Icons.not_accessible);
 
-List<MenuItem> siteMenuItems = [
+List<MainMenuItem> siteMenuItems = [
   productsPageItem,
   dashboardPageItem,
   settingsPageItem,
@@ -52,7 +52,7 @@ List<MenuItem> siteMenuItems = [
   if (kIsWeb) shopifyPageItem,
 ];
 
-class MenuItem {
+class MainMenuItem {
   final String name;
   final String route;
   final IconData iconData;
@@ -64,5 +64,5 @@ class MenuItem {
     );
   }
 
-  MenuItem(this.route, this.name, this.iconData);
+  MainMenuItem(this.route, this.name, this.iconData);
 }

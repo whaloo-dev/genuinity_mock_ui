@@ -14,11 +14,11 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
-  // static const _demoStoreName = "ruesco";
+  static const _demoStoreName = "ruesco";
   // static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
-  static const _demoStoreName = "decathlon";
+  // static const _demoStoreName = "decathlon";
   // static const _demoStoreName = "thebookbundler";
   // static const _demoStoreName = "commonfarmflowers";
   // static const _demoStoreName = "atelierdubraceletparisien";
@@ -75,7 +75,8 @@ class DemoBackend extends GetConnect implements Backend {
         image: productData['image']['src'],
         type: productData['product_type'],
         vendor: productData['vendor'],
-        codesCount: 0, //Random().nextInt(100),
+//TODO cleaning
+        codesCount: Random().nextInt(2),
         inventoryQuantity: 0,
         status: mod3 == 0
             ? ProductStatus.active
@@ -116,7 +117,7 @@ class DemoBackend extends GetConnect implements Backend {
   }
 
   @override
-  Future<List<Product>> loadProducts({
+  Future<List<Product>> loadProductsHavingCodes({
     Map<ProductStatus, bool>? statusFilter,
     List<String>? productTitleFilter,
     String? skuFilter,
@@ -137,6 +138,9 @@ class DemoBackend extends GetConnect implements Backend {
 
     for (int i = 0; i < _products.length; i++) {
       final _product = _products[i];
+      if (_product.codesCount == 0) {
+        continue;
+      }
 
       // Product status filter
       if (statusFilter != null && !statusFilter[_product.status]!) {

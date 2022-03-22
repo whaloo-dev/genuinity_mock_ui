@@ -15,7 +15,7 @@ class ProductsPage extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
-          if (!productsController.isProductCatalogEmpty())
+          if (productsController.totalProductsCount() > 10)
             const ProductsSearchBar(),
           Obx(() {
             if (productsController.isFormVisible() ||

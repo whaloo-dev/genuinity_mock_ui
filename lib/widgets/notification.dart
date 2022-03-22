@@ -15,12 +15,12 @@ class NotificationWidget extends StatelessWidget {
       badgeContent: Text(
         "10",
         style: TextStyle(
-          color: colorScheme.onPrimary,
+          color: colorScheme.onPrimaryContainer,
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
       ),
-      badgeColor: colorScheme.primary,
+      badgeColor: colorScheme.primaryContainer,
       position: const BadgePosition(
         isCenter: false,
         end: 0,
@@ -29,7 +29,7 @@ class NotificationWidget extends StatelessWidget {
       child: IconButton(
         onPressed: () {},
         splashRadius: kIconButtonSplashRadius,
-        icon: const Icon(Icons.notifications),
+        icon: const Icon(Icons.notifications_none_rounded),
       ),
     );
   }

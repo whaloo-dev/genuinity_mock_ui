@@ -7,17 +7,17 @@ class MenuController extends GetxController {
   var activeItem = productsPageItem.obs;
   var hoverItem = nonePageItem.obs;
 
-  changeActiveItemTo(MenuItem item) {
+  changeActiveItemTo(MainMenuItem item) {
     activeItem.value = item;
   }
 
-  onHover(MenuItem item) {
+  onHover(MainMenuItem item) {
     if (!isActive(item)) {
       hoverItem.value = item;
     }
   }
 
-  isActive(MenuItem item) => activeItem.value == item;
+  isActive(MainMenuItem item) => activeItem.value == item;
 
-  isHovering(MenuItem item) => hoverItem.value == item;
+  isHovering(MainMenuItem item) => hoverItem.value == item;
 }

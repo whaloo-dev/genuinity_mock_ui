@@ -6,7 +6,7 @@ import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 
 class SideMenuItemWidget extends StatelessWidget {
-  final MenuItem menuItem;
+  final MainMenuItem menuItem;
   final void Function()? onTap;
 
   const SideMenuItemWidget({Key? key, required this.menuItem, this.onTap})

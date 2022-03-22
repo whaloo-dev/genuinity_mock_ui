@@ -82,6 +82,7 @@ class CodesHeader extends StatelessWidget {
         height: Responsiveness.isScreenSmall(context) ? 50 : 70,
         child: Image.network(
           product.image,
+          fit: BoxFit.fill,
           errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,
           ),

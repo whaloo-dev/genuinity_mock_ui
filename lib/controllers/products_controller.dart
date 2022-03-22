@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
-import 'package:whaloo_genuinity/routes/routes.dart';
 
 class ProductsController extends GetxController {
   static ProductsController instance = Get.find();
@@ -52,7 +50,7 @@ class ProductsController extends GetxController {
   }
 
   Future<void> loadInit() async {
-    Backend.instance.loadProducts().then((products) {
+    Backend.instance.loadProductsHavingCodes().then((products) {
       int _maxInventorySize = 0;
       int _minInventorySize = 0;
       for (var product in products) {
@@ -65,6 +63,8 @@ class ProductsController extends GetxController {
           _vendors.add(product.vendor);
         }
       }
+      _vendors.sort();
+      _productTypes.sort();
       _maxInventorySize = min(_maxInventorySize, _absoluteMaxInventory);
       _defaultInventorySizeRangeFilter = RangeValues(
           _minInventorySize.toDouble(), _maxInventorySize.toDouble());
@@ -74,11 +74,11 @@ class ProductsController extends GetxController {
       _isLoadingData.value = false;
 
       // TODO Debug
-      if (productsCount() > 0) {
-        navigationController.navigateTo(codesPageRoute, arguments: product(0));
-        navigationController.navigateTo(newCodesPageRoute,
-            arguments: product(0));
-      }
+      // if (productsCount() > 0) {
+      //   navigationController.navigateTo(codesPageRoute, arguments: product(0));
+      //   navigationController.navigateTo(newCodesPageRoute,
+      //       arguments: product(0));
+      // }
 
       resetFilters();
     });
@@ -246,8 +246,8 @@ class ProductsController extends GetxController {
     return _barcodeFilter.value.isNotEmpty;
   }
 
-  bool isProductCatalogEmpty() {
-    return _totalProductsCount.value == 0;
+  int totalProductsCount() {
+    return _totalProductsCount.value;
   }
 
   bool isEditingFilters() {
@@ -330,7 +330,7 @@ class ProductsController extends GetxController {
       _isLoadingData.value = true;
     }
     Backend.instance
-        .loadProducts(
+        .loadProductsHavingCodes(
       statusFilter: statusFilter(),
       productTitleFilter: _productTitleFilter.isNotEmpty
           ? _productTitleFilter.value.tokenize()

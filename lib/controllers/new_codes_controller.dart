@@ -3,13 +3,16 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
+import 'package:whaloo_genuinity/pages/codes_creation_wizard/codes_creation_wizard.dart';
 
 class NewCodesController extends GetxController {
   static NewCodesController instance = Get.find();
 
   final GlobalKey<FormState> formState = GlobalKey<FormState>();
+
+  final _product = Rx<Product?>(null);
+  bool _isProductPreset = true;
 
   String _variantText = "";
   ProductVariant? _variant;
@@ -39,9 +42,24 @@ class NewCodesController extends GetxController {
   String? variantFieldError() => _variantFieldError.value;
   TextEditingController bulkSizeController() => _bulkSizeController;
   String? bulkSizeFieldError() => _bulkSizeFieldError.value;
+  Product? product() => _product.value;
+  bool isProductPreset() => _isProductPreset;
 
-  submit(Product product) {
-    var isVariantValid = _validateVariantField(product);
+  open({Product? product}) {
+    _isProductPreset = product != null;
+    _product.value = product;
+    _variantFieldError.value = null;
+    _variant = null;
+    _variantText = "";
+    _bulkSizeController.text = "1";
+    _bulkSizeFieldError.value = null;
+    Get.dialog(
+      const CodesCreationWizard(),
+    );
+  }
+
+  submit() {
+    var isVariantValid = _validateVariantField(_product.value!);
     var isBulkSizeValid = _validateBulkSizeField();
     var isValid = isVariantValid && isBulkSizeValid;
     if (!isValid) {
@@ -68,27 +86,25 @@ class NewCodesController extends GetxController {
   }
 
   bool _validateVariantField(Product product) {
+    if (product.variants.length <= 1) {
+      _variant = product.variants[0];
+      return true;
+    }
+
+    if (_variantText.trim().isEmpty) {
+      _variantFieldError.value = "This field is mandatory";
+      return false;
+    }
+
+    for (ProductVariant variant in product.variants) {
+      if (_variantText == variant.title) {
+        _variant = variant;
+        break;
+      }
+    }
     if (_variant == null) {
-      if (product.variants.length <= 1) {
-        _variant = product.variants[0];
-        return true;
-      }
-
-      if (_variantText.trim().isEmpty) {
-        _variantFieldError.value = "This field is mandatory";
-        return false;
-      }
-
-      for (ProductVariant variant in product.variants) {
-        if (_variantText == variant.title) {
-          _variant = variant;
-          break;
-        }
-      }
-      if (_variant == null) {
-        _variantFieldError.value = "Incorrect input";
-        return false;
-      }
+      _variantFieldError.value = "Incorrect input";
+      return false;
     }
     return true;
   }
@@ -112,11 +128,6 @@ class NewCodesController extends GetxController {
   }
 
   _closeForm() {
-    navigationController.goBack();
-    _variantFieldError.value = null;
-    _variant = null;
-    _variantText = "";
-    _bulkSizeController.text = "1";
-    _bulkSizeFieldError.value = null;
+    Get.back();
   }
 }

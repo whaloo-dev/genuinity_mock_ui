@@ -5,13 +5,7 @@ import 'package:whaloo_genuinity/constants/lib_color_schemes.g.dart';
 const Color kWarningColor = Colors.orange;
 final Color kErrorColor = Colors.red.shade200;
 
-const double radius = 10;
-BorderRadius kBorderRadius = const BorderRadius.only(
-  topLeft: Radius.circular(radius),
-  topRight: Radius.circular(radius),
-  bottomLeft: Radius.circular(radius),
-  bottomRight: Radius.circular(radius),
-);
+BorderRadius kBorderRadius = const BorderRadius.all(Radius.circular(10));
 
 const double kElevation = 3;
 
@@ -20,15 +14,7 @@ const double kSpacing = 5;
 const double kIconButtonSplashRadius = 25;
 
 // Theme
-// const colorScheme = lightColorScheme;
-// const colorScheme = darkColorScheme;
-final colorScheme = ColorScheme.fromSeed(
-  seedColor: const Color(0x0077a4bd),
-  // brightness: Brightness.dark,
-);
-// final colorScheme = ColorScheme.fromSwatch(
-//     primarySwatch: Colors.brown, brightness: Brightness.dark);
-
+var colorScheme = lightColorScheme;
 final ThemeData themeData = ThemeData(
   colorScheme: colorScheme,
   inputDecorationTheme: _inputDecorationTheme,
@@ -37,11 +23,11 @@ final ThemeData themeData = ThemeData(
   textTheme: _textTheme,
   pageTransitionsTheme: _pageTransitionsTheme,
   scrollbarTheme: _scrollbarThemeData,
+  floatingActionButtonTheme: _floatingActionButtonThemeData,
 );
 
 final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
-  filled: true,
-  border: UnderlineInputBorder(
+  border: OutlineInputBorder(
     borderRadius: kBorderRadius,
   ),
 );
@@ -73,6 +59,13 @@ const PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(
     TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
     TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
   },
+);
+
+final _floatingActionButtonThemeData = FloatingActionButtonThemeData(
+  elevation: kElevation,
+  focusElevation: kElevation,
+  hoverElevation: kElevation + 1,
+  shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
 );
 
 const ScrollbarThemeData _scrollbarThemeData = ScrollbarThemeData(

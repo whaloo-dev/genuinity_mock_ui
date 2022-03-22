@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/routes/routes.dart';
 
 class CodesTableEmptyWidget extends StatelessWidget {
   final Product product;
@@ -52,8 +51,11 @@ class CodesTableEmptyWidget extends StatelessWidget {
                           FloatingActionButton(
                             child: const Icon(Icons.add),
                             onPressed: () {
-                              navigationController.navigateTo(newCodesPageRoute,
-                                  arguments: product);
+                              newCodesController.open(product: product);
+
+                              //TODO clean
+                              // navigationController.navigateTo(newCodesPageRoute,
+                              // arguments: product);
                             },
                           ),
                         ],

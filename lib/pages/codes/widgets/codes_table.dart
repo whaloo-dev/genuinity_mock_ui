@@ -16,41 +16,64 @@ class CodesTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final visibleCodesCount = codesController.visibleCodesCount();
-      final codesCount = codesController.codesCount();
-      return ListView.separated(
-        separatorBuilder: (context, index) =>
-            const Divider(thickness: 1, height: 1),
-        itemCount: min(visibleCodesCount + 1, codesCount),
-        itemBuilder: (context, index) {
-          if (index == visibleCodesCount) {
-            codesController.showMore();
-            return ListTile(
-              hoverColor: Colors.transparent,
-              dense: true,
-              title: Center(
-                child: Container(
-                  padding: const EdgeInsets.all(kSpacing),
-                  child: Container(
-                    padding: const EdgeInsets.all(kSpacing),
-                    child: const Text("Loading..."),
+    return Stack(
+      children: [
+        Obx(() {
+          final visibleCodesCount = codesController.visibleCodesCount();
+          final codesCount = codesController.codesCount();
+          return ListView.separated(
+            separatorBuilder: (context, index) =>
+                const Divider(thickness: 1, height: 1),
+            itemCount: min(visibleCodesCount + 1, codesCount),
+            itemBuilder: (context, index) {
+              if (index == visibleCodesCount) {
+                codesController.showMore();
+                return ListTile(
+                  hoverColor: Colors.transparent,
+                  dense: true,
+                  title: Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(kSpacing),
+                      child: Container(
+                        padding: const EdgeInsets.all(kSpacing),
+                        child: const Text("Loading..."),
+                      ),
+                    ),
                   ),
+                );
+              }
+              Code code = codesController.code(product, index);
+              return Column(
+                children: [
+                  CodeTile(
+                    code: code,
+                    index: index + 1,
+                    totalCount: product.codesCount,
+                  ),
+                  //added space for the floating action button
+                  if (index + 1 == product.codesCount)
+                    const SizedBox(height: 75),
+                ],
+              );
+            },
+          );
+        }),
+        if (codesController.codesCount() != 0)
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(kSpacing * 3),
+                child: FloatingActionButton(
+                  child: const Icon(Icons.add),
+                  onPressed: () {
+                    newCodesController.open(product: product);
+                  },
                 ),
               ),
-            );
-          }
-          Code code = codesController.code(product, index);
-          return Column(children: [
-            CodeTile(
-              code: code,
-              index: index + 1,
-              totalCount: product.codesCount,
             ),
-            if (index + 1 == product.codesCount) const SizedBox(height: 75),
-          ]);
-        },
-      );
-    });
+          )
+      ],
+    );
   }
 }

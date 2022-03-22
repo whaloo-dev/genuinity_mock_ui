@@ -101,17 +101,13 @@ class ProductTile extends StatelessWidget {
           children: [
             const Icon(
               Icons.qr_code_rounded,
-              // size: 18,
-              // color: kDarkColor,
             ),
             const SizedBox(width: kSpacing),
             Text(
               "${numberFormat.format(product.codesCount)}"
               " code${product.codesCount == 1 ? '' : 's'}",
               style: const TextStyle(
-                // color: kDarkColor,
                 fontWeight: FontWeight.bold,
-                // fontSize: 18,
               ),
             ),
           ],
@@ -131,6 +127,7 @@ class ProductTile extends StatelessWidget {
         height: Responsiveness.isScreenSmall(context) ? 50 : 100,
         child: Image.network(
           product.image,
+          fit: BoxFit.fill,
           errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,
           ),

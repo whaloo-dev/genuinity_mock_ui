@@ -22,7 +22,7 @@ abstract class Backend {
 
   Future<Store> getCurrentStore();
 
-  Future<List<Product>> loadProducts({
+  Future<List<Product>> loadProductsHavingCodes({
     Map<ProductStatus, bool>? statusFilter,
     List<String>? productTitleFilter,
     String? skuFilter,

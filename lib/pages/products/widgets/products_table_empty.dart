@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/helpers/url_launcher.dart';
 
 class ProductsTableEmptyWidget extends StatelessWidget {
   const ProductsTableEmptyWidget({Key? key}) : super(key: key);
@@ -35,34 +33,54 @@ class ProductsTableEmptyWidget extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Stack(
-                                  children: const [
-                                    Icon(
-                                      Icons.shopify_rounded,
-                                      size: 30,
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      child: Icon(
-                                        FontAwesomeIcons.exclamationCircle,
-                                        size: 10,
-                                        color: kWarningColor,
-                                      ),
-                                    ),
-                                  ],
+                                const SizedBox(height: 50),
+                                const Icon(
+                                  Icons.qr_code_2_rounded,
+                                  size: 30,
                                 ),
                                 const SizedBox(height: kSpacing),
-                                const Text("Products Catalog Is Empty."),
+                                const Text("There's no codes yet."),
                                 const SizedBox(height: kSpacing * 3),
-                                ElevatedButton(
+                                FloatingActionButton(
+                                  child: const Icon(Icons.add),
                                   onPressed: () {
-                                    goToShopify();
+                                    newCodesController.open();
                                   },
-                                  child: const Text("Go To Shopify Admin"),
                                 ),
                               ],
                             ),
                           )
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Stack(
+                //         children: const [
+                //           Icon(
+                //             Icons.shopify_rounded,
+                //             size: 30,
+                //           ),
+                //           Positioned(
+                //             right: 0,
+                //             child: Icon(
+                //               FontAwesomeIcons.exclamationCircle,
+                //               size: 10,
+                //               color: kWarningColor,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //       const SizedBox(height: kSpacing),
+                //       const Text("Products Catalog Is Empty."),
+                //       const SizedBox(height: kSpacing * 3),
+                //       ElevatedButton(
+                //         onPressed: () {
+                //           goToShopify();
+                //         },
+                //         child: const Text("Go To Shopify Admin"),
+                //       ),
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),

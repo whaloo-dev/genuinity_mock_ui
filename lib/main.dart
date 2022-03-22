@@ -24,10 +24,10 @@ void main() {
   Get.put(ProductsController());
   Get.put(CodesController());
   Get.put(NewCodesController());
-  runApp(const MyApp());
   storeController.onReady();
   productsController.onReady();
   codesController.onReady();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
