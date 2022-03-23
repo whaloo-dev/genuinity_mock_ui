@@ -13,6 +13,14 @@ class ProductsController extends GetxController {
   static const int _loadingStep = 10;
   static const int _absoluteMaxInventory = 1000;
 
+  final bool showProductsHavingCodesOnly;
+
+  ProductsController({this.showProductsHavingCodesOnly = true}) {
+    Backend.instance.addListener(BackendEvent.productUpdated, ({arguments}) {
+      applyFilter(showDataLoading: false);
+    });
+  }
+
   final _isEditingFilters = false.obs;
   final _isFormVisible = false.obs;
   final _isLoadingData = true.obs;
@@ -40,17 +48,10 @@ class ProductsController extends GetxController {
   };
   final _statusFilter = _defaultStatusFilter.obs;
 
-  @override
-  void onReady() async {
-    super.onReady();
-    await loadInit();
-    Backend.instance.addListener(BackendEvent.productUpdated, ({arguments}) {
-      applyFilter(showDataLoading: false);
-    });
-  }
-
   Future<void> loadInit() async {
-    Backend.instance.loadProductsHavingCodes().then((products) {
+    Backend.instance
+        .loadProducts(showProductsHavingCodesOnly: showProductsHavingCodesOnly)
+        .then((products) {
       int _maxInventorySize = 0;
       int _minInventorySize = 0;
       for (var product in products) {
@@ -72,13 +73,6 @@ class ProductsController extends GetxController {
       _visibleProductsCount.value = min(_loadingStep, productsCount());
       _totalProductsCount.value = _products.length;
       _isLoadingData.value = false;
-
-      // TODO Debug
-      // if (productsCount() > 0) {
-      //   navigationController.navigateTo(codesPageRoute, arguments: product(0));
-      //   navigationController.navigateTo(newCodesPageRoute,
-      //       arguments: product(0));
-      // }
 
       resetFilters();
     });
@@ -330,7 +324,8 @@ class ProductsController extends GetxController {
       _isLoadingData.value = true;
     }
     Backend.instance
-        .loadProductsHavingCodes(
+        .loadProducts(
+      showProductsHavingCodesOnly: showProductsHavingCodesOnly,
       statusFilter: statusFilter(),
       productTitleFilter: _productTitleFilter.isNotEmpty
           ? _productTitleFilter.value.tokenize()

@@ -33,6 +33,9 @@ class _WhalooAutoCompleteState<T extends Object>
     extends State<WhalooAutoComplete<T>> {
   Widget _fieldViewBuilder(
       context, textEditingController, FocusNode focusNode, onFieldSubmitted) {
+    focusNode.addListener(() {
+      setState(() {});
+    });
     return TextField(
       controller: textEditingController,
       focusNode: focusNode,
@@ -54,9 +57,9 @@ class _WhalooAutoCompleteState<T extends Object>
   Widget _clearFieldWidget(void Function() handler) {
     return IconButton(
       splashRadius: kIconButtonSplashRadius,
-      icon: Icon(widget.focusNode!.hasFocus
+      icon: Icon(!widget.focusNode!.hasFocus
           ? Icons.arrow_drop_down_outlined
-          : Icons.cancel_rounded),
+          : Icons.arrow_drop_up_outlined),
       onPressed: handler,
     );
   }
@@ -76,9 +79,6 @@ class _WhalooAutoCompleteState<T extends Object>
         optionsViewBuilder: (context, onSelected, options) => Align(
           alignment: Alignment.topLeft,
           child: Material(
-            // shape: const RoundedRectangleBorder(
-            //   borderRadius: BorderRadius.vertical(bottom: Radius.circular(4.0)),
-            // ),
             child: SizedBox(
               height: widget.optionsHeight,
               width: constraints.biggest.width,

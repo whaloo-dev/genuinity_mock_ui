@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
-import 'package:whaloo_genuinity/pages/codes_creation_wizard/widgets/codes_creation_form.dart';
-import 'package:whaloo_genuinity/pages/codes_creation_wizard/widgets/codes_creation_header.dart';
+import 'package:whaloo_genuinity/pages/codes_creation/widgets/codes_creation_form.dart';
+import 'package:whaloo_genuinity/pages/codes_creation/widgets/codes_creation_header.dart';
 
 class CodesCreationWizard extends StatelessWidget {
   const CodesCreationWizard({
@@ -15,7 +15,7 @@ class CodesCreationWizard extends StatelessWidget {
       children: [
         Expanded(flex: 1, child: Container()),
         Expanded(
-          flex: Responsiveness.isScreenSmall(context) ? 100 : 4,
+          flex: Responsiveness.isScreenSmall(context) ? 100 : 10,
           child: Column(
             children: [
               const SizedBox(height: kSpacing),

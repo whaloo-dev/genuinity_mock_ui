@@ -48,13 +48,6 @@ class CodesController extends GetxController {
     });
   }
 
-  Future<void> addCode(Code code) async {
-    //TODO Codes : add validation
-    Future.delayed(Duration.zero, () {
-      _codes.add(code);
-    });
-  }
-
   Code code(Product product, int index) {
     return _codes[index];
   }

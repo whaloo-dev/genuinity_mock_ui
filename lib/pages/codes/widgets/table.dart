@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/code_tile.dart';
+import 'package:whaloo_genuinity/pages/codes/widgets/tile.dart';
 
 class CodesTable extends StatelessWidget {
   final Product product;
@@ -62,7 +62,7 @@ class CodesTable extends StatelessWidget {
           Positioned.fill(
             child: Align(
               alignment: Alignment.bottomRight,
-              child: Padding(
+              child: Container(
                 padding: const EdgeInsets.all(kSpacing * 3),
                 child: FloatingActionButton(
                   child: const Icon(Icons.add),

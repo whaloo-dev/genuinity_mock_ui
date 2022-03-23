@@ -5,7 +5,7 @@ import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/code_menu.dart';
+import 'package:whaloo_genuinity/pages/codes/widgets/tile_menu.dart';
 
 class CodeTile extends StatelessWidget {
   final Code code;
@@ -48,7 +48,7 @@ class CodeTile extends StatelessWidget {
               children: [
                 _selectionWidget(),
                 Expanded(child: Container()),
-                codesMenu(code),
+                codeTileMenu(code),
               ],
             )
           ],

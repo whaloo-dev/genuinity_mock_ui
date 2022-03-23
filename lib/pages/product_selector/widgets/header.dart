@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 
 class ProductSelectorHeader extends StatelessWidget {
+  final void Function() onCancel;
+
   const ProductSelectorHeader({
     Key? key,
+    required this.onCancel,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class ProductSelectorHeader extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.only(left: kSpacing),
       child: Text(
-        "Create Codes",
+        "Select product : ",
         style: TextStyle(
           fontWeight: FontWeight.bold,
         ),
@@ -46,9 +48,7 @@ class ProductSelectorHeader extends StatelessWidget {
     return IconButton(
       splashRadius: kIconButtonSplashRadius,
       icon: const Icon(Icons.close_rounded),
-      onPressed: () {
-        newCodesController.cancel();
-      },
+      onPressed: onCancel,
     );
   }
 }

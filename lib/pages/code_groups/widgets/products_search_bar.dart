@@ -15,53 +15,55 @@ class ProductsSearchBar extends StatelessWidget {
     return Obx(() {
       var searchFieldController =
           textEditingController(text: productsController.productTitleFilter());
-
-      return Column(
-        children: [
-          TextField(
-            enableSuggestions: true,
-            enabled: !productsController.isLoadingData(),
-            onChanged: (value) {
-              productsController.changeProductTitleFilter(value);
-            },
-            onSubmitted: (value) {
-              productsController.applyFilter();
-            },
-            controller: searchFieldController,
-            decoration: InputDecoration(
-              counter: (!productsController.isLoadingData() &&
-                      !productsController.isEditingFilters() &&
-                      productsController.isFiltered())
-                  ? Wrap(
-                      spacing: kSpacing,
-                      runSpacing: kSpacing,
-                      children: [
-                        if (productsController.isInventorySizeRangeFilterSet())
-                          _inventoryRangeChip(),
-                        if (productsController.isSkuFilterSet()) _skuChip(),
-                        if (productsController.isBarcodeFilterSet())
-                          _barcodeChip(),
-                        if (productsController.isProductTypeFilterSet())
-                          _productTypeChip(),
-                        if (productsController.isVendorFilterSet())
-                          _vendorChip(),
-                        if (productsController.isStatusFilterSet())
-                          ...ProductStatus.values
-                              .where((status) =>
-                                  productsController.statusFilter()[status] !=
-                                  productsController
-                                      .defaultStatusFilter(status))
-                              .map((status) => _statusChip(status,
-                                  productsController.statusFilter()[status]!))
-                              .toList()
-                      ],
-                    )
-                  : null,
-              label: const Text("Search by product title"),
-              suffixIcon: _suffixWidget(searchFieldController),
+      return Padding(
+        padding: const EdgeInsets.all(kSpacing * 2),
+        child: Column(
+          children: [
+            TextField(
+              enabled: !productsController.isLoadingData(),
+              onChanged: (value) {
+                productsController.changeProductTitleFilter(value);
+              },
+              onSubmitted: (value) {
+                productsController.applyFilter();
+              },
+              controller: searchFieldController,
+              decoration: InputDecoration(
+                counter: (!productsController.isLoadingData() &&
+                        !productsController.isEditingFilters() &&
+                        productsController.isFiltered())
+                    ? Wrap(
+                        spacing: kSpacing,
+                        runSpacing: kSpacing,
+                        children: [
+                          if (productsController
+                              .isInventorySizeRangeFilterSet())
+                            _inventoryRangeChip(),
+                          if (productsController.isSkuFilterSet()) _skuChip(),
+                          if (productsController.isBarcodeFilterSet())
+                            _barcodeChip(),
+                          if (productsController.isProductTypeFilterSet())
+                            _productTypeChip(),
+                          if (productsController.isVendorFilterSet())
+                            _vendorChip(),
+                          if (productsController.isStatusFilterSet())
+                            ...ProductStatus.values
+                                .where((status) =>
+                                    productsController.statusFilter()[status] !=
+                                    productsController
+                                        .defaultStatusFilter(status))
+                                .map((status) => _statusChip(status,
+                                    productsController.statusFilter()[status]!))
+                                .toList()
+                        ],
+                      )
+                    : null,
+                label: const Text("Search by product title"),
+                suffixIcon: _suffixWidget(searchFieldController),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     });
   }

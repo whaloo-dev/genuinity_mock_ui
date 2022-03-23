@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/codes_header.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/codes_table.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/codes_table_empty.dart';
+import 'package:whaloo_genuinity/pages/codes/widgets/header.dart';
+import 'package:whaloo_genuinity/pages/codes/widgets/table.dart';
+import 'package:whaloo_genuinity/pages/codes/widgets/table_empty.dart';
 
 class CodesPage extends StatelessWidget {
   final Product product;

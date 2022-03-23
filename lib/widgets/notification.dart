@@ -15,12 +15,12 @@ class NotificationWidget extends StatelessWidget {
       badgeContent: Text(
         "10",
         style: TextStyle(
-          color: colorScheme.onPrimaryContainer,
+          color: colorScheme.onPrimary,
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
       ),
-      badgeColor: colorScheme.primaryContainer,
+      badgeColor: colorScheme.primary,
       position: const BadgePosition(
         isCenter: false,
         end: 0,

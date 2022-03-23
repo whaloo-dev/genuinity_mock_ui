@@ -52,10 +52,6 @@ class CodesTableEmptyWidget extends StatelessWidget {
                             child: const Icon(Icons.add),
                             onPressed: () {
                               newCodesController.open(product: product);
-
-                              //TODO clean
-                              // navigationController.navigateTo(newCodesPageRoute,
-                              // arguments: product);
                             },
                           ),
                         ],

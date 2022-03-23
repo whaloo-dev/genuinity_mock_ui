@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
-import 'package:whaloo_genuinity/pages/products/widgets/products_menu.dart';
-import 'package:whaloo_genuinity/routes/routes.dart';
+import 'package:whaloo_genuinity/pages/code_groups/widgets/products_menu.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -14,9 +12,11 @@ class ProductTile extends StatelessWidget {
   final int productsCount;
   final int vendorsCount;
   final int productTypesCount;
+  final void Function(Product product) onSelected;
 
   const ProductTile({
     Key? key,
+    required this.onSelected,
     required this.product,
     required this.productIndex,
     required this.productsCount,
@@ -28,18 +28,9 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       hoverColor: Colors.transparent,
-      // dense: true,
       title: _productTileBody(context),
-      contentPadding: const EdgeInsets.only(
-        top: kSpacing * 2,
-        left: kSpacing,
-        right: kSpacing,
-      ),
-      onTap: () async {
-        navigationController.navigateTo(
-          codesPageRoute,
-          arguments: product,
-        );
+      onTap: () {
+        onSelected(product);
       },
     );
   }

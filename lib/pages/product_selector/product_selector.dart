@@ -1,80 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/helpers/responsiveness.dart';
-import 'package:whaloo_genuinity/pages/codes_creation_wizard/widgets/codes_creation_form.dart';
-import 'package:whaloo_genuinity/pages/product_selector/widgets/product_selector_header.dart';
+import 'package:whaloo_genuinity/pages/product_selector/widgets/products_search_bar.dart';
+import 'package:whaloo_genuinity/pages/product_selector/widgets/products_search_form.dart';
+import 'package:whaloo_genuinity/pages/product_selector/widgets/products_table.dart';
+import 'package:whaloo_genuinity/pages/product_selector/widgets/products_table_empty.dart';
 
-class ProductSelector extends StatelessWidget {
-  const ProductSelector({
+final controller = productSelectorController;
+
+class ProductsSelector extends StatelessWidget {
+  final void Function(Product selectedProduct) onSelected;
+  final void Function() onCancel;
+
+  ProductsSelector({
     Key? key,
-  }) : super(key: key);
+    required this.onSelected,
+    required this.onCancel,
+  }) : super(key: key) {
+    controller.loadInit();
+  }
+
+  // TODO cleaning
+  //Widget _layout(BuildContext context, Widget content) {
+  //   return Row(
+  //     children: [
+  //       Expanded(flex: 1, child: Container()),
+  //       Expanded(
+  //         flex: Responsiveness.isScreenSmall(context) ? 50 : 5,
+  //         child: Column(
+  //           children: [
+  //             const SizedBox(height: kSpacing * 3),
+  //             Expanded(
+  //               child: content,
+  //             ),
+  //             const SizedBox(height: kSpacing * 3),
+  //           ],
+  //         ),
+  //       ),
+  //       Expanded(flex: 1, child: Container()),
+  //     ],
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(flex: 1, child: Container()),
-        Expanded(
-          flex: Responsiveness.isScreenSmall(context) ? 100 : 4,
-          child: Column(
-            children: [
-              const SizedBox(height: kSpacing),
-              Expanded(
-                child: Card(
-                  child: Column(
-                    children: [
-                      const ProductSelectorHeader(),
-                      const Expanded(
-                        child: CodesCreationForm(),
-                      ),
-                      const SizedBox(height: kSpacing * 2),
-                      const Divider(thickness: 1),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _cancelButton(),
-                          const SizedBox(width: kSpacing),
-                          _submitButton(),
-                        ],
-                      ),
-                      const SizedBox(height: kSpacing * 2),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: kSpacing),
-            ],
-          ),
-        ),
-        Expanded(flex: 1, child: Container()),
-      ],
-    );
-  }
-
-  Widget _submitButton() {
-    return ElevatedButton(
-      onPressed: () {
-        // newCodesController.submit();
-      },
-      child: const Text("Create"),
-    );
-  }
-
-  Widget _cancelButton() {
-    return ElevatedButton(
-      onPressed: () {
-        // newCodesController.cancel();
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
-          colorScheme.secondaryContainer,
+    return Obx(
+      () => Card(
+        child: Column(
+          children: [
+            //ProductSelectorHeader(onCancel: onCancel),
+            if (controller.totalProductsCount() > 0) const ProductsSearchBar(),
+            (controller.isFormVisible() || controller.isEditingFilters())
+                ? const Expanded(child: ProductsSearchForm())
+                : (controller.productsCount() == 0)
+                    ? const Expanded(child: ProductsTableEmptyWidget())
+                    : Expanded(child: ProductsTable(onSelected: onSelected)),
+            const SizedBox(height: kSpacing),
+          ],
         ),
       ),
-      child: Text("Cancel",
-          style: TextStyle(
-            color: colorScheme.onSecondaryContainer,
-          )),
     );
   }
 }

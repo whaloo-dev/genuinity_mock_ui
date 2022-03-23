@@ -14,8 +14,8 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
-  static const _demoStoreName = "ruesco";
-  // static const _demoStoreName = "huel";
+  // static const _demoStoreName = "ruesco";
+  static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
   // static const _demoStoreName = "decathlon";
@@ -75,8 +75,7 @@ class DemoBackend extends GetConnect implements Backend {
         image: productData['image']['src'],
         type: productData['product_type'],
         vendor: productData['vendor'],
-//TODO cleaning
-        codesCount: Random().nextInt(2),
+        codesCount: 0,
         inventoryQuantity: 0,
         status: mod3 == 0
             ? ProductStatus.active
@@ -117,7 +116,8 @@ class DemoBackend extends GetConnect implements Backend {
   }
 
   @override
-  Future<List<Product>> loadProductsHavingCodes({
+  Future<List<Product>> loadProducts({
+    bool showProductsHavingCodesOnly = true,
     Map<ProductStatus, bool>? statusFilter,
     List<String>? productTitleFilter,
     String? skuFilter,
@@ -138,7 +138,7 @@ class DemoBackend extends GetConnect implements Backend {
 
     for (int i = 0; i < _products.length; i++) {
       final _product = _products[i];
-      if (_product.codesCount == 0) {
+      if (showProductsHavingCodesOnly && _product.codesCount == 0) {
         continue;
       }
 

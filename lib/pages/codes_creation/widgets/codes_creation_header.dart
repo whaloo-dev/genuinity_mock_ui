@@ -34,7 +34,7 @@ class CodesCreationHeader extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.only(left: kSpacing),
       child: Text(
-        "Create Codes",
+        "Create new codes : ",
         style: TextStyle(
           fontWeight: FontWeight.bold,
         ),

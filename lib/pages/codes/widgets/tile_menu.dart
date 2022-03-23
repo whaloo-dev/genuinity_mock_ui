@@ -3,7 +3,7 @@ import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 
-Widget codesMenu(Code code) {
+Widget codeTileMenu(Code code) {
   final _menuItems = <PopupMenuItemData>[
     // _MenuItem(
     //     text: "Hide this product",
