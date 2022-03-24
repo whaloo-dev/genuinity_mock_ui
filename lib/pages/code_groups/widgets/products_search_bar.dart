@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
-import 'package:whaloo_genuinity/constants/localization.dart';
+import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';

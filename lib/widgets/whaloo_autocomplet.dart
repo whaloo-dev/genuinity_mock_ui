@@ -79,6 +79,7 @@ class _WhalooAutoCompleteState<T extends Object>
         optionsViewBuilder: (context, onSelected, options) => Align(
           alignment: Alignment.topLeft,
           child: Material(
+            color: Colors.transparent,
             child: SizedBox(
               height: widget.optionsHeight,
               width: constraints.biggest.width,

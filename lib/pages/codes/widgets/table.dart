@@ -52,7 +52,7 @@ class CodesTable extends StatelessWidget {
                   ),
                   //added space for the floating action button
                   if (index + 1 == product.codesCount)
-                    const SizedBox(height: 75),
+                    const SizedBox(height: kSpacing * 11),
                 ],
               );
             },

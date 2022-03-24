@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
-import 'package:whaloo_genuinity/constants/localization.dart';
+import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/code_groups/widgets/products_menu.dart';
@@ -210,11 +210,10 @@ class ProductTile extends StatelessWidget {
 
   Widget _indexWidget() {
     return Container(
-      margin: const EdgeInsets.only(top: 10, right: 10),
+      margin: const EdgeInsets.only(right: kSpacing * 2),
       child: Text(
         "${numberFormat.format(productIndex)} of ${numberFormat.format(productsCount)}",
         style: const TextStyle(
-          // color: kDarkColor,
           fontSize: 12,
         ),
       ),

@@ -9,7 +9,7 @@ BorderRadius kBorderRadius = const BorderRadius.all(Radius.circular(10));
 
 const double kElevation = 3;
 
-const double kSpacing = 5;
+const double kSpacing = 8;
 
 const double kIconButtonSplashRadius = 25;
 
@@ -34,6 +34,7 @@ final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
 
 final ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
+    padding: MaterialStateProperty.all(const EdgeInsets.all(kSpacing * 2)),
     elevation: MaterialStateProperty.all(kElevation),
     shape: MaterialStateProperty.all(
       RoundedRectangleBorder(
@@ -63,7 +64,7 @@ const PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(
 
 final _floatingActionButtonThemeData = FloatingActionButtonThemeData(
   elevation: kElevation,
-  focusElevation: kElevation,
+  focusElevation: kElevation + 1,
   hoverElevation: kElevation + 1,
   shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
 );

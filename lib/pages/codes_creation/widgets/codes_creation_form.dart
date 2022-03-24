@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,19 +35,18 @@ class CodesCreationForm extends StatelessWidget {
                   // _expirationDateField(),
                   // _styleField(),
                   // _tagsField(),
-                  const SizedBox(height: kSpacing * 2),
+                  const SizedBox(height: kSpacing * 10),
                 ],
               ),
             ),
           ),
+          const Divider(thickness: 1, height: 1),
           const SizedBox(height: kSpacing * 2),
-          const Divider(thickness: 1),
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _cancelButton(),
-              const SizedBox(width: kSpacing),
               _submitButton(),
             ],
           ),
@@ -74,10 +75,12 @@ class CodesCreationForm extends StatelessWidget {
           colorScheme.secondaryContainer,
         ),
       ),
-      child: Text("Cancel",
-          style: TextStyle(
-            color: colorScheme.onSecondaryContainer,
-          )),
+      child: Text(
+        "Cancel",
+        style: TextStyle(
+          color: colorScheme.onSecondaryContainer,
+        ),
+      ),
     );
   }
 
@@ -85,41 +88,44 @@ class CodesCreationForm extends StatelessWidget {
     var showSelector = false;
     var key = GlobalKey<WidgetWithOverlayState>();
 
-    showPopup() {
+    showOverlay() {
+      print("show");
+
       showSelector = true;
       key.currentState?.updateOverlay();
     }
 
-    hidePopup() {
+    hideOverlay() {
+      print("hide");
+
       showSelector = false;
       key.currentState?.updateOverlay();
     }
 
     final FocusNode focusNode = FocusNode();
-    if (!controller.isProductPreset()) {
-      focusNode.addListener(() {
-        if (focusNode.hasFocus) {
-          focusNode.unfocus();
-          showPopup();
-        }
-      });
-    }
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        focusNode.unfocus();
+        showOverlay();
+      }
+    });
+
     return ListTile(
       title: WidgetWithOverlay(
         key: key,
         shouldShowOverlay: () => showSelector,
-        clickOutsideCallback: hidePopup,
-        maxOverlayHeight: MediaQuery.of(context).size.height - 155,
-        outsiedColor: colorScheme.shadow.withOpacity(0.2),
+        clickOutsideCallback: hideOverlay,
+        maxOverlayHeight: MediaQuery.of(context).size.height - 22 * kSpacing,
+        outsiedColor: colorScheme.shadow.withOpacity(0.1),
         overlay: ProductsSelector(
           onSelected: (selectedProduct) {
             controller.changeProduct(selectedProduct);
-            hidePopup();
+            hideOverlay();
           },
-          onCancel: hidePopup,
+          onCancel: hideOverlay,
         ),
         child: TextField(
-            focusNode: focusNode,
+            focusNode: controller.isProductPreset() ? null : focusNode,
             decoration: InputDecoration(
               prefixIcon: _productPhotoWidget(context),
               label: const Text("Product"),
@@ -128,7 +134,7 @@ class CodesCreationForm extends StatelessWidget {
                   ? null
                   : IconButton(
                       icon: const Icon(Icons.arrow_drop_down_rounded),
-                      onPressed: showPopup,
+                      onPressed: showOverlay,
                     ),
             ),
             readOnly: true,

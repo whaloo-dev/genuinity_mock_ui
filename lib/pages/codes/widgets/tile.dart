@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
-import 'package:whaloo_genuinity/constants/localization.dart';
+import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/tile_menu.dart';
@@ -143,7 +143,6 @@ class CodeTile extends StatelessWidget {
         Text(
           "N° ${code.serial}",
           style: TextStyle(
-            // color: kDarkColor,
             fontSize: isSmall ? 8 : 10,
           ),
         ),
@@ -151,7 +150,6 @@ class CodeTile extends StatelessWidget {
         Text(
           "Short : ${code.shortCode}",
           style: TextStyle(
-            // color: kDarkColor,
             fontSize: isSmall ? 8 : 10,
           ),
         ),
@@ -302,11 +300,10 @@ class CodeTile extends StatelessWidget {
 
   Widget _indexWidget() {
     return Container(
-      margin: const EdgeInsets.only(top: 10, right: 10),
+      margin: const EdgeInsets.only(right: kSpacing * 2),
       child: Text(
         "${numberFormat.format(index)} of ${numberFormat.format(totalCount)}",
         style: const TextStyle(
-          // color: kDarkColor,
           fontSize: 12,
         ),
       ),
@@ -322,7 +319,6 @@ class CodeTile extends StatelessWidget {
           child: Center(
             child: Icon(
               icon1,
-              // color: kLightGreyColor,
               size: 18,
             ),
           ),
@@ -332,7 +328,6 @@ class CodeTile extends StatelessWidget {
             right: 0,
             child: Icon(
               icon2,
-              // color: icon2Color ?? kLightGreyColor,
               size: 12,
             ),
           )

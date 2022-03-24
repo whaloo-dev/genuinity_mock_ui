@@ -62,7 +62,8 @@ class ProductsTable extends StatelessWidget {
                       },
                     ),
                     //added space for the floating action button
-                    if (index + 1 == productsCount) const SizedBox(height: 75),
+                    if (index + 1 == productsCount)
+                      const SizedBox(height: kSpacing * 11),
                   ],
                 );
               },

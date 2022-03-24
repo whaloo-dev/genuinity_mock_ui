@@ -25,7 +25,6 @@ class WidgetWithOverlay extends StatefulWidget {
 class WidgetWithOverlayState extends State<WidgetWithOverlay> {
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
-  OverlayEntry? _barrierOverlayEntry;
   BoxConstraints? _constraints;
 
   void updateOverlay() {
@@ -33,51 +32,52 @@ class WidgetWithOverlayState extends State<WidgetWithOverlay> {
       _overlayEntry?.remove();
       _overlayEntry = OverlayEntry(
         builder: (BuildContext context) {
-          return CompositedTransformFollower(
+          return _barrier(CompositedTransformFollower(
             link: _layerLink,
             showWhenUnlinked: false,
             targetAnchor: Alignment.bottomLeft,
             child: Align(
               alignment: Alignment.topLeft,
-              child: SizedBox(
-                width: _constraints!.biggest.width,
-                height: widget.maxOverlayHeight ?? 200,
-                child: widget.overlay,
+              child: Material(
+                color: Colors.transparent,
+                child: SizedBox(
+                  width: _constraints!.biggest.width,
+                  height: widget.maxOverlayHeight ?? 200,
+                  child: widget.overlay,
+                ),
               ),
             ),
-          );
+          ));
         },
       );
-      _barrierOverlayEntry = OverlayEntry(builder: (context) {
-        return Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: widget.clickOutsideCallback,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            child: Container(
-                color: widget.outsiedColor ?? Colors.black.withOpacity(.1)),
-          ),
-        );
-      });
-      Overlay.of(context, rootOverlay: true)!.insert(_barrierOverlayEntry!);
       Overlay.of(context, rootOverlay: true)!.insert(_overlayEntry!);
     } else if (_overlayEntry != null) {
       _overlayEntry!.remove();
       _overlayEntry = null;
-      _barrierOverlayEntry!.remove();
-      _barrierOverlayEntry = null;
     }
+  }
+
+  Widget _barrier(Widget child) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: widget.clickOutsideCallback,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        child: Container(
+          color: widget.outsiedColor ?? Colors.black.withOpacity(.1),
+          child: child,
+        ),
+      ),
+    );
   }
 
   @override
   void dispose() {
     _overlayEntry?.remove();
     _overlayEntry = null;
-    _barrierOverlayEntry?.remove();
-    _barrierOverlayEntry = null;
     super.dispose();
   }
 

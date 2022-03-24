@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
-import 'package:whaloo_genuinity/constants/localization.dart';
+import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
@@ -44,7 +44,7 @@ class ProductsSearchForm extends StatelessWidget {
             ),
           ),
           const Divider(thickness: 1),
-          const SizedBox(height: kSpacing * 2),
+          const SizedBox(height: kSpacing),
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -53,7 +53,7 @@ class ProductsSearchForm extends StatelessWidget {
               _searchButton(),
             ],
           ),
-          const SizedBox(height: kSpacing * 2),
+          const SizedBox(height: kSpacing),
         ],
       );
     });
