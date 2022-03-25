@@ -17,7 +17,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       assert(settings.arguments != null);
       assert(settings.arguments is Product);
       Product product = settings.arguments as Product;
-      return _getPageRoute(CodesPage(product: product));
+      return _getRightSlidePageRoute(CodesPage(product: product));
     case settingsPageRoute:
       return _getPageRoute(const SettingsPage());
     case colorsPageRoute:
@@ -27,13 +27,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   }
 }
 
-PageRoute _getPageRouteOld(Widget pageWidget) {
+PageRoute _getPageRoute(Widget pageWidget) {
   return MaterialPageRoute(
     builder: (context) => pageWidget,
   );
 }
 
-PageRoute _getPageRoute(Widget pageWidget) {
+PageRoute _getRightSlidePageRoute(Widget pageWidget) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => pageWidget,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {

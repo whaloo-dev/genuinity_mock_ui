@@ -3,7 +3,6 @@ import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
-import 'package:whaloo_genuinity/pages/code_groups/widgets/products_menu.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -28,30 +27,12 @@ class ProductTile extends StatelessWidget {
     return ListTile(
       dense: true,
       hoverColor: Colors.transparent,
-      leading: Card(
-        elevation: 1,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Icon(
-          Icons.add_circle_outlined,
-          color: colorScheme.primary.withOpacity(0.4),
-        ),
-      ),
       title: _productTileBody(context),
       contentPadding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      subtitle: Wrap(
-        alignment: WrapAlignment.spaceBetween,
-        spacing: kSpacing,
-        crossAxisAlignment: WrapCrossAlignment.center,
+      subtitle: Row(
         children: [
-          // TODO show elements focused on code : number of qrcodes, last updated date, number of scans ..etc
-          _qrCodesWidget(),
-
-          Row(
-            children: [
-              Expanded(child: Container()),
-              _indexWidget(),
-            ],
-          ),
+          Expanded(child: Container()),
+          _indexWidget(),
         ],
       ),
       onTap: () {
@@ -64,12 +45,23 @@ class ProductTile extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
+        const SizedBox(height: kSpacing),
         Row(
           children: [
             _productPhotoWidget(context),
             const SizedBox(width: kSpacing),
             Expanded(child: _productTitleWidget()),
-            productsMenu(product),
+            // productsMenu(product),
+            Card(
+              margin: const EdgeInsets.only(right: kSpacing * 2),
+              elevation: 1,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: Icon(
+                Icons.arrow_circle_left_rounded,
+                color: colorScheme.primary.withOpacity(0.4),
+              ),
+            ),
           ],
         ),
       ],
@@ -77,18 +69,15 @@ class ProductTile extends StatelessWidget {
   }
 
   Widget _qrCodesWidget() {
-    return Container(
-      margin: const EdgeInsets.all(kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _stackIcon(icon1: Icons.qr_code_rounded),
-          Text(
-            "${numberFormat.format(product.codesCount)}"
-            " code${product.codesCount == 1 ? '' : 's'}",
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _stackIcon(icon1: Icons.qr_code_rounded),
+        Text(
+          "${numberFormat.format(product.codesCount)}"
+          " code${product.codesCount == 1 ? '' : 's'}",
+        ),
+      ],
     );
   }
 
@@ -113,14 +102,19 @@ class ProductTile extends StatelessWidget {
   }
 
   Widget _productTitleWidget() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return Wrap(
+      alignment: WrapAlignment.spaceBetween,
       children: [
-        Flexible(
-          child: Text(
-            product.title,
-          ),
+        Row(
+          children: [
+            Flexible(
+              child: Text(
+                product.title,
+              ),
+            ),
+          ],
         ),
+        _qrCodesWidget(),
       ],
     );
   }
@@ -149,7 +143,7 @@ class ProductTile extends StatelessWidget {
           child: Center(
             child: Icon(
               icon1,
-              size: 13,
+              size: 18,
             ),
           ),
         ),

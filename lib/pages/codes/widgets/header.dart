@@ -31,13 +31,12 @@ class CodesHeader extends StatelessWidget {
                 dense: true,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: kSpacing),
-                // leading: _backWidget(),
                 leading: Card(
                   elevation: 1,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Icon(
-                    Icons.remove_circle,
+                    Icons.arrow_circle_right_rounded,
                     color: colorScheme.primary.withOpacity(0.4),
                   ),
                 ),
@@ -50,17 +49,7 @@ class CodesHeader extends StatelessWidget {
                   alignment: WrapAlignment.spaceBetween,
                   spacing: kSpacing,
                   crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Center(
-                              // child: ,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ],
+                  children: [],
                 ),
               ),
             ],
