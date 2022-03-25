@@ -11,10 +11,18 @@ const double kElevation = 3;
 
 const double kSpacing = 8;
 
-const double kIconButtonSplashRadius = 25;
+const double kSplashRadius = 25;
+
+const Duration kAnimationDuration = Duration(milliseconds: 300);
+
+const double kSmallImage = 50;
+const double kLargeImage = 70;
 
 // Theme
 var colorScheme = lightColorScheme;
+// var colorScheme = ColorScheme.fromSeed(
+//     seedColor: Colors.transparent, brightness: Brightness.dark);
+
 final ThemeData themeData = ThemeData(
   colorScheme: colorScheme,
   inputDecorationTheme: _inputDecorationTheme,
@@ -24,6 +32,22 @@ final ThemeData themeData = ThemeData(
   pageTransitionsTheme: _pageTransitionsTheme,
   scrollbarTheme: _scrollbarThemeData,
   floatingActionButtonTheme: _floatingActionButtonThemeData,
+  listTileTheme: _listTileThemeData,
+  checkboxTheme: _checkboxTheme,
+);
+
+final _checkboxTheme = CheckboxThemeData(
+  checkColor: MaterialStateProperty.all(colorScheme.onPrimary),
+  fillColor: MaterialStateProperty.all(colorScheme.primary.withOpacity(0.6)),
+  splashRadius: kSplashRadius,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(5),
+  ),
+);
+
+final _listTileThemeData = ListTileThemeData(
+  selectedTileColor: colorScheme.primary.withOpacity(0.05),
+  textColor: colorScheme.onBackground,
 );
 
 final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
@@ -52,7 +76,7 @@ final CardTheme _cardTheme = CardTheme(
 );
 
 final TextTheme _textTheme = GoogleFonts.robotoTextTheme().apply(
-  bodyColor: colorScheme.onSurfaceVariant,
+  bodyColor: colorScheme.onBackground,
 );
 
 const PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(

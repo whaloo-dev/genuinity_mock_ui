@@ -44,7 +44,7 @@ class CodesCreationHeader extends StatelessWidget {
 
   Widget _closeWidget() {
     return IconButton(
-      splashRadius: kIconButtonSplashRadius,
+      splashRadius: kSplashRadius,
       icon: const Icon(Icons.close_rounded),
       onPressed: () {
         newCodesController.cancel();

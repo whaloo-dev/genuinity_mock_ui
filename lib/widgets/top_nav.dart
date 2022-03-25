@@ -10,7 +10,7 @@ Widget topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
     ListTile(
       leading: Responsiveness.isScreenSmall(context)
           ? IconButton(
-              splashRadius: kIconButtonSplashRadius,
+              splashRadius: kSplashRadius,
               onPressed: () {
                 key.currentState!.openDrawer();
               },

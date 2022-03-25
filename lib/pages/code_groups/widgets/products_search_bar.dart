@@ -168,7 +168,7 @@ class ProductsSearchBar extends StatelessWidget {
       children: [
         if (showSearch)
           IconButton(
-            splashRadius: kIconButtonSplashRadius,
+            splashRadius: kSplashRadius,
             icon: const Icon(Icons.search_rounded),
             onPressed: () {
               productsController.applyFilter();
@@ -182,7 +182,7 @@ class ProductsSearchBar extends StatelessWidget {
           ),
         if (showCancel)
           IconButton(
-            splashRadius: kIconButtonSplashRadius,
+            splashRadius: kSplashRadius,
             icon: const Icon(Icons.cancel_rounded),
             onPressed: () {
               productsController.resetFilters();
@@ -194,7 +194,7 @@ class ProductsSearchBar extends StatelessWidget {
           maintainAnimation: true,
           maintainState: true,
           child: IconButton(
-            splashRadius: kIconButtonSplashRadius,
+            splashRadius: kSplashRadius,
             icon: (productsController.isFormVisible())
                 ? const Icon(Icons.arrow_drop_up_rounded)
                 : const Icon(Icons.arrow_drop_down_rounded),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/code_groups/widgets/products_search_bar.dart';
 import 'package:whaloo_genuinity/pages/code_groups/widgets/products_search_form.dart';
 import 'package:whaloo_genuinity/pages/code_groups/widgets/products_table.dart';
 import 'package:whaloo_genuinity/pages/code_groups/widgets/products_table_empty.dart';
@@ -19,7 +18,8 @@ class ProductsPage extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
-          if (controller.totalProductsCount() > 0) const ProductsSearchBar(),
+          //TODO replace search bar with a better tool bar focused on codes rather than products
+          // if (controller.totalProductsCount() > 0) const ProductsSearchBar(),
           (controller.isFormVisible() || controller.isEditingFilters())
               ? const Expanded(child: ProductsSearchForm())
               : (controller.productsCount() == 0)

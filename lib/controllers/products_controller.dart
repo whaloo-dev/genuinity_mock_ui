@@ -323,6 +323,17 @@ class ProductsController extends GetxController {
     if (refresh) {
       _isLoadingData.value = true;
     }
+
+    RangeValues? inventoryFilter;
+    if (isInventorySizeRangeFilterSet()) {
+      inventoryFilter = RangeValues(_inventorySizeRangeFilter.value.start,
+          _inventorySizeRangeFilter.value.end);
+      if (inventoryFilter.end == _defaultInventorySizeRangeFilter.end) {
+        inventoryFilter = RangeValues(
+            _inventorySizeRangeFilter.value.start, double.maxFinite);
+      }
+    }
+
     Backend.instance
         .loadProducts(
       showProductsHavingCodesOnly: showProductsHavingCodesOnly,
@@ -335,8 +346,7 @@ class ProductsController extends GetxController {
       vendorFilter: vendorFilter().isNotEmpty ? vendorFilter() : null,
       productTypeFilter:
           productTypeFilter().isNotEmpty ? productTypeFilter() : null,
-      inventoryRangeFilter:
-          isInventorySizeRangeFilterSet() ? inventorySizeRangeFilter() : null,
+      inventoryRangeFilter: inventoryFilter,
     )
         .then(
       (products) {

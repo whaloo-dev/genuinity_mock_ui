@@ -15,8 +15,7 @@ class CodesCreationController extends GetxController {
   bool _isProductPreset = true;
   final _productFieldError = Rx<String?>(null);
 
-  String _variantText = "";
-  ProductVariant? _variant;
+  final _variant = Rx<ProductVariant?>(null);
   final _variantFieldError = Rx<String?>(null);
 
   final TextEditingController _bulkSizeController =
@@ -29,17 +28,18 @@ class CodesCreationController extends GetxController {
     });
   }
 
-  changeVariantText(String newValue) {
-    _variantText = newValue;
+  changeVariant(ProductVariant? newValue) {
+    _variant.value = newValue;
     _variantFieldError.value = null;
   }
 
-  changeProduct(Product product) {
+  changeProduct(Product? product) {
     _product.value = product;
     _productFieldError.value = null;
   }
 
   String? variantFieldError() => _variantFieldError.value;
+  ProductVariant? variant() => _variant.value;
   TextEditingController bulkSizeController() => _bulkSizeController;
   String? bulkSizeFieldError() => _bulkSizeFieldError.value;
   Product? product() => _product.value;
@@ -49,9 +49,9 @@ class CodesCreationController extends GetxController {
   open({Product? product}) {
     _isProductPreset = product != null;
     _product.value = product;
+    _productFieldError.value = null;
     _variantFieldError.value = null;
-    _variant = null;
-    _variantText = "";
+    _variant.value = null;
     _bulkSizeController.text = "1";
     _bulkSizeFieldError.value = null;
     Get.dialog(
@@ -71,13 +71,13 @@ class CodesCreationController extends GetxController {
     final bulkSize = int.parse(_bulkSizeController.text.trim());
     Backend.instance
         .createCode(
-          _variant!,
+          _variant.value!,
           blukSize: bulkSize,
         )
         .then(
-          (value) =>
-              showActionDoneNotification("${bulkSize == 1 ? '' : bulkSize} "
-                  "new code${bulkSize == 1 ? '' : 's'} created."),
+          (value) => showActionDoneNotification(bulkSize == 1
+              ? "New code created"
+              : "$bulkSize new codes created."),
         );
 
     _closeForm();
@@ -101,25 +101,15 @@ class CodesCreationController extends GetxController {
     }
 
     if (product()!.variants.length <= 1) {
-      _variant = product()!.variants[0];
+      _variant.value = product()!.variants[0];
       return true;
     }
 
-    if (_variantText.trim().isEmpty) {
+    if (_variant.value == null) {
       _variantFieldError.value = "This field is mandatory";
       return false;
     }
 
-    for (ProductVariant variant in product()!.variants) {
-      if (_variantText == variant.title) {
-        _variant = variant;
-        break;
-      }
-    }
-    if (_variant == null) {
-      _variantFieldError.value = "Incorrect input";
-      return false;
-    }
     return true;
   }
 

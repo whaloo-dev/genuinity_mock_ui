@@ -36,6 +36,7 @@ class CodesTableEmptyWidget extends StatelessWidget {
                   //           ],
                   //         ),
                   //       )
+
                   : Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -45,10 +46,12 @@ class CodesTableEmptyWidget extends StatelessWidget {
                             Icons.qr_code_2_rounded,
                             size: 30,
                           ),
+                          //TODO this section will never be called
                           const SizedBox(height: kSpacing),
                           const Text("There's no codes for this product."),
                           const SizedBox(height: kSpacing * 3),
                           FloatingActionButton(
+                            heroTag: null,
                             child: const Icon(Icons.add),
                             onPressed: () {
                               newCodesController.open(product: product);

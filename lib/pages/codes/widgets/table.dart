@@ -65,6 +65,7 @@ class CodesTable extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(kSpacing * 3),
                 child: FloatingActionButton(
+                  heroTag: null,
                   child: const Icon(Icons.add),
                   onPressed: () {
                     newCodesController.open(product: product);

@@ -327,7 +327,7 @@ class ProductsSearchForm extends StatelessWidget {
 
   Widget _clearFieldWidget(void Function() handler) {
     return IconButton(
-      splashRadius: kIconButtonSplashRadius,
+      splashRadius: kSplashRadius,
       icon: const Icon(Icons.cancel_rounded),
       onPressed: () {
         handler();

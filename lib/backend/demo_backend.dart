@@ -8,10 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
-import 'package:whaloo_genuinity/constants/controllers.dart';
-import 'package:whaloo_genuinity/controllers/store_controller.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
+//TODO loadProduct returns a structure containing agregates
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
   // static const _demoStoreName = "ruesco";
@@ -75,7 +74,7 @@ class DemoBackend extends GetConnect implements Backend {
         image: productData['image']['src'],
         type: productData['product_type'],
         vendor: productData['vendor'],
-        codesCount: 0,
+        codesCount: 1,
         inventoryQuantity: 0,
         status: mod3 == 0
             ? ProductStatus.active
@@ -195,10 +194,6 @@ class DemoBackend extends GetConnect implements Backend {
       if (inventoryRangeFilter != null) {
         double start = inventoryRangeFilter.start;
         double end = inventoryRangeFilter.end;
-        end = end == productsController.maxInventorySize()
-            ? double.maxFinite
-            : end;
-
         bool inRange = _product.inventoryQuantity >= start &&
             _product.inventoryQuantity <= end;
         if (!inRange) {

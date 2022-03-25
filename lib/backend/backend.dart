@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
-import 'package:whaloo_genuinity/controllers/store_controller.dart';
 
 typedef BackendCallback<T> = void Function({T? arguments});
 

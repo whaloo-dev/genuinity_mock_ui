@@ -120,8 +120,10 @@ class ProductTile extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width: Responsiveness.isScreenSmall(context) ? 50 : 100,
-        height: Responsiveness.isScreenSmall(context) ? 50 : 100,
+        width:
+            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
+        height:
+            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
         child: Image.network(
           product.image,
           fit: BoxFit.fill,

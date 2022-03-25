@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
-import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/code_groups/widgets/products_menu.dart';
 
@@ -27,8 +26,34 @@ class ProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      dense: true,
       hoverColor: Colors.transparent,
+      leading: Card(
+        elevation: 1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Icon(
+          Icons.add_circle_outlined,
+          color: colorScheme.primary.withOpacity(0.4),
+        ),
+      ),
       title: _productTileBody(context),
+      contentPadding: const EdgeInsets.symmetric(horizontal: kSpacing),
+      subtitle: Wrap(
+        alignment: WrapAlignment.spaceBetween,
+        spacing: kSpacing,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          // TODO show elements focused on code : number of qrcodes, last updated date, number of scans ..etc
+          _qrCodesWidget(),
+
+          Row(
+            children: [
+              Expanded(child: Container()),
+              _indexWidget(),
+            ],
+          ),
+        ],
+      ),
       onTap: () {
         onSelected(product);
       },
@@ -39,44 +64,12 @@ class ProductTile extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        _qrCodesWidget(),
-        const SizedBox(height: kSpacing * 2),
         Row(
           children: [
             _productPhotoWidget(context),
             const SizedBox(width: kSpacing),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _productTitleWidget(),
-                  const SizedBox(height: kSpacing * 2),
-                  Wrap(
-                    alignment: WrapAlignment.spaceBetween,
-                    spacing: kSpacing,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      (productTypesCount > 1 && product.type.isNotEmpty)
-                          ? _productTypeWidget()
-                          : const SizedBox(),
-                      (vendorsCount > 1 && product.vendor.isNotEmpty)
-                          ? _vendorWidget()
-                          : const SizedBox(),
-                      _productInventoryWidget(),
-                      _productStatusWidget(),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 30),
-          ],
-        ),
-        const SizedBox(height: 4 * kSpacing),
-        Row(
-          children: [
-            Expanded(child: Container()),
-            _indexWidget(),
+            Expanded(child: _productTitleWidget()),
+            productsMenu(product),
           ],
         ),
       ],
@@ -84,28 +77,18 @@ class ProductTile extends StatelessWidget {
   }
 
   Widget _qrCodesWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Row(
-          children: [
-            const Icon(
-              Icons.qr_code_rounded,
-            ),
-            const SizedBox(width: kSpacing),
-            Text(
-              "${numberFormat.format(product.codesCount)}"
-              " code${product.codesCount == 1 ? '' : 's'}",
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        Expanded(child: Container()),
-        productsMenu(product)
-      ],
+    return Container(
+      margin: const EdgeInsets.all(kSpacing),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _stackIcon(icon1: Icons.qr_code_rounded),
+          Text(
+            "${numberFormat.format(product.codesCount)}"
+            " code${product.codesCount == 1 ? '' : 's'}",
+          ),
+        ],
+      ),
     );
   }
 
@@ -114,8 +97,10 @@ class ProductTile extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width: Responsiveness.isScreenSmall(context) ? 50 : 100,
-        height: Responsiveness.isScreenSmall(context) ? 50 : 100,
+        width:
+            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
+        height:
+            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
         child: Image.network(
           product.image,
           fit: BoxFit.fill,
@@ -140,77 +125,9 @@ class ProductTile extends StatelessWidget {
     );
   }
 
-  Widget _productInventoryWidget() {
-    return Container(
-      margin: const EdgeInsets.all(kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _stackIcon(icon1: FontAwesomeIcons.boxes),
-          const SizedBox(width: kSpacing),
-          Text(
-            "Inventory : ${numberFormat.format(product.inventoryQuantity)}",
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _productTypeWidget() {
-    return Container(
-      margin: const EdgeInsets.all(kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _stackIcon(icon1: FontAwesomeIcons.solidFolder),
-          const SizedBox(width: kSpacing),
-          Flexible(
-            child: Text(
-              product.type,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _vendorWidget() {
-    return Container(
-      margin: const EdgeInsets.all(kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _stackIcon(icon1: FontAwesomeIcons.store),
-          const SizedBox(width: kSpacing),
-          Flexible(
-            child: Text(
-              "Vendor : ${product.vendor}",
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _productStatusWidget() {
-    return Container(
-      margin: const EdgeInsets.all(kSpacing),
-      child: Chip(
-        backgroundColor: product.status.color(),
-        label: Text(
-          product.status.name(),
-          style: TextStyle(
-            color: product.status.onColor(),
-            fontSize: 12,
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _indexWidget() {
     return Container(
-      margin: const EdgeInsets.only(right: kSpacing * 2),
+      margin: const EdgeInsets.only(top: kSpacing, right: kSpacing * 2),
       child: Text(
         "${numberFormat.format(productIndex)} of ${numberFormat.format(productsCount)}",
         style: const TextStyle(

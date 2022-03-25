@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
+import 'package:whaloo_genuinity/backend/models.dart';
 
 class StoreController extends GetxController {
   static StoreController get instance => Get.find();
@@ -21,17 +22,4 @@ class StoreController extends GetxController {
       isDataLoaded.value = true;
     });
   }
-}
-
-class Store {
-  String id;
-  String name;
-  String? imageUrl;
-  String website;
-  Store({
-    required this.id,
-    required this.name,
-    this.imageUrl,
-    required this.website,
-  }) : super();
 }

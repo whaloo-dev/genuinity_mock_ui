@@ -44,32 +44,36 @@ class ColorsPage extends StatelessWidget {
             final onkey = "on${entry.key[0].toUpperCase()}"
                 "${entry.key.substring(1)}";
             return colorMap.containsKey(onkey)
-                ? Row(children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 1),
-                      padding: const EdgeInsets.all(10),
-                      width: 200,
-                      color: entry.value,
-                      child: Text(
-                        onkey,
-                        style: TextStyle(
-                          color: colorMap[onkey],
-                          fontWeight: FontWeight.bold,
+                ? Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 1),
+                        padding: const EdgeInsets.all(10),
+                        width: 200,
+                        color: entry.value,
+                        child: Text(
+                          onkey,
+                          style: TextStyle(
+                            color: colorMap[onkey],
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    Text(" <- ${entry.key}")
-                  ])
-                : Row(children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 1),
-                      padding: const EdgeInsets.all(10),
-                      width: 200,
-                      color: entry.value,
-                      child: const Text(""),
-                    ),
-                    Text(" <- ${entry.key}")
-                  ]);
+                      Text(" <- ${entry.key}")
+                    ],
+                  )
+                : Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 1),
+                        padding: const EdgeInsets.all(10),
+                        width: 200,
+                        color: entry.value,
+                        child: const Text(""),
+                      ),
+                      Text(" <- ${entry.key}")
+                    ],
+                  );
           },
         ).toList(),
       ),

@@ -26,6 +26,15 @@ class CodeTile extends StatelessWidget {
       selected: code.isSelected,
       dense: true,
       title: _codeTileBody(context),
+      subtitle: // Footer
+          Row(
+        children: [
+          Expanded(
+            child: Container(),
+          ),
+          _indexWidget(),
+        ],
+      ),
       onTap: () {
         final newValue = !code.isSelected;
         if (newValue) {
@@ -94,25 +103,12 @@ class CodeTile extends StatelessWidget {
           ],
         ),
         const SizedBox(height: kSpacing),
-        // Footer
-        Row(
-          children: [
-            Expanded(
-              child: Container(),
-            ),
-            _indexWidget(),
-          ],
-        ),
       ],
     );
   }
 
   Widget _selectionWidget() {
     return Checkbox(
-      shape: RoundedRectangleBorder(
-        borderRadius: kBorderRadius,
-      ),
-      splashRadius: kIconButtonSplashRadius,
       value: code.isSelected,
       onChanged: (newValue) {
         if (newValue!) {
@@ -202,7 +198,7 @@ class CodeTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _stackIcon(
-            icon1: Icons.collections_rounded,
+            icon1: FontAwesomeIcons.swatchbook,
           ),
           const SizedBox(width: kSpacing),
           Flexible(
@@ -329,6 +325,7 @@ class CodeTile extends StatelessWidget {
             child: Icon(
               icon2,
               size: 12,
+              color: icon2Color,
             ),
           )
       ],

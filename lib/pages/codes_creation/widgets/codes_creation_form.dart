@@ -1,13 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/pages/product_selector/product_selector.dart';
-import 'package:whaloo_genuinity/widgets/whaloo_autocomplet.dart';
+import 'package:whaloo_genuinity/widgets/selector.dart';
 import 'package:whaloo_genuinity/widgets/widget_with_overlay.dart';
 
 final controller = newCodesController;
@@ -89,15 +88,11 @@ class CodesCreationForm extends StatelessWidget {
     var key = GlobalKey<WidgetWithOverlayState>();
 
     showOverlay() {
-      print("show");
-
       showSelector = true;
       key.currentState?.updateOverlay();
     }
 
     hideOverlay() {
-      print("hide");
-
       showSelector = false;
       key.currentState?.updateOverlay();
     }
@@ -110,21 +105,23 @@ class CodesCreationForm extends StatelessWidget {
       }
     });
 
-    return ListTile(
-      title: WidgetWithOverlay(
-        key: key,
-        shouldShowOverlay: () => showSelector,
-        clickOutsideCallback: hideOverlay,
-        maxOverlayHeight: MediaQuery.of(context).size.height - 22 * kSpacing,
-        outsiedColor: colorScheme.shadow.withOpacity(0.1),
-        overlay: ProductsSelector(
-          onSelected: (selectedProduct) {
-            controller.changeProduct(selectedProduct);
-            hideOverlay();
-          },
-          onCancel: hideOverlay,
-        ),
-        child: TextField(
+    return AnimatedSwitcher(
+      duration: kAnimationDuration,
+      child: ListTile(
+        key: GlobalKey(),
+        title: WidgetWithOverlay(
+          key: key,
+          shouldShowOverlay: () => showSelector,
+          onClickOutside: hideOverlay,
+          maxOverlayHeight: MediaQuery.of(context).size.height - 22 * kSpacing,
+          overlay: ProductsSelector(
+            onSelected: (selectedProduct) {
+              controller.changeProduct(selectedProduct);
+              hideOverlay();
+            },
+            onCancel: hideOverlay,
+          ),
+          child: TextField(
             focusNode: controller.isProductPreset() ? null : focusNode,
             decoration: InputDecoration(
               prefixIcon: _productPhotoWidget(context),
@@ -134,13 +131,16 @@ class CodesCreationForm extends StatelessWidget {
                   ? null
                   : IconButton(
                       icon: const Icon(Icons.arrow_drop_down_rounded),
+                      splashRadius: kSplashRadius,
                       onPressed: showOverlay,
                     ),
             ),
             readOnly: true,
             controller: controller.product() != null
                 ? TextEditingController(text: controller.product()!.title)
-                : null),
+                : null,
+          ),
+        ),
       ),
     );
   }
@@ -151,12 +151,13 @@ class CodesCreationForm extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width: 50,
-        height: 50,
+        width: kSmallImage,
+        height: kSmallImage,
         child: controller.product() == null
             ? Container()
             : Image.network(
                 controller.product()!.image,
+                key: GlobalKey(),
                 fit: BoxFit.fill,
                 errorBuilder: (context, error, stackTrace) => const Icon(
                   Icons.image_not_supported_rounded,
@@ -167,54 +168,44 @@ class CodesCreationForm extends StatelessWidget {
   }
 
   Widget _variantField() {
-    final focusNode = FocusNode();
-    final textEditingController = TextEditingController();
-    if (controller.product() == null ||
-        controller.product()!.variants.length <= 1) {
-      return Container();
-    }
-    return ListTile(
-      leading: const Icon(Icons.collections_rounded),
-      title: Obx(
-        () => WhalooAutoComplete<String>(
-          label: const Text("Product Variant"),
-          errorText: controller.variantFieldError(),
-          focusNode: focusNode,
-          textEditingController: textEditingController,
-          optionsBuilder: (TextEditingValue textEditingValue) {
-            var text = textEditingValue.text.trim().toUpperCase();
-            return controller
-                .product()!
-                .variants
-                .where((variant) {
-                  final e = variant.title.trim().toUpperCase();
-                  return e.contains(text) && e.isNotEmpty;
-                })
-                .map((e) => e.title)
-                .toList();
-          },
-          onSelected: (newValue) {
-            controller.changeVariantText(newValue);
-          },
-        ),
-      ),
+    return AnimatedSwitcher(
+      duration: kAnimationDuration,
+      child: (controller.product() == null ||
+              controller.product()!.variants.length <= 1)
+          ? Container()
+          : ListTile(
+              leading: const Icon(FontAwesomeIcons.swatchbook),
+              title: Obx(
+                () => Selector<ProductVariant>(
+                  optionWidgetBuilder: (option) => Text(option.title),
+                  value: controller.variant(),
+                  fieldLabel: const Text("Product Variant"),
+                  fieldErrorText: controller.variantFieldError(),
+                  options: controller.product()!.variants,
+                  onSelected: controller.changeVariant,
+                  optionToString: (option) => option.title,
+                ),
+              ),
+            ),
     );
   }
 
   Widget _bulkSizeField() {
-    if (controller.product() == null) {
-      return Container();
-    }
-    return ListTile(
-      leading: const Icon(FontAwesomeIcons.layerGroup),
-      title: TextField(
-        controller: controller.bulkSizeController(),
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        decoration: InputDecoration(
-          label: const Text("Number of codes to create"),
-          errorText: controller.bulkSizeFieldError(),
-        ),
-      ),
+    return AnimatedSwitcher(
+      duration: kAnimationDuration,
+      child: controller.product() == null
+          ? Container()
+          : ListTile(
+              leading: const Icon(FontAwesomeIcons.solidClone),
+              title: TextField(
+                controller: controller.bulkSizeController(),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  label: const Text("Number of codes to create"),
+                  errorText: controller.bulkSizeFieldError(),
+                ),
+              ),
+            ),
     );
   }
 }

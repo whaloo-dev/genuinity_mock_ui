@@ -56,7 +56,7 @@ class _WhalooAutoCompleteState<T extends Object>
 
   Widget _clearFieldWidget(void Function() handler) {
     return IconButton(
-      splashRadius: kIconButtonSplashRadius,
+      splashRadius: kSplashRadius,
       icon: Icon(!widget.focusNode!.hasFocus
           ? Icons.arrow_drop_down_outlined
           : Icons.arrow_drop_up_outlined),

@@ -17,10 +17,6 @@ class CodesHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        //this will avoid selected CodeTiles to show outside card borders:
-        Positioned.fill(
-          child: Container(),
-        ),
         Card(
           margin: const EdgeInsets.all(0),
           shape: RoundedRectangleBorder(
@@ -33,10 +29,39 @@ class CodesHeader extends StatelessWidget {
             children: [
               ListTile(
                 dense: true,
-                contentPadding: const EdgeInsets.all(kSpacing),
-                leading: _backWidget(),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: kSpacing),
+                // leading: _backWidget(),
+                leading: Card(
+                  elevation: 1,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Icon(
+                    Icons.remove_circle,
+                    color: colorScheme.primary.withOpacity(0.4),
+                  ),
+                ),
                 title: _productTileBody(context),
                 trailing: productsMenu(product),
+                onTap: () {
+                  navigationController.goBack();
+                },
+                subtitle: Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  spacing: kSpacing,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Center(
+                              // child: ,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -64,7 +89,7 @@ class CodesHeader extends StatelessWidget {
 
   Widget _backWidget() {
     return IconButton(
-      splashRadius: kIconButtonSplashRadius,
+      splashRadius: kSplashRadius,
       icon: const Icon(Icons.arrow_back_rounded),
       onPressed: () {
         navigationController.goBack();
@@ -78,8 +103,10 @@ class CodesHeader extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width: Responsiveness.isScreenSmall(context) ? 50 : 70,
-        height: Responsiveness.isScreenSmall(context) ? 50 : 70,
+        width:
+            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
+        height:
+            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
         child: Image.network(
           product.image,
           fit: BoxFit.fill,
@@ -99,7 +126,8 @@ class CodesHeader extends StatelessWidget {
         Flexible(
           child: Text(
             product.title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            //TODO cleaning
+            // style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],

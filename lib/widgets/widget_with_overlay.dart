@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
 
 class WidgetWithOverlay extends StatefulWidget {
   final bool Function() shouldShowOverlay;
-  final void Function()? clickOutsideCallback;
+  final void Function()? onClickOutside;
   final Widget child;
   final Widget overlay;
   final double? maxOverlayHeight;
-  final Color? outsiedColor;
+  final Color? outsideColor;
 
   const WidgetWithOverlay({
     Key? key,
     required this.shouldShowOverlay,
-    this.clickOutsideCallback,
+    this.onClickOutside,
     required this.child,
     required this.overlay,
     this.maxOverlayHeight,
-    this.outsiedColor,
+    this.outsideColor,
   }) : super(key: key);
 
   @override
@@ -61,13 +62,13 @@ class WidgetWithOverlayState extends State<WidgetWithOverlay> {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: widget.clickOutsideCallback,
+        onTap: widget.onClickOutside,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         focusColor: Colors.transparent,
         hoverColor: Colors.transparent,
         child: Container(
-          color: widget.outsiedColor ?? Colors.black.withOpacity(.1),
+          color: widget.outsideColor ?? colorScheme.shadow.withOpacity(0.2),
           child: child,
         ),
       ),

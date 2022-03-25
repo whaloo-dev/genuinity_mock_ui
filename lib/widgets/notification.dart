@@ -28,7 +28,7 @@ class NotificationWidget extends StatelessWidget {
       ),
       child: IconButton(
         onPressed: () {},
-        splashRadius: kIconButtonSplashRadius,
+        splashRadius: kSplashRadius,
         icon: const Icon(Icons.notifications_none_rounded),
       ),
     );

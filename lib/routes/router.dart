@@ -27,8 +27,27 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   }
 }
 
-PageRoute _getPageRoute(Widget pageWidget) {
+PageRoute _getPageRouteOld(Widget pageWidget) {
   return MaterialPageRoute(
     builder: (context) => pageWidget,
+  );
+}
+
+PageRoute _getPageRoute(Widget pageWidget) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => pageWidget,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      final offsetAnimation = animation.drive(tween);
+      return SlideTransition(
+        position: offsetAnimation,
+        child: child,
+      );
+    },
   );
 }

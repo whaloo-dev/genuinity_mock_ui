@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:quiver/core.dart';
 
+class Store {
+  String id;
+  String name;
+  String? imageUrl;
+  String website;
+  Store({
+    required this.id,
+    required this.name,
+    this.imageUrl,
+    required this.website,
+  }) : super();
+}
+
 class Product {
   final ProductId id;
   final String title;
