@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/pages/codes_creation/codes_creation.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 
 class CodesCreationController extends GetxController {
   static CodesCreationController instance = Get.find();
@@ -18,6 +23,9 @@ class CodesCreationController extends GetxController {
   final _variant = Rx<ProductVariant?>(null);
   final _variantFieldError = Rx<String?>(null);
 
+  final _codeStyle = Rx<CodeStyle?>(null);
+  final _codeStyles = <CodeStyle>[].obs;
+
   final TextEditingController _bulkSizeController =
       TextEditingController(text: "1");
   final _bulkSizeFieldError = Rx<String?>(null);
@@ -28,18 +36,27 @@ class CodesCreationController extends GetxController {
     });
   }
 
+  changeProduct(Product? product) {
+    _product.value = product;
+    _productFieldError.value = null;
+    _variant.value = null;
+    _variantFieldError.value = null;
+  }
+
   changeVariant(ProductVariant? newValue) {
     _variant.value = newValue;
     _variantFieldError.value = null;
   }
 
-  changeProduct(Product? product) {
-    _product.value = product;
-    _productFieldError.value = null;
+  changeCodeStyle(CodeStyle? codeStyle) {
+    _codeStyle.value = codeStyle;
   }
 
   String? variantFieldError() => _variantFieldError.value;
   ProductVariant? variant() => _variant.value;
+  CodeStyle? codeStyle() => _codeStyle.value;
+  List<CodeStyle> codeStyles() => _codeStyles;
+
   TextEditingController bulkSizeController() => _bulkSizeController;
   String? bulkSizeFieldError() => _bulkSizeFieldError.value;
   Product? product() => _product.value;
@@ -47,16 +64,20 @@ class CodesCreationController extends GetxController {
   String? productFieldError() => _productFieldError.value;
 
   open({Product? product}) {
-    _isProductPreset = product != null;
-    _product.value = product;
-    _productFieldError.value = null;
-    _variantFieldError.value = null;
-    _variant.value = null;
-    _bulkSizeController.text = "1";
-    _bulkSizeFieldError.value = null;
-    Get.dialog(
-      const CodesCreationWizard(),
-    );
+    Backend.instance.loadCodeStyles().then((codeStyles) {
+      _codeStyles.value = codeStyles;
+      _codeStyle.value = codeStyles[0];
+      _isProductPreset = product != null;
+      _product.value = product;
+      _productFieldError.value = null;
+      _variantFieldError.value = null;
+      _variant.value = null;
+      _bulkSizeController.text = "1";
+      _bulkSizeFieldError.value = null;
+      Get.dialog(
+        const CodesCreationWizard(),
+      );
+    });
   }
 
   submit() {
@@ -72,6 +93,7 @@ class CodesCreationController extends GetxController {
     Backend.instance
         .createCode(
           _variant.value!,
+          _codeStyle.value!,
           blukSize: bulkSize,
         )
         .then(
@@ -80,11 +102,17 @@ class CodesCreationController extends GetxController {
               : "$bulkSize new codes created."),
         );
 
-    _closeForm();
+    Get.back();
+
+    if (!isProductPreset()) {
+      Timer(kAnimationDuration, () {
+        navigationController.navigateTo(codesPageRoute, arguments: product());
+      });
+    }
   }
 
   cancel() {
-    _closeForm();
+    Get.back();
   }
 
   bool _validateProductField() {
@@ -129,9 +157,5 @@ class CodesCreationController extends GetxController {
       return false;
     }
     return true;
-  }
-
-  _closeForm() {
-    Get.back();
   }
 }

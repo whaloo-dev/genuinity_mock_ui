@@ -74,7 +74,7 @@ class DemoBackend extends GetConnect implements Backend {
         image: productData['image']['src'],
         type: productData['product_type'],
         vendor: productData['vendor'],
-        codesCount: 1,
+        codesCount: 0,
         inventoryQuantity: 0,
         status: mod3 == 0
             ? ProductStatus.active
@@ -235,7 +235,8 @@ class DemoBackend extends GetConnect implements Backend {
 
   @override
   Future<void> createCode(
-    ProductVariant variant, {
+    ProductVariant variant,
+    CodeStyle codeStyle, {
     int blukSize = 1,
     Map<String, String> tags = const <String, String>{},
   }) async {
@@ -256,6 +257,7 @@ class DemoBackend extends GetConnect implements Backend {
             serial: serial,
             shortCode: _computeShortCode(serial, 7),
             variant: variant,
+            codeStyle: codeStyle,
             expirationDate: creationDate.add(const Duration(days: 365 * 5)),
           );
 
@@ -269,6 +271,22 @@ class DemoBackend extends GetConnect implements Backend {
         _products[_products.indexOf(product)] = product;
         _doCallbacks(BackendEvent.productUpdated);
       },
+    );
+  }
+
+  @override
+  Future<List<CodeStyle>> loadCodeStyles() async {
+    return Future.delayed(
+      Duration.zero,
+      () => <CodeStyle>[
+        CodeStyle(id: 1),
+        CodeStyle(id: 2),
+        CodeStyle(id: 3),
+        CodeStyle(id: 4),
+        CodeStyle(id: 5),
+        CodeStyle(id: 6),
+        CodeStyle(id: 7),
+      ],
     );
   }
 

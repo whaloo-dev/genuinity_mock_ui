@@ -10,8 +10,6 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 //TODO rework forms using TextEditingController
 class ProductsSearchForm extends StatelessWidget {
-  final kOptionsMaxHeight = 200.0;
-
   const ProductsSearchForm({Key? key}) : super(key: key);
 
   @override

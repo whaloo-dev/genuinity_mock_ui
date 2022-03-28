@@ -7,6 +7,9 @@ import 'package:whaloo_genuinity/backend/models.dart';
 //TODO Codes : add sorting
 //TODO Codes : add search
 //TODO Codes : add delete code
+//TODO Codes : add modify code
+//TODO Codes : add export code
+//TODO Codes : add test verify code
 class CodesController extends GetxController {
   static CodesController instance = Get.find();
 

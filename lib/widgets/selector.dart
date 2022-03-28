@@ -113,7 +113,7 @@ class _SelectorState<T extends Object> extends State<Selector<T>> {
       onClickOutside: () {
         _hideOptions();
       },
-      maxOverlayHeight: 200,
+      maxOverlayHeight: kOptionsMaxHeight,
     );
   }
 }

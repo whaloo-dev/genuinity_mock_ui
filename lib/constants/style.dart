@@ -18,6 +18,8 @@ const Duration kAnimationDuration = Duration(milliseconds: 300);
 const double kSmallImage = 50;
 const double kLargeImage = 70;
 
+const kOptionsMaxHeight = 200.0;
+
 // Theme
 var colorScheme = lightColorScheme;
 // var colorScheme = ColorScheme.fromSeed(

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/product_selector/product_selector.dart';
 import 'package:whaloo_genuinity/widgets/selector.dart';
 import 'package:whaloo_genuinity/widgets/widget_with_overlay.dart';
@@ -30,11 +31,12 @@ class CodesCreationForm extends StatelessWidget {
                   const SizedBox(height: kSpacing),
                   _variantField(),
                   const SizedBox(height: kSpacing),
+                  _codeStyleField(),
+                  const SizedBox(height: kSpacing),
                   _bulkSizeField(),
                   // _expirationDateField(),
-                  // _styleField(),
                   // _tagsField(),
-                  const SizedBox(height: kSpacing * 10),
+                  const SizedBox(height: kOptionsMaxHeight),
                 ],
               ),
             ),
@@ -187,6 +189,49 @@ class CodesCreationForm extends StatelessWidget {
                 ),
               ),
             ),
+    );
+  }
+
+  Widget _codeStyleField() {
+    if (controller.codeStyles().isEmpty) {
+      return Container();
+    }
+    return AnimatedSwitcher(
+      duration: kAnimationDuration,
+      child: controller.product() == null
+          ? Container()
+          : ListTile(
+              leading: const Icon(FontAwesomeIcons.qrcode),
+              title: Obx(
+                () => Selector<CodeStyle>(
+                  optionWidgetBuilder: _codeStyleOptionWidget,
+                  value: controller.codeStyle(),
+                  fieldLabel: const Text("Code Style"),
+                  fieldErrorText: controller.variantFieldError(),
+                  options: controller.codeStyles(),
+                  onSelected: controller.changeCodeStyle,
+                  optionToString: (codeStyle) => "Style N°${codeStyle.id}",
+                ),
+              ),
+            ),
+    );
+  }
+
+  Widget _codeStyleOptionWidget(CodeStyle codeStyle) {
+    return Row(
+      children: [
+        Card(
+          color: Colors.transparent,
+          elevation: 0,
+          clipBehavior: Clip.antiAlias,
+          child: SizedBox(
+            width: kLargeImage,
+            height: kLargeImage,
+            child: Image.asset("assets/demo/images/qrcode${codeStyle.id}.png"),
+          ),
+        ),
+        Text("Style N°${codeStyle.id}"),
+      ],
     );
   }
 
