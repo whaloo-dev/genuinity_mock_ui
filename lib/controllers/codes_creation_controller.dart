@@ -24,6 +24,9 @@ class CodesCreationController extends GetxController {
   final _codeStyle = Rx<CodeStyle?>(null);
   final _codeStyles = <CodeStyle>[].obs;
 
+  final _expirationDate = Rx<DateTime?>(null);
+  final _expirationDateError = Rx<String?>(null);
+
   final _descriptionController = TextEditingController();
 
   final TextEditingController _bulkSizeController =
@@ -52,10 +55,16 @@ class CodesCreationController extends GetxController {
     _codeStyle.value = codeStyle;
   }
 
+  changeExpirationDate(DateTime? expirationDate) {
+    _expirationDate.value = expirationDate;
+    _expirationDateError.value = null;
+  }
+
   String? variantFieldError() => _variantFieldError.value;
   ProductVariant? variant() => _variant.value;
   CodeStyle? codeStyle() => _codeStyle.value;
   List<CodeStyle> codeStyles() => _codeStyles;
+  DateTime? expirationDate() => _expirationDate.value;
 
   TextEditingController descriptionController() => _descriptionController;
   TextEditingController bulkSizeController() => _bulkSizeController;
@@ -63,30 +72,37 @@ class CodesCreationController extends GetxController {
   Product? product() => _product.value;
   bool isProductPreset() => _isProductPreset;
   String? productFieldError() => _productFieldError.value;
+  String? expirationDateError() => _expirationDateError.value;
 
-  open({Product? product}) {
-    Backend.instance.loadCodeStyles().then((codeStyles) {
-      _codeStyles.value = codeStyles;
-      _codeStyle.value = codeStyles[0];
-      _isProductPreset = product != null;
-      _product.value = product;
-      _productFieldError.value = null;
-      _variantFieldError.value = null;
-      _variant.value = null;
-      _descriptionController.text = "";
-      _bulkSizeController.text = "1";
-      _bulkSizeFieldError.value = null;
-      Get.dialog(
-        const CodesCreationWizard(),
-      );
-    });
+  open({Product? product}) async {
+    _codeStyles.value = await Backend.instance.loadCodeStyles();
+    _codeStyle.value = _codeStyles[0];
+    _isProductPreset = product != null;
+    _product.value = product;
+    _productFieldError.value = null;
+    _variantFieldError.value = null;
+    _variant.value = null;
+    _expirationDate.value = null;
+    _expirationDateError.value = null;
+    _descriptionController.text = "";
+    _bulkSizeController.text = "1";
+    _bulkSizeFieldError.value = null;
+    Get.dialog(
+      const CodesCreationWizard(),
+    );
   }
 
   submit() {
-    var isProductValid = _validateProductField();
-    var isVariantValid = _validateVariantField();
-    var isBulkSizeValid = _validateBulkSizeField();
-    var isValid = isProductValid && isVariantValid && isBulkSizeValid;
+    final isProductValid = _validateProductField();
+    final isVariantValid = _validateVariantField();
+    final isBulkSizeValid = _validateBulkSizeField();
+    final isExpirationDateValid = _validateExpirationDate();
+
+    final isValid = isProductValid &&
+        isVariantValid &&
+        isExpirationDateValid &&
+        isBulkSizeValid;
+
     if (!isValid) {
       return;
     }
@@ -98,6 +114,7 @@ class CodesCreationController extends GetxController {
         .createCode(
           _variant.value!,
           _codeStyle.value!,
+          expirationDate: _expirationDate.value,
           description: description.isEmpty ? null : description,
           blukSize: bulkSize,
         )
@@ -140,6 +157,19 @@ class CodesCreationController extends GetxController {
 
     if (_variant.value == null) {
       _variantFieldError.value = "This field is mandatory";
+      return false;
+    }
+
+    return true;
+  }
+
+  bool _validateExpirationDate() {
+    if (_expirationDate.value == null) {
+      return true;
+    }
+
+    if (_expirationDate.value!.isBefore(DateTime.now())) {
+      _expirationDateError.value = "Expiration date cannot be in the past";
       return false;
     }
 

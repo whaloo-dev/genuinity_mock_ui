@@ -42,6 +42,7 @@ abstract class Backend {
     ProductVariant variant,
     CodeStyle codeStyle, {
     String? description,
+    DateTime? expirationDate,
     int blukSize = 1,
     Map<String, String> tags = const <String, String>{},
   });

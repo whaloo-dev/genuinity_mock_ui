@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
@@ -154,7 +155,7 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _stackIcon(
+          stackIcon(
             icon1: Icons.qr_code_scanner_rounded,
           ),
           const SizedBox(width: kSpacing),
@@ -172,7 +173,7 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _stackIcon(
+          stackIcon(
             icon1: Icons.qr_code_scanner_rounded,
             icon2: FontAwesomeIcons.exclamationCircle,
             icon2Color: kErrorColor,
@@ -192,7 +193,7 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _stackIcon(
+          stackIcon(
             icon1: Icons.call_split_outlined,
           ),
           const SizedBox(width: kSpacing),
@@ -212,14 +213,14 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _stackIcon(
+          stackIcon(
             icon1: Icons.calendar_month_rounded,
             icon2: Icons.add_rounded,
           ),
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
-              "Created : ${dateFormat.format(code.creationDate)}",
+              "Created : ${dateTimeFormat.format(code.creationDate)}",
             ),
           ),
         ],
@@ -233,14 +234,14 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _stackIcon(
+          stackIcon(
             icon1: Icons.calendar_month_rounded,
             icon2: Icons.download_rounded,
           ),
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
-              "First Exported : ${dateFormat.format(code.exportDate!)}",
+              "First Exported : ${dateTimeFormat.format(code.exportDate!)}",
             ),
           ),
         ],
@@ -254,14 +255,14 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _stackIcon(
+          stackIcon(
             icon1: Icons.calendar_month_rounded,
             icon2: Icons.qr_code_scanner_rounded,
           ),
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
-              "Last Scanned : ${dateFormat.format(code.lastScanDate!)}",
+              "Last Scanned : ${dateTimeFormat.format(code.lastScanDate!)}",
             ),
           ),
         ],
@@ -275,7 +276,7 @@ class CodeTile extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _stackIcon(
+          stackIcon(
               icon1: Icons.calendar_month_rounded,
               icon2: Icons.recycling_rounded),
           const SizedBox(width: kSpacing),
@@ -298,32 +299,6 @@ class CodeTile extends StatelessWidget {
           fontSize: 12,
         ),
       ),
-    );
-  }
-
-  Widget _stackIcon(
-      {required IconData icon1, IconData? icon2, Color? icon2Color}) {
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.all(7),
-          child: Center(
-            child: Icon(
-              icon1,
-              size: 18,
-            ),
-          ),
-        ),
-        if (icon2 != null)
-          Positioned(
-            right: 0,
-            child: Icon(
-              icon2,
-              size: 12,
-              color: icon2Color,
-            ),
-          )
-      ],
     );
   }
 }

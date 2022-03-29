@@ -57,7 +57,7 @@ class PopupMenuItemData {
   });
 }
 
-dialog_layout(BuildContext context, Widget child) {
+Widget dialogLayout(BuildContext context, Widget child) {
   return Row(
     children: [
       Expanded(flex: 1, child: Container()),
@@ -74,6 +74,32 @@ dialog_layout(BuildContext context, Widget child) {
         ),
       ),
       Expanded(flex: 1, child: Container()),
+    ],
+  );
+}
+
+Widget stackIcon(
+    {required IconData icon1, IconData? icon2, Color? icon2Color}) {
+  return Stack(
+    children: [
+      Container(
+        margin: const EdgeInsets.all(7),
+        child: Center(
+          child: Icon(
+            icon1,
+            size: 18,
+          ),
+        ),
+      ),
+      if (icon2 != null)
+        Positioned(
+          right: 0,
+          child: Icon(
+            icon2,
+            size: 12,
+            color: icon2Color,
+          ),
+        )
     ],
   );
 }

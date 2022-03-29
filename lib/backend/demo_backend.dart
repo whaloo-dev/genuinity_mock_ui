@@ -246,6 +246,7 @@ class DemoBackend extends GetConnect implements Backend {
     ProductVariant variant,
     CodeStyle codeStyle, {
     String? description,
+    DateTime? expirationDate,
     int blukSize = 1,
     Map<String, String> tags = const <String, String>{},
   }) async {
@@ -270,7 +271,7 @@ class DemoBackend extends GetConnect implements Backend {
             variant: variant,
             codeStyle: codeStyle,
             description: description,
-            expirationDate: creationDate.add(const Duration(days: 365 * 5)),
+            expirationDate: expirationDate,
           );
 
           if (!_codes.containsKey(product.id)) {

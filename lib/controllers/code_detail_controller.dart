@@ -16,7 +16,7 @@ class CodeDetailController extends GetxController {
     );
   }
 
-  cancel() {
+  close() {
     Get.back();
   }
 }

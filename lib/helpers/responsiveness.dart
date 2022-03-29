@@ -50,7 +50,7 @@ class Responsiveness {
 
   static String formatDate(BuildContext context, DateTime dateTime) =>
       isScreenLarge(context)
-          ? dateFormat.format(dateTime)
+          ? dateTimeFormat.format(dateTime)
           : compactDateFormat.format(dateTime);
 
   static String formatNumber(BuildContext context, num number) =>

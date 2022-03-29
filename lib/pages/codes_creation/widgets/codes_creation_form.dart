@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/pages/product_selector/product_selector.dart';
 import 'package:whaloo_genuinity/widgets/selector.dart';
 import 'package:whaloo_genuinity/widgets/widget_with_overlay.dart';
@@ -30,7 +31,8 @@ class CodesCreationForm extends StatelessWidget {
                   _variantField(),
                   const SizedBox(height: kSpacing),
                   _codeStyleField(),
-                  // TODO add _expirationDateField(),
+                  const SizedBox(height: kSpacing),
+                  _expirationDateField(context),
                   const SizedBox(height: kSpacing),
                   _descriptionField(),
                   const SizedBox(height: kSpacing),
@@ -244,7 +246,57 @@ class CodesCreationForm extends StatelessWidget {
     );
   }
 
+  Widget _expirationDateField(BuildContext context) {
+    selectDate() {
+      showDatePicker(
+        context: context,
+        initialDate: controller.expirationDate() ??
+            DateTime.now().add(const Duration(days: 30)),
+        firstDate: DateTime.now().add(const Duration(days: 30)),
+        lastDate: DateTime.now().add(const Duration(days: 365 * 20)),
+      ).then((newExpirationDate) =>
+          controller.changeExpirationDate(newExpirationDate));
+    }
+
+    return AnimatedSwitcher(
+      duration: kAnimationDuration,
+      child: controller.product() == null
+          ? Container()
+          : ListTile(
+              leading: const Icon(Icons.recycling_rounded),
+              title: TextField(
+                readOnly: true,
+                onTap: selectDate,
+                keyboardType: TextInputType.datetime,
+                controller: controller.expirationDate() == null
+                    ? TextEditingController()
+                    : TextEditingController(
+                        text: dateFormat.format(controller.expirationDate()!)),
+                decoration: InputDecoration(
+                  label: const Text("Expiration Date (Optional)"),
+                  errorText: controller.expirationDateError(),
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (controller.expirationDate() != null)
+                        IconButton(
+                            onPressed: () {
+                              controller.changeExpirationDate(null);
+                            },
+                            icon: const Icon(Icons.cancel_rounded)),
+                      IconButton(
+                          onPressed: selectDate,
+                          icon: const Icon(Icons.calendar_month_rounded)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+    );
+  }
+
   Widget _descriptionField() {
+    final descController = controller.descriptionController();
     return AnimatedSwitcher(
       duration: kAnimationDuration,
       child: controller.product() == null
@@ -252,12 +304,13 @@ class CodesCreationForm extends StatelessWidget {
           : ListTile(
               leading: const Icon(Icons.info_outlined),
               title: TextField(
-                controller: controller.descriptionController(),
+                textInputAction: TextInputAction.newline,
+                controller: descController,
                 keyboardType: TextInputType.multiline,
                 minLines: 3,
                 maxLines: null,
                 decoration: const InputDecoration(
-                  label: Text("More Information"),
+                  label: Text("More Information (Optional)"),
                 ),
               ),
             ),

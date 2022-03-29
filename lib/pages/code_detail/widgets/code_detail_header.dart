@@ -34,7 +34,7 @@ class CodeDetailHeader extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.only(left: kSpacing),
       child: Text(
-        "Code Detail : ",
+        "Code's Detail : ",
         style: TextStyle(
           fontWeight: FontWeight.bold,
         ),
@@ -47,7 +47,7 @@ class CodeDetailHeader extends StatelessWidget {
       splashRadius: kSplashRadius,
       icon: const Icon(Icons.close_rounded),
       onPressed: () {
-        codeDetailController.cancel();
+        codeDetailController.close();
       },
     );
   }
