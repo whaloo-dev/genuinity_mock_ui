@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 
-class CodesCreationHeader extends StatelessWidget {
-  const CodesCreationHeader({
+class CodeDetailHeader extends StatelessWidget {
+  const CodeDetailHeader({
     Key? key,
   }) : super(key: key);
 
@@ -34,7 +34,7 @@ class CodesCreationHeader extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.only(left: kSpacing),
       child: Text(
-        "Create new codes : ",
+        "Code Detail : ",
         style: TextStyle(
           fontWeight: FontWeight.bold,
         ),
@@ -47,7 +47,7 @@ class CodesCreationHeader extends StatelessWidget {
       splashRadius: kSplashRadius,
       icon: const Icon(Icons.close_rounded),
       onPressed: () {
-        codesCreationController.cancel();
+        codeDetailController.cancel();
       },
     );
   }

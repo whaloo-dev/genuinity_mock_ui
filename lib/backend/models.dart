@@ -155,7 +155,7 @@ class Code {
   final DateTime? lastScanDate;
   final DateTime? expirationDate;
   final CodeStyle? codeStyle;
-  final Map<String, String> tags;
+  final String? description;
 
   bool isSelected;
 
@@ -167,10 +167,10 @@ class Code {
     required this.scanCount,
     required this.scanErrorsCount,
     required this.codeStyle,
-    this.tags = const <String, String>{},
     this.exportDate,
     this.lastScanDate,
     this.expirationDate,
+    this.description,
     this.isSelected = false,
   });
 
@@ -183,7 +183,7 @@ class Code {
   int get hashCode => hash2(serial.hashCode, serial.hashCode);
 }
 
-// TODO add parameters for codes here
+// TODO add parameters for code styles here
 class CodeStyle {
   int id;
 

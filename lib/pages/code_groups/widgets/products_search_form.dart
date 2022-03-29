@@ -36,7 +36,7 @@ class ProductsSearchForm extends StatelessWidget {
                       _vendorField(vendor),
                     _statusField(status),
                     _inventoryRangeField(),
-                    SizedBox(height: kOptionsMaxHeight),
+                    const SizedBox(height: kOptionsMaxHeight),
                   ],
                 ),
               ),

@@ -14,8 +14,6 @@ import 'package:whaloo_genuinity/routes/routes.dart';
 class CodesCreationController extends GetxController {
   static CodesCreationController instance = Get.find();
 
-  final GlobalKey<FormState> formState = GlobalKey<FormState>();
-
   final _product = Rx<Product?>(null);
   bool _isProductPreset = true;
   final _productFieldError = Rx<String?>(null);
@@ -25,6 +23,8 @@ class CodesCreationController extends GetxController {
 
   final _codeStyle = Rx<CodeStyle?>(null);
   final _codeStyles = <CodeStyle>[].obs;
+
+  final _descriptionController = TextEditingController();
 
   final TextEditingController _bulkSizeController =
       TextEditingController(text: "1");
@@ -57,6 +57,7 @@ class CodesCreationController extends GetxController {
   CodeStyle? codeStyle() => _codeStyle.value;
   List<CodeStyle> codeStyles() => _codeStyles;
 
+  TextEditingController descriptionController() => _descriptionController;
   TextEditingController bulkSizeController() => _bulkSizeController;
   String? bulkSizeFieldError() => _bulkSizeFieldError.value;
   Product? product() => _product.value;
@@ -72,6 +73,7 @@ class CodesCreationController extends GetxController {
       _productFieldError.value = null;
       _variantFieldError.value = null;
       _variant.value = null;
+      _descriptionController.text = "";
       _bulkSizeController.text = "1";
       _bulkSizeFieldError.value = null;
       Get.dialog(
@@ -90,10 +92,13 @@ class CodesCreationController extends GetxController {
     }
 
     final bulkSize = int.parse(_bulkSizeController.text.trim());
+    final description = _descriptionController.text.trim();
+
     Backend.instance
         .createCode(
           _variant.value!,
           _codeStyle.value!,
+          description: description.isEmpty ? null : description,
           blukSize: bulkSize,
         )
         .then(

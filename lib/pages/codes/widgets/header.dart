@@ -49,7 +49,7 @@ class CodesHeader extends StatelessWidget {
                   alignment: WrapAlignment.spaceBetween,
                   spacing: kSpacing,
                   crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [],
+                  children: const [],
                 ),
               ),
             ],
@@ -76,15 +76,16 @@ class CodesHeader extends StatelessWidget {
     );
   }
 
-  Widget _backWidget() {
-    return IconButton(
-      splashRadius: kSplashRadius,
-      icon: const Icon(Icons.arrow_back_rounded),
-      onPressed: () {
-        navigationController.goBack();
-      },
-    );
-  }
+  //TODO cleaning
+  //Widget _backWidget() {
+  //   return IconButton(
+  //     splashRadius: kSplashRadius,
+  //     icon: const Icon(Icons.arrow_back_rounded),
+  //     onPressed: () {
+  //       navigationController.goBack();
+  //     },
+  //   );
+  // }
 
   Widget _productPhotoWidget(BuildContext context) {
     return Card(
@@ -115,8 +116,6 @@ class CodesHeader extends StatelessWidget {
         Flexible(
           child: Text(
             product.title,
-            //TODO cleaning
-            // style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 
 TextEditingController textEditingController(
     {String? text, TextSelection? selection}) {
@@ -54,4 +55,25 @@ class PopupMenuItemData {
     required this.icon,
     required this.handler,
   });
+}
+
+dialog_layout(BuildContext context, Widget child) {
+  return Row(
+    children: [
+      Expanded(flex: 1, child: Container()),
+      Expanded(
+        flex: Responsiveness.isScreenSmall(context) ? 100 : 10,
+        child: Column(
+          children: [
+            const SizedBox(height: kSpacing),
+            Expanded(
+              child: child,
+            ),
+            const SizedBox(height: kSpacing),
+          ],
+        ),
+      ),
+      Expanded(flex: 1, child: Container()),
+    ],
+  );
 }

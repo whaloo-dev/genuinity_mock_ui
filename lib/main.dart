@@ -5,6 +5,7 @@ import 'package:whaloo_genuinity/backend/demo_backend.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/globals.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/controllers/code_detail_controller.dart';
 import 'package:whaloo_genuinity/controllers/codes_controller.dart';
 import 'package:whaloo_genuinity/controllers/menu_controller.dart';
 import 'package:whaloo_genuinity/controllers/navigation_controller.dart';
@@ -24,6 +25,7 @@ void main() {
   Get.put(ProductsController());
   Get.put(CodesController());
   Get.put(CodesCreationController());
+  Get.put(CodeDetailController());
   storeController.onReady();
   productsController.onReady();
 

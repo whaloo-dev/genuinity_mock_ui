@@ -36,12 +36,7 @@ class CodeTile extends StatelessWidget {
         ],
       ),
       onTap: () {
-        final newValue = !code.isSelected;
-        if (newValue) {
-          codesController.select(code);
-        } else {
-          codesController.unselect(code);
-        }
+        codeDetailController.open(code);
       },
     );
   }
@@ -198,7 +193,7 @@ class CodeTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _stackIcon(
-            icon1: FontAwesomeIcons.swatchbook,
+            icon1: Icons.call_split_outlined,
           ),
           const SizedBox(width: kSpacing),
           Flexible(

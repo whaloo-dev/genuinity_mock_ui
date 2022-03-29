@@ -22,28 +22,6 @@ class ProductsSelector extends StatelessWidget {
     controller.loadInit();
   }
 
-  // TODO cleaning
-  //Widget _layout(BuildContext context, Widget content) {
-  //   return Row(
-  //     children: [
-  //       Expanded(flex: 1, child: Container()),
-  //       Expanded(
-  //         flex: Responsiveness.isScreenSmall(context) ? 50 : 5,
-  //         child: Column(
-  //           children: [
-  //             const SizedBox(height: kSpacing * 3),
-  //             Expanded(
-  //               child: content,
-  //             ),
-  //             const SizedBox(height: kSpacing * 3),
-  //           ],
-  //         ),
-  //       ),
-  //       Expanded(flex: 1, child: Container()),
-  //     ],
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Obx(

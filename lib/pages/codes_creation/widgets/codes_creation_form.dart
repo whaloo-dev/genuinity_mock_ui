@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/product_selector/product_selector.dart';
 import 'package:whaloo_genuinity/widgets/selector.dart';
 import 'package:whaloo_genuinity/widgets/widget_with_overlay.dart';
 
-final controller = newCodesController;
+final controller = codesCreationController;
 
 class CodesCreationForm extends StatelessWidget {
   const CodesCreationForm({
@@ -32,16 +30,20 @@ class CodesCreationForm extends StatelessWidget {
                   _variantField(),
                   const SizedBox(height: kSpacing),
                   _codeStyleField(),
+                  // TODO add _expirationDateField(),
                   const SizedBox(height: kSpacing),
-                  _bulkSizeField(),
-                  // _expirationDateField(),
-                  // _tagsField(),
+                  _descriptionField(),
+                  const SizedBox(height: kSpacing),
                   const SizedBox(height: kOptionsMaxHeight),
                 ],
               ),
             ),
           ),
           const Divider(thickness: 1, height: 1),
+          const SizedBox(height: kSpacing),
+          _bulkSizeField(),
+          const SizedBox(height: kSpacing * 2),
+          const Divider(thickness: 1, height: kSpacing),
           const SizedBox(height: kSpacing * 2),
           Row(
             mainAxisSize: MainAxisSize.max,
@@ -176,7 +178,7 @@ class CodesCreationForm extends StatelessWidget {
               controller.product()!.variants.length <= 1)
           ? Container()
           : ListTile(
-              leading: const Icon(FontAwesomeIcons.swatchbook),
+              leading: const Icon(Icons.call_split_outlined),
               title: Obx(
                 () => Selector<ProductVariant>(
                   optionWidgetBuilder: (option) => Text(option.title),
@@ -201,13 +203,18 @@ class CodesCreationForm extends StatelessWidget {
       child: controller.product() == null
           ? Container()
           : ListTile(
-              leading: const Icon(FontAwesomeIcons.qrcode),
+              leading: const Icon(Icons.palette_outlined),
               title: Obx(
                 () => Selector<CodeStyle>(
                   optionWidgetBuilder: _codeStyleOptionWidget,
                   value: controller.codeStyle(),
-                  fieldLabel: const Text("Code Style"),
-                  fieldErrorText: controller.variantFieldError(),
+                  fieldLabel: const Text("Style"),
+                  prefixIcon: controller.codeStyle() == null
+                      ? null
+                      : _codeStyleOptionWidget(
+                          controller.codeStyle()!,
+                          showText: false,
+                        ),
                   options: controller.codeStyles(),
                   onSelected: controller.changeCodeStyle,
                   optionToString: (codeStyle) => "Style N°${codeStyle.id}",
@@ -217,40 +224,57 @@ class CodesCreationForm extends StatelessWidget {
     );
   }
 
-  Widget _codeStyleOptionWidget(CodeStyle codeStyle) {
+  Widget _codeStyleOptionWidget(CodeStyle codeStyle,
+      {bool showText = true, double size = kSmallImage}) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Card(
           color: Colors.transparent,
           elevation: 0,
           clipBehavior: Clip.antiAlias,
           child: SizedBox(
-            width: kLargeImage,
-            height: kLargeImage,
+            width: size,
+            height: size,
             child: Image.asset("assets/demo/images/qrcode${codeStyle.id}.png"),
           ),
         ),
-        Text("Style N°${codeStyle.id}"),
+        if (showText) Text("Style N°${codeStyle.id}"),
       ],
     );
   }
 
-  Widget _bulkSizeField() {
+  Widget _descriptionField() {
     return AnimatedSwitcher(
       duration: kAnimationDuration,
       child: controller.product() == null
           ? Container()
           : ListTile(
-              leading: const Icon(FontAwesomeIcons.solidClone),
+              leading: const Icon(Icons.info_outlined),
               title: TextField(
-                controller: controller.bulkSizeController(),
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  label: const Text("Number of codes to create"),
-                  errorText: controller.bulkSizeFieldError(),
+                controller: controller.descriptionController(),
+                keyboardType: TextInputType.multiline,
+                minLines: 3,
+                maxLines: null,
+                decoration: const InputDecoration(
+                  label: Text("More Information"),
                 ),
               ),
             ),
+    );
+  }
+
+  Widget _bulkSizeField() {
+    return ListTile(
+      // leading: const Icon(Icons.copy_all_rounded),
+      title: TextField(
+        controller: controller.bulkSizeController(),
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        decoration: InputDecoration(
+          label: const Text("Number Of Copies"),
+          errorText: controller.bulkSizeFieldError(),
+        ),
+      ),
     );
   }
 }

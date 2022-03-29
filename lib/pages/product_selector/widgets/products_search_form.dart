@@ -7,6 +7,7 @@ import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
+import 'package:whaloo_genuinity/widgets/selector.dart';
 
 final controller = productSelectorController;
 
@@ -205,39 +206,12 @@ class ProductsSearchForm extends StatelessWidget {
   Widget _productTypeField(String productType) {
     return ListTile(
       leading: const Icon(FontAwesomeIcons.folder),
-      title: Autocomplete<String>(
-        optionsMaxHeight: kOptionsMaxHeight,
-        fieldViewBuilder:
-            (context, textEditingController, focusNode, onFieldSubmitted) {
-          textEditingController.text = productType;
-          return TextField(
-            controller: textEditingController,
-            focusNode: focusNode,
-            onChanged: (value) {
-              if (value.trim().isEmpty) {
-                controller.changeProductTypeFilter(value);
-              }
-            },
-            decoration: InputDecoration(
-              label: const Text("Product Type"),
-              suffixIcon: productType.isNotEmpty
-                  ? _clearFieldWidget(() {
-                      controller.changeProductTypeFilter("");
-                    })
-                  : null,
-            ),
-          );
-        },
+      title: Selector<String>(
+        value: productType,
+        fieldLabel: const Text("Product Type"),
+        options: controller.productTypes(),
         onSelected: (value) {
           controller.changeProductTypeFilter(value);
-        },
-        optionsBuilder: (textEditingValue) {
-          var text = textEditingValue.text.trim().toUpperCase();
-          return controller.productTypes().where((element) {
-            final e = element.trim().toUpperCase();
-            return e.contains(text) && e.isNotEmpty;
-          }).toList()
-            ..insert(0, " ");
         },
       ),
     );
@@ -246,38 +220,12 @@ class ProductsSearchForm extends StatelessWidget {
   Widget _vendorField(String vendor) {
     return ListTile(
       leading: const Icon(FontAwesomeIcons.store),
-      title: Autocomplete<String>(
-        fieldViewBuilder:
-            (context, textEditingController, focusNode, onFieldSubmitted) {
-          textEditingController.text = vendor;
-          return TextField(
-            controller: textEditingController,
-            focusNode: focusNode,
-            onChanged: (value) {
-              if (value.trim().isEmpty) {
-                controller.changeVendorFilter(value);
-              }
-            },
-            decoration: InputDecoration(
-              label: const Text("Vendor"),
-              suffixIcon: vendor.isNotEmpty
-                  ? _clearFieldWidget(() {
-                      controller.changeVendorFilter("");
-                    })
-                  : null,
-            ),
-          );
-        },
+      title: Selector<String>(
+        value: vendor,
+        fieldLabel: const Text("Vendor"),
+        options: controller.vendors(),
         onSelected: (value) {
           controller.changeVendorFilter(value);
-        },
-        optionsBuilder: (textEditingValue) {
-          var text = textEditingValue.text.trim().toUpperCase();
-          return controller.vendors().where((element) {
-            final e = element.trim().toUpperCase();
-            return e.contains(text) && e.isNotEmpty;
-          }).toList()
-            ..insert(0, " ");
         },
       ),
     );

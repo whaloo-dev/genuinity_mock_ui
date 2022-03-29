@@ -49,6 +49,7 @@ class ProductsController extends GetxController {
   final _statusFilter = _defaultStatusFilter.obs;
 
   Future<void> loadInit() async {
+    Get.log("ProductController.loadInit");
     Backend.instance
         .loadProducts(showProductsHavingCodesOnly: showProductsHavingCodesOnly)
         .then((products) {

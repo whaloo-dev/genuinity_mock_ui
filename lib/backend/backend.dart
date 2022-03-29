@@ -41,6 +41,7 @@ abstract class Backend {
   Future<void> createCode(
     ProductVariant variant,
     CodeStyle codeStyle, {
+    String? description,
     int blukSize = 1,
     Map<String, String> tags = const <String, String>{},
   });

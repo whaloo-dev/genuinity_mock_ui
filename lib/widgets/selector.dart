@@ -6,6 +6,7 @@ class Selector<T extends Object> extends StatefulWidget {
   final void Function(T selected) onSelected;
   final List<T> options;
   final Widget fieldLabel;
+  final Widget? prefixIcon;
   final String? fieldErrorText;
   final T? value;
   final Widget Function(T option)? optionWidgetBuilder;
@@ -16,6 +17,7 @@ class Selector<T extends Object> extends StatefulWidget {
     required this.onSelected,
     required this.options,
     required this.fieldLabel,
+    this.prefixIcon,
     this.value,
     this.fieldErrorText,
     this.optionWidgetBuilder,
@@ -71,6 +73,7 @@ class _SelectorState<T extends Object> extends State<Selector<T>> {
         controller: textController,
         focusNode: focusNode,
         decoration: InputDecoration(
+          prefixIcon: widget.prefixIcon,
           label: widget.fieldLabel,
           errorText: widget.fieldErrorText,
           suffixIcon: _showOverlay

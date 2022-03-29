@@ -13,8 +13,8 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 //TODO loadProduct returns a structure containing agregates
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
-  // static const _demoStoreName = "ruesco";
-  static const _demoStoreName = "huel";
+  static const _demoStoreName = "ruesco";
+  // static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
   // static const _demoStoreName = "decathlon";
@@ -40,6 +40,7 @@ class DemoBackend extends GetConnect implements Backend {
     if (_isStoreDataInitialized) {
       return;
     }
+    Get.log("Backend : initializating store data...");
 
     var url = "$_basePath/demo/data/${_demoStoreName}_store.json";
     var response = await get(url);
@@ -59,6 +60,7 @@ class DemoBackend extends GetConnect implements Backend {
     if (_isProductDataInitialized) {
       return;
     }
+    Get.log("Backend : initializing products data...");
 
     final url = "$_basePath/demo/data/${_demoStoreName}_products.json";
     final response = await get(url);
@@ -110,6 +112,8 @@ class DemoBackend extends GetConnect implements Backend {
 
   @override
   Future<Store> getCurrentStore() async {
+    Get.log("Backend : getCurrentStore...");
+
     await _initStoreData();
     return Future<Store>(() => _demoStore!);
   }
@@ -125,6 +129,8 @@ class DemoBackend extends GetConnect implements Backend {
     String? productTypeFilter,
     RangeValues? inventoryRangeFilter,
   }) async {
+    Get.log("Backend : loadProducts...");
+
     await _initProductsData();
 
     final products = <Product>[];
@@ -221,6 +227,8 @@ class DemoBackend extends GetConnect implements Backend {
   Future<List<Code>> loadCodes({
     required Product product,
   }) async {
+    Get.log("Backend : loadCodes...");
+
     return Future.delayed(const Duration(milliseconds: 100), () {
       if (!_codes.containsKey(product.id)) {
         return <Code>[];
@@ -237,9 +245,12 @@ class DemoBackend extends GetConnect implements Backend {
   Future<void> createCode(
     ProductVariant variant,
     CodeStyle codeStyle, {
+    String? description,
     int blukSize = 1,
     Map<String, String> tags = const <String, String>{},
   }) async {
+    Get.log("Backend : createCode...");
+
     Future.delayed(
       Duration.zero,
       () {
@@ -258,6 +269,7 @@ class DemoBackend extends GetConnect implements Backend {
             shortCode: _computeShortCode(serial, 7),
             variant: variant,
             codeStyle: codeStyle,
+            description: description,
             expirationDate: creationDate.add(const Duration(days: 365 * 5)),
           );
 
@@ -276,6 +288,8 @@ class DemoBackend extends GetConnect implements Backend {
 
   @override
   Future<List<CodeStyle>> loadCodeStyles() async {
+    Get.log("Backend : loadCodeStyles...");
+
     return Future.delayed(
       Duration.zero,
       () => <CodeStyle>[

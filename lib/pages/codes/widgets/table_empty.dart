@@ -54,7 +54,7 @@ class CodesTableEmptyWidget extends StatelessWidget {
                             heroTag: null,
                             child: const Icon(Icons.add),
                             onPressed: () {
-                              newCodesController.open(product: product);
+                              codesCreationController.open(product: product);
                             },
                           ),
                         ],

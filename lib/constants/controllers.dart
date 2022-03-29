@@ -1,3 +1,4 @@
+import 'package:whaloo_genuinity/controllers/code_detail_controller.dart';
 import 'package:whaloo_genuinity/controllers/codes_controller.dart';
 import 'package:whaloo_genuinity/controllers/menu_controller.dart';
 import 'package:whaloo_genuinity/controllers/navigation_controller.dart';
@@ -12,4 +13,6 @@ ProductsController productsController = ProductsController.instance;
 ProductsController productSelectorController =
     ProductsController(showProductsHavingCodesOnly: false);
 CodesController codesController = CodesController.instance;
-CodesCreationController newCodesController = CodesCreationController.instance;
+CodesCreationController codesCreationController =
+    CodesCreationController.instance;
+CodeDetailController codeDetailController = CodeDetailController.instance;
