@@ -13,8 +13,8 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 //TODO loadProduct returns a structure containing agregates
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
-  static const _demoStoreName = "ruesco";
-  // static const _demoStoreName = "huel";
+  // static const _demoStoreName = "ruesco";
+  static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
   // static const _demoStoreName = "decathlon";
@@ -22,6 +22,7 @@ class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "commonfarmflowers";
   // static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";
+  // static const _demoStoreName = "seriouswatches";
 
   late String _basePath;
 
@@ -113,7 +114,6 @@ class DemoBackend extends GetConnect implements Backend {
   @override
   Future<Store> getCurrentStore() async {
     Get.log("Backend : getCurrentStore...");
-
     await _initStoreData();
     return Future<Store>(() => _demoStore!);
   }
@@ -252,7 +252,7 @@ class DemoBackend extends GetConnect implements Backend {
   }) async {
     Get.log("Backend : createCode...");
 
-    Future.delayed(
+    return Future.delayed(
       Duration.zero,
       () {
         final product = variant.product;
@@ -303,6 +303,15 @@ class DemoBackend extends GetConnect implements Backend {
         CodeStyle(id: 7),
       ],
     );
+  }
+
+  @override
+  Future<void> deleteCode(Code code) async {
+    Get.log("Backend : deleteCode...");
+    return Future.delayed(Duration.zero, () {
+      _codes[code.variant.product]!.remove(code);
+      _doCallbacks(BackendEvent.codeRemoved);
+    });
   }
 
   @override

@@ -46,4 +46,6 @@ abstract class Backend {
     int blukSize = 1,
     Map<String, String> tags = const <String, String>{},
   });
+
+  Future<void> deleteCode(Code code);
 }

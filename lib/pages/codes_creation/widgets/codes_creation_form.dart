@@ -21,11 +21,12 @@ class CodesCreationForm extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
-          const SizedBox(height: kSpacing * 3),
+          const SizedBox(height: kSpacing),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  const SizedBox(height: kSpacing),
                   _productField(context),
                   const SizedBox(height: kSpacing),
                   _variantField(),

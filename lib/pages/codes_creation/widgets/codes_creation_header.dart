@@ -9,46 +9,24 @@ class CodesCreationHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(kBorderRadius.topLeft.x),
-          topRight: Radius.circular(kBorderRadius.topRight.x),
-        ),
-      ),
-      child: Column(
-        children: [
-          ListTile(
-            dense: true,
-            contentPadding: const EdgeInsets.all(kSpacing),
-            title: _title(context),
-            trailing: _closeWidget(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _title(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(left: kSpacing),
-      child: Text(
-        "Create New Codes : ",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+    return Row(
+      children: [
+        Expanded(child: Container()),
+        _closeWidget(),
+      ],
     );
   }
 
   Widget _closeWidget() {
-    return IconButton(
-      splashRadius: kSplashRadius,
-      icon: const Icon(Icons.close_rounded),
-      onPressed: () {
-        codesCreationController.cancel();
-      },
+    return Padding(
+      padding: const EdgeInsets.all(kSpacing),
+      child: IconButton(
+        splashRadius: kSplashRadius,
+        icon: const Icon(Icons.close_rounded),
+        onPressed: () {
+          codesCreationController.cancel();
+        },
+      ),
     );
   }
 }

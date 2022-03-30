@@ -67,6 +67,10 @@ class CodesController extends GetxController {
     _codes[index] = code;
   }
 
+  Future<void> deleteCode(Code code) async {
+    return Backend.instance.deleteCode(code);
+  }
+
   bool isLoadingData() {
     return _isLoadingData.value;
   }

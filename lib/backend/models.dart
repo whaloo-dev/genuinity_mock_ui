@@ -156,6 +156,7 @@ class Code {
   final DateTime? expirationDate;
   final CodeStyle? codeStyle;
   final String? description;
+  final List<CodeScan> scans;
 
   bool isSelected;
 
@@ -164,14 +165,15 @@ class Code {
     required this.serial,
     required this.creationDate,
     required this.variant,
-    required this.scanCount,
-    required this.scanErrorsCount,
     required this.codeStyle,
+    this.scanCount = 0,
+    this.scanErrorsCount = 0,
     this.exportDate,
     this.lastScanDate,
     this.expirationDate,
     this.description,
     this.isSelected = false,
+    this.scans = const <CodeScan>[],
   });
 
   @override
@@ -189,5 +191,16 @@ class CodeStyle {
 
   CodeStyle({
     required this.id,
+  });
+}
+
+// TODO add location
+class CodeScan {
+  DateTime dateTime;
+  bool isFailed;
+
+  CodeScan({
+    required this.dateTime,
+    required this.isFailed,
   });
 }
