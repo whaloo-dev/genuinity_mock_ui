@@ -309,8 +309,11 @@ class DemoBackend extends GetConnect implements Backend {
   Future<void> deleteCode(Code code) async {
     Get.log("Backend : deleteCode...");
     return Future.delayed(Duration.zero, () {
-      _codes[code.variant.product]!.remove(code);
+      Product product = code.variant.product;
+      product.codesCount = product.codesCount - 1;
+      _codes[product.id]!.remove(code);
       _doCallbacks(BackendEvent.codeRemoved);
+      _doCallbacks(BackendEvent.productUpdated);
     });
   }
 

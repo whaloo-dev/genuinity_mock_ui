@@ -3,11 +3,10 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/helpers/custom.dart';
 
 //TODO Codes : add sorting
 //TODO Codes : add search
-//TODO Codes : add delete code
-//TODO Codes : add modify code
 //TODO Codes : add export code
 //TODO Codes : add test verify code
 class CodesController extends GetxController {
@@ -25,6 +24,11 @@ class CodesController extends GetxController {
   void onReady() async {
     super.onReady();
     Backend.instance.addListener(BackendEvent.codeAdded, ({arguments}) {
+      if (_currentProduct.value != null) {
+        loadCodes(_currentProduct.value!);
+      }
+    });
+    Backend.instance.addListener(BackendEvent.codeRemoved, ({arguments}) {
       if (_currentProduct.value != null) {
         loadCodes(_currentProduct.value!);
       }
@@ -68,7 +72,14 @@ class CodesController extends GetxController {
   }
 
   Future<void> deleteCode(Code code) async {
-    return Backend.instance.deleteCode(code);
+    await Backend.instance.deleteCode(code);
+    showActionDoneNotification(
+      "Code deleted",
+      onCancel: () {
+        //TODO Cancel delete
+        Get.closeCurrentSnackbar();
+      },
+    );
   }
 
   bool isLoadingData() {

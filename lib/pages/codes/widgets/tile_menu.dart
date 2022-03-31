@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 
 Widget codeTileMenu(Code code) {
   final _menuItems = <PopupMenuItemData>[
-    // _MenuItem(
-    //     text: "Hide this product",
-    //     icon: Icons.visibility_off_rounded,
-    //     handler: () {
-    //     },
-    //   ),
+    PopupMenuItemData(
+      text: "Delete",
+      icon: Icons.delete_rounded,
+      handler: () {
+        codesController.deleteCode(code);
+      },
+    ),
   ];
 
   return PopupMenuButton<PopupMenuItemData>(
@@ -18,7 +20,6 @@ Widget codeTileMenu(Code code) {
     elevation: kElevation,
     icon: const Icon(
       Icons.more_vert_rounded,
-      // color: kDarkColor,
     ),
     itemBuilder: (context) => _menuItems
         .map(

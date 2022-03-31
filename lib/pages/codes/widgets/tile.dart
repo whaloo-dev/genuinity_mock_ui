@@ -118,7 +118,7 @@ class CodeTile extends StatelessWidget {
 
   Widget _qrCodeWidget(BuildContext context) {
     bool isSmall = Responsiveness.isScreenSmall(context);
-    double size = isSmall ? kSmallImage : kLargeImage;
+    // double size = isSmall ? kSmallImage : kLargeImage;
     return Column(
       children: [
         Card(
@@ -126,8 +126,8 @@ class CodeTile extends StatelessWidget {
           elevation: 0,
           clipBehavior: Clip.antiAlias,
           child: SizedBox(
-            width: size,
-            height: size,
+            width: kSmallImage,
+            height: kSmallImage,
             child: Image.asset(
                 "assets/demo/images/qrcode${code.codeStyle!.id}.png"),
           ),

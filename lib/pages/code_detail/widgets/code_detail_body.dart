@@ -1,4 +1,3 @@
-import 'package:data_table_2/paginated_data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
@@ -16,24 +15,28 @@ class CodeDetailBody extends StatelessWidget {
   }) : super(key: key);
 
   final TextStyle? textStyleLabel = Get.theme.textTheme.subtitle2!
-      .copyWith(color: colorScheme.onSurface.withOpacity(0.9), fontSize: 12);
+      .copyWith(color: Get.theme.hintColor, fontSize: 12);
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Column(
         children: [
+          const SizedBox(height: kSpacing),
+          _qrCodeWidget(context),
+          const Divider(thickness: 1, height: 1),
+          const SizedBox(height: kSpacing),
           Expanded(
-            child: Column(
-              children: [
-                const SizedBox(height: kSpacing),
-                _qrCodeWidget(context),
-                _productField(context),
-                _variantField(),
-                _expirationDateField(),
-                _descriptionField(),
-                Expanded(child: _logField())
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _productField(),
+                  _variantField(),
+                  _expirationDateField(),
+                  _descriptionField(),
+                  _logField()
+                ],
+              ),
             ),
           ),
           const SizedBox(height: kSpacing * 2),
@@ -96,18 +99,15 @@ class CodeDetailBody extends StatelessWidget {
           )
         ],
       ),
-      // ),
     );
   }
 
-  Widget _productField(BuildContext context) {
+  Widget _productField() {
     Product product = controller.code()!.variant.product;
-    return ListTile(
-      title: _readOnlyTextField(
-        label: "Product",
-        value: product.title,
-        prefixIcon: _productPhotoWidget(product),
-      ),
+    return _info(
+      label: "Product : ",
+      info: Text(product.title),
+      image: _productPhotoWidget(product),
     );
   }
 
@@ -121,7 +121,6 @@ class CodeDetailBody extends StatelessWidget {
         height: kSmallImage,
         child: Image.network(
           product.image,
-          key: GlobalKey(),
           fit: BoxFit.fill,
           errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,
@@ -137,13 +136,10 @@ class CodeDetailBody extends StatelessWidget {
       return Container();
     }
     ProductVariant variant = controller.code()!.variant;
-
-    return ListTile(
-      leading: const Icon(Icons.call_split_rounded),
-      title: _readOnlyTextField(
-        label: "Product Variant",
-        value: variant.title,
-      ),
+    //TODO add more information like SKU
+    return _info(
+      label: "Variant : ",
+      info: Text(variant.title),
     );
   }
 
@@ -151,12 +147,9 @@ class CodeDetailBody extends StatelessWidget {
     if (controller.code()!.expirationDate == null) {
       return Container();
     }
-    return ListTile(
-      leading: const Icon(Icons.recycling_rounded),
-      title: _readOnlyTextField(
-        label: "Expires",
-        value: dateFormat.format(controller.code()!.expirationDate!),
-      ),
+    return _info(
+      label: "Expires : ",
+      info: Text(dateFormat.format(controller.code()!.expirationDate!)),
     );
   }
 
@@ -165,116 +158,77 @@ class CodeDetailBody extends StatelessWidget {
         controller.code()!.description!.isEmpty) {
       return Container();
     }
-    return ListTile(
-      leading: const Icon(Icons.info_outlined),
-      title: _readOnlyTextField(
-        label: "More Information",
-        value: controller.code()!.description ?? "",
-        keyboardType: TextInputType.multiline,
-        minLines: null,
-        maxLines: 3,
-        canCopy: true,
+    return _info(
+      label: "More Information : ",
+      toClipboard: controller.code()!.description!,
+      info: Text(
+        controller.code()!.description!,
       ),
     );
   }
 
   Widget _logField() {
     final code = controller.code()!;
-    return ListTile(
-      leading: const Icon(Icons.watch_later_outlined),
-      title: Container(
-        // padding: const EdgeInsets.only(top: kSpacing),
-        child: Stack(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: kSpacing),
-              child: DataTable2(
-                decoration: BoxDecoration(
-                  borderRadius: kBorderRadius,
-                  border: Border.all(
-                    color: colorScheme.outline.withOpacity(.8),
-                  ),
-                ),
-                sortColumnIndex: 0,
-                columnSpacing: 0,
-                columns: const [
-                  DataColumn2(label: Text("Date"), size: ColumnSize.S),
-                  DataColumn2(label: Text("Event"), size: ColumnSize.M)
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text(
-                      compactDateTimeFormat.format(code.creationDate),
-                      style: const TextStyle(fontSize: 12),
-                    )),
-                    const DataCell(
-                      Text(
-                        "Code created",
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ),
-                  ]),
-                  ...List.generate(
-                    10,
-                    (index) => DataRow(
-                      cells: [
-                        DataCell(Text(
-                          compactDateTimeFormat.format(code.creationDate),
-                          style: const TextStyle(fontSize: 12),
-                        )),
-                        DataCell(
-                          Text(
-                            "Event $index",
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: kSpacing,
-              child: Container(
-                color: colorScheme.background,
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: Text(
-                  "Logs",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: colorScheme.outline,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
 
-      // title: _readOnlyTextField(
-      //   label: "Logs",
-      //   value: logs,
-      //   keyboardType: TextInputType.multiline,
-      //   minLines: null,
-      //   maxLines: null,
-      //   expands: true,
-      //   canCopy: true,
-      // ),
+    final toClipboard = [
+      "${compactDateTimeFormat.format(code.creationDate)} Code created",
+      ...List.generate(
+        10,
+        (index) =>
+            "${compactDateTimeFormat.format(code.creationDate)} Event$index",
+      )
+    ].join("\n");
+
+    return _info(
+      label: "Logs : ",
+      toClipboard: toClipboard,
+      info: Column(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                compactDateTimeFormat.format(code.creationDate),
+                style: const TextStyle(fontSize: 12),
+              ),
+              const SizedBox(width: kSpacing),
+              const Expanded(
+                child: Text(
+                  "Code created",
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+          ...List.generate(
+            10,
+            (index) => Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  compactDateTimeFormat.format(code.creationDate),
+                  style: const TextStyle(fontSize: 12),
+                ),
+                const SizedBox(width: kSpacing),
+                Expanded(
+                  child: Text(
+                    "Event $index",
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _readOnlyTextField({
+  Widget _info({
     required String label,
-    required String value,
-    bool canCopy = false,
-    Widget? prefixIcon,
-    TextInputAction? textInputAction,
-    TextInputType? keyboardType,
-    TextStyle? textStyle,
-    int? minLines,
-    int? maxLines,
-    bool expands = false,
+    required Widget info,
+    String? toClipboard,
+    Widget? image,
   }) {
     final focusNode = FocusNode();
     focusNode.addListener(() {
@@ -285,31 +239,43 @@ class CodeDetailBody extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: kSpacing),
-      child: TextField(
-        textInputAction: textInputAction,
-        focusNode: focusNode,
-        controller: TextEditingController(text: value),
-        keyboardType: keyboardType,
-        minLines: minLines,
-        maxLines: maxLines,
-        expands: expands,
-        readOnly: true,
-        style: textStyle,
-        decoration: InputDecoration(
-          // floatingLabelStyle: TextStyle(color: Colors.red),
-          suffixIcon: canCopy
-              ? IconButton(
-                  splashRadius: kSplashRadius,
-                  icon: const Icon(Icons.copy),
-                  onPressed: () {
-                    copyToClipBoard(value);
-                  },
-                )
-              : null,
-          label: Text(label),
-          prefixIcon: prefixIcon,
+      child: ListTile(
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: textStyleLabel,
+              ),
+            ),
+            if (toClipboard != null) _copyButton(toClipboard),
+          ],
+        ),
+        subtitle: Container(
+          margin: const EdgeInsets.only(top: kSpacing),
+          child: Row(
+            children: [
+              if (image != null) image,
+              const SizedBox(width: kSpacing),
+              Expanded(child: info),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _copyButton(String text) {
+    return IconButton(
+      icon: Icon(
+        Icons.copy,
+        size: 15,
+        color: Get.theme.hintColor,
+      ),
+      splashRadius: kSplashRadius,
+      onPressed: () {
+        copyToClipBoard(text);
+      },
     );
   }
 }
