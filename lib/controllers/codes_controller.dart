@@ -9,6 +9,9 @@ import 'package:whaloo_genuinity/helpers/custom.dart';
 //TODO Codes : add search
 //TODO Codes : add export code
 //TODO Codes : add test verify code
+//TODO Codes : add bulk delete
+//TODO Codes : add bulk export
+//TODO Codes : add bulk export
 class CodesController extends GetxController {
   static CodesController instance = Get.find();
 

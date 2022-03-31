@@ -131,7 +131,7 @@ class CodesCreationForm extends StatelessWidget {
           child: TextField(
             focusNode: controller.isProductPreset() ? null : focusNode,
             decoration: InputDecoration(
-              prefixIcon: _productPhotoWidget(context),
+              prefixIcon: _photoWidget(),
               label: const Text("Product"),
               errorText: controller.productFieldError(),
               suffixIcon: controller.isProductPreset()
@@ -152,7 +152,7 @@ class CodesCreationForm extends StatelessWidget {
     );
   }
 
-  Widget _productPhotoWidget(BuildContext context) {
+  Widget _photoWidget() {
     return Card(
       color: Colors.transparent,
       elevation: 0,
@@ -181,12 +181,51 @@ class CodesCreationForm extends StatelessWidget {
               controller.product()!.variants.length <= 1)
           ? Container()
           : ListTile(
-              leading: const Icon(Icons.call_split_outlined),
+              leading: SizedBox(
+                height: kSmallImage,
+                width: kSmallImage,
+                child: Column(children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(child: Container()),
+                        Expanded(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Container(),
+                            shape: Border(
+                              left: BorderSide(
+                                style: BorderStyle.solid,
+                                color: colorScheme.outline.withOpacity(0.5),
+                              ),
+                              bottom: BorderSide(
+                                style: BorderStyle.solid,
+                                color: colorScheme.outline.withOpacity(0.5),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(child: Container())
+                ]),
+              ),
               title: Obx(
                 () => Selector<ProductVariant>(
-                  optionWidgetBuilder: (option) => Text(option.title),
+                  optionWidgetBuilder: (option) => Row(
+                    children: [
+                      //TODO replace product photo with variant photo
+                      _photoWidget(),
+                      const SizedBox(width: kSpacing),
+                      Text(option.title),
+                    ],
+                  ),
                   value: controller.variant(),
-                  fieldLabel: const Text("Product Variant"),
+                  //TODO replace product photo with variant photo
+                  prefixIcon:
+                      controller.variant() == null ? null : _photoWidget(),
+                  fieldLabel: const Text("Variant"),
                   fieldErrorText: controller.variantFieldError(),
                   options: controller.product()!.variants,
                   onSelected: controller.changeVariant,

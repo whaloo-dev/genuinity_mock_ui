@@ -9,6 +9,8 @@ import 'package:whaloo_genuinity/helpers/services.dart';
 final controller = codeDetailController;
 
 //TODO add actions : remove code, export code, test verification code.
+//TODO add more information to variant like SKU
+//TODO add photo to variant (detail and creation dialog)
 class CodeDetailBody extends StatelessWidget {
   CodeDetailBody({
     Key? key,
@@ -31,7 +33,6 @@ class CodeDetailBody extends StatelessWidget {
               child: Column(
                 children: [
                   _productField(),
-                  _variantField(),
                   _expirationDateField(),
                   _descriptionField(),
                   _logField()
@@ -103,15 +104,62 @@ class CodeDetailBody extends StatelessWidget {
   }
 
   Widget _productField() {
-    Product product = controller.code()!.variant.product;
+    ProductVariant variant = controller.code()!.variant;
+    Product product = variant.product;
     return _info(
       label: "Product : ",
-      info: Text(product.title),
-      image: _productPhotoWidget(product),
+      info: Column(
+        children: [
+          Row(children: [
+            _photoWidget(product.image),
+            const SizedBox(width: kSpacing),
+            Expanded(child: Text(product.title)),
+          ]),
+          if (product.variants.length > 1)
+            Row(
+              children: [
+                SizedBox(
+                  height: kSmallImage,
+                  width: kSmallImage,
+                  child: Column(children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(child: Container()),
+                          Expanded(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Container(),
+                              shape: Border(
+                                left: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: colorScheme.outline.withOpacity(0.5),
+                                ),
+                                bottom: BorderSide(
+                                  style: BorderStyle.solid,
+                                  color: colorScheme.outline.withOpacity(0.5),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(child: Container())
+                  ]),
+                ),
+                //TODO replace this with variant.image
+                _photoWidget(product.image),
+                const SizedBox(width: kSpacing),
+                Text(variant.title),
+              ],
+            ),
+        ],
+      ),
     );
   }
 
-  Widget _productPhotoWidget(Product product) {
+  Widget _photoWidget(String image) {
     return Card(
       color: Colors.transparent,
       elevation: 0,
@@ -120,7 +168,7 @@ class CodeDetailBody extends StatelessWidget {
         width: kSmallImage,
         height: kSmallImage,
         child: Image.network(
-          product.image,
+          image,
           fit: BoxFit.fill,
           errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,
@@ -130,18 +178,13 @@ class CodeDetailBody extends StatelessWidget {
     );
   }
 
-  Widget _variantField() {
-    Product product = controller.code()!.variant.product;
-    if (product.variants.length == 1) {
-      return Container();
-    }
-    ProductVariant variant = controller.code()!.variant;
-    //TODO add more information like SKU
-    return _info(
-      label: "Variant : ",
-      info: Text(variant.title),
-    );
-  }
+  // Widget _variantField() {
+  //   ProductVariant variant = controller.code()!.variant;
+  //   return _info(
+  //     label: "Variant : ",
+  //     info: Text(variant.title),
+  //   );
+  // }
 
   Widget _expirationDateField() {
     if (controller.code()!.expirationDate == null) {
@@ -158,12 +201,14 @@ class CodeDetailBody extends StatelessWidget {
         controller.code()!.description!.isEmpty) {
       return Container();
     }
+    Text text = Text(
+      controller.code()!.description!,
+      style: const TextStyle(fontSize: 12),
+    );
     return _info(
       label: "More Information : ",
       toClipboard: controller.code()!.description!,
-      info: Text(
-        controller.code()!.description!,
-      ),
+      info: text,
     );
   }
 
@@ -228,15 +273,7 @@ class CodeDetailBody extends StatelessWidget {
     required String label,
     required Widget info,
     String? toClipboard,
-    Widget? image,
   }) {
-    final focusNode = FocusNode();
-    focusNode.addListener(() {
-      if (focusNode.hasFocus) {
-        focusNode.unfocus();
-      }
-    });
-
     return Padding(
       padding: const EdgeInsets.only(top: kSpacing),
       child: ListTile(
@@ -255,7 +292,6 @@ class CodeDetailBody extends StatelessWidget {
           margin: const EdgeInsets.only(top: kSpacing),
           child: Row(
             children: [
-              if (image != null) image,
               const SizedBox(width: kSpacing),
               Expanded(child: info),
             ],
