@@ -57,12 +57,12 @@ class PopupMenuItemData {
   });
 }
 
-Widget dialogLayout(BuildContext context, Widget child) {
+Widget dialogLayout(Widget child) {
   return Row(
     children: [
       Expanded(flex: 1, child: Container()),
       Expanded(
-        flex: Responsiveness.isScreenSmall(context) ? 100 : 10,
+        flex: Responsiveness.isScreenSmall() ? 100 : 10,
         child: Column(
           children: [
             const SizedBox(height: kSpacing),

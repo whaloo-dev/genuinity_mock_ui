@@ -24,9 +24,9 @@ class CodeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       hoverColor: Colors.transparent,
-      selected: code.isSelected,
+      selected: codesController.isSelected(code),
       dense: true,
-      title: _codeTileBody(context),
+      title: _codeTileBody(),
       subtitle: // Footer
           Row(
         children: [
@@ -42,7 +42,7 @@ class CodeTile extends StatelessWidget {
     );
   }
 
-  Widget _codeTileBody(BuildContext context) {
+  Widget _codeTileBody() {
     return Column(
       children: [
         // Header
@@ -62,7 +62,7 @@ class CodeTile extends StatelessWidget {
         Row(
           children: [
             const SizedBox(width: kSpacing),
-            _qrCodeWidget(context),
+            _qrCodeWidget(),
             const SizedBox(width: kSpacing),
             Expanded(
               child: Column(
@@ -105,7 +105,7 @@ class CodeTile extends StatelessWidget {
 
   Widget _selectionWidget() {
     return Checkbox(
-      value: code.isSelected,
+      value: codesController.isSelected(code),
       onChanged: (newValue) {
         if (newValue!) {
           codesController.select(code);
@@ -116,9 +116,8 @@ class CodeTile extends StatelessWidget {
     );
   }
 
-  Widget _qrCodeWidget(BuildContext context) {
-    bool isSmall = Responsiveness.isScreenSmall(context);
-    // double size = isSmall ? kSmallImage : kLargeImage;
+  Widget _qrCodeWidget() {
+    bool isSmall = Responsiveness.isScreenSmall();
     return Column(
       children: [
         Card(

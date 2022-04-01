@@ -24,7 +24,7 @@ class ProductSelectorHeader extends StatelessWidget {
           ListTile(
             dense: true,
             contentPadding: const EdgeInsets.all(kSpacing),
-            title: _title(context),
+            title: _title(),
             trailing: _closeWidget(),
           ),
         ],
@@ -32,7 +32,7 @@ class ProductSelectorHeader extends StatelessWidget {
     );
   }
 
-  Widget _title(BuildContext context) {
+  Widget _title() {
     return const Padding(
       padding: EdgeInsets.only(left: kSpacing),
       child: Text(

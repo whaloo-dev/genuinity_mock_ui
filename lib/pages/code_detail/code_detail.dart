@@ -10,7 +10,6 @@ class CodeDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return dialogLayout(
-      context,
       Card(
         child: Stack(
           children: [

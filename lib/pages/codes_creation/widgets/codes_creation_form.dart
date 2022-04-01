@@ -21,13 +21,12 @@ class CodesCreationForm extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
-          const SizedBox(height: kSpacing),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: kSpacing),
-                  _productField(context),
+                  const SizedBox(height: 1),
+                  _productField(),
                   const SizedBox(height: kSpacing),
                   _variantField(),
                   const SizedBox(height: kSpacing),
@@ -90,7 +89,7 @@ class CodesCreationForm extends StatelessWidget {
     );
   }
 
-  Widget _productField(BuildContext context) {
+  Widget _productField() {
     var showSelector = false;
     var key = GlobalKey<WidgetWithOverlayState>();
 
@@ -120,7 +119,7 @@ class CodesCreationForm extends StatelessWidget {
           key: key,
           shouldShowOverlay: () => showSelector,
           onClickOutside: hideOverlay,
-          maxOverlayHeight: MediaQuery.of(context).size.height - 22 * kSpacing,
+          maxOverlayHeight: Get.mediaQuery.size.height - 22 * kSpacing,
           overlay: ProductsSelector(
             onSelected: (selectedProduct) {
               controller.changeProduct(selectedProduct);
@@ -131,7 +130,7 @@ class CodesCreationForm extends StatelessWidget {
           child: TextField(
             focusNode: controller.isProductPreset() ? null : focusNode,
             decoration: InputDecoration(
-              prefixIcon: _photoWidget(),
+              prefixIcon: _photoWidget(controller.product()?.image),
               label: const Text("Product"),
               errorText: controller.productFieldError(),
               suffixIcon: controller.isProductPreset()
@@ -152,7 +151,7 @@ class CodesCreationForm extends StatelessWidget {
     );
   }
 
-  Widget _photoWidget() {
+  Widget _photoWidget(String? image) {
     return Card(
       color: Colors.transparent,
       elevation: 0,
@@ -160,11 +159,11 @@ class CodesCreationForm extends StatelessWidget {
       child: SizedBox(
         width: kSmallImage,
         height: kSmallImage,
-        child: controller.product() == null
+        child: image == null
             ? Container()
             : Image.network(
-                controller.product()!.image,
-                key: GlobalKey(),
+                image,
+                isAntiAlias: true,
                 fit: BoxFit.fill,
                 errorBuilder: (context, error, stackTrace) => const Icon(
                   Icons.image_not_supported_rounded,
@@ -215,16 +214,15 @@ class CodesCreationForm extends StatelessWidget {
                 () => Selector<ProductVariant>(
                   optionWidgetBuilder: (option) => Row(
                     children: [
-                      //TODO replace product photo with variant photo
-                      _photoWidget(),
+                      if (option.image != null) _photoWidget(option.image),
                       const SizedBox(width: kSpacing),
                       Text(option.title),
                     ],
                   ),
                   value: controller.variant(),
-                  //TODO replace product photo with variant photo
-                  prefixIcon:
-                      controller.variant() == null ? null : _photoWidget(),
+                  prefixIcon: controller.variant()?.image != null
+                      ? _photoWidget(controller.variant()?.image)
+                      : null,
                   fieldLabel: const Text("Variant"),
                   fieldErrorText: controller.variantFieldError(),
                   options: controller.product()!.variants,

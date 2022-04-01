@@ -21,6 +21,7 @@ class CodesController extends GetxController {
   final _isLoadingData = true.obs;
 
   final _codes = <Code>[].obs;
+  final _selectedCodes = <Code>{}.obs;
   final _visibleCodes = 0.obs;
 
   @override
@@ -63,15 +64,15 @@ class CodesController extends GetxController {
   }
 
   void select(Code code) {
-    code.isSelected = true;
-    int index = _codes.indexOf(code);
-    _codes[index] = code;
+    _selectedCodes.add(code);
   }
 
   void unselect(Code code) {
-    code.isSelected = false;
-    int index = _codes.indexOf(code);
-    _codes[index] = code;
+    _selectedCodes.remove(code);
+  }
+
+  bool isSelected(code) {
+    return _selectedCodes.contains(code);
   }
 
   Future<void> deleteCode(Code code) async {
@@ -79,8 +80,8 @@ class CodesController extends GetxController {
     showActionDoneNotification(
       "Code deleted",
       onCancel: () {
-        //TODO Cancel delete
         Get.closeCurrentSnackbar();
+        Backend.instance.undeleteCode(code);
       },
     );
   }

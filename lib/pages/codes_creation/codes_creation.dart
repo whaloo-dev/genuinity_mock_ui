@@ -11,7 +11,6 @@ class CodesCreationWizard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return dialogLayout(
-      context,
       Card(
         child: Column(
           children: const [

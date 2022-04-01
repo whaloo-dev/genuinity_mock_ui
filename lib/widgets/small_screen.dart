@@ -4,7 +4,7 @@ import 'package:whaloo_genuinity/widgets/side_menu.dart';
 import 'package:whaloo_genuinity/widgets/top_nav.dart';
 import 'package:flutter/material.dart';
 
-Widget smallScreen(BuildContext context, GlobalKey<ScaffoldState> key) {
+Widget smallScreen(GlobalKey<ScaffoldState> key) {
   return Scaffold(
     key: key,
     drawer: const Drawer(child: SideMenu()),
@@ -12,7 +12,7 @@ Widget smallScreen(BuildContext context, GlobalKey<ScaffoldState> key) {
       padding: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Column(
         children: [
-          topNavigationBar(context, key),
+          topNavigationBar(key),
           Expanded(child: localNavigator()),
         ],
       ),

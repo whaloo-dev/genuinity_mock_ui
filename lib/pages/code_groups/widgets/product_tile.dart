@@ -27,31 +27,24 @@ class ProductTile extends StatelessWidget {
     return ListTile(
       dense: true,
       hoverColor: Colors.transparent,
-      title: _productTileBody(context),
+      title: _productTileBody(),
       contentPadding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      subtitle: Row(
-        children: [
-          Expanded(child: Container()),
-          _indexWidget(),
-        ],
-      ),
       onTap: () {
         onSelected(product);
       },
     );
   }
 
-  Widget _productTileBody(BuildContext context) {
+  Widget _productTileBody() {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
         const SizedBox(height: kSpacing),
         Row(
           children: [
-            _productPhotoWidget(context),
+            _productPhotoWidget(),
             const SizedBox(width: kSpacing),
             Expanded(child: _productTitleWidget()),
-            // productsMenu(product),
             Card(
               margin: const EdgeInsets.only(right: kSpacing * 2),
               elevation: 1,
@@ -81,17 +74,16 @@ class ProductTile extends StatelessWidget {
     );
   }
 
-  Widget _productPhotoWidget(BuildContext context) {
+  Widget _productPhotoWidget() {
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width:
-            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
-        height:
-            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
+        width: Responsiveness.isScreenSmall() ? kSmallImage : kLargeImage,
+        height: Responsiveness.isScreenSmall() ? kSmallImage : kLargeImage,
         child: Image.network(
           product.image,
+          isAntiAlias: true,
           fit: BoxFit.fill,
           errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,
@@ -116,18 +108,6 @@ class ProductTile extends StatelessWidget {
         ),
         _qrCodesWidget(),
       ],
-    );
-  }
-
-  Widget _indexWidget() {
-    return Container(
-      margin: const EdgeInsets.only(top: kSpacing, right: kSpacing * 2),
-      child: Text(
-        "${numberFormat.format(productIndex)} of ${numberFormat.format(productsCount)}",
-        style: const TextStyle(
-          fontSize: 12,
-        ),
-      ),
     );
   }
 

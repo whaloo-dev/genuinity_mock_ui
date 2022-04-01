@@ -34,14 +34,14 @@ class ProductTile extends StatelessWidget {
     return ListTile(
       hoverColor: Colors.transparent,
       dense: true,
-      title: _productTileBody(context),
+      title: _productTileBody(),
       onTap: () {
         onSelected(product);
       },
     );
   }
 
-  Widget _productTileBody(BuildContext context) {
+  Widget _productTileBody() {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -49,7 +49,7 @@ class ProductTile extends StatelessWidget {
         const SizedBox(height: kSpacing * 2),
         Row(
           children: [
-            _productPhotoWidget(context),
+            _productPhotoWidget(),
             const SizedBox(width: kSpacing),
             Expanded(
               child: Column(
@@ -115,17 +115,16 @@ class ProductTile extends StatelessWidget {
     );
   }
 
-  Widget _productPhotoWidget(BuildContext context) {
+  Widget _productPhotoWidget() {
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width:
-            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
-        height:
-            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
+        width: Responsiveness.isScreenSmall() ? kSmallImage : kLargeImage,
+        height: Responsiveness.isScreenSmall() ? kSmallImage : kLargeImage,
         child: Image.network(
           product.image,
+          isAntiAlias: true,
           fit: BoxFit.fill,
           errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,

@@ -10,7 +10,6 @@ final controller = codeDetailController;
 
 //TODO add actions : remove code, export code, test verification code.
 //TODO add more information to variant like SKU
-//TODO add photo to variant (detail and creation dialog)
 class CodeDetailBody extends StatelessWidget {
   CodeDetailBody({
     Key? key,
@@ -25,7 +24,7 @@ class CodeDetailBody extends StatelessWidget {
       () => Column(
         children: [
           const SizedBox(height: kSpacing),
-          _qrCodeWidget(context),
+          _qrCodeWidget(),
           const Divider(thickness: 1, height: 1),
           const SizedBox(height: kSpacing),
           Expanded(
@@ -46,7 +45,7 @@ class CodeDetailBody extends StatelessWidget {
     );
   }
 
-  Widget _qrCodeWidget(BuildContext context) {
+  Widget _qrCodeWidget() {
     double size = kLargeImage;
     Code code = controller.code()!;
     return ListTile(
@@ -148,8 +147,7 @@ class CodeDetailBody extends StatelessWidget {
                     Expanded(child: Container())
                   ]),
                 ),
-                //TODO replace this with variant.image
-                _photoWidget(product.image),
+                if (variant.image != null) _photoWidget(variant.image!),
                 const SizedBox(width: kSpacing),
                 Text(variant.title),
               ],
@@ -169,6 +167,7 @@ class CodeDetailBody extends StatelessWidget {
         height: kSmallImage,
         child: Image.network(
           image,
+          isAntiAlias: true,
           fit: BoxFit.fill,
           errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,
@@ -177,14 +176,6 @@ class CodeDetailBody extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _variantField() {
-  //   ProductVariant variant = controller.code()!.variant;
-  //   return _info(
-  //     label: "Variant : ",
-  //     info: Text(variant.title),
-  //   );
-  // }
 
   Widget _expirationDateField() {
     if (controller.code()!.expirationDate == null) {

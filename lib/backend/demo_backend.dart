@@ -34,6 +34,8 @@ class DemoBackend extends GetConnect implements Backend {
   Store? _demoStore;
   final _products = <Product>[];
   final _codes = <ProductId, List<Code>>{};
+  final _deletedCodes = <Code>[];
+
   bool _isStoreDataInitialized = false;
   bool _isProductDataInitialized = false;
 
@@ -96,10 +98,9 @@ class DemoBackend extends GetConnect implements Backend {
           inventoryQuantity: variantData.containsKey('inventory_quantity')
               ? variantData['inventory_quantity']
               : 0,
-          oldInventoryQuantity: 0,
-          option1: variantData['option1'],
-          option2: variantData['option2'],
-          option3: variantData['option3'],
+          image: variantData.containsKey('image')
+              ? variantData['image']['src']
+              : null,
         );
         product.variants.add(variant);
         product.inventoryQuantity =
@@ -312,9 +313,65 @@ class DemoBackend extends GetConnect implements Backend {
       Product product = code.variant.product;
       product.codesCount = product.codesCount - 1;
       _codes[product.id]!.remove(code);
+      _deletedCodes.add(code);
       _doCallbacks(BackendEvent.codeRemoved);
       _doCallbacks(BackendEvent.productUpdated);
     });
+  }
+
+  @override
+  Future<void> undeleteCode(Code code) async {
+    Get.log("Backend : undeleteCode...");
+    return Future.delayed(Duration.zero, () {
+      Product product = code.variant.product;
+      product.codesCount = product.codesCount + 1;
+      _codes[product.id]!.add(code);
+      _deletedCodes.remove(code);
+      _doCallbacks(BackendEvent.codeAdded);
+      _doCallbacks(BackendEvent.productUpdated);
+    });
+  }
+
+  @override
+  Future<void> deleteCodes(List<Code> codes) async {
+    Get.log("Backend : deleteCodes...");
+    return Future.delayed(Duration.zero, () {
+      for (Code code in codes) {
+        Product product = code.variant.product;
+        product.codesCount = product.codesCount - 1;
+        _codes[product.id]!.remove(code);
+        _deletedCodes.add(code);
+      }
+      _doCallbacks(BackendEvent.codeRemoved);
+      _doCallbacks(BackendEvent.productUpdated);
+    });
+  }
+
+  @override
+  Future<void> undeleteCodes(List<Code> codes) async {
+    Get.log("Backend : undeleteCodes...");
+    return Future.delayed(Duration.zero, () {
+      for (Code code in codes) {
+        Product product = code.variant.product;
+        product.codesCount = product.codesCount + 1;
+        _codes[product.id]!.add(code);
+        _deletedCodes.remove(code);
+      }
+      _doCallbacks(BackendEvent.codeAdded);
+      _doCallbacks(BackendEvent.productUpdated);
+    });
+  }
+
+  @override
+  Future<String> exportCode(Code code) async {
+    //TODO Codes add export code
+    return Future.value("");
+  }
+
+  @override
+  Future<String> exportCodes(List<Code> codes) async {
+    //TODO Codes add bulk export code
+    return Future.value("");
   }
 
   @override

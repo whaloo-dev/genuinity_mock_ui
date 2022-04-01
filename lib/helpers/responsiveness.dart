@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 
 const int largeScreenSize = 1366;
@@ -22,8 +23,7 @@ class ResponsiveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // double _width = constraints.maxWidth;
-        double _width = MediaQuery.of(context).size.width;
+        double _width = Get.mediaQuery.size.width;
         if (_width >= largeScreenSize) {
           return largeWidget;
         } else if (_width < largeScreenSize && _width >= mediumScreenSize) {
@@ -37,24 +37,20 @@ class ResponsiveWidget extends StatelessWidget {
 }
 
 class Responsiveness {
-  static bool isScreenSmall(BuildContext context) =>
-      MediaQuery.of(context).size.width < mediumScreenSize;
-  static bool isScreenMedium(BuildContext context) =>
-      MediaQuery.of(context).size.width >= mediumScreenSize &&
-      MediaQuery.of(context).size.width < largeScreenSize;
-  static bool isScreenLarge(BuildContext context) =>
-      MediaQuery.of(context).size.width >= largeScreenSize;
-  static bool isScreenCustom(BuildContext context) =>
-      MediaQuery.of(context).size.width >= mediumScreenSize &&
-      MediaQuery.of(context).size.width < customScreenSize;
+  static bool isScreenSmall() => Get.mediaQuery.size.width < mediumScreenSize;
+  static bool isScreenMedium() =>
+      Get.mediaQuery.size.width >= mediumScreenSize &&
+      Get.mediaQuery.size.width < largeScreenSize;
+  static bool isScreenLarge() => Get.mediaQuery.size.width >= largeScreenSize;
+  static bool isScreenCustom() =>
+      Get.mediaQuery.size.width >= mediumScreenSize &&
+      Get.mediaQuery.size.width < customScreenSize;
 
-  static String formatDate(BuildContext context, DateTime dateTime) =>
-      isScreenLarge(context)
-          ? dateTimeFormat.format(dateTime)
-          : compactDateFormat.format(dateTime);
+  static String formatDate(DateTime dateTime) => isScreenLarge()
+      ? dateTimeFormat.format(dateTime)
+      : compactDateFormat.format(dateTime);
 
-  static String formatNumber(BuildContext context, num number) =>
-      isScreenSmall(context)
-          ? compactNumberFormat.format(number)
-          : numberFormat.format(number);
+  static String formatNumber(num number) => isScreenSmall()
+      ? compactNumberFormat.format(number)
+      : numberFormat.format(number);
 }

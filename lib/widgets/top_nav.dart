@@ -5,9 +5,8 @@ import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/widgets/profile.dart';
 
-Widget topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
-    ListTile(
-      leading: Responsiveness.isScreenSmall(context)
+Widget topNavigationBar(GlobalKey<ScaffoldState> key) => ListTile(
+      leading: Responsiveness.isScreenSmall()
           ? IconButton(
               splashRadius: kSplashRadius,
               onPressed: () {

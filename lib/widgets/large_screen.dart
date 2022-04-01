@@ -4,7 +4,7 @@ import 'package:whaloo_genuinity/widgets/side_menu.dart';
 import 'package:whaloo_genuinity/widgets/top_nav.dart';
 import 'package:flutter/material.dart';
 
-largeScreen(BuildContext context, GlobalKey<ScaffoldState> key) {
+largeScreen(GlobalKey<ScaffoldState> key) {
   return Row(
     children: [
       const Expanded(child: SideMenu()),
@@ -15,7 +15,7 @@ largeScreen(BuildContext context, GlobalKey<ScaffoldState> key) {
             padding: const EdgeInsets.symmetric(horizontal: kSpacing),
             child: Column(
               children: [
-                topNavigationBar(context, key),
+                topNavigationBar(key),
                 Expanded(child: localNavigator()),
               ],
             ),

@@ -12,8 +12,8 @@ class SiteLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ResponsiveWidget(
-        largeWidget: largeScreen(context, scaffoldKey),
-        smallWidget: smallScreen(context, scaffoldKey),
+        largeWidget: largeScreen(scaffoldKey),
+        smallWidget: smallScreen(scaffoldKey),
       ),
     );
   }

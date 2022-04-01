@@ -3,7 +3,6 @@ import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
-import 'package:whaloo_genuinity/pages/code_groups/widgets/products_menu.dart';
 
 class CodesHeader extends StatelessWidget {
   final Product product;
@@ -40,8 +39,9 @@ class CodesHeader extends StatelessWidget {
                     color: colorScheme.primary.withOpacity(0.4),
                   ),
                 ),
-                title: _productTileBody(context),
-                trailing: productsMenu(product),
+                title: _productTileBody(),
+                // TODO Add global menu to achieve bulk operations : delete and export
+                // trailing: productsMenu(product),
                 onTap: () {
                   navigationController.goBack();
                 },
@@ -59,13 +59,13 @@ class CodesHeader extends StatelessWidget {
     );
   }
 
-  Widget _productTileBody(BuildContext context) {
+  Widget _productTileBody() {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
         Row(
           children: [
-            _productPhotoWidget(context),
+            _productPhotoWidget(),
             const SizedBox(width: kSpacing),
             Expanded(
               child: _productTitleWidget(),
@@ -76,29 +76,17 @@ class CodesHeader extends StatelessWidget {
     );
   }
 
-  //TODO cleaning
-  //Widget _backWidget() {
-  //   return IconButton(
-  //     splashRadius: kSplashRadius,
-  //     icon: const Icon(Icons.arrow_back_rounded),
-  //     onPressed: () {
-  //       navigationController.goBack();
-  //     },
-  //   );
-  // }
-
-  Widget _productPhotoWidget(BuildContext context) {
+  Widget _productPhotoWidget() {
     return Card(
       color: Colors.transparent,
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        width:
-            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
-        height:
-            Responsiveness.isScreenSmall(context) ? kSmallImage : kLargeImage,
+        width: Responsiveness.isScreenSmall() ? kSmallImage : kLargeImage,
+        height: Responsiveness.isScreenSmall() ? kSmallImage : kLargeImage,
         child: Image.network(
           product.image,
+          isAntiAlias: true,
           fit: BoxFit.fill,
           errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.image_not_supported_rounded,

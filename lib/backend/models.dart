@@ -116,10 +116,7 @@ class ProductVariant {
   String sku;
   String barcode;
   int inventoryQuantity;
-  int oldInventoryQuantity;
-  String option1;
-  String option2;
-  String option3;
+  String? image;
 
   ProductVariant({
     required this.product,
@@ -127,10 +124,7 @@ class ProductVariant {
     required this.sku,
     required this.barcode,
     required this.inventoryQuantity,
-    required this.oldInventoryQuantity,
-    required this.option1,
-    required this.option2,
-    required this.option3,
+    this.image,
   });
 
   @override
@@ -158,8 +152,6 @@ class Code {
   final String? description;
   final List<CodeScan> scans;
 
-  bool isSelected;
-
   Code({
     required this.shortCode,
     required this.serial,
@@ -172,7 +164,6 @@ class Code {
     this.lastScanDate,
     this.expirationDate,
     this.description,
-    this.isSelected = false,
     this.scans = const <CodeScan>[],
   });
 
