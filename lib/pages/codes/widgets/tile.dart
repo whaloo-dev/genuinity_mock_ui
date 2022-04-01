@@ -128,7 +128,7 @@ class CodeTile extends StatelessWidget {
           color: Colors.transparent,
           elevation: 0,
           clipBehavior: Clip.antiAlias,
-          child: photoWidget(code.image),
+          child: photoWidget(code.image, fixedSize: kSmallImage),
         ),
         Text(
           "N° ${code.serial}",

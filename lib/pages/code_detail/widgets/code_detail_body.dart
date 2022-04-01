@@ -142,7 +142,8 @@ class CodeDetailBody extends StatelessWidget {
                     Expanded(child: Container())
                   ]),
                 ),
-                if (variant.image != null) photoWidget(variant.image!),
+                if (variant.image != null)
+                  photoWidget(variant.image!, fixedSize: kSmallImage),
                 const SizedBox(width: kSpacing),
                 Text(variant.title),
               ],

@@ -192,14 +192,16 @@ class CodesCreationForm extends StatelessWidget {
                 () => Selector<ProductVariant>(
                   optionWidgetBuilder: (option) => Row(
                     children: [
-                      if (option.image != null) photoWidget(option.image),
+                      if (option.image != null)
+                        photoWidget(option.image, fixedSize: kSmallImage),
                       const SizedBox(width: kSpacing),
                       Text(option.title),
                     ],
                   ),
                   value: controller.variant(),
                   prefixIcon: controller.variant()?.image != null
-                      ? photoWidget(controller.variant()?.image)
+                      ? photoWidget(controller.variant()?.image,
+                          fixedSize: kSmallImage)
                       : null,
                   fieldLabel: const Text("Variant"),
                   fieldErrorText: controller.variantFieldError(),
