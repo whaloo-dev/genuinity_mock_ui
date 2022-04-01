@@ -23,7 +23,7 @@ class ResponsiveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double _width = Get.mediaQuery.size.width;
+        double _width = MediaQuery.of(context).size.width;
         if (_width >= largeScreenSize) {
           return largeWidget;
         } else if (_width < largeScreenSize && _width >= mediumScreenSize) {
@@ -37,14 +37,16 @@ class ResponsiveWidget extends StatelessWidget {
 }
 
 class Responsiveness {
-  static bool isScreenSmall() => Get.mediaQuery.size.width < mediumScreenSize;
+  static bool isScreenSmall() =>
+      MediaQuery.of(Get.context!).size.width < mediumScreenSize;
   static bool isScreenMedium() =>
-      Get.mediaQuery.size.width >= mediumScreenSize &&
-      Get.mediaQuery.size.width < largeScreenSize;
-  static bool isScreenLarge() => Get.mediaQuery.size.width >= largeScreenSize;
+      MediaQuery.of(Get.context!).size.width >= mediumScreenSize &&
+      MediaQuery.of(Get.context!).size.width < largeScreenSize;
+  static bool isScreenLarge() =>
+      MediaQuery.of(Get.context!).size.width >= largeScreenSize;
   static bool isScreenCustom() =>
-      Get.mediaQuery.size.width >= mediumScreenSize &&
-      Get.mediaQuery.size.width < customScreenSize;
+      MediaQuery.of(Get.context!).size.width >= mediumScreenSize &&
+      MediaQuery.of(Get.context!).size.width < customScreenSize;
 
   static String formatDate(DateTime dateTime) => isScreenLarge()
       ? dateTimeFormat.format(dateTime)

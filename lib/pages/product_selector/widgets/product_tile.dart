@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
-import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/helpers/responsiveness.dart';
+import 'package:whaloo_genuinity/helpers/localization.dart';
+import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -49,7 +49,7 @@ class ProductTile extends StatelessWidget {
         const SizedBox(height: kSpacing * 2),
         Row(
           children: [
-            _productPhotoWidget(),
+            photoWidget(product.image),
             const SizedBox(width: kSpacing),
             Expanded(
               child: Column(
@@ -112,25 +112,6 @@ class ProductTile extends StatelessWidget {
         ),
         Expanded(child: Container()),
       ],
-    );
-  }
-
-  Widget _productPhotoWidget() {
-    return Card(
-      elevation: 0,
-      clipBehavior: Clip.antiAlias,
-      child: SizedBox(
-        width: Responsiveness.isScreenSmall() ? kSmallImage : kLargeImage,
-        height: Responsiveness.isScreenSmall() ? kSmallImage : kLargeImage,
-        child: Image.network(
-          product.image,
-          isAntiAlias: true,
-          fit: BoxFit.fill,
-          errorBuilder: (context, error, stackTrace) => const Icon(
-            Icons.image_not_supported_rounded,
-          ),
-        ),
-      ),
     );
   }
 

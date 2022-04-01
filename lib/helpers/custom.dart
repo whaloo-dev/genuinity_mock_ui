@@ -62,7 +62,11 @@ Widget dialogLayout(Widget child) {
     children: [
       Expanded(flex: 1, child: Container()),
       Expanded(
-        flex: Responsiveness.isScreenSmall() ? 100 : 10,
+        flex: Responsiveness.isScreenSmall()
+            ? 100
+            : Responsiveness.isScreenMedium()
+                ? 10
+                : 3,
         child: Column(
           children: [
             const SizedBox(height: kSpacing),

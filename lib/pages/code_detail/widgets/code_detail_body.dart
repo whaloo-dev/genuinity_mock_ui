@@ -5,10 +5,11 @@ import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/helpers/services.dart';
+import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
 final controller = codeDetailController;
 
-//TODO add actions : remove code, export code, test verification code.
+//TODO add actions : export code.
 //TODO add more information to variant like SKU
 class CodeDetailBody extends StatelessWidget {
   CodeDetailBody({
@@ -46,7 +47,6 @@ class CodeDetailBody extends StatelessWidget {
   }
 
   Widget _qrCodeWidget() {
-    double size = kLargeImage;
     Code code = controller.code()!;
     return ListTile(
       title: Column(
@@ -55,12 +55,7 @@ class CodeDetailBody extends StatelessWidget {
             color: Colors.transparent,
             elevation: 0,
             clipBehavior: Clip.antiAlias,
-            child: SizedBox(
-              width: size,
-              height: size,
-              child: Image.asset(
-                  "assets/demo/images/qrcode${code.codeStyle!.id}.png"),
-            ),
+            child: photoWidget(code.image, fixedSize: kLargeImage),
           ),
           const SizedBox(height: kSpacing),
           Column(
@@ -110,7 +105,7 @@ class CodeDetailBody extends StatelessWidget {
       info: Column(
         children: [
           Row(children: [
-            _photoWidget(product.image),
+            photoWidget(product.image),
             const SizedBox(width: kSpacing),
             Expanded(child: Text(product.title)),
           ]),
@@ -147,32 +142,12 @@ class CodeDetailBody extends StatelessWidget {
                     Expanded(child: Container())
                   ]),
                 ),
-                if (variant.image != null) _photoWidget(variant.image!),
+                if (variant.image != null) photoWidget(variant.image!),
                 const SizedBox(width: kSpacing),
                 Text(variant.title),
               ],
             ),
         ],
-      ),
-    );
-  }
-
-  Widget _photoWidget(String image) {
-    return Card(
-      color: Colors.transparent,
-      elevation: 0,
-      clipBehavior: Clip.antiAlias,
-      child: SizedBox(
-        width: kSmallImage,
-        height: kSmallImage,
-        child: Image.network(
-          image,
-          isAntiAlias: true,
-          fit: BoxFit.fill,
-          errorBuilder: (context, error, stackTrace) => const Icon(
-            Icons.image_not_supported_rounded,
-          ),
-        ),
       ),
     );
   }

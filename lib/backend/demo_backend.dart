@@ -13,12 +13,12 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 //TODO loadProduct returns a structure containing agregates
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
-  static const _demoStoreName = "ruesco";
+  // static const _demoStoreName = "ruesco";
   // static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
   // static const _demoStoreName = "decathlon";
-  // static const _demoStoreName = "thebookbundler";
+  static const _demoStoreName = "thebookbundler";
   // static const _demoStoreName = "commonfarmflowers";
   // static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";
@@ -270,6 +270,7 @@ class DemoBackend extends GetConnect implements Backend {
             serial: serial,
             shortCode: _computeShortCode(serial, 7),
             variant: variant,
+            image: "$_basePath/demo/images/qrcode${codeStyle.id}.png",
             codeStyle: codeStyle,
             description: description,
             expirationDate: expirationDate,
@@ -294,15 +295,13 @@ class DemoBackend extends GetConnect implements Backend {
 
     return Future.delayed(
       Duration.zero,
-      () => <CodeStyle>[
-        CodeStyle(id: 1),
-        CodeStyle(id: 2),
-        CodeStyle(id: 3),
-        CodeStyle(id: 4),
-        CodeStyle(id: 5),
-        CodeStyle(id: 6),
-        CodeStyle(id: 7),
-      ],
+      () => List.generate(
+        7,
+        (index) => CodeStyle(
+          id: index + 1,
+          image: "$_basePath/demo/images/qrcode${index + 1}.png",
+        ),
+      ),
     );
   }
 

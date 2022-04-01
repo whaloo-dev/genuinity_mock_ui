@@ -15,8 +15,8 @@ const double kSplashRadius = 25;
 
 const Duration kAnimationDuration = Duration(milliseconds: 300);
 
-const double kSmallImage = 50;
-const double kLargeImage = 70;
+const double kSmallImage = 55;
+const double kLargeImage = 75;
 
 const kOptionsMaxHeight = 200.0;
 

@@ -6,6 +6,7 @@ import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/pages/product_selector/product_selector.dart';
+import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 import 'package:whaloo_genuinity/widgets/selector.dart';
 import 'package:whaloo_genuinity/widgets/widget_with_overlay.dart';
 
@@ -35,7 +36,6 @@ class CodesCreationForm extends StatelessWidget {
                   _expirationDateField(context),
                   const SizedBox(height: kSpacing),
                   _descriptionField(),
-                  const SizedBox(height: kSpacing),
                   const SizedBox(height: kOptionsMaxHeight),
                 ],
               ),
@@ -44,7 +44,7 @@ class CodesCreationForm extends StatelessWidget {
           const Divider(thickness: 1, height: 1),
           const SizedBox(height: kSpacing),
           _bulkSizeField(),
-          const SizedBox(height: kSpacing * 2),
+          const SizedBox(height: kSpacing),
           const Divider(thickness: 1, height: kSpacing),
           const SizedBox(height: kSpacing * 2),
           Row(
@@ -130,7 +130,7 @@ class CodesCreationForm extends StatelessWidget {
           child: TextField(
             focusNode: controller.isProductPreset() ? null : focusNode,
             decoration: InputDecoration(
-              prefixIcon: _photoWidget(controller.product()?.image),
+              prefixIcon: photoWidget(controller.product()?.image),
               label: const Text("Product"),
               errorText: controller.productFieldError(),
               suffixIcon: controller.isProductPreset()
@@ -147,28 +147,6 @@ class CodesCreationForm extends StatelessWidget {
                 : null,
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _photoWidget(String? image) {
-    return Card(
-      color: Colors.transparent,
-      elevation: 0,
-      clipBehavior: Clip.antiAlias,
-      child: SizedBox(
-        width: kSmallImage,
-        height: kSmallImage,
-        child: image == null
-            ? Container()
-            : Image.network(
-                image,
-                isAntiAlias: true,
-                fit: BoxFit.fill,
-                errorBuilder: (context, error, stackTrace) => const Icon(
-                  Icons.image_not_supported_rounded,
-                ),
-              ),
       ),
     );
   }
@@ -214,14 +192,14 @@ class CodesCreationForm extends StatelessWidget {
                 () => Selector<ProductVariant>(
                   optionWidgetBuilder: (option) => Row(
                     children: [
-                      if (option.image != null) _photoWidget(option.image),
+                      if (option.image != null) photoWidget(option.image),
                       const SizedBox(width: kSpacing),
                       Text(option.title),
                     ],
                   ),
                   value: controller.variant(),
                   prefixIcon: controller.variant()?.image != null
-                      ? _photoWidget(controller.variant()?.image)
+                      ? photoWidget(controller.variant()?.image)
                       : null,
                   fieldLabel: const Text("Variant"),
                   fieldErrorText: controller.variantFieldError(),
@@ -273,11 +251,7 @@ class CodesCreationForm extends StatelessWidget {
           color: Colors.transparent,
           elevation: 0,
           clipBehavior: Clip.antiAlias,
-          child: SizedBox(
-            width: size,
-            height: size,
-            child: Image.asset("assets/demo/images/qrcode${codeStyle.id}.png"),
-          ),
+          child: photoWidget(codeStyle.image, fixedSize: kSmallImage),
         ),
         if (showText) Text("Style N°${codeStyle.id}"),
       ],

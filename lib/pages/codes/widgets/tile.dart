@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
@@ -7,6 +8,7 @@ import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/tile_menu.dart';
+import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
 class CodeTile extends StatelessWidget {
   final Code code;
@@ -22,23 +24,25 @@ class CodeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      hoverColor: Colors.transparent,
-      selected: codesController.isSelected(code),
-      dense: true,
-      title: _codeTileBody(),
-      subtitle: // Footer
-          Row(
-        children: [
-          Expanded(
-            child: Container(),
-          ),
-          _indexWidget(),
-        ],
+    return Obx(
+      () => ListTile(
+        hoverColor: Colors.transparent,
+        selected: codesController.isSelected(code),
+        dense: true,
+        title: _codeTileBody(),
+        subtitle: // Footer
+            Row(
+          children: [
+            Expanded(
+              child: Container(),
+            ),
+            _indexWidget(),
+          ],
+        ),
+        onTap: () {
+          codeDetailController.open(code);
+        },
       ),
-      onTap: () {
-        codeDetailController.open(code);
-      },
     );
   }
 
@@ -124,12 +128,7 @@ class CodeTile extends StatelessWidget {
           color: Colors.transparent,
           elevation: 0,
           clipBehavior: Clip.antiAlias,
-          child: SizedBox(
-            width: kSmallImage,
-            height: kSmallImage,
-            child: Image.asset(
-                "assets/demo/images/qrcode${code.codeStyle!.id}.png"),
-          ),
+          child: photoWidget(code.image),
         ),
         Text(
           "N° ${code.serial}",

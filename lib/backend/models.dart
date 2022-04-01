@@ -145,11 +145,13 @@ class Code {
   final int scanCount;
   final int scanErrorsCount;
   final ProductVariant variant;
+  final String image;
   final DateTime? exportDate;
   final DateTime? lastScanDate;
   final DateTime? expirationDate;
-  final CodeStyle? codeStyle;
+  final CodeStyle codeStyle;
   final String? description;
+
   final List<CodeScan> scans;
 
   Code({
@@ -158,6 +160,7 @@ class Code {
     required this.creationDate,
     required this.variant,
     required this.codeStyle,
+    required this.image,
     this.scanCount = 0,
     this.scanErrorsCount = 0,
     this.exportDate,
@@ -179,9 +182,11 @@ class Code {
 // TODO add parameters for code styles here
 class CodeStyle {
   int id;
+  final String image;
 
   CodeStyle({
     required this.id,
+    required this.image,
   });
 }
 
