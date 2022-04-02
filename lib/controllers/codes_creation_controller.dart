@@ -74,7 +74,7 @@ class CodesCreationController extends GetxController {
   String? productFieldError() => _productFieldError.value;
   String? expirationDateError() => _expirationDateError.value;
 
-  open({Product? product}) async {
+  createNew({Product? product}) async {
     _codeStyles.value = await Backend.instance.loadCodeStyles();
     _codeStyle.value = _codeStyles[0];
     _isProductPreset = product != null;
@@ -85,6 +85,28 @@ class CodesCreationController extends GetxController {
     _expirationDate.value = null;
     _expirationDateError.value = null;
     _descriptionController.text = "";
+    _bulkSizeController.text = "1";
+    _bulkSizeFieldError.value = null;
+    Get.dialog(
+      const CodesCreationWizard(),
+    );
+  }
+
+  createFrom(Code code) async {
+    _codeStyles.value = await Backend.instance.loadCodeStyles();
+    _codeStyle.value = code.codeStyle;
+    _isProductPreset = false;
+    _product.value = code.variant.product;
+    _productFieldError.value = null;
+    _variantFieldError.value = null;
+    _variant.value = code.variant;
+    _expirationDate.value = code.expirationDate == null
+        ? null
+        : code.expirationDate!.isBefore(DateTime.now())
+            ? null
+            : code.expirationDate;
+    _expirationDateError.value = null;
+    _descriptionController.text = code.description ?? "";
     _bulkSizeController.text = "1";
     _bulkSizeFieldError.value = null;
     Get.dialog(

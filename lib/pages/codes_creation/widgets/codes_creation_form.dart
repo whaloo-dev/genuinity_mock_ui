@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/pages/product_selector/product_selector.dart';
 import 'package:whaloo_genuinity/widgets/photo_widget.dart';
@@ -45,14 +46,16 @@ class CodesCreationForm extends StatelessWidget {
           const SizedBox(height: kSpacing),
           _bulkSizeField(),
           const SizedBox(height: kSpacing),
-          const Divider(thickness: 1, height: kSpacing),
+          const Divider(thickness: 1, height: 1),
           const SizedBox(height: kSpacing * 2),
           Row(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _cancelButton(),
+              const SizedBox(width: kSpacing),
               _submitButton(),
+              const SizedBox(width: kSpacing * 2),
             ],
           ),
           const SizedBox(height: kSpacing * 2),
@@ -62,29 +65,29 @@ class CodesCreationForm extends StatelessWidget {
   }
 
   Widget _submitButton() {
-    return ElevatedButton(
+    return TextButton(
       onPressed: () {
         controller.submit();
       },
-      child: const Text("Create"),
+      child: const Text("OK"),
     );
   }
 
   Widget _cancelButton() {
-    return ElevatedButton(
+    return TextButton(
       onPressed: () {
         controller.cancel();
       },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
-          colorScheme.secondaryContainer,
-        ),
-      ),
-      child: Text(
-        "Cancel",
-        style: TextStyle(
-          color: colorScheme.onSecondaryContainer,
-        ),
+      // style: ButtonStyle(
+      //   backgroundColor: MaterialStateProperty.all(
+      //     colorScheme.secondaryContainer,
+      //   ),
+      // ),
+      child: const Text(
+        "CANCEL",
+        // style: TextStyle(
+        //   color: colorScheme.onSecondaryContainer,
+        // ),
       ),
     );
   }
@@ -158,36 +161,7 @@ class CodesCreationForm extends StatelessWidget {
               controller.product()!.variants.length <= 1)
           ? Container()
           : ListTile(
-              leading: SizedBox(
-                height: kSmallImage,
-                width: kSmallImage,
-                child: Column(children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(child: Container()),
-                        Expanded(
-                          child: Material(
-                            color: Colors.transparent,
-                            child: Container(),
-                            shape: Border(
-                              left: BorderSide(
-                                style: BorderStyle.solid,
-                                color: colorScheme.outline.withOpacity(0.5),
-                              ),
-                              bottom: BorderSide(
-                                style: BorderStyle.solid,
-                                color: colorScheme.outline.withOpacity(0.5),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(child: Container())
-                ]),
-              ),
+              leading: childIndicator(),
               title: Obx(
                 () => Selector<ProductVariant>(
                   optionWidgetBuilder: (option) => Row(

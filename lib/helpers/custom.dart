@@ -57,6 +57,30 @@ class PopupMenuItemData {
   });
 }
 
+Widget menu({required List<PopupMenuItemData> items}) {
+  return PopupMenuButton<PopupMenuItemData>(
+    onSelected: (item) => item.handler(),
+    elevation: kElevation,
+    icon: const Icon(
+      Icons.more_vert_rounded,
+    ),
+    itemBuilder: (context) => items
+        .map(
+          (menuItem) => PopupMenuItem(
+            value: menuItem,
+            child: Row(
+              children: [
+                Icon(menuItem.icon),
+                const SizedBox(width: kSpacing),
+                Text(menuItem.text),
+              ],
+            ),
+          ),
+        )
+        .toList(),
+  );
+}
+
 Widget dialogLayout(Widget child) {
   return Row(
     children: [
@@ -105,5 +129,38 @@ Widget stackIcon(
           ),
         )
     ],
+  );
+}
+
+Widget childIndicator() {
+  return SizedBox(
+    height: kSmallImage,
+    width: kSmallImage,
+    child: Column(children: [
+      Expanded(
+        child: Row(
+          children: [
+            Expanded(child: Container()),
+            Expanded(
+              child: Material(
+                color: Colors.transparent,
+                child: Container(),
+                shape: Border(
+                  left: BorderSide(
+                    style: BorderStyle.solid,
+                    color: colorScheme.outline.withOpacity(0.5),
+                  ),
+                  bottom: BorderSide(
+                    style: BorderStyle.solid,
+                    color: colorScheme.outline.withOpacity(0.5),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+      Expanded(child: Container())
+    ]),
   );
 }

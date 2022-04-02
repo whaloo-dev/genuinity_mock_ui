@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/helpers/services.dart';
 import 'package:whaloo_genuinity/widgets/photo_widget.dart';
@@ -112,36 +113,7 @@ class CodeDetailBody extends StatelessWidget {
           if (product.variants.length > 1)
             Row(
               children: [
-                SizedBox(
-                  height: kSmallImage,
-                  width: kSmallImage,
-                  child: Column(children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(child: Container()),
-                          Expanded(
-                            child: Material(
-                              color: Colors.transparent,
-                              child: Container(),
-                              shape: Border(
-                                left: BorderSide(
-                                  style: BorderStyle.solid,
-                                  color: colorScheme.outline.withOpacity(0.5),
-                                ),
-                                bottom: BorderSide(
-                                  style: BorderStyle.solid,
-                                  color: colorScheme.outline.withOpacity(0.5),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(child: Container())
-                  ]),
-                ),
+                childIndicator(),
                 if (variant.image != null)
                   photoWidget(variant.image!, fixedSize: kSmallImage),
                 const SizedBox(width: kSpacing),

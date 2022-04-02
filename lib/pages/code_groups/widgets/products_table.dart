@@ -77,7 +77,7 @@ class ProductsTable extends StatelessWidget {
                     child: FloatingActionButton(
                       child: const Icon(Icons.add),
                       onPressed: () {
-                        codesCreationController.open();
+                        codesCreationController.createNew();
                       },
                     ),
                   ),

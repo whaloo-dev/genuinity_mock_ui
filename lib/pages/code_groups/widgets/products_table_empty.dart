@@ -45,7 +45,7 @@ class ProductsTableEmptyWidget extends StatelessWidget {
                               FloatingActionButton(
                                 child: const Icon(Icons.add),
                                 onPressed: () {
-                                  codesCreationController.open();
+                                  codesCreationController.createNew();
                                 },
                               ),
                             ],
