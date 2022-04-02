@@ -50,20 +50,22 @@ class CodeTile extends StatelessWidget {
     return Column(
       children: [
         // Header
-        Column(
-          children: [
-            const SizedBox(height: kSpacing * 3),
-            Row(
-              children: [
-                Expanded(child: Container()),
-              ],
-            )
-          ],
-        ),
+        if (Responsiveness.isScreenSmall())
+          Column(
+            children: [
+              Row(
+                children: [
+                  _selectionWidget(),
+                  Expanded(child: Container()),
+                  codeTileMenu(code),
+                ],
+              )
+            ],
+          ),
         // Body
         Row(
           children: [
-            _selectionWidget(),
+            if (!Responsiveness.isScreenSmall()) _selectionWidget(),
             const SizedBox(width: kSpacing),
             _qrCodeWidget(),
             const SizedBox(width: kSpacing),
@@ -99,7 +101,7 @@ class CodeTile extends StatelessWidget {
               ),
             ),
             const SizedBox(width: kSpacing * 3),
-            codeTileMenu(code),
+            if (!Responsiveness.isScreenSmall()) codeTileMenu(code),
           ],
         ),
         const SizedBox(height: kSpacing),

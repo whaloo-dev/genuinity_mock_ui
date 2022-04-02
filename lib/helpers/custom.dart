@@ -23,7 +23,7 @@ showActionDoneNotification(
       animationDuration: kAnimationDuration,
       backgroundColor: colorScheme.primaryContainer.withOpacity(0.7),
       barBlur: 1,
-      forwardAnimationCurve: Curves.easeInBack,
+      forwardAnimationCurve: Curves.easeInOut,
       reverseAnimationCurve: Curves.easeInBack,
       messageText: Row(
         children: [
