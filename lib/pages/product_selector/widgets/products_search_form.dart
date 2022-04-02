@@ -48,10 +48,11 @@ class ProductsSearchForm extends StatelessWidget {
           const SizedBox(height: kSpacing),
           Row(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              _resetButton(),
+              if (productSelectorController.isFiltered()) _resetButton(),
               _searchButton(),
+              const SizedBox(height: kSpacing * 2),
             ],
           ),
           const SizedBox(height: kSpacing),
@@ -63,7 +64,7 @@ class ProductsSearchForm extends StatelessWidget {
   Widget _searchButton() {
     return SizedBox(
       width: 150,
-      child: ElevatedButton(
+      child: TextButton(
         onPressed: () {
           controller.applyFilter();
         },
@@ -71,7 +72,7 @@ class ProductsSearchForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Text("Search"),
+            Text("SEARCH"),
             SizedBox(width: kSpacing),
             Icon(Icons.search_rounded),
           ],
@@ -83,22 +84,15 @@ class ProductsSearchForm extends StatelessWidget {
   Widget _resetButton() {
     return SizedBox(
       width: 150,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all(colorScheme.secondaryContainer),
-        ),
+      child: TextButton(
         onPressed: () {
           controller.resetFilters();
         },
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Reset filters",
-              style: TextStyle(color: colorScheme.onSecondaryContainer),
-            ),
+          children: const [
+            Text("CANCEL"),
           ],
         ),
       ),

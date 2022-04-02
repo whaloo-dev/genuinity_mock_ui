@@ -9,7 +9,9 @@ class Selector<T extends Object> extends StatefulWidget {
   final Widget? prefixIcon;
   final String? fieldErrorText;
   final T? value;
-  final Widget Function(T option)? optionWidgetBuilder;
+  final Widget? Function(T option)? optionLeadingBuilder;
+  final Widget Function(T option)? optionTitleBuilder;
+  final Widget? Function(T option)? optionSubtitleBuilder;
   final String Function(T option)? optionToString;
 
   const Selector({
@@ -20,7 +22,9 @@ class Selector<T extends Object> extends StatefulWidget {
     this.prefixIcon,
     this.value,
     this.fieldErrorText,
-    this.optionWidgetBuilder,
+    this.optionLeadingBuilder,
+    this.optionTitleBuilder,
+    this.optionSubtitleBuilder,
     this.optionToString,
   }) : super(key: key);
 
@@ -101,14 +105,21 @@ class _SelectorState<T extends Object> extends State<Selector<T>> {
                 ? widget.optionToString!(widget.options[index])
                 : widget.options[index].toString();
             return ListTile(
+              selected: option == widget.value,
               onTap: () {
                 widget.onSelected(option);
                 textController.text = optionString;
                 _hideOptions();
               },
-              title: widget.optionWidgetBuilder != null
-                  ? widget.optionWidgetBuilder!(option)
-                  : Text(optionString),
+              leading: widget.optionLeadingBuilder != null
+                  ? widget.optionLeadingBuilder!(option)
+                  : null,
+              title: widget.optionTitleBuilder != null
+                  ? widget.optionTitleBuilder!(option)
+                  : Flexible(child: Text(optionString)),
+              subtitle: widget.optionSubtitleBuilder != null
+                  ? widget.optionSubtitleBuilder!(option)
+                  : null,
             );
           },
         ),

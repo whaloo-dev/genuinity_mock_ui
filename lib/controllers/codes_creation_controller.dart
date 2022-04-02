@@ -42,7 +42,11 @@ class CodesCreationController extends GetxController {
   changeProduct(Product? product) {
     _product.value = product;
     _productFieldError.value = null;
-    _variant.value = null;
+    _variant.value = product == null
+        ? null
+        : product.variants.length != 1
+            ? null
+            : product.variants[0];
     _variantFieldError.value = null;
   }
 
@@ -76,14 +80,11 @@ class CodesCreationController extends GetxController {
 
   createNew({Product? product}) async {
     _codeStyles.value = await Backend.instance.loadCodeStyles();
-    _codeStyle.value = _codeStyles[0];
     _isProductPreset = product != null;
-    _product.value = product;
-    _productFieldError.value = null;
-    _variantFieldError.value = null;
-    _variant.value = null;
-    _expirationDate.value = null;
-    _expirationDateError.value = null;
+
+    changeCodeStyle(_codeStyles[0]);
+    changeProduct(product);
+    changeExpirationDate(null);
     _descriptionController.text = "";
     _bulkSizeController.text = "1";
     _bulkSizeFieldError.value = null;

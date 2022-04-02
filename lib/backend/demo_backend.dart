@@ -13,12 +13,12 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 //TODO loadProduct returns a structure containing agregates
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
-  static const _demoStoreName = "ruesco";
+  // static const _demoStoreName = "ruesco";
   // static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
   // static const _demoStoreName = "decathlon";
-  // static const _demoStoreName = "thebookbundler";
+  static const _demoStoreName = "thebookbundler";
   // static const _demoStoreName = "commonfarmflowers";
   // static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";

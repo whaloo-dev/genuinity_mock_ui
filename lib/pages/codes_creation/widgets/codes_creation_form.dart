@@ -78,17 +78,7 @@ class CodesCreationForm extends StatelessWidget {
       onPressed: () {
         controller.cancel();
       },
-      // style: ButtonStyle(
-      //   backgroundColor: MaterialStateProperty.all(
-      //     colorScheme.secondaryContainer,
-      //   ),
-      // ),
-      child: const Text(
-        "CANCEL",
-        // style: TextStyle(
-        //   color: colorScheme.onSecondaryContainer,
-        // ),
-      ),
+      child: const Text("CANCEL"),
     );
   }
 
@@ -157,32 +147,56 @@ class CodesCreationForm extends StatelessWidget {
   Widget _variantField() {
     return AnimatedSwitcher(
       duration: kAnimationDuration,
-      child: (controller.product() == null ||
-              controller.product()!.variants.length <= 1)
+      child: (controller.product() == null)
           ? Container()
           : ListTile(
               leading: childIndicator(),
               title: Obx(
                 () => Selector<ProductVariant>(
-                  optionWidgetBuilder: (option) => Row(
-                    children: [
-                      if (option.image != null)
-                        photoWidget(option.image, fixedSize: kSmallImage),
-                      const SizedBox(width: kSpacing),
-                      Text(option.title),
-                    ],
-                  ),
-                  value: controller.variant(),
-                  prefixIcon: controller.variant()?.image != null
-                      ? photoWidget(controller.variant()?.image,
-                          fixedSize: kSmallImage)
-                      : null,
-                  fieldLabel: const Text("Variant"),
-                  fieldErrorText: controller.variantFieldError(),
-                  options: controller.product()!.variants,
-                  onSelected: controller.changeVariant,
-                  optionToString: (option) => option.title,
-                ),
+                    optionLeadingBuilder: (option) => option.image != null
+                        ? photoWidget(option.image, fixedSize: kSmallImage)
+                        : null,
+                    optionTitleBuilder: (option) => Row(
+                          children: [
+                            const SizedBox(width: kSpacing),
+                            Flexible(
+                              child: Text(option.title),
+                            ),
+                          ],
+                        ),
+                    optionSubtitleBuilder: (option) {
+                      if (option.sku.isEmpty) {
+                        return null;
+                      }
+                      return Row(
+                        children: [
+                          const SizedBox(width: kSpacing),
+                          Flexible(
+                            child: Text(
+                              "SKU : ${option.sku}",
+                              style: TextStyle(
+                                color: Get.theme.hintColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    value: controller.variant(),
+                    prefixIcon: controller.variant()?.image != null
+                        ? photoWidget(controller.variant()?.image,
+                            fixedSize: kSmallImage)
+                        : null,
+                    fieldLabel: const Text("Variant"),
+                    fieldErrorText: controller.variantFieldError(),
+                    options: controller.product()!.variants,
+                    onSelected: controller.changeVariant,
+                    optionToString: (option) {
+                      final sku =
+                          option.sku.isNotEmpty ? "(SKU : ${option.sku})" : "";
+                      return "${option.title} $sku";
+                    }),
               ),
             ),
     );
@@ -200,7 +214,7 @@ class CodesCreationForm extends StatelessWidget {
               leading: const Icon(Icons.palette_outlined),
               title: Obx(
                 () => Selector<CodeStyle>(
-                  optionWidgetBuilder: _codeStyleOptionWidget,
+                  optionTitleBuilder: _codeStyleOptionWidget,
                   value: controller.codeStyle(),
                   fieldLabel: const Text("Style"),
                   prefixIcon: controller.codeStyle() == null

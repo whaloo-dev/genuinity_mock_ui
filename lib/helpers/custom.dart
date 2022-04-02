@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
@@ -19,25 +20,44 @@ showActionDoneNotification(
 }) {
   Get.showSnackbar(
     GetSnackBar(
-      shouldIconPulse: true,
       duration: const Duration(seconds: 3),
-      backgroundColor: colorScheme.inverseSurface.withOpacity(0.8),
+      backgroundColor: colorScheme.primaryContainer.withOpacity(0.7),
+      barBlur: 1,
+      forwardAnimationCurve: Curves.easeInBack,
+      reverseAnimationCurve: Curves.easeInBack,
       messageText: Row(
         children: [
           Text(
             "$text ",
             style: TextStyle(
-              color: colorScheme.onInverseSurface,
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(width: kSpacing),
           if (onCancel != null)
-            ElevatedButton(
+            TextButton(
               onPressed: () {
                 Get.closeAllSnackbars();
                 onCancel();
               },
-              child: const Text("Cancel"),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(colorScheme.primaryContainer),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.undo_outlined,
+                    color: colorScheme.onPrimaryContainer,
+                    size: 15,
+                  ),
+                  const SizedBox(width: kSpacing),
+                  Text(
+                    "UNDO",
+                    style: TextStyle(color: colorScheme.onPrimaryContainer),
+                  )
+                ],
+              ),
             ),
         ],
       ),
@@ -136,31 +156,14 @@ Widget childIndicator() {
   return SizedBox(
     height: kSmallImage,
     width: kSmallImage,
-    child: Column(children: [
-      Expanded(
-        child: Row(
-          children: [
-            Expanded(child: Container()),
-            Expanded(
-              child: Material(
-                color: Colors.transparent,
-                child: Container(),
-                shape: Border(
-                  left: BorderSide(
-                    style: BorderStyle.solid,
-                    color: colorScheme.outline.withOpacity(0.5),
-                  ),
-                  bottom: BorderSide(
-                    style: BorderStyle.solid,
-                    color: colorScheme.outline.withOpacity(0.5),
-                  ),
-                ),
-              ),
-            )
-          ],
+    child: Row(
+      children: [
+        Expanded(child: Container()),
+        Icon(
+          Icons.subdirectory_arrow_right_rounded,
+          color: colorScheme.outline.withOpacity(0.6),
         ),
-      ),
-      Expanded(child: Container())
-    ]),
+      ],
+    ),
   );
 }

@@ -16,7 +16,7 @@ Widget codeTileMenu(Code code) {
       ),
       PopupMenuItemData(
         text: "Duplicate",
-        icon: Icons.copy_outlined,
+        icon: Icons.copy_rounded,
         handler: () {
           codesCreationController.createFrom(code);
           navigationController.goBack();

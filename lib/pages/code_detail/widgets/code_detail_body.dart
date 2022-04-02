@@ -110,16 +110,32 @@ class CodeDetailBody extends StatelessWidget {
             const SizedBox(width: kSpacing),
             Expanded(child: Text(product.title)),
           ]),
-          if (product.variants.length > 1)
-            Row(
-              children: [
-                childIndicator(),
-                if (variant.image != null)
-                  photoWidget(variant.image!, fixedSize: kSmallImage),
-                const SizedBox(width: kSpacing),
-                Text(variant.title),
-              ],
-            ),
+          Row(
+            children: [
+              childIndicator(),
+              if (variant.image != null)
+                photoWidget(variant.image!, fixedSize: kSmallImage),
+              const SizedBox(width: kSpacing),
+              Expanded(
+                child: Column(
+                  // alignment: WrapAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(variant.title),
+                    // const SizedBox(width: kSpacing),
+                    if (variant.sku.isNotEmpty)
+                      Text(
+                        "SKU : ${variant.sku}",
+                        style: TextStyle(
+                          color: Get.theme.hintColor,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

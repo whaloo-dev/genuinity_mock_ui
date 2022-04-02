@@ -41,9 +41,14 @@ class CodesController extends GetxController {
 
   Future<void> loadCodes(Product product) async {
     Future.delayed(Duration.zero, () {
+      bool isSameProduct = _currentProduct.value != null &&
+          _currentProduct.value!.id == product.id;
       _codes.clear();
       _isLoadingData.value = true;
       _currentProduct.value = product;
+      if (!isSameProduct) {
+        _selectedCodes.clear();
+      }
       Backend.instance.loadCodes(product: product).then((codes) {
         _codes.addAll(codes);
         _visibleCodes.value = min(loadingSteps, _codes.length);
@@ -77,6 +82,7 @@ class CodesController extends GetxController {
 
   Future<void> deleteCode(Code code) async {
     await Backend.instance.deleteCode(code);
+    _selectedCodes.remove(code);
     showActionDoneNotification(
       "Code deleted",
       onCancel: () {
