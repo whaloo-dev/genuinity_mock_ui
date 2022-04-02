@@ -11,7 +11,6 @@ import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 final controller = codeDetailController;
 
 //TODO add actions : export code.
-//TODO add more information to variant like SKU
 class CodeDetailBody extends StatelessWidget {
   CodeDetailBody({
     Key? key,

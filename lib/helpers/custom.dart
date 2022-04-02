@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
@@ -21,6 +20,7 @@ showActionDoneNotification(
   Get.showSnackbar(
     GetSnackBar(
       duration: const Duration(seconds: 3),
+      animationDuration: kAnimationDuration,
       backgroundColor: colorScheme.primaryContainer.withOpacity(0.7),
       barBlur: 1,
       forwardAnimationCurve: Curves.easeInBack,

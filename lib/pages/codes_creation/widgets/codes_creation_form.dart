@@ -193,9 +193,7 @@ class CodesCreationForm extends StatelessWidget {
                     options: controller.product()!.variants,
                     onSelected: controller.changeVariant,
                     optionToString: (option) {
-                      final sku =
-                          option.sku.isNotEmpty ? "(SKU : ${option.sku})" : "";
-                      return "${option.title} $sku";
+                      return option.title;
                     }),
               ),
             ),
