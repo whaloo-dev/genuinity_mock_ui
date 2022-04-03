@@ -52,14 +52,13 @@ class ProductsTableEmptyWidget extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: kSpacing),
-                              const Text("Products Catalog Is Empty."),
+                              const Text("Products catalog is empty."),
                               const SizedBox(height: kSpacing * 3),
-                              ElevatedButton(
+                              TextButton(
                                 onPressed: () {
                                   goToShopify();
                                 },
-                                child:
-                                    const Text("Go controllerTo Shopify Admin"),
+                                child: const Text("GO TO SHOPIFY"),
                               ),
                             ],
                           ),

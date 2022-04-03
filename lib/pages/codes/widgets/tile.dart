@@ -150,7 +150,7 @@ class CodeTile extends StatelessWidget {
 
   Widget _codeScanCountWidget() {
     return Container(
-      margin: const EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -168,7 +168,7 @@ class CodeTile extends StatelessWidget {
 
   Widget _codeScanErrorCountWidget() {
     return Container(
-      margin: const EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -188,7 +188,7 @@ class CodeTile extends StatelessWidget {
 
   Widget _variantWidget() {
     return Container(
-      margin: const EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -208,7 +208,7 @@ class CodeTile extends StatelessWidget {
 
   Widget _creationDateWidget() {
     return Container(
-      margin: const EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -229,7 +229,7 @@ class CodeTile extends StatelessWidget {
 
   Widget _exportDateWidget() {
     return Container(
-      margin: const EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -250,7 +250,7 @@ class CodeTile extends StatelessWidget {
 
   Widget _lastScanningDateWidget() {
     return Container(
-      margin: const EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -271,7 +271,7 @@ class CodeTile extends StatelessWidget {
 
   Widget _expirationDateWidget() {
     return Container(
-      margin: const EdgeInsets.all(kSpacing),
+      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

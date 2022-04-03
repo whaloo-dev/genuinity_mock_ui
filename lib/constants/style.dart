@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:whaloo_genuinity/constants/lib_color_schemes.g.dart';
 
+final Color kSuccessColor = Colors.green.shade200;
 const Color kWarningColor = Colors.orange;
 final Color kErrorColor = Colors.red.shade200;
 
@@ -28,7 +29,6 @@ var colorScheme = lightColorScheme;
 final ThemeData themeData = ThemeData(
   colorScheme: colorScheme,
   inputDecorationTheme: _inputDecorationTheme,
-  elevatedButtonTheme: _elevatedButtonTheme,
   cardTheme: _cardTheme,
   textTheme: _textTheme,
   pageTransitionsTheme: _pageTransitionsTheme,
@@ -55,18 +55,6 @@ final _listTileThemeData = ListTileThemeData(
 final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
   border: OutlineInputBorder(
     borderRadius: kBorderRadius,
-  ),
-);
-
-final ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(
-  style: ButtonStyle(
-    padding: MaterialStateProperty.all(const EdgeInsets.all(kSpacing * 2)),
-    elevation: MaterialStateProperty.all(kElevation),
-    shape: MaterialStateProperty.all(
-      RoundedRectangleBorder(
-        borderRadius: kBorderRadius,
-      ),
-    ),
   ),
 );
 

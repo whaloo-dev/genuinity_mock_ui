@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
@@ -171,11 +172,17 @@ class CodeDetailBody extends StatelessWidget {
 
     final toClipboard = [
       "${compactDateTimeFormat.format(code.creationDate)} Code created",
-      ...List.generate(
-        10,
-        (index) =>
-            "${compactDateTimeFormat.format(code.creationDate)} Event$index",
-      )
+      if (code.exportDate != null)
+        "${compactDateTimeFormat.format(code.creationDate)} Code exported",
+      ...code.scans!.map(
+        (codeScan) =>
+            compactDateTimeFormat.format(codeScan.dateTime) +
+            [
+              " Code scanned",
+              if (codeScan.isFailed) " (Scan failed)",
+              if (!codeScan.isFailed) " (Scan succeed)",
+            ].join(),
+      ),
     ].join("\n");
 
     return _info(
@@ -183,40 +190,73 @@ class CodeDetailBody extends StatelessWidget {
       toClipboard: toClipboard,
       info: Column(
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
+          _logLine(
+            compactDateTimeFormat.format(code.creationDate),
+            Row(children: const [
+              Icon(Icons.add, size: 13),
               Text(
-                compactDateTimeFormat.format(code.creationDate),
-                style: const TextStyle(fontSize: 12),
+                " Code created",
+                style: TextStyle(fontSize: 12),
               ),
-              const SizedBox(width: kSpacing),
-              const Expanded(
-                child: Text(
-                  "Code created",
+            ]),
+          ),
+          if (code.exportDate != null)
+            _logLine(
+              compactDateTimeFormat.format(code.creationDate),
+              Row(children: const [
+                Icon(Icons.download_rounded, size: 13),
+                Text(
+                  " Code exported",
                   style: TextStyle(fontSize: 12),
                 ),
-              ),
-            ],
-          ),
-          ...List.generate(
-            10,
-            (index) => Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  compactDateTimeFormat.format(code.creationDate),
-                  style: const TextStyle(fontSize: 12),
-                ),
-                const SizedBox(width: kSpacing),
-                Expanded(
-                  child: Text(
-                    "Event $index",
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ),
-              ],
+              ]),
             ),
+          ...code.scans!.map(
+            (codeScan) => _logLine(
+              compactDateTimeFormat.format(codeScan.dateTime),
+              Row(
+                children: [
+                  if (codeScan.isFailed)
+                    Icon(FontAwesomeIcons.exclamationCircle,
+                        size: 12, color: kErrorColor),
+                  if (!codeScan.isFailed)
+                    const Icon(Icons.qr_code_scanner, size: 13),
+                  const Text(
+                    " Code scanned",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  if (codeScan.isFailed)
+                    Text(
+                      " (Scan failed)",
+                      style: TextStyle(fontSize: 12, color: kErrorColor),
+                    ),
+                  if (!codeScan.isFailed)
+                    Text(
+                      " (Scan succeed)",
+                      style: TextStyle(fontSize: 12, color: kSuccessColor),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _logLine(String header, Widget body) {
+    return Container(
+      margin: const EdgeInsets.only(top: 3),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            header,
+            style: const TextStyle(fontSize: 12),
+          ),
+          const SizedBox(width: kSpacing),
+          Expanded(
+            child: body,
           ),
         ],
       ),
@@ -256,7 +296,9 @@ class CodeDetailBody extends StatelessWidget {
   }
 
   Widget _copyButton(String text) {
+    final focusNode = FocusNode();
     return IconButton(
+      focusNode: focusNode,
       icon: Icon(
         Icons.copy,
         size: 15,
@@ -264,6 +306,7 @@ class CodeDetailBody extends StatelessWidget {
       ),
       splashRadius: kSplashRadius,
       onPressed: () {
+        focusNode.requestFocus();
         copyToClipBoard(text);
       },
     );

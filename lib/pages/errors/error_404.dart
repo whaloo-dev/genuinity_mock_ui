@@ -19,7 +19,7 @@ class PageNotFound extends StatelessWidget {
             children: [
               Image.asset("assets/images/notfound.png"),
               const SizedBox(height: kSpacing),
-              ElevatedButton(
+              TextButton(
                 onPressed: () {
                   Get.offAllNamed(rootRoute);
                 },

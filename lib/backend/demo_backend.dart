@@ -362,16 +362,40 @@ class DemoBackend extends GetConnect implements Backend {
   }
 
   @override
-  Future<String> exportCode(Code code) async {
-    return Future.value(_export(code.image));
+  Future<String> printCode(Code code) async {
+    return Future.delayed(Duration.zero, () {
+      code.exportDate ??= DateTime.now();
+      for (int i = 0; i < Random().nextInt(10); i++) {
+        final scanTime = DateTime.now();
+        if (Random().nextInt(10) == 1) {
+          code.scanErrorsCount = code.scanErrorsCount + 1;
+          code.scans!.add(CodeScan(dateTime: scanTime, isFailed: true));
+        } else {
+          code.scans!.add(CodeScan(dateTime: scanTime, isFailed: false));
+        }
+        code.scanCount = code.scanCount + 1;
+        code.lastScanDate = scanTime;
+      }
+      _doCallbacks(BackendEvent.codeUpdated);
+      _doCallbacks(BackendEvent.productUpdated);
+
+      return _getPrintUrl(code.image);
+    });
   }
 
   @override
-  Future<String> exportCodes(List<Code> codes) async {
-    return Future.value(_export("$_assetsPath/demo/images/bulk_codes.png"));
+  Future<String> printCodes(List<Code> codes) async {
+    return Future.delayed(Duration.zero, () {
+      for (Code code in codes) {
+        code.exportDate ??= DateTime.now();
+      }
+      _doCallbacks(BackendEvent.codeUpdated);
+      _doCallbacks(BackendEvent.productUpdated);
+      return _getPrintUrl("$_assetsPath/demo/images/bulk_codes.png");
+    });
   }
 
-  String _export(String image) {
+  String _getPrintUrl(String image) {
     final uriBase = Uri.base;
     final basePath =
         "${uriBase.scheme}://${uriBase.host}${uriBase.hasPort ? ':' + uriBase.port.toString() : ''}";

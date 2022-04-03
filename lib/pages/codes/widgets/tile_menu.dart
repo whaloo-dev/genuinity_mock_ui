@@ -25,7 +25,7 @@ Widget codeTileMenu(Code code) {
         text: "Print",
         icon: Icons.print_outlined,
         handler: () {
-          codesController.export(code);
+          codesController.printCode(code);
         },
       ),
     ],

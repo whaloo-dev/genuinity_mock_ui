@@ -8,11 +8,9 @@ import 'package:whaloo_genuinity/helpers/url_launcher.dart';
 
 //TODO Codes : add sorting
 //TODO Codes : add search
-//TODO Codes : add export code
 //TODO Codes : add test verify code
 //TODO Codes : add bulk delete
-//TODO Codes : add bulk export
-//TODO Codes : add bulk export
+//TODO Codes : add bulk print
 class CodesController extends GetxController {
   static CodesController instance = Get.find();
 
@@ -25,19 +23,18 @@ class CodesController extends GetxController {
   final _selectedCodes = <Code>{}.obs;
   final _visibleCodes = 0.obs;
 
+  _callback({arguments}) {
+    if (_currentProduct.value != null) {
+      loadCodes(_currentProduct.value!);
+    }
+  }
+
   @override
   void onReady() async {
     super.onReady();
-    Backend.instance.addListener(BackendEvent.codeAdded, ({arguments}) {
-      if (_currentProduct.value != null) {
-        loadCodes(_currentProduct.value!);
-      }
-    });
-    Backend.instance.addListener(BackendEvent.codeRemoved, ({arguments}) {
-      if (_currentProduct.value != null) {
-        loadCodes(_currentProduct.value!);
-      }
-    });
+    Backend.instance.addListener(BackendEvent.codeAdded, _callback);
+    Backend.instance.addListener(BackendEvent.codeRemoved, _callback);
+    Backend.instance.addListener(BackendEvent.codeUpdated, _callback);
   }
 
   Future<void> loadCodes(Product product) async {
@@ -93,8 +90,8 @@ class CodesController extends GetxController {
     );
   }
 
-  Future<void> export(Code code) async {
-    final exportUrl = await Backend.instance.exportCode(code);
+  Future<void> printCode(Code code) async {
+    final exportUrl = await Backend.instance.printCode(code);
     launchURL(exportUrl);
   }
 

@@ -142,17 +142,17 @@ class Code {
   final String shortCode;
   final String serial;
   final DateTime creationDate;
-  final int scanCount;
-  final int scanErrorsCount;
   final ProductVariant variant;
   final String image;
-  final DateTime? exportDate;
-  final DateTime? lastScanDate;
   final DateTime? expirationDate;
   final CodeStyle codeStyle;
   final String? description;
 
-  final List<CodeScan> scans;
+  DateTime? exportDate;
+  DateTime? lastScanDate;
+  int scanCount;
+  int scanErrorsCount;
+  List<CodeScan>? scans = <CodeScan>[];
 
   Code({
     required this.shortCode,
@@ -167,7 +167,6 @@ class Code {
     this.lastScanDate,
     this.expirationDate,
     this.description,
-    this.scans = const <CodeScan>[],
   });
 
   @override

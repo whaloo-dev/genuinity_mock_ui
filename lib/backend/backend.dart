@@ -53,6 +53,6 @@ abstract class Backend {
   Future<void> deleteCodes(List<Code> codes);
   Future<void> undeleteCodes(List<Code> codes);
 
-  Future<String> exportCode(Code code);
-  Future<String> exportCodes(List<Code> codes);
+  Future<String> printCode(Code code);
+  Future<String> printCodes(List<Code> codes);
 }
