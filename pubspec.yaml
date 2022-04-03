@@ -72,6 +72,8 @@ flutter:
     - assets/images/
     - assets/demo/data/
     - assets/demo/images/
+    - assets/demo/print.html
+    
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
