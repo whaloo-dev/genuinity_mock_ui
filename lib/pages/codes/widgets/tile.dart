@@ -240,7 +240,7 @@ class CodeTile extends StatelessWidget {
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
-              "First Exported : ${dateTimeFormat.format(code.exportDate!)}",
+              "Exported : ${dateTimeFormat.format(code.exportDate!)}",
             ),
           ),
         ],

@@ -376,9 +376,9 @@ class DemoBackend extends GetConnect implements Backend {
         code.scanCount = code.scanCount + 1;
         code.lastScanDate = scanTime;
       }
+
       _doCallbacks(BackendEvent.codeUpdated);
       _doCallbacks(BackendEvent.productUpdated);
-
       return _getPrintUrl(code.image);
     });
   }

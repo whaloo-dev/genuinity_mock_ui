@@ -31,10 +31,12 @@ class CodesCreationForm extends StatelessWidget {
                   _productField(),
                   const SizedBox(height: kSpacing),
                   _variantField(),
-                  const SizedBox(height: kSpacing),
-                  _codeStyleField(),
-                  const SizedBox(height: kSpacing),
-                  _expirationDateField(context),
+                  //TODO activate this  when you add codestyle feature
+                  //const SizedBox(height: kSpacing),
+                  //_codeStyleField(),
+                  //TODO Activate this when you add expiration date featue
+                  //const SizedBox(height: kSpacing),
+                  //_expirationDateField(context),
                   const SizedBox(height: kSpacing),
                   _descriptionField(),
                   const SizedBox(height: kOptionsMaxHeight),

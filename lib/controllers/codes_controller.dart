@@ -34,21 +34,23 @@ class CodesController extends GetxController {
     super.onReady();
     Backend.instance.addListener(BackendEvent.codeAdded, _callback);
     Backend.instance.addListener(BackendEvent.codeRemoved, _callback);
-    Backend.instance.addListener(BackendEvent.codeUpdated, _callback);
+    // Backend.instance.addListener(BackendEvent.codeUpdated, _callback);
   }
 
   Future<void> loadCodes(Product product) async {
     Future.delayed(Duration.zero, () {
       bool isSameProduct = _currentProduct.value != null &&
           _currentProduct.value!.id == product.id;
-      _codes.clear();
+      if (!isSameProduct) {
+        _selectedCodes.clear();
+      }
       _isLoadingData.value = true;
       _currentProduct.value = product;
       if (!isSameProduct) {
         _selectedCodes.clear();
       }
       Backend.instance.loadCodes(product: product).then((codes) {
-        _codes.addAll(codes);
+        _codes.value = codes;
         _visibleCodes.value = min(loadingSteps, _codes.length);
         _isLoadingData.value = false;
       });
@@ -93,6 +95,7 @@ class CodesController extends GetxController {
   Future<void> printCode(Code code) async {
     final exportUrl = await Backend.instance.printCode(code);
     launchURL(exportUrl);
+    if (_currentProduct.value != null) loadCodes(_currentProduct.value!);
   }
 
   bool isLoadingData() {
