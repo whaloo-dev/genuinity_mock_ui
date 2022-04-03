@@ -76,8 +76,7 @@ class CodeTile extends StatelessWidget {
                   Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     children: [
-                      if (code.variant.product.variants.length > 1)
-                        _variantWidget(),
+                      _variantWidget(),
                       _creationDateWidget(),
                       code.exportDate != null
                           ? _exportDateWidget()

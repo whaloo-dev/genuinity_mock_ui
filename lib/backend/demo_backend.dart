@@ -24,10 +24,10 @@ class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "nixon";
   // static const _demoStoreName = "seriouswatches";
 
-  late String _basePath;
+  late String _assetsPath;
 
   DemoBackend() {
-    _basePath = kReleaseMode ? "assets/assets" : "assets";
+    _assetsPath = kReleaseMode ? "assets/assets" : "assets";
   }
 
   final _callbacks = <BackendEvent, List<BackendCallback>>{};
@@ -45,7 +45,7 @@ class DemoBackend extends GetConnect implements Backend {
     }
     Get.log("Backend : initializating store data...");
 
-    var url = "$_basePath/demo/data/${_demoStoreName}_store.json";
+    var url = "$_assetsPath/demo/data/${_demoStoreName}_store.json";
     var response = await get(url);
     final storeData = await json.decode(response.bodyString!);
     _demoStore = Store(
@@ -65,7 +65,7 @@ class DemoBackend extends GetConnect implements Backend {
     }
     Get.log("Backend : initializing products data...");
 
-    final url = "$_basePath/demo/data/${_demoStoreName}_products.json";
+    final url = "$_assetsPath/demo/data/${_demoStoreName}_products.json";
     final response = await get(url);
     var productsData = await json.decode(response.bodyString!);
     productsData = productsData['products'];
@@ -270,7 +270,7 @@ class DemoBackend extends GetConnect implements Backend {
             serial: serial,
             shortCode: _computeShortCode(serial, 7),
             variant: variant,
-            image: "$_basePath/demo/images/qrcode${codeStyle.id}.png",
+            image: "$_assetsPath/demo/images/qrcode${codeStyle.id}.png",
             codeStyle: codeStyle,
             description: description,
             expirationDate: expirationDate,
@@ -299,7 +299,7 @@ class DemoBackend extends GetConnect implements Backend {
         7,
         (index) => CodeStyle(
           id: index + 1,
-          image: "$_basePath/demo/images/qrcode${index + 1}.png",
+          image: "$_assetsPath/demo/images/qrcode${index + 1}.png",
         ),
       ),
     );
@@ -363,14 +363,20 @@ class DemoBackend extends GetConnect implements Backend {
 
   @override
   Future<String> exportCode(Code code) async {
-    //TODO Codes add export code
-    return Future.value("");
+    return Future.value(_export(code.image));
   }
 
   @override
   Future<String> exportCodes(List<Code> codes) async {
-    //TODO Codes add bulk export code
-    return Future.value("");
+    return Future.value(_export("$_assetsPath/demo/images/bulk_codes.png"));
+  }
+
+  String _export(String image) {
+    final uriBase = Uri.base;
+    final basePath =
+        "${uriBase.scheme}://${uriBase.host}${uriBase.hasPort ? ':' + uriBase.port.toString() : ''}";
+    final printUrl = "$basePath/$_assetsPath/demo/print.html#$basePath/$image";
+    return printUrl;
   }
 
   @override

@@ -21,6 +21,13 @@ Widget codeTileMenu(Code code) {
           navigationController.goBack();
         },
       ),
+      PopupMenuItemData(
+        text: "Print",
+        icon: Icons.print_outlined,
+        handler: () {
+          codesController.export(code);
+        },
+      ),
     ],
   );
 }

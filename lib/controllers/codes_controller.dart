@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
+import 'package:whaloo_genuinity/helpers/url_launcher.dart';
 
 //TODO Codes : add sorting
 //TODO Codes : add search
@@ -90,6 +91,11 @@ class CodesController extends GetxController {
         Backend.instance.undeleteCode(code);
       },
     );
+  }
+
+  Future<void> export(Code code) async {
+    final exportUrl = await Backend.instance.exportCode(code);
+    launchURL(exportUrl);
   }
 
   bool isLoadingData() {
