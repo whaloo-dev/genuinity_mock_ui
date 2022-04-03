@@ -116,7 +116,7 @@ class _SelectorState<T extends Object> extends State<Selector<T>> {
                   : null,
               title: widget.optionTitleBuilder != null
                   ? widget.optionTitleBuilder!(option)
-                  : Flexible(child: Text(optionString)),
+                  : Text(optionString, softWrap: true),
               subtitle: widget.optionSubtitleBuilder != null
                   ? widget.optionSubtitleBuilder!(option)
                   : null,
