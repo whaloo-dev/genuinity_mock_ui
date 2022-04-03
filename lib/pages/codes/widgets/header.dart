@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/pages/codes/widgets/global_menu.dart';
 import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
 class CodesHeader extends StatelessWidget {
@@ -41,7 +42,7 @@ class CodesHeader extends StatelessWidget {
                 ),
                 title: _productTileBody(),
                 // TODO Add global menu to achieve bulk operations : delete and export
-                // trailing: productsMenu(product),
+                trailing: codesMenu(product),
                 onTap: () {
                   navigationController.goBack();
                 },

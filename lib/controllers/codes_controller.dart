@@ -76,8 +76,21 @@ class CodesController extends GetxController {
     _selectedCodes.remove(code);
   }
 
+  void selectAll() {
+    _selectedCodes.clear();
+    _selectedCodes.addAll(_codes);
+  }
+
+  void unselectAll() {
+    _selectedCodes.clear();
+  }
+
   bool isSelected(code) {
     return _selectedCodes.contains(code);
+  }
+
+  Set<Code> selection() {
+    return _selectedCodes;
   }
 
   Future<void> deleteCode(Code code) async {
@@ -94,6 +107,38 @@ class CodesController extends GetxController {
 
   Future<void> printCode(Code code) async {
     final exportUrl = await Backend.instance.printCode(code);
+    launchURL(exportUrl);
+    if (_currentProduct.value != null) loadCodes(_currentProduct.value!);
+  }
+
+  Future<void> deleteSelection() async {
+    if (_selectedCodes.isEmpty) {
+      return;
+    }
+    if (_selectedCodes.length == 1) {
+      deleteCode(_selectedCodes.first);
+    }
+    final codes = _selectedCodes.toList();
+    await Backend.instance.deleteCodes(codes);
+    _selectedCodes.removeAll(codes);
+    showActionDoneNotification(
+      "${codes.length} Codes deleted",
+      onCancel: () {
+        Get.closeCurrentSnackbar();
+        Backend.instance.undeleteCodes(codes);
+      },
+    );
+  }
+
+  Future<void> printSelection() async {
+    if (_selectedCodes.isEmpty) {
+      return;
+    }
+    if (_selectedCodes.length == 1) {
+      printCode(_selectedCodes.first);
+    }
+    final exportUrl =
+        await Backend.instance.printCodes(_selectedCodes.toList());
     launchURL(exportUrl);
     if (_currentProduct.value != null) loadCodes(_currentProduct.value!);
   }

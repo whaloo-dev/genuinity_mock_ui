@@ -178,7 +178,6 @@ class Code {
   int get hashCode => hash2(serial.hashCode, serial.hashCode);
 }
 
-// TODO add parameters for code styles here
 class CodeStyle {
   int id;
   final String image;

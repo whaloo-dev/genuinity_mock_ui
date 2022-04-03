@@ -11,7 +11,7 @@ import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
 final controller = codeDetailController;
 
-//TODO add actions : export code.
+//TODO add actions : export, delete, duplicate
 class CodeDetailBody extends StatelessWidget {
   CodeDetailBody({
     Key? key,

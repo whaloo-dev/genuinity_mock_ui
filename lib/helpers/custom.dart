@@ -66,38 +66,62 @@ showActionDoneNotification(
 }
 
 class PopupMenuItemData {
-  final String text;
-  final IconData icon;
-  final void Function() handler;
+  final String? text;
+  final IconData? icon;
+  final void Function()? handler;
+  final bool isDivider;
 
   PopupMenuItemData({
-    required this.text,
-    required this.icon,
-    required this.handler,
+    this.text,
+    this.icon,
+    this.handler,
+    this.isDivider = false,
   });
+}
+
+class PopupMenuDivider extends PopupMenuEntry<PopupMenuItemData> {
+  const PopupMenuDivider({Key? key}) : super(key: key);
+  @override
+  bool represents(void value) => false;
+  @override
+  State<PopupMenuDivider> createState() => _PopupMenuDividerState();
+  @override
+  double get height => 1;
+}
+
+class _PopupMenuDividerState extends State<PopupMenuDivider> {
+  @override
+  Widget build(BuildContext context) => const Divider(height: 1, thickness: 1);
 }
 
 Widget menu({required List<PopupMenuItemData> items}) {
   return PopupMenuButton<PopupMenuItemData>(
-    onSelected: (item) => item.handler(),
+    onSelected: (item) {
+      if (item.handler != null) {
+        item.handler!();
+      }
+    },
     elevation: kElevation,
     icon: const Icon(
       Icons.more_vert_rounded,
     ),
-    itemBuilder: (context) => items
-        .map(
-          (menuItem) => PopupMenuItem(
-            value: menuItem,
-            child: Row(
-              children: [
-                Icon(menuItem.icon),
-                const SizedBox(width: kSpacing),
-                Text(menuItem.text),
-              ],
-            ),
+    itemBuilder: (context) => items.map(
+      (menuItem) {
+        if (menuItem.isDivider) {
+          return const PopupMenuDivider();
+        }
+        return PopupMenuItem(
+          value: menuItem,
+          child: Row(
+            children: [
+              Icon(menuItem.icon),
+              const SizedBox(width: kSpacing),
+              Text(menuItem.text!),
+            ],
           ),
-        )
-        .toList(),
+        );
+      },
+    ).toList(),
   );
 }
 

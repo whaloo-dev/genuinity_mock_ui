@@ -5,7 +5,6 @@ import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
-import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/pages/product_selector/product_selector.dart';
 import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 import 'package:whaloo_genuinity/widgets/selector.dart';
@@ -202,100 +201,100 @@ class CodesCreationForm extends StatelessWidget {
     );
   }
 
-  Widget _codeStyleField() {
-    if (controller.codeStyles().isEmpty) {
-      return Container();
-    }
-    return AnimatedSwitcher(
-      duration: kAnimationDuration,
-      child: controller.product() == null
-          ? Container()
-          : ListTile(
-              leading: const Icon(Icons.palette_outlined),
-              title: Obx(
-                () => Selector<CodeStyle>(
-                  optionTitleBuilder: _codeStyleOptionWidget,
-                  value: controller.codeStyle(),
-                  fieldLabel: const Text("Style"),
-                  prefixIcon: controller.codeStyle() == null
-                      ? null
-                      : _codeStyleOptionWidget(
-                          controller.codeStyle()!,
-                          showText: false,
-                        ),
-                  options: controller.codeStyles(),
-                  onSelected: controller.changeCodeStyle,
-                  optionToString: (codeStyle) => "Style N°${codeStyle.id}",
-                ),
-              ),
-            ),
-    );
-  }
+  // Widget _codeStyleField() {
+  //   if (controller.codeStyles().isEmpty) {
+  //     return Container();
+  //   }
+  //   return AnimatedSwitcher(
+  //     duration: kAnimationDuration,
+  //     child: controller.product() == null
+  //         ? Container()
+  //         : ListTile(
+  //             leading: const Icon(Icons.palette_outlined),
+  //             title: Obx(
+  //               () => Selector<CodeStyle>(
+  //                 optionTitleBuilder: _codeStyleOptionWidget,
+  //                 value: controller.codeStyle(),
+  //                 fieldLabel: const Text("Style"),
+  //                 prefixIcon: controller.codeStyle() == null
+  //                     ? null
+  //                     : _codeStyleOptionWidget(
+  //                         controller.codeStyle()!,
+  //                         showText: false,
+  //                       ),
+  //                 options: controller.codeStyles(),
+  //                 onSelected: controller.changeCodeStyle,
+  //                 optionToString: (codeStyle) => "Style N°${codeStyle.id}",
+  //               ),
+  //             ),
+  //           ),
+  //   );
+  // }
 
-  Widget _codeStyleOptionWidget(CodeStyle codeStyle,
-      {bool showText = true, double size = kSmallImage}) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Card(
-          color: Colors.transparent,
-          elevation: 0,
-          clipBehavior: Clip.antiAlias,
-          child: photoWidget(codeStyle.image, fixedSize: kSmallImage),
-        ),
-        if (showText) Text("Style N°${codeStyle.id}"),
-      ],
-    );
-  }
+  // Widget _codeStyleOptionWidget(CodeStyle codeStyle,
+  //     {bool showText = true, double size = kSmallImage}) {
+  //   return Row(
+  //     mainAxisSize: MainAxisSize.min,
+  //     children: [
+  //       Card(
+  //         color: Colors.transparent,
+  //         elevation: 0,
+  //         clipBehavior: Clip.antiAlias,
+  //         child: photoWidget(codeStyle.image, fixedSize: kSmallImage),
+  //       ),
+  //       if (showText) Text("Style N°${codeStyle.id}"),
+  //     ],
+  //   );
+  // }
 
-  Widget _expirationDateField(BuildContext context) {
-    selectDate() {
-      showDatePicker(
-        context: context,
-        initialDate: controller.expirationDate() ??
-            DateTime.now().add(const Duration(days: 30)),
-        firstDate: DateTime.now().add(const Duration(days: 30)),
-        lastDate: DateTime.now().add(const Duration(days: 365 * 20)),
-      ).then((newExpirationDate) =>
-          controller.changeExpirationDate(newExpirationDate));
-    }
+  // Widget _expirationDateField(BuildContext context) {
+  //   selectDate() {
+  //     showDatePicker(
+  //       context: context,
+  //       initialDate: controller.expirationDate() ??
+  //           DateTime.now().add(const Duration(days: 30)),
+  //       firstDate: DateTime.now().add(const Duration(days: 30)),
+  //       lastDate: DateTime.now().add(const Duration(days: 365 * 20)),
+  //     ).then((newExpirationDate) =>
+  //         controller.changeExpirationDate(newExpirationDate));
+  //   }
 
-    return AnimatedSwitcher(
-      duration: kAnimationDuration,
-      child: controller.product() == null
-          ? Container()
-          : ListTile(
-              leading: const Icon(Icons.recycling_rounded),
-              title: TextField(
-                readOnly: true,
-                onTap: selectDate,
-                keyboardType: TextInputType.datetime,
-                controller: controller.expirationDate() == null
-                    ? TextEditingController()
-                    : TextEditingController(
-                        text: dateFormat.format(controller.expirationDate()!)),
-                decoration: InputDecoration(
-                  label: const Text("Expiration Date (Optional)"),
-                  errorText: controller.expirationDateError(),
-                  suffixIcon: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (controller.expirationDate() != null)
-                        IconButton(
-                            onPressed: () {
-                              controller.changeExpirationDate(null);
-                            },
-                            icon: const Icon(Icons.cancel_rounded)),
-                      IconButton(
-                          onPressed: selectDate,
-                          icon: const Icon(Icons.calendar_month_rounded)),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-    );
-  }
+  //   return AnimatedSwitcher(
+  //     duration: kAnimationDuration,
+  //     child: controller.product() == null
+  //         ? Container()
+  //         : ListTile(
+  //             leading: const Icon(Icons.recycling_rounded),
+  //             title: TextField(
+  //               readOnly: true,
+  //               onTap: selectDate,
+  //               keyboardType: TextInputType.datetime,
+  //               controller: controller.expirationDate() == null
+  //                   ? TextEditingController()
+  //                   : TextEditingController(
+  //                       text: dateFormat.format(controller.expirationDate()!)),
+  //               decoration: InputDecoration(
+  //                 label: const Text("Expiration Date (Optional)"),
+  //                 errorText: controller.expirationDateError(),
+  //                 suffixIcon: Row(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: [
+  //                     if (controller.expirationDate() != null)
+  //                       IconButton(
+  //                           onPressed: () {
+  //                             controller.changeExpirationDate(null);
+  //                           },
+  //                           icon: const Icon(Icons.cancel_rounded)),
+  //                     IconButton(
+  //                         onPressed: selectDate,
+  //                         icon: const Icon(Icons.calendar_month_rounded)),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //   );
+  // }
 
   Widget _descriptionField() {
     final descController = controller.descriptionController();

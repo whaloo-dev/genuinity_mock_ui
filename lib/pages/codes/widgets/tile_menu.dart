@@ -14,18 +14,21 @@ Widget codeTileMenu(Code code) {
         },
       ),
       PopupMenuItemData(
+        text: "Print",
+        icon: Icons.print_outlined,
+        handler: () {
+          codesController.printCode(code);
+        },
+      ),
+      PopupMenuItemData(
+        isDivider: true,
+      ),
+      PopupMenuItemData(
         text: "Duplicate",
         icon: Icons.copy_rounded,
         handler: () {
           codesCreationController.createFrom(code);
           navigationController.goBack();
-        },
-      ),
-      PopupMenuItemData(
-        text: "Print",
-        icon: Icons.print_outlined,
-        handler: () {
-          codesController.printCode(code);
         },
       ),
     ],
