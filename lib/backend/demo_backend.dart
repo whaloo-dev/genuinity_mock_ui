@@ -368,6 +368,9 @@ class DemoBackend extends GetConnect implements Backend {
     return Future.delayed(Duration.zero, () {
       for (Code code in codes) {
         Product product = code.variant.product;
+        if (!_codes.containsKey(product.id)) {
+          _codes[product.id] = Group(key: product, codes: <Code>[]);
+        }
         _codes[product.id]!.codes.add(code);
         _deletedCodes.remove(code);
       }
