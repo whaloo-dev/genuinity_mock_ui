@@ -18,13 +18,11 @@ class Product {
   final ProductId id;
   final String title;
   final String image;
-  int codesCount;
   int inventoryQuantity;
   final String type;
   final String vendor;
   final ProductStatus status;
   final List<ProductVariant> variants = <ProductVariant>[];
-  final List<Option> options = <Option>[];
 
   Product({
     required this.id,
@@ -32,7 +30,6 @@ class Product {
     required this.image,
     required this.type,
     required this.vendor,
-    required this.codesCount,
     required this.inventoryQuantity,
     required this.status,
   });
@@ -103,13 +100,6 @@ extension ProductStatusExtension on ProductStatus {
   }
 }
 
-class Option {
-  String name;
-  Option({
-    required this.name,
-  });
-}
-
 class ProductVariant {
   Product product;
   String title;
@@ -139,8 +129,7 @@ class ProductVariant {
 }
 
 class Code {
-  final String shortCode;
-  final String serial;
+  final CodeId id;
   final DateTime creationDate;
   final ProductVariant variant;
   final String image;
@@ -152,11 +141,11 @@ class Code {
   DateTime? lastScanDate;
   int scanCount;
   int scanErrorsCount;
+  //TODO separate scans from code
   List<CodeScan>? scans = <CodeScan>[];
 
   Code({
-    required this.shortCode,
-    required this.serial,
+    required this.id,
     required this.creationDate,
     required this.variant,
     required this.codeStyle,
@@ -171,7 +160,25 @@ class Code {
 
   @override
   bool operator ==(other) {
-    return other is Code && serial == other.serial;
+    return other is Code && id == other.id;
+  }
+
+  @override
+  int get hashCode => hash2(id.hashCode, id.hashCode);
+}
+
+class CodeId {
+  final String serial;
+  final String shortCode;
+
+  CodeId({
+    required this.shortCode,
+    required this.serial,
+  });
+
+  @override
+  bool operator ==(other) {
+    return other is CodeId && serial == other.serial;
   }
 
   @override
@@ -197,4 +204,19 @@ class CodeScan {
     required this.dateTime,
     required this.isFailed,
   });
+}
+
+class Group {
+  Product key;
+  List<Code> codes;
+  Group({required this.key, required this.codes});
+
+  //agregates
+  int codesCount() => codes.length;
+  int scanCount() => codes.map((e) => e.scanCount).reduce((v1, v2) => v1 + v2);
+  int scanErrorsCount() =>
+      codes.map((e) => e.scanErrorsCount).reduce((v1, v2) => v1 + v2);
+  DateTime lastUpdateDate() => codes
+      .map((e) => e.lastScanDate ?? (e.exportDate ?? e.creationDate))
+      .reduce((v1, v2) => v1.isAfter(v2) ? v1 : v2);
 }

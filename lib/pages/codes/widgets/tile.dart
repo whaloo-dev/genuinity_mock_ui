@@ -132,14 +132,14 @@ class CodeTile extends StatelessWidget {
           child: photoWidget(code.image, fixedSize: kSmallImage),
         ),
         Text(
-          "N° ${code.serial}",
+          "N° ${code.id.serial}",
           style: TextStyle(
             fontSize: isSmall ? 8 : 10,
           ),
         ),
         const SizedBox(height: kSpacing),
         Text(
-          "Short : ${code.shortCode}",
+          "Short : ${code.id.shortCode}",
           style: TextStyle(
             fontSize: isSmall ? 8 : 10,
           ),

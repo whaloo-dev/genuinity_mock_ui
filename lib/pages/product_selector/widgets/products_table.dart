@@ -58,7 +58,6 @@ class ProductsTable extends StatelessWidget {
               vendorsCount: vendorsCount,
               productTypesCount: productTypesCount,
               showMenu: false,
-              showQrCodeStatistics: false,
               onSelected: onSelected,
             );
           },

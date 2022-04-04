@@ -72,7 +72,7 @@ class CodeDetailBody extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Text(" ${code.serial}"),
+                    child: Text(" ${code.id.serial}"),
                   ),
                 ],
               ),
@@ -87,7 +87,7 @@ class CodeDetailBody extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Text(" ${code.shortCode}"),
+                    child: Text(" ${code.id.shortCode}"),
                   ),
                 ],
               ),

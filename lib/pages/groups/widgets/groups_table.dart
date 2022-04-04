@@ -4,29 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/code_groups/widgets/product_tile.dart';
+import 'package:whaloo_genuinity/pages/groups/widgets/group_tile.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 
-class ProductsTable extends StatelessWidget {
-  const ProductsTable({Key? key}) : super(key: key);
+class GroupsTable extends StatelessWidget {
+  const GroupsTable({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Obx(() {
-        final visibleProductsCount = productsController.visibleProductsCount();
-        final productsCount = productsController.productsCount();
-        final vendorsCount = productsController.vendors().length;
-        final productTypesCount = productsController.productTypes().length;
+        final visibleCount = groupsController.visibleCount();
+        final groupsCount = groupsController.groupsCount();
         return Stack(
           children: [
             ListView.separated(
               separatorBuilder: (context, index) =>
                   const Divider(thickness: 1, height: 1),
-              itemCount: min(visibleProductsCount + 1, productsCount),
+              itemCount: min(visibleCount + 1, groupsCount),
               itemBuilder: (context, index) {
-                if (index == visibleProductsCount) {
-                  productsController.showMore();
+                if (index == visibleCount) {
+                  groupsController.showMore();
                   return ListTile(
                     hoverColor: Colors.transparent,
                     dense: true,
@@ -48,27 +46,23 @@ class ProductsTable extends StatelessWidget {
                 }
                 return Column(
                   children: [
-                    ProductTile(
-                      product: productsController.product(index),
-                      productIndex: index + 1,
-                      productsCount: productsCount,
-                      vendorsCount: vendorsCount,
-                      productTypesCount: productTypesCount,
-                      onSelected: (selectedProduct) {
+                    GroupTile(
+                      group: groupsController.group(index),
+                      onSelected: (selectedGroup) {
                         navigationController.navigateTo(
                           codesPageRoute,
-                          arguments: selectedProduct,
+                          arguments: selectedGroup.key,
                         );
                       },
                     ),
                     //added space for the floating action button
-                    if (index + 1 == productsCount)
+                    if (index + 1 == groupsCount)
                       const SizedBox(height: kSpacing * 11),
                   ],
                 );
               },
             ),
-            if (productsController.productsCount() != 0)
+            if (groupsController.groupsCount() != 0)
               Positioned.fill(
                 child: Align(
                   alignment: Alignment.bottomRight,

@@ -6,6 +6,7 @@ typedef BackendCallback<T> = void Function({T? arguments});
 
 enum BackendEvent {
   productUpdated,
+  groupUpdated,
   codeAdded,
   codeUpdated,
   codeRemoved,
@@ -22,7 +23,6 @@ abstract class Backend {
   Future<Store> getCurrentStore();
 
   Future<List<Product>> loadProducts({
-    bool showProductsHavingCodesOnly = true,
     Map<ProductStatus, bool>? statusFilter,
     List<String>? productTitleFilter,
     String? skuFilter,
@@ -31,6 +31,8 @@ abstract class Backend {
     String? productTypeFilter,
     RangeValues? inventoryRangeFilter,
   });
+
+  Future<List<Group>> loadGroups();
 
   Future<List<Code>> loadCodes({
     required Product product,

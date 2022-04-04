@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/constants/style.dart';
+
+class GroupsTableEmptyWidget extends StatelessWidget {
+  const GroupsTableEmptyWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => Card(
+        child: SizedBox(
+          height: 100,
+          child: Column(
+            children: [
+              const SizedBox(height: kSpacing * 4),
+              groupsController.isDataLoading()
+                  ? const Center(
+                      child: Text("Loading..."),
+                    )
+                  :
+                  // TODO add filtering
+                  // productsController.isFiltered()
+                  //     ? Center(
+                  //         child: Column(
+                  //           mainAxisAlignment: MainAxisAlignment.center,
+                  //           children: const [
+                  //             Icon(Icons.warning_rounded),
+                  //             SizedBox(height: kSpacing),
+                  //             Text("No Results Found"),
+                  //           ],
+                  //         ),
+                  //       )
+                  //     :
+                  Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 50),
+                          const Icon(
+                            Icons.qr_code_2_rounded,
+                            size: 30,
+                          ),
+                          const SizedBox(height: kSpacing),
+                          const Text("There's no codes yet."),
+                          const SizedBox(height: kSpacing * 3),
+                          FloatingActionButton(
+                            child: const Icon(Icons.add),
+                            onPressed: () {
+                              codesCreationController.createNew();
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

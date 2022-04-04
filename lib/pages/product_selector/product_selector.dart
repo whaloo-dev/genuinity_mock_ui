@@ -28,7 +28,6 @@ class ProductsSelector extends StatelessWidget {
       () => Card(
         child: Column(
           children: [
-            //ProductSelectorHeader(onCancel: onCancel),
             if (controller.totalProductsCount() > 0) const ProductsSearchBar(),
             (controller.isFormVisible() || controller.isEditingFilters())
                 ? const Expanded(child: ProductsSearchForm())

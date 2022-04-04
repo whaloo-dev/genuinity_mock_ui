@@ -48,10 +48,10 @@ class CodesTable extends StatelessWidget {
                   CodeTile(
                     code: code,
                     index: index + 1,
-                    totalCount: product.codesCount,
+                    totalCount: codesController.codesCount(),
                   ),
                   //added space for the floating action button
-                  if (index + 1 == product.codesCount)
+                  if (index + 1 == codesController.codesCount())
                     const SizedBox(height: kSpacing * 11),
                 ],
               );

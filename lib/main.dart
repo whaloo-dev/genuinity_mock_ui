@@ -7,10 +7,11 @@ import 'package:whaloo_genuinity/constants/globals.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/controllers/code_detail_controller.dart';
 import 'package:whaloo_genuinity/controllers/codes_controller.dart';
+import 'package:whaloo_genuinity/controllers/groups_controller.dart';
 import 'package:whaloo_genuinity/controllers/menu_controller.dart';
 import 'package:whaloo_genuinity/controllers/navigation_controller.dart';
 import 'package:whaloo_genuinity/controllers/codes_creation_controller.dart';
-import 'package:whaloo_genuinity/controllers/products_controller.dart';
+import 'package:whaloo_genuinity/controllers/products_selector_controller.dart';
 import 'package:whaloo_genuinity/controllers/store_controller.dart';
 import 'package:whaloo_genuinity/layout.dart';
 import 'package:whaloo_genuinity/pages/errors/error_404.dart';
@@ -22,13 +23,12 @@ void main() {
   Get.put(MenuController());
   Get.put(NavigationController());
   Get.put(StoreController());
-  Get.put(ProductsController());
+  Get.put(GroupsController());
   Get.put(CodesController());
   Get.put(CodesCreationController());
   Get.put(CodeDetailController());
+  Get.put(ProductsSelectorController());
   storeController.onReady();
-  productsController.onReady();
-
   codesController.onReady();
   runApp(const App());
 }

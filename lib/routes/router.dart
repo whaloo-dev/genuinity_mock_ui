@@ -3,7 +3,7 @@ import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/pages/codes/codes.dart';
 import 'package:whaloo_genuinity/pages/colors/colors.dart';
 import 'package:whaloo_genuinity/pages/dashboard/dashoboard.dart';
-import 'package:whaloo_genuinity/pages/code_groups/products.dart';
+import 'package:whaloo_genuinity/pages/groups/groups.dart';
 import 'package:whaloo_genuinity/pages/settings/settings.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 
@@ -12,7 +12,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case dashboardPageRoute:
       return _getPageRoute(const DashboardPage());
     case productsPageRoute:
-      return _getPageRoute(ProductsPage());
+      return _getPageRoute(GroupsPage());
     case codesPageRoute:
       assert(settings.arguments != null);
       assert(settings.arguments is Product);

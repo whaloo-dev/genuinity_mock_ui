@@ -7,6 +7,17 @@ Widget codeTileMenu(Code code) {
   return menu(
     items: <PopupMenuItemData>[
       PopupMenuItemData(
+        text: "Duplicate",
+        icon: Icons.copy_rounded,
+        handler: () {
+          codesCreationController.createFrom(code);
+          navigationController.goBack();
+        },
+      ),
+      PopupMenuItemData(
+        isDivider: true,
+      ),
+      PopupMenuItemData(
         text: "Delete",
         icon: Icons.delete_outline_rounded,
         handler: () {
@@ -18,17 +29,6 @@ Widget codeTileMenu(Code code) {
         icon: Icons.print_outlined,
         handler: () {
           codesController.printCode(code);
-        },
-      ),
-      PopupMenuItemData(
-        isDivider: true,
-      ),
-      PopupMenuItemData(
-        text: "Duplicate",
-        icon: Icons.copy_rounded,
-        handler: () {
-          codesCreationController.createFrom(code);
-          navigationController.goBack();
         },
       ),
     ],

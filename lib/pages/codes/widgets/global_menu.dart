@@ -16,7 +16,7 @@ Widget codesMenu(Product product) {
               codesController.unselectAll();
             },
           ),
-        if (codesController.selection().length != product.codesCount)
+        if (codesController.selection().length != codesController.codesCount())
           PopupMenuItemData(
             text: "Select All",
             icon: Icons.check_box_outline_blank_rounded,

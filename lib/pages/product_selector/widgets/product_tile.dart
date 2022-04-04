@@ -12,7 +12,6 @@ class ProductTile extends StatelessWidget {
   final int vendorsCount;
   final int productTypesCount;
   final bool showMenu;
-  final bool showQrCodeStatistics;
   final bool showFooter;
   final void Function(Product product) onSelected;
 
@@ -26,7 +25,6 @@ class ProductTile extends StatelessWidget {
     required this.productTypesCount,
     this.showMenu = true,
     this.showFooter = true,
-    this.showQrCodeStatistics = true,
   }) : super(key: key);
 
   @override
@@ -45,7 +43,6 @@ class ProductTile extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        if (showQrCodeStatistics) _qrCodesWidget(),
         const SizedBox(height: kSpacing * 2),
         Row(
           children: [
@@ -86,31 +83,6 @@ class ProductTile extends StatelessWidget {
               _indexWidget(),
             ],
           ),
-      ],
-    );
-  }
-
-  Widget _qrCodesWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Row(
-          children: [
-            const Icon(
-              Icons.qr_code_rounded,
-            ),
-            const SizedBox(width: kSpacing),
-            Text(
-              "${numberFormat.format(product.codesCount)}"
-              " code${product.codesCount == 1 ? '' : 's'}",
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        Expanded(child: Container()),
       ],
     );
   }

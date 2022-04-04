@@ -41,7 +41,6 @@ class CodesHeader extends StatelessWidget {
                   ),
                 ),
                 title: _productTileBody(),
-                // TODO Add global menu to achieve bulk operations : delete and export
                 trailing: codesMenu(product),
                 onTap: () {
                   navigationController.goBack();

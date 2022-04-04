@@ -9,8 +9,6 @@ import 'package:whaloo_genuinity/helpers/url_launcher.dart';
 //TODO Codes : add sorting
 //TODO Codes : add search
 //TODO Codes : add test verify code
-//TODO Codes : add bulk delete
-//TODO Codes : add bulk print
 class CodesController extends GetxController {
   static CodesController instance = Get.find();
 
@@ -29,12 +27,9 @@ class CodesController extends GetxController {
     }
   }
 
-  @override
-  void onReady() async {
-    super.onReady();
+  CodesController() {
     Backend.instance.addListener(BackendEvent.codeAdded, _callback);
     Backend.instance.addListener(BackendEvent.codeRemoved, _callback);
-    // Backend.instance.addListener(BackendEvent.codeUpdated, _callback);
   }
 
   Future<void> loadCodes(Product product) async {
@@ -117,6 +112,7 @@ class CodesController extends GetxController {
     }
     if (_selectedCodes.length == 1) {
       deleteCode(_selectedCodes.first);
+      return;
     }
     final codes = _selectedCodes.toList();
     await Backend.instance.deleteCodes(codes);
@@ -136,6 +132,7 @@ class CodesController extends GetxController {
     }
     if (_selectedCodes.length == 1) {
       printCode(_selectedCodes.first);
+      return;
     }
     final exportUrl =
         await Backend.instance.printCodes(_selectedCodes.toList());

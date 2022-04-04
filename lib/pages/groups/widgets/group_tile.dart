@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
-class ProductTile extends StatelessWidget {
-  final Product product;
-  final int productIndex;
-  final int productsCount;
-  final int vendorsCount;
-  final int productTypesCount;
-  final void Function(Product product) onSelected;
+class GroupTile extends StatelessWidget {
+  final Group group;
+  final void Function(Group product) onSelected;
 
-  const ProductTile({
+  const GroupTile({
     Key? key,
     required this.onSelected,
-    required this.product,
-    required this.productIndex,
-    required this.productsCount,
-    required this.vendorsCount,
-    required this.productTypesCount,
+    required this.group,
   }) : super(key: key);
 
   @override
@@ -27,22 +21,22 @@ class ProductTile extends StatelessWidget {
     return ListTile(
       dense: true,
       hoverColor: Colors.transparent,
-      title: _productTileBody(),
+      title: _tileBody(),
       contentPadding: const EdgeInsets.symmetric(horizontal: kSpacing),
       onTap: () {
-        onSelected(product);
+        onSelected(group);
       },
     );
   }
 
-  Widget _productTileBody() {
+  Widget _tileBody() {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
         const SizedBox(height: kSpacing),
         Row(
           children: [
-            photoWidget(product.image),
+            photoWidget(group.key.image),
             const SizedBox(width: kSpacing),
             Expanded(child: _productTitleWidget()),
             Card(
@@ -61,20 +55,10 @@ class ProductTile extends StatelessWidget {
     );
   }
 
-  Widget _qrCodesWidget() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _stackIcon(icon1: Icons.qr_code_rounded),
-        Text(
-          "${numberFormat.format(product.codesCount)}"
-          " code${product.codesCount == 1 ? '' : 's'}",
-        ),
-      ],
-    );
-  }
-
   Widget _productTitleWidget() {
+    int codesCount = group.codesCount();
+    int scansCount = group.scanCount();
+    int scanErrorsCount = group.scanErrorsCount();
     return Wrap(
       alignment: WrapAlignment.spaceBetween,
       children: [
@@ -82,13 +66,67 @@ class ProductTile extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                product.title,
+                group.key.title,
               ),
             ),
           ],
         ),
-        _qrCodesWidget(),
+        _codesCountWidget(codesCount),
+        if (scansCount != 0) _codeScanCountWidget(scansCount),
+        if (scanErrorsCount != 0) _codeScanErrorCountWidget(scanErrorsCount),
+        const SizedBox(),
       ],
+    );
+  }
+
+  Widget _codesCountWidget(int count) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _stackIcon(icon1: Icons.qr_code_rounded),
+        Text(
+          "${numberFormat.format(count)}"
+          " code${count == 1 ? '' : 's'}",
+        ),
+      ],
+    );
+  }
+
+  Widget _codeScanCountWidget(int count) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          stackIcon(
+            icon1: Icons.qr_code_scanner_rounded,
+          ),
+          const SizedBox(width: kSpacing),
+          Text(
+            "Scans : ${numberFormat.format(count)}",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _codeScanErrorCountWidget(int count) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          stackIcon(
+            icon1: Icons.qr_code_scanner_rounded,
+            icon2: FontAwesomeIcons.exclamationCircle,
+            icon2Color: kErrorColor,
+          ),
+          const SizedBox(width: kSpacing),
+          Text(
+            "Scan Errors : ${numberFormat.format(count)}",
+          ),
+        ],
+      ),
     );
   }
 

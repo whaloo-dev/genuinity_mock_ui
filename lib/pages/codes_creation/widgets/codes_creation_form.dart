@@ -30,9 +30,8 @@ class CodesCreationForm extends StatelessWidget {
                   _productField(),
                   const SizedBox(height: kSpacing),
                   _variantField(),
-                  //TODO activate this  when you add codestyle feature
-                  //const SizedBox(height: kSpacing),
-                  //_codeStyleField(),
+                  const SizedBox(height: kSpacing),
+                  _codeStyleField(),
                   //TODO Activate this when you add expiration date featue
                   //const SizedBox(height: kSpacing),
                   //_expirationDateField(context),
@@ -201,51 +200,51 @@ class CodesCreationForm extends StatelessWidget {
     );
   }
 
-  // Widget _codeStyleField() {
-  //   if (controller.codeStyles().isEmpty) {
-  //     return Container();
-  //   }
-  //   return AnimatedSwitcher(
-  //     duration: kAnimationDuration,
-  //     child: controller.product() == null
-  //         ? Container()
-  //         : ListTile(
-  //             leading: const Icon(Icons.palette_outlined),
-  //             title: Obx(
-  //               () => Selector<CodeStyle>(
-  //                 optionTitleBuilder: _codeStyleOptionWidget,
-  //                 value: controller.codeStyle(),
-  //                 fieldLabel: const Text("Style"),
-  //                 prefixIcon: controller.codeStyle() == null
-  //                     ? null
-  //                     : _codeStyleOptionWidget(
-  //                         controller.codeStyle()!,
-  //                         showText: false,
-  //                       ),
-  //                 options: controller.codeStyles(),
-  //                 onSelected: controller.changeCodeStyle,
-  //                 optionToString: (codeStyle) => "Style N°${codeStyle.id}",
-  //               ),
-  //             ),
-  //           ),
-  //   );
-  // }
+  Widget _codeStyleField() {
+    if (controller.codeStyles().isEmpty) {
+      return Container();
+    }
+    return AnimatedSwitcher(
+      duration: kAnimationDuration,
+      child: controller.product() == null
+          ? Container()
+          : ListTile(
+              leading: const Icon(Icons.palette_outlined),
+              title: Obx(
+                () => Selector<CodeStyle>(
+                  optionTitleBuilder: _codeStyleOptionWidget,
+                  value: controller.codeStyle(),
+                  fieldLabel: const Text("Style"),
+                  prefixIcon: controller.codeStyle() == null
+                      ? null
+                      : _codeStyleOptionWidget(
+                          controller.codeStyle()!,
+                          showText: false,
+                        ),
+                  options: controller.codeStyles(),
+                  onSelected: controller.changeCodeStyle,
+                  optionToString: (codeStyle) => "Style N°${codeStyle.id}",
+                ),
+              ),
+            ),
+    );
+  }
 
-  // Widget _codeStyleOptionWidget(CodeStyle codeStyle,
-  //     {bool showText = true, double size = kSmallImage}) {
-  //   return Row(
-  //     mainAxisSize: MainAxisSize.min,
-  //     children: [
-  //       Card(
-  //         color: Colors.transparent,
-  //         elevation: 0,
-  //         clipBehavior: Clip.antiAlias,
-  //         child: photoWidget(codeStyle.image, fixedSize: kSmallImage),
-  //       ),
-  //       if (showText) Text("Style N°${codeStyle.id}"),
-  //     ],
-  //   );
-  // }
+  Widget _codeStyleOptionWidget(CodeStyle codeStyle,
+      {bool showText = true, double size = kSmallImage}) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Card(
+          color: Colors.transparent,
+          elevation: 0,
+          clipBehavior: Clip.antiAlias,
+          child: photoWidget(codeStyle.image, fixedSize: kSmallImage),
+        ),
+        if (showText) Text("Style N°${codeStyle.id}"),
+      ],
+    );
+  }
 
   // Widget _expirationDateField(BuildContext context) {
   //   selectDate() {

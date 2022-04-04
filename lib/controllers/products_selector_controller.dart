@@ -7,15 +7,13 @@ import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
-class ProductsController extends GetxController {
-  static ProductsController instance = Get.find();
+class ProductsSelectorController extends GetxController {
+  static ProductsSelectorController instance = Get.find();
 
   static const int _loadingStep = 10;
   static const int _absoluteMaxInventory = 1000;
 
-  final bool showProductsHavingCodesOnly;
-
-  ProductsController({this.showProductsHavingCodesOnly = true}) {
+  ProductsSelectorController() {
     Backend.instance.addListener(BackendEvent.productUpdated, ({arguments}) {
       applyFilter(showDataLoading: false);
     });
@@ -50,9 +48,7 @@ class ProductsController extends GetxController {
 
   Future<void> loadInit() async {
     Get.log("ProductController.loadInit");
-    Backend.instance
-        .loadProducts(showProductsHavingCodesOnly: showProductsHavingCodesOnly)
-        .then((products) {
+    Backend.instance.loadProducts().then((products) {
       int _maxInventorySize = 0;
       int _minInventorySize = 0;
       for (var product in products) {
@@ -337,7 +333,6 @@ class ProductsController extends GetxController {
 
     Backend.instance
         .loadProducts(
-      showProductsHavingCodesOnly: showProductsHavingCodesOnly,
       statusFilter: statusFilter(),
       productTitleFilter: _productTitleFilter.isNotEmpty
           ? _productTitleFilter.value.tokenize()

@@ -33,7 +33,7 @@ class DemoBackend extends GetConnect implements Backend {
   final _callbacks = <BackendEvent, List<BackendCallback>>{};
   Store? _demoStore;
   final _products = <Product>[];
-  final _codes = <ProductId, List<Code>>{};
+  final _codes = <ProductId, Group>{};
   final _deletedCodes = <Code>[];
 
   bool _isStoreDataInitialized = false;
@@ -79,7 +79,6 @@ class DemoBackend extends GetConnect implements Backend {
         image: productData['image']['src'],
         type: productData['product_type'],
         vendor: productData['vendor'],
-        codesCount: 0,
         inventoryQuantity: 0,
         status: mod3 == 0
             ? ProductStatus.active
@@ -121,7 +120,6 @@ class DemoBackend extends GetConnect implements Backend {
 
   @override
   Future<List<Product>> loadProducts({
-    bool showProductsHavingCodesOnly = true,
     Map<ProductStatus, bool>? statusFilter,
     List<String>? productTitleFilter,
     String? skuFilter,
@@ -144,9 +142,6 @@ class DemoBackend extends GetConnect implements Backend {
 
     for (int i = 0; i < _products.length; i++) {
       final _product = _products[i];
-      if (showProductsHavingCodesOnly && _product.codesCount == 0) {
-        continue;
-      }
 
       // Product status filter
       if (statusFilter != null && !statusFilter[_product.status]!) {
@@ -225,6 +220,20 @@ class DemoBackend extends GetConnect implements Backend {
   }
 
   @override
+  Future<List<Group>> loadGroups() {
+    return Future.delayed(Duration.zero, () {
+      Get.log("Backend : loadGroups...");
+
+      // .sort(
+      //   (group1, group2) {
+      //     return group1.key.title.compareTo(group2.key.title);
+      //   },
+      // )
+      return _codes.values.toList();
+    });
+  }
+
+  @override
   Future<List<Code>> loadCodes({
     required Product product,
   }) async {
@@ -234,7 +243,7 @@ class DemoBackend extends GetConnect implements Backend {
       if (!_codes.containsKey(product.id)) {
         return <Code>[];
       }
-      final codes = _codes[product.id]!;
+      final codes = _codes[product.id]!.codes;
       codes.sort(
         (a, b) => -a.creationDate.compareTo(b.creationDate),
       );
@@ -260,15 +269,18 @@ class DemoBackend extends GetConnect implements Backend {
         for (int i = 0; i < blukSize; i++) {
           final creationDate = DateTime.now();
           final serial =
-              ("${variant.title} ${creationDate.microsecondsSinceEpoch} ${Random().nextInt(1000)}")
+              ("${variant.title} ${creationDate.microsecondsSinceEpoch}"
+                      " ${Random().nextInt(100000)}")
                   .hashCode
                   .toString();
           final code = Code(
+            id: CodeId(
+              serial: serial,
+              shortCode: _computeShortCode(serial, 7),
+            ),
             creationDate: creationDate,
             scanCount: 0,
             scanErrorsCount: 0,
-            serial: serial,
-            shortCode: _computeShortCode(serial, 7),
             variant: variant,
             image: "$_assetsPath/demo/images/qrcode${codeStyle.id}.png",
             codeStyle: codeStyle,
@@ -277,14 +289,12 @@ class DemoBackend extends GetConnect implements Backend {
           );
 
           if (!_codes.containsKey(product.id)) {
-            _codes[product.id] = <Code>[];
+            _codes[product.id] = Group(key: product, codes: <Code>[]);
           }
-          _codes[product.id]!.add(code);
+          _codes[product.id]!.codes.add(code);
         }
         _doCallbacks(BackendEvent.codeAdded);
-        variant.product.codesCount = variant.product.codesCount + blukSize;
-        _products[_products.indexOf(product)] = product;
-        _doCallbacks(BackendEvent.productUpdated);
+        _doCallbacks(BackendEvent.groupUpdated);
       },
     );
   }
@@ -310,11 +320,13 @@ class DemoBackend extends GetConnect implements Backend {
     Get.log("Backend : deleteCode...");
     return Future.delayed(Duration.zero, () {
       Product product = code.variant.product;
-      product.codesCount = product.codesCount - 1;
-      _codes[product.id]!.remove(code);
+      _codes[product.id]!.codes.remove(code);
+      if (_codes[product.id]!.codes.isEmpty) {
+        _codes.remove(product.id);
+      }
       _deletedCodes.add(code);
       _doCallbacks(BackendEvent.codeRemoved);
-      _doCallbacks(BackendEvent.productUpdated);
+      _doCallbacks(BackendEvent.groupUpdated);
     });
   }
 
@@ -323,11 +335,13 @@ class DemoBackend extends GetConnect implements Backend {
     Get.log("Backend : undeleteCode...");
     return Future.delayed(Duration.zero, () {
       Product product = code.variant.product;
-      product.codesCount = product.codesCount + 1;
-      _codes[product.id]!.add(code);
+      if (!_codes.containsKey(product.id)) {
+        _codes[product.id] = Group(key: product, codes: <Code>[]);
+      }
+      _codes[product.id]!.codes.add(code);
       _deletedCodes.remove(code);
       _doCallbacks(BackendEvent.codeAdded);
-      _doCallbacks(BackendEvent.productUpdated);
+      _doCallbacks(BackendEvent.groupUpdated);
     });
   }
 
@@ -337,12 +351,14 @@ class DemoBackend extends GetConnect implements Backend {
     return Future.delayed(Duration.zero, () {
       for (Code code in codes) {
         Product product = code.variant.product;
-        product.codesCount = product.codesCount - 1;
-        _codes[product.id]!.remove(code);
+        _codes[product.id]!.codes.remove(code);
+        if (_codes[product.id]!.codes.isEmpty) {
+          _codes.remove(product.id);
+        }
         _deletedCodes.add(code);
       }
       _doCallbacks(BackendEvent.codeRemoved);
-      _doCallbacks(BackendEvent.productUpdated);
+      _doCallbacks(BackendEvent.groupUpdated);
     });
   }
 
@@ -352,12 +368,11 @@ class DemoBackend extends GetConnect implements Backend {
     return Future.delayed(Duration.zero, () {
       for (Code code in codes) {
         Product product = code.variant.product;
-        product.codesCount = product.codesCount + 1;
-        _codes[product.id]!.add(code);
+        _codes[product.id]!.codes.add(code);
         _deletedCodes.remove(code);
       }
       _doCallbacks(BackendEvent.codeAdded);
-      _doCallbacks(BackendEvent.productUpdated);
+      _doCallbacks(BackendEvent.groupUpdated);
     });
   }
 
@@ -365,9 +380,9 @@ class DemoBackend extends GetConnect implements Backend {
   Future<String> printCode(Code code) async {
     return Future.delayed(Duration.zero, () {
       code.exportDate ??= DateTime.now();
-      for (int i = 0; i < Random().nextInt(10); i++) {
+      for (int i = 0; i < Random().nextInt(50); i++) {
         final scanTime = DateTime.now();
-        if (Random().nextInt(10) == 1) {
+        if (Random().nextInt(3) == 1) {
           code.scanErrorsCount = code.scanErrorsCount + 1;
           code.scans!.add(CodeScan(dateTime: scanTime, isFailed: true));
         } else {
@@ -376,9 +391,8 @@ class DemoBackend extends GetConnect implements Backend {
         code.scanCount = code.scanCount + 1;
         code.lastScanDate = scanTime;
       }
-
       _doCallbacks(BackendEvent.codeUpdated);
-      _doCallbacks(BackendEvent.productUpdated);
+      _doCallbacks(BackendEvent.groupUpdated);
       return _getPrintUrl(code.image);
     });
   }
@@ -390,7 +404,7 @@ class DemoBackend extends GetConnect implements Backend {
         code.exportDate ??= DateTime.now();
       }
       _doCallbacks(BackendEvent.codeUpdated);
-      _doCallbacks(BackendEvent.productUpdated);
+      _doCallbacks(BackendEvent.groupUpdated);
       return _getPrintUrl("$_assetsPath/demo/images/bulk_codes.png");
     });
   }
