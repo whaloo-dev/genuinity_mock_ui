@@ -78,6 +78,7 @@ class CodesCreationController extends GetxController {
   String? expirationDateError() => _expirationDateError.value;
 
   createNew({Product? product}) async {
+    Get.back();
     _codeStyles.value = await Backend.instance.loadCodeStyles();
     _isProductPreset = product != null;
 
@@ -93,6 +94,7 @@ class CodesCreationController extends GetxController {
   }
 
   createFrom(Code code) async {
+    Get.back();
     _codeStyles.value = await Backend.instance.loadCodeStyles();
     _codeStyle.value = code.codeStyle;
     _isProductPreset = false;

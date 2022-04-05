@@ -112,7 +112,6 @@ class CodeDetailBody extends StatelessWidget {
             color: Get.theme.hintColor,
           ),
           onPressed: () {
-            codeDetailController.close();
             codesCreationController.createFrom(code);
             navigationController.goBack();
           },
@@ -125,7 +124,6 @@ class CodeDetailBody extends StatelessWidget {
             color: Get.theme.hintColor,
           ),
           onPressed: () {
-            codeDetailController.close();
             codesController.deleteCode(code);
           },
         ),

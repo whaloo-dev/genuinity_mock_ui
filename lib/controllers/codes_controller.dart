@@ -82,6 +82,7 @@ class CodesController extends GetxController {
   }
 
   Future<void> deleteCode(Code code) async {
+    Get.back();
     await Backend.instance.deleteCode(code);
     _selectedCodes.remove(code);
     showActionDoneNotification(
@@ -100,6 +101,7 @@ class CodesController extends GetxController {
   }
 
   Future<void> deleteSelection() async {
+    Get.back();
     if (_selectedCodes.isEmpty) {
       return;
     }

@@ -19,7 +19,9 @@ showActionDoneNotification(
 }) {
   Get.showSnackbar(
     GetSnackBar(
-      duration: const Duration(seconds: 3),
+      duration: (onCancel == null)
+          ? const Duration(milliseconds: 1500)
+          : const Duration(seconds: 3),
       animationDuration: kAnimationDuration,
       backgroundColor: colorScheme.primaryContainer.withOpacity(0.7),
       barBlur: 1,
@@ -154,8 +156,12 @@ Widget dialogLayout(Widget child) {
   );
 }
 
-Widget stackIcon(
-    {required IconData icon1, IconData? icon2, Color? icon2Color}) {
+Widget stackIcon({
+  required IconData icon1,
+  IconData? icon2,
+  Color? icon1Color,
+  Color? icon2Color,
+}) {
   return Stack(
     children: [
       Container(
@@ -164,6 +170,7 @@ Widget stackIcon(
           child: Icon(
             icon1,
             size: 18,
+            color: icon1Color,
           ),
         ),
       ),

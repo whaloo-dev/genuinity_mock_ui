@@ -10,6 +10,7 @@ class CodeDetailController extends GetxController {
   Code? code() => _code.value;
 
   open(Code code) {
+    Get.back();
     _code.value = code;
     Get.dialog(
       const CodeDetail(),
@@ -17,7 +18,6 @@ class CodeDetailController extends GetxController {
   }
 
   close() {
-    print("Closing detail dialog : ");
     Get.back();
   }
 }
