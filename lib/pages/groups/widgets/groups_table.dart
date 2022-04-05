@@ -49,10 +49,7 @@ class GroupsTable extends StatelessWidget {
                     GroupTile(
                       group: groupsController.group(index),
                       onSelected: (selectedGroup) {
-                        navigationController.navigateTo(
-                          codesPageRoute,
-                          arguments: selectedGroup.key,
-                        );
+                        codesController.open(selectedGroup.key);
                       },
                     ),
                     //added space for the floating action button

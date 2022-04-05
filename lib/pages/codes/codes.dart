@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/header.dart';
@@ -8,12 +7,11 @@ import 'package:whaloo_genuinity/pages/codes/widgets/table.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/table_empty.dart';
 
 class CodesPage extends StatelessWidget {
-  final Product product;
-  const CodesPage({Key? key, required this.product}) : super(key: key);
+  const CodesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    codesController.loadCodes(product);
+    final product = codesController.product()!;
     return Obx(
       () => Column(
         children: [

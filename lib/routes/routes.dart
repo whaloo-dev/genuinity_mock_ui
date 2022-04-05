@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 //Routes
 const rootRoute = "/main";
 const dashboardPageRoute = "/main/dashboard";
-const productsPageRoute = "/main/products";
+const groupsPageRoute = "/main/products";
 const codesPageRoute = "/main/codes";
 const newCodesPageRoute = "/main/new_code";
 const settingsPageRoute = "/main/settings";
@@ -13,7 +13,7 @@ const shopifyPageRoute = "/main/shopify";
 
 //Menu Items
 final productsPageItem = MainMenuItem(
-  productsPageRoute,
+  groupsPageRoute,
   "Codes",
   Icons.qr_code_rounded,
 );

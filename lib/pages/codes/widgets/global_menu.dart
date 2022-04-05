@@ -7,6 +7,7 @@ import 'package:whaloo_genuinity/helpers/custom.dart';
 Widget codesMenu(Product product) {
   return Obx(
     () => menu(
+      enabled: codesController.codesCount() != 0,
       items: <PopupMenuItemData>[
         if (codesController.selection().isNotEmpty)
           PopupMenuItemData(

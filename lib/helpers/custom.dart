@@ -94,8 +94,12 @@ class _PopupMenuDividerState extends State<PopupMenuDivider> {
   Widget build(BuildContext context) => const Divider(height: 1, thickness: 1);
 }
 
-Widget menu({required List<PopupMenuItemData> items}) {
+Widget menu({
+  bool enabled = true,
+  required List<PopupMenuItemData> items,
+}) {
   return PopupMenuButton<PopupMenuItemData>(
+    enabled: enabled,
     onSelected: (item) {
       if (item.handler != null) {
         item.handler!();

@@ -17,6 +17,7 @@ class CodeDetailController extends GetxController {
   }
 
   close() {
+    print("Closing detail dialog : ");
     Get.back();
   }
 }

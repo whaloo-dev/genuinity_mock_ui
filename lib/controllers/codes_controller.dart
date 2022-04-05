@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/url_launcher.dart';
+import 'package:whaloo_genuinity/routes/routes.dart';
 
 //TODO Codes : add sorting
 //TODO Codes : add search
@@ -23,7 +25,7 @@ class CodesController extends GetxController {
 
   _callback({arguments}) {
     if (_currentProduct.value != null) {
-      loadCodes(_currentProduct.value!);
+      loadCodes();
     }
   }
 
@@ -32,19 +34,10 @@ class CodesController extends GetxController {
     Backend.instance.addListener(BackendEvent.codeRemoved, _callback);
   }
 
-  Future<void> loadCodes(Product product) async {
+  Future<void> loadCodes() async {
+    _isLoadingData.value = true;
     Future.delayed(Duration.zero, () {
-      bool isSameProduct = _currentProduct.value != null &&
-          _currentProduct.value!.id == product.id;
-      if (!isSameProduct) {
-        _selectedCodes.clear();
-      }
-      _isLoadingData.value = true;
-      _currentProduct.value = product;
-      if (!isSameProduct) {
-        _selectedCodes.clear();
-      }
-      Backend.instance.loadCodes(product: product).then((codes) {
+      Backend.instance.loadCodes(product: _currentProduct.value!).then((codes) {
         _codes.value = codes;
         _visibleCodes.value = min(loadingSteps, _codes.length);
         _isLoadingData.value = false;
@@ -103,7 +96,7 @@ class CodesController extends GetxController {
   Future<void> printCode(Code code) async {
     final exportUrl = await Backend.instance.printCode(code);
     launchURL(exportUrl);
-    if (_currentProduct.value != null) loadCodes(_currentProduct.value!);
+    if (_currentProduct.value != null) loadCodes();
   }
 
   Future<void> deleteSelection() async {
@@ -137,7 +130,7 @@ class CodesController extends GetxController {
     final exportUrl =
         await Backend.instance.printCodes(_selectedCodes.toList());
     launchURL(exportUrl);
-    if (_currentProduct.value != null) loadCodes(_currentProduct.value!);
+    if (_currentProduct.value != null) loadCodes();
   }
 
   bool isLoadingData() {
@@ -151,4 +144,20 @@ class CodesController extends GetxController {
   int codesCount() {
     return _codes.length;
   }
+
+  Product? product() => _currentProduct.value;
+
+  open(Product product) {
+    bool isSameProduct = _currentProduct.value != null &&
+        _currentProduct.value!.id == product.id;
+    if (!isSameProduct) {
+      _selectedCodes.clear();
+    }
+    _currentProduct.value = product;
+
+    loadCodes();
+    navigationController.navigateTo(codesPageRoute);
+  }
+
+  close() {}
 }

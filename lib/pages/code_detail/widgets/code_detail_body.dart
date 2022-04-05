@@ -11,7 +11,6 @@ import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
 final controller = codeDetailController;
 
-//TODO add actions : export, delete, duplicate
 class CodeDetailBody extends StatelessWidget {
   CodeDetailBody({
     Key? key,
@@ -52,6 +51,8 @@ class CodeDetailBody extends StatelessWidget {
     return ListTile(
       title: Column(
         children: [
+          _actionsWidget(),
+          const SizedBox(height: kSpacing),
           Card(
             color: Colors.transparent,
             elevation: 0,
@@ -95,6 +96,51 @@ class CodeDetailBody extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  Widget _actionsWidget() {
+    Code code = controller.code()!;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          tooltip: "Duplicate",
+          splashRadius: kSplashRadius,
+          icon: Icon(
+            Icons.copy_rounded,
+            color: Get.theme.hintColor,
+          ),
+          onPressed: () {
+            codeDetailController.close();
+            codesCreationController.createFrom(code);
+            navigationController.goBack();
+          },
+        ),
+        IconButton(
+          tooltip: "Delete",
+          splashRadius: kSplashRadius,
+          icon: Icon(
+            Icons.delete_outline_rounded,
+            color: Get.theme.hintColor,
+          ),
+          onPressed: () {
+            codeDetailController.close();
+            codesController.deleteCode(code);
+          },
+        ),
+        IconButton(
+          tooltip: "Print",
+          splashRadius: kSplashRadius,
+          icon: Icon(
+            Icons.print_outlined,
+            color: Get.theme.hintColor,
+          ),
+          onPressed: () {
+            codesController.printCode(code);
+          },
+        ),
+      ],
     );
   }
 
