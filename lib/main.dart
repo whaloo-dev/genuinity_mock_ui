@@ -7,6 +7,7 @@ import 'package:whaloo_genuinity/constants/globals.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/controllers/code_detail_controller.dart';
 import 'package:whaloo_genuinity/controllers/codes_controller.dart';
+import 'package:whaloo_genuinity/controllers/codes_filtering_controller.dart';
 import 'package:whaloo_genuinity/controllers/groups_controller.dart';
 import 'package:whaloo_genuinity/controllers/menu_controller.dart';
 import 'package:whaloo_genuinity/controllers/navigation_controller.dart';
@@ -28,6 +29,7 @@ void main() {
   Get.put(CodesCreationController());
   Get.put(CodeDetailController());
   Get.put(ProductsSelectorController());
+  Get.put(CodesFilteringController());
   storeController.onReady();
   codesController.onReady();
   runApp(const App());

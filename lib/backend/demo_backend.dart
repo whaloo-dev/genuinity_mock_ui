@@ -223,13 +223,11 @@ class DemoBackend extends GetConnect implements Backend {
   Future<List<Group>> loadGroups() {
     return Future.delayed(Duration.zero, () {
       Get.log("Backend : loadGroups...");
-
-      // .sort(
-      //   (group1, group2) {
-      //     return group1.key.title.compareTo(group2.key.title);
-      //   },
-      // )
-      return _codes.values.toList();
+      final groups = _codes.values.toList();
+      groups.sort(
+        (a, b) => -a.lastModificationDate().compareTo(b.lastModificationDate()),
+      );
+      return groups;
     });
   }
 
@@ -245,7 +243,7 @@ class DemoBackend extends GetConnect implements Backend {
       }
       final codes = _codes[product.id]!.codes;
       codes.sort(
-        (a, b) => -a.creationDate.compareTo(b.creationDate),
+        (a, b) => -a.lastModified().compareTo(b.lastModified()),
       );
       return codes;
     });

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 
 class GroupsToolbar extends StatelessWidget {
@@ -17,29 +20,24 @@ class GroupsToolbar extends StatelessWidget {
             onPressed: () {},
           ),
           Expanded(child: Container()),
-          DropdownButton<String>(
+          Obx(
+            () => DropdownButton<TimeSpan>(
               borderRadius: kBorderRadius,
-              value: "7 Days",
+              value: codesFilteringController.timeSpan(),
               style: TextStyle(fontSize: fontSize),
-              items: const [
-                DropdownMenuItem(
-                  value: "7 Days",
-                  child: Text("7 Days"),
-                ),
-                DropdownMenuItem(
-                  value: "30 Days",
-                  child: Text("30 Days"),
-                ),
-                DropdownMenuItem(
-                  value: "3 Monthes",
-                  child: Text("3 Monthes"),
-                ),
-                DropdownMenuItem(
-                  value: "Show All",
-                  child: Text("Show All"),
-                ),
-              ],
-              onChanged: (selceted) {}),
+              items: TimeSpan.values
+                  .map(
+                    (timeSpan) => DropdownMenuItem(
+                      value: timeSpan,
+                      child: Text(timeSpan.name()),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (newValue) {
+                codesFilteringController.changeTimeSpan(newValue!);
+              },
+            ),
+          ),
         ],
       ),
     );

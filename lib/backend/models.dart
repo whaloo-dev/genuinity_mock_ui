@@ -5,6 +5,7 @@ enum TimeSpan {
   sevenDays,
   thirtyDays,
   threeMonthes,
+  twelveMonthes,
   all,
 }
 
@@ -12,13 +13,15 @@ extension TimeSpanToText on TimeSpan {
   String name() {
     switch (this) {
       case TimeSpan.sevenDays:
-        return "7 Days";
+        return "For the last 7 days";
       case TimeSpan.thirtyDays:
-        return "30 Days";
+        return "For the last 30 days";
       case TimeSpan.threeMonthes:
-        return "3 Monthes";
+        return "For the last 3 monthes";
+      case TimeSpan.twelveMonthes:
+        return "For the last 12 monthes";
       case TimeSpan.all:
-        return "Show All";
+        return "All";
     }
   }
 }
@@ -150,6 +153,51 @@ class ProductVariant {
   int get hashCode => hash2(product.hashCode, title.hashCode);
 }
 
+enum CodeStatus {
+  created,
+  exported,
+  scanned,
+  expired,
+}
+
+extension CodeStatusExtension on CodeStatus {
+  String name() {
+    switch (this) {
+      case CodeStatus.created:
+        return "New";
+      case CodeStatus.exported:
+        return "Exported";
+      case CodeStatus.scanned:
+        return "Scanned";
+      case CodeStatus.expired:
+        return "Expired";
+    }
+  }
+
+  Color color() {
+    switch (this) {
+      case CodeStatus.created:
+        return const Color.fromARGB(255, 234, 236, 172);
+      case CodeStatus.exported:
+        return const Color.fromRGBO(164, 232, 242, 1);
+      case CodeStatus.scanned:
+        return const Color.fromRGBO(174, 233, 209, 1);
+      case CodeStatus.expired:
+        return const Color.fromARGB(255, 228, 171, 185);
+    }
+  }
+
+  Color onColor() {
+    switch (this) {
+      case CodeStatus.created:
+      case CodeStatus.exported:
+      case CodeStatus.scanned:
+      case CodeStatus.expired:
+        return Colors.black;
+    }
+  }
+}
+
 class Code {
   final CodeId id;
   final DateTime creationDate;
@@ -179,6 +227,22 @@ class Code {
     this.expirationDate,
     this.description,
   });
+
+  CodeStatus status() {
+    return lastScanDate != null
+        ? CodeStatus.scanned
+        : exportDate != null
+            ? CodeStatus.exported
+            : CodeStatus.created;
+  }
+
+  DateTime lastModified() {
+    return lastScanDate != null
+        ? lastScanDate!
+        : exportDate != null
+            ? exportDate!
+            : creationDate;
+  }
 
   @override
   bool operator ==(other) {

@@ -77,22 +77,20 @@ class CodeTile extends StatelessWidget {
                     alignment: WrapAlignment.spaceBetween,
                     children: [
                       _variantWidget(),
-                      _creationDateWidget(),
-                      code.exportDate != null
-                          ? _exportDateWidget()
-                          : const SizedBox(),
-                      code.lastScanDate != null
-                          ? _lastScanningDateWidget()
-                          : const SizedBox(),
-                      code.expirationDate != null
-                          ? _expirationDateWidget()
-                          : const SizedBox(),
-                      code.scanCount > 0
-                          ? _codeScanCountWidget()
-                          : const SizedBox(),
-                      code.scanErrorsCount > 0
-                          ? _codeScanErrorCountWidget()
-                          : const SizedBox(),
+                      _statusWidget(),
+                      _lastModifiedDateWidget(),
+                      // TODO cleaning
+                      // code.exportDate != null
+                      //     ? _exportDateWidget()
+                      //     : const SizedBox(),
+                      // code.lastScanDate != null
+                      //     ? _lastScanningDateWidget()
+                      //     : const SizedBox(),
+                      // code.expirationDate != null
+                      // ? _expirationDateWidget()
+                      // : const SizedBox(),
+                      _codeScanCountWidget(),
+                      _codeScanErrorCountWidget(),
                       const SizedBox(),
                     ],
                   ),
@@ -149,39 +147,55 @@ class CodeTile extends StatelessWidget {
   }
 
   Widget _codeScanCountWidget() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          stackIcon(
-            icon1: Icons.qr_code_scanner_rounded,
-          ),
-          const SizedBox(width: kSpacing),
-          Text(
-            "Scans : ${numberFormat.format(code.scanCount)}",
-          ),
-        ],
+    return Visibility(
+      visible: code.scanCount != 0,
+      maintainAnimation: true,
+      maintainInteractivity: false,
+      maintainSemantics: false,
+      maintainSize: true,
+      maintainState: true,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: kSpacing),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            stackIcon(
+              icon1: Icons.qr_code_scanner_rounded,
+            ),
+            const SizedBox(width: kSpacing),
+            Text(
+              "Scans : ${numberFormat.format(code.scanCount)}",
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _codeScanErrorCountWidget() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          stackIcon(
-            icon1: Icons.qr_code_scanner_rounded,
-            icon2: FontAwesomeIcons.exclamationCircle,
-            icon2Color: kErrorColor,
-          ),
-          const SizedBox(width: kSpacing),
-          Text(
-            "Scan Errors : ${numberFormat.format(code.scanErrorsCount)}",
-          ),
-        ],
+    return Visibility(
+      visible: code.scanErrorsCount != 0,
+      maintainAnimation: true,
+      maintainInteractivity: false,
+      maintainSemantics: false,
+      maintainSize: true,
+      maintainState: true,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: kSpacing),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            stackIcon(
+              icon1: Icons.qr_code_scanner_rounded,
+              icon2: FontAwesomeIcons.exclamationCircle,
+              icon2Color: kErrorColor,
+            ),
+            const SizedBox(width: kSpacing),
+            Text(
+              "Scan Errors : ${numberFormat.format(code.scanErrorsCount)}",
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -206,7 +220,26 @@ class CodeTile extends StatelessWidget {
     );
   }
 
-  Widget _creationDateWidget() {
+  Widget _statusWidget() {
+    final status = code.status();
+    return Container(
+      margin: const EdgeInsets.all(kSpacing),
+      child: Chip(
+        backgroundColor: status.color(),
+        label: Text(
+          status.name(),
+          style: TextStyle(
+            color: status.onColor(),
+            fontSize: 12,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _lastModifiedDateWidget() {
+    final date = code.lastModified();
+    final status = code.status();
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
@@ -214,12 +247,12 @@ class CodeTile extends StatelessWidget {
         children: [
           stackIcon(
             icon1: Icons.calendar_month_rounded,
-            icon2: Icons.add_rounded,
           ),
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
-              "Created : ${compactDateTimeFormat.format(code.creationDate)}",
+              (status == CodeStatus.created ? "Created " : "Last Modified ") +
+                  ":  ${compactDateTimeFormat.format(date)}",
             ),
           ),
         ],
@@ -227,67 +260,67 @@ class CodeTile extends StatelessWidget {
     );
   }
 
-  Widget _exportDateWidget() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          stackIcon(
-            icon1: Icons.calendar_month_rounded,
-            icon2: Icons.download_rounded,
-          ),
-          const SizedBox(width: kSpacing),
-          Flexible(
-            child: Text(
-              "Exported : ${compactDateTimeFormat.format(code.exportDate!)}",
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _exportDateWidget() {
+  //   return Container(
+  //     margin: const EdgeInsets.symmetric(horizontal: kSpacing),
+  //     child: Row(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: [
+  //         stackIcon(
+  //           icon1: Icons.calendar_month_rounded,
+  //           icon2: Icons.download_rounded,
+  //         ),
+  //         const SizedBox(width: kSpacing),
+  //         Flexible(
+  //           child: Text(
+  //             "Exported : ${compactDateTimeFormat.format(code.exportDate!)}",
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _lastScanningDateWidget() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          stackIcon(
-            icon1: Icons.calendar_month_rounded,
-            icon2: Icons.qr_code_scanner_rounded,
-          ),
-          const SizedBox(width: kSpacing),
-          Flexible(
-            child: Text(
-              "Last Scanned : ${compactDateTimeFormat.format(code.lastScanDate!)}",
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _lastScanningDateWidget() {
+  //   return Container(
+  //     margin: const EdgeInsets.symmetric(horizontal: kSpacing),
+  //     child: Row(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: [
+  //         stackIcon(
+  //           icon1: Icons.calendar_month_rounded,
+  //           icon2: Icons.qr_code_scanner_rounded,
+  //         ),
+  //         const SizedBox(width: kSpacing),
+  //         Flexible(
+  //           child: Text(
+  //             "Last Scanned : ${compactDateTimeFormat.format(code.lastScanDate!)}",
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _expirationDateWidget() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          stackIcon(
-              icon1: Icons.calendar_month_rounded,
-              icon2: Icons.recycling_rounded),
-          const SizedBox(width: kSpacing),
-          Flexible(
-            child: Text(
-              "Expires : ${dateFormat.format(code.expirationDate!)}",
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _expirationDateWidget() {
+  //   return Container(
+  //     margin: const EdgeInsets.symmetric(horizontal: kSpacing),
+  //     child: Row(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: [
+  //         stackIcon(
+  //             icon1: Icons.calendar_month_rounded,
+  //             icon2: Icons.recycling_rounded),
+  //         const SizedBox(width: kSpacing),
+  //         Flexible(
+  //           child: Text(
+  //             "Expires : ${dateFormat.format(code.expirationDate!)}",
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _indexWidget() {
     return Container(
