@@ -31,15 +31,6 @@ class CodesHeader extends StatelessWidget {
                 dense: true,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: kSpacing),
-                leading: Card(
-                  elevation: 1,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Icon(
-                    Icons.arrow_circle_right_rounded,
-                    color: colorScheme.primary.withOpacity(0.4),
-                  ),
-                ),
                 title: _productTileBody(),
                 trailing: codesMenu(product),
                 onTap: () {
@@ -65,6 +56,7 @@ class CodesHeader extends StatelessWidget {
       children: [
         Row(
           children: [
+            const Icon(Icons.arrow_back_ios_new_rounded),
             photoWidget(product.image, fixedSize: kSmallImage),
             const SizedBox(width: kSpacing),
             Expanded(

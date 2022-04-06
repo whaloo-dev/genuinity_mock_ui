@@ -22,7 +22,7 @@ const double kLargeImage = 75;
 const kOptionsMaxHeight = 200.0;
 
 // Theme
-var colorScheme = darkColorScheme;
+var colorScheme = lightColorScheme;
 // var colorScheme = ColorScheme.fromSeed(
 //     seedColor: Colors.transparent, brightness: Brightness.dark);
 

@@ -194,7 +194,9 @@ class ProductsSearchBar extends StatelessWidget {
           maintainState: true,
           child: IconButton(
             splashRadius: kSplashRadius,
-            icon: const Icon(Icons.filter_alt_rounded),
+            icon: Icon(controller.isFormVisible()
+                ? Icons.filter_alt_rounded
+                : Icons.filter_alt_outlined),
             onPressed: () {
               controller.changeIsFormVisible(!controller.isFormVisible());
             },

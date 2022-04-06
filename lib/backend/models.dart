@@ -1,6 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:quiver/core.dart';
 
+enum TimeSpan {
+  sevenDays,
+  thirtyDays,
+  threeMonthes,
+  all,
+}
+
+extension TimeSpanToText on TimeSpan {
+  String name() {
+    switch (this) {
+      case TimeSpan.sevenDays:
+        return "7 Days";
+      case TimeSpan.thirtyDays:
+        return "30 Days";
+      case TimeSpan.threeMonthes:
+        return "3 Monthes";
+      case TimeSpan.all:
+        return "Show All";
+    }
+  }
+}
+
 class Store {
   String id;
   String name;
@@ -216,7 +238,7 @@ class Group {
   int scanCount() => codes.map((e) => e.scanCount).reduce((v1, v2) => v1 + v2);
   int scanErrorsCount() =>
       codes.map((e) => e.scanErrorsCount).reduce((v1, v2) => v1 + v2);
-  DateTime lastUpdateDate() => codes
+  DateTime lastModificationDate() => codes
       .map((e) => e.lastScanDate ?? (e.exportDate ?? e.creationDate))
       .reduce((v1, v2) => v1.isAfter(v2) ? v1 : v2);
 }

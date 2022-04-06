@@ -13,7 +13,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case groupsPageRoute:
       return _getPageRoute(GroupsPage());
     case codesPageRoute:
-      return _getRightSlidePageRoute(const CodesPage());
+      return _noTransitionPageRoute(const CodesPage());
     case settingsPageRoute:
       return _getPageRoute(const SettingsPage());
     case colorsPageRoute:
@@ -29,21 +29,28 @@ PageRoute _getPageRoute(Widget pageWidget) {
   );
 }
 
-PageRoute _getRightSlidePageRoute(Widget pageWidget) {
+PageRoute _noTransitionPageRoute(Widget pageWidget) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => pageWidget,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(1, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      final offsetAnimation = animation.drive(tween);
-      return SlideTransition(
-        position: offsetAnimation,
-        child: child,
-      );
-    },
+    transitionDuration: Duration.zero,
+    reverseTransitionDuration: Duration.zero,
   );
 }
+
+// TODO Clean if needed
+// PageRoute _getRightSlidePageRoute(Widget pageWidget) {
+//   return PageRouteBuilder(
+//     pageBuilder: (context, animation, secondaryAnimation) => pageWidget,
+//     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//       const begin = Offset(1, 0.0);
+//       const end = Offset.zero;
+//       const curve = Curves.ease;
+//       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+//       final offsetAnimation = animation.drive(tween);
+//       return SlideTransition(
+//         position: offsetAnimation,
+//         child: child,
+//       );
+//     },
+//   );
+// }

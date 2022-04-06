@@ -40,16 +40,6 @@ class GroupTile extends StatelessWidget {
             photoWidget(group.key.image),
             const SizedBox(width: kSpacing),
             Expanded(child: _productTitleWidget()),
-            Card(
-              margin: const EdgeInsets.only(right: kSpacing * 2),
-              elevation: 1,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Icon(
-                Icons.arrow_circle_left_rounded,
-                color: colorScheme.primary.withOpacity(0.4),
-              ),
-            ),
           ],
         ),
       ],
@@ -73,8 +63,9 @@ class GroupTile extends StatelessWidget {
           ],
         ),
         _codesCountWidget(codesCount),
-        if (scansCount != 0) _codeScanCountWidget(scansCount),
-        if (scanErrorsCount != 0) _codeScanErrorCountWidget(scanErrorsCount),
+        _updateDateWidget(group.lastModificationDate()),
+        _codeScanCountWidget(scansCount),
+        _codeScanErrorCountWidget(scanErrorsCount),
         const SizedBox(),
       ],
     );
@@ -89,8 +80,7 @@ class GroupTile extends StatelessWidget {
           icon1Color: Get.theme.hintColor,
         ),
         Text(
-          "${numberFormat.format(count)}"
-          " code${count == 1 ? '' : 's'}",
+          "Codes : ${numberFormat.format(count)}",
           style: TextStyle(color: Get.theme.hintColor),
         ),
       ],
@@ -98,41 +88,79 @@ class GroupTile extends StatelessWidget {
   }
 
   Widget _codeScanCountWidget(int count) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          stackIcon(
-            icon1: Icons.qr_code_scanner_rounded,
-            icon1Color: Get.theme.hintColor,
-          ),
-          const SizedBox(width: kSpacing),
-          Text(
-            "Scans : ${numberFormat.format(count)}",
-            style: TextStyle(color: Get.theme.hintColor),
-          ),
-        ],
+    return Visibility(
+      visible: count != 0,
+      maintainAnimation: true,
+      maintainInteractivity: false,
+      maintainSemantics: false,
+      maintainState: true,
+      maintainSize: true,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: kSpacing),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            stackIcon(
+              icon1: Icons.qr_code_scanner_rounded,
+              icon1Color: Get.theme.hintColor,
+            ),
+            const SizedBox(width: kSpacing),
+            Text(
+              "Total Scans : ${numberFormat.format(count)}",
+              style: TextStyle(color: Get.theme.hintColor),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _codeScanErrorCountWidget(int count) {
+    return Visibility(
+      visible: count != 0,
+      maintainAnimation: true,
+      maintainInteractivity: false,
+      maintainSemantics: false,
+      maintainState: true,
+      maintainSize: true,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: kSpacing),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            stackIcon(
+              icon1: Icons.qr_code_scanner_rounded,
+              icon1Color: Get.theme.hintColor,
+              icon2: FontAwesomeIcons.exclamationCircle,
+              icon2Color: kErrorColor,
+            ),
+            const SizedBox(width: kSpacing),
+            Text(
+              "Total Scan Errors : ${numberFormat.format(count)}",
+              style: TextStyle(color: Get.theme.hintColor),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _updateDateWidget(DateTime modificationDate) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           stackIcon(
-            icon1: Icons.qr_code_scanner_rounded,
+            icon1: Icons.calendar_month_rounded,
             icon1Color: Get.theme.hintColor,
-            icon2: FontAwesomeIcons.exclamationCircle,
-            icon2Color: kErrorColor,
           ),
           const SizedBox(width: kSpacing),
-          Text(
-            "Scan Errors : ${numberFormat.format(count)}",
-            style: TextStyle(color: Get.theme.hintColor),
+          Flexible(
+            child: Text(
+              "Last Modified : ${compactDateTimeFormat.format(modificationDate)}",
+              style: TextStyle(color: Get.theme.hintColor),
+            ),
           ),
         ],
       ),

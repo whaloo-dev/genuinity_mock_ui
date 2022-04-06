@@ -6,15 +6,16 @@ import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 import 'package:whaloo_genuinity/widgets/profile.dart';
 
 Widget topNavigationBar(GlobalKey<ScaffoldState> key) => ListTile(
-      leading: Responsiveness.isScreenSmall()
-          ? IconButton(
-              splashRadius: kSplashRadius,
-              onPressed: () {
-                key.currentState!.openDrawer();
-              },
-              icon: const Icon(Icons.menu),
-            )
-          : null,
+      leading: ResponsiveWidget(
+        largeWidget: const SizedBox(),
+        smallWidget: IconButton(
+          splashRadius: kSplashRadius,
+          onPressed: () {
+            key.currentState!.openDrawer();
+          },
+          icon: const Icon(Icons.menu),
+        ),
+      ),
       title: Row(
         children: [
           Obx(

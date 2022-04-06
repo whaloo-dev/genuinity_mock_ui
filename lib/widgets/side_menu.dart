@@ -17,7 +17,8 @@ class SideMenu extends StatelessWidget {
         const Logo(),
         const SizedBox(height: kSpacing),
         const Divider(
-          thickness: 2,
+          thickness: 1,
+          height: 1,
         ),
         const SizedBox(height: kSpacing),
         Column(

@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/local_navigator.dart';
 import 'package:whaloo_genuinity/widgets/side_menu.dart';
@@ -13,7 +14,14 @@ Widget smallScreen(GlobalKey<ScaffoldState> key) {
       child: Column(
         children: [
           topNavigationBar(key),
-          Expanded(child: localNavigator()),
+          Expanded(
+            child: Card(
+              elevation: 1,
+              margin: const EdgeInsets.only(bottom: kSpacing),
+              color: Get.theme.scaffoldBackgroundColor,
+              child: localNavigator(),
+            ),
+          ),
         ],
       ),
     ),

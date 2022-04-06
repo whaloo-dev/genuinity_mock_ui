@@ -219,7 +219,7 @@ class CodeTile extends StatelessWidget {
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
-              "Created : ${dateTimeFormat.format(code.creationDate)}",
+              "Created : ${compactDateTimeFormat.format(code.creationDate)}",
             ),
           ),
         ],
@@ -240,7 +240,7 @@ class CodeTile extends StatelessWidget {
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
-              "Exported : ${dateTimeFormat.format(code.exportDate!)}",
+              "Exported : ${compactDateTimeFormat.format(code.exportDate!)}",
             ),
           ),
         ],
@@ -261,7 +261,7 @@ class CodeTile extends StatelessWidget {
           const SizedBox(width: kSpacing),
           Flexible(
             child: Text(
-              "Last Scanned : ${dateTimeFormat.format(code.lastScanDate!)}",
+              "Last Scanned : ${compactDateTimeFormat.format(code.lastScanDate!)}",
             ),
           ),
         ],

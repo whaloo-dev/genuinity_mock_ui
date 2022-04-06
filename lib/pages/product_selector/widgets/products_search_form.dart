@@ -3,10 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
-import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
-import 'package:whaloo_genuinity/helpers/extensions.dart';
 import 'package:whaloo_genuinity/widgets/selector.dart';
 
 final controller = productSelectorController;
@@ -23,7 +21,7 @@ class ProductsSearchForm extends StatelessWidget {
       final productType = controller.productTypeFilter();
       final vendor = controller.vendorFilter();
       final sku = controller.skuFilter();
-      final barcode = controller.barcodeFilter();
+      // final barcode = controller.barcodeFilter();
       final status = controller.statusFilter();
       return Column(
         children: [
@@ -33,12 +31,12 @@ class ProductsSearchForm extends StatelessWidget {
               child: Column(
                 children: [
                   _skuField(sku),
-                  _barcodeField(barcode),
+                  //TODO _barcodeField(barcode),
                   if (controller.productTypes().length > 1)
                     _productTypeField(productType),
                   if (controller.vendors().length > 1) _vendorField(vendor),
                   _statusField(status),
-                  _inventoryRangeField(),
+                  //TODO _inventoryRangeField(),
                   SizedBox(height: kOptionsMaxHeight),
                 ],
               ),
@@ -99,41 +97,41 @@ class ProductsSearchForm extends StatelessWidget {
     );
   }
 
-  Widget _inventoryRangeField() {
-    final maxInventory = controller.maxInventorySize();
-    final minInventory = controller.minInventorySize();
-    final inventorySizeRange = controller.inventorySizeRangeFilter();
-    if (maxInventory == minInventory) {
-      return Container();
-    }
-    return ListTile(
-      leading: const Icon(FontAwesomeIcons.boxes),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Inventory ${inventorySizeRange.toText(minInventory, maxInventory)}",
-          ),
-          RangeSlider(
-            divisions: maxInventory - minInventory,
-            labels: RangeLabels(
-              numberFormat.format(inventorySizeRange.start),
-              inventorySizeRange.end == controller.maxInventorySize()
-                  ? "∞"
-                  : numberFormat.format(inventorySizeRange.end),
-            ),
-            min: minInventory.toDouble(),
-            max: maxInventory.toDouble(),
-            values: inventorySizeRange,
-            onChanged: (value) {
-              controller.changeInventorySizeRangeFilter(RangeValues(
-                  value.start.roundToDouble(), value.end.roundToDouble()));
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _inventoryRangeField() {
+  //   final maxInventory = controller.maxInventorySize();
+  //   final minInventory = controller.minInventorySize();
+  //   final inventorySizeRange = controller.inventorySizeRangeFilter();
+  //   if (maxInventory == minInventory) {
+  //     return Container();
+  //   }
+  //   return ListTile(
+  //     leading: const Icon(FontAwesomeIcons.boxes),
+  //     title: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           "Inventory ${inventorySizeRange.toText(minInventory, maxInventory)}",
+  //         ),
+  //         RangeSlider(
+  //           divisions: maxInventory - minInventory,
+  //           labels: RangeLabels(
+  //             numberFormat.format(inventorySizeRange.start),
+  //             inventorySizeRange.end == controller.maxInventorySize()
+  //                 ? "∞"
+  //                 : numberFormat.format(inventorySizeRange.end),
+  //           ),
+  //           min: minInventory.toDouble(),
+  //           max: maxInventory.toDouble(),
+  //           values: inventorySizeRange,
+  //           onChanged: (value) {
+  //             controller.changeInventorySizeRangeFilter(RangeValues(
+  //                 value.start.roundToDouble(), value.end.roundToDouble()));
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _skuField(String sku) {
     final TextEditingController textController =
@@ -176,26 +174,26 @@ class ProductsSearchForm extends StatelessWidget {
     );
   }
 
-  Widget _barcodeField(String barcode) {
-    TextEditingController textController = textEditingController(text: barcode);
-    return ListTile(
-      leading: const Icon(FontAwesomeIcons.barcode),
-      title: TextField(
-        controller: textController,
-        onChanged: (value) {
-          controller.changeBarcodeFilter(value);
-        },
-        decoration: InputDecoration(
-          label: const Text("Barcode (ISBN, UPC, GTIN, etc.)"),
-          suffixIcon: barcode.isNotEmpty
-              ? _clearFieldWidget(() {
-                  controller.changeBarcodeFilter("");
-                })
-              : null,
-        ),
-      ),
-    );
-  }
+  // Widget _barcodeField(String barcode) {
+  //   TextEditingController textController = textEditingController(text: barcode);
+  //   return ListTile(
+  //     leading: const Icon(FontAwesomeIcons.barcode),
+  //     title: TextField(
+  //       controller: textController,
+  //       onChanged: (value) {
+  //         controller.changeBarcodeFilter(value);
+  //       },
+  //       decoration: InputDecoration(
+  //         label: const Text("Barcode (ISBN, UPC, GTIN, etc.)"),
+  //         suffixIcon: barcode.isNotEmpty
+  //             ? _clearFieldWidget(() {
+  //                 controller.changeBarcodeFilter("");
+  //               })
+  //             : null,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _productTypeField(String productType) {
     return ListTile(
