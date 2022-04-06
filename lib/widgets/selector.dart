@@ -5,7 +5,7 @@ import 'package:whaloo_genuinity/widgets/widget_with_overlay.dart';
 class Selector<T extends Object> extends StatefulWidget {
   final void Function(T selected) onSelected;
   final List<T> options;
-  final Widget fieldLabel;
+  final Widget? fieldLabel;
   final Widget? prefixIcon;
   final String? fieldErrorText;
   final T? value;
@@ -18,7 +18,7 @@ class Selector<T extends Object> extends StatefulWidget {
     Key? key,
     required this.onSelected,
     required this.options,
-    required this.fieldLabel,
+    this.fieldLabel,
     this.prefixIcon,
     this.value,
     this.fieldErrorText,

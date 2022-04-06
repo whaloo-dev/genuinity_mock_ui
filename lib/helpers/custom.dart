@@ -96,10 +96,11 @@ class _PopupMenuDividerState extends State<PopupMenuDivider> {
   Widget build(BuildContext context) => const Divider(height: 1, thickness: 1);
 }
 
-Widget menu({
-  bool enabled = true,
-  required List<PopupMenuItemData> items,
-}) {
+Widget menu(
+    {bool enabled = true,
+    required List<PopupMenuItemData> items,
+    IconData icon = Icons.more_vert_rounded,
+    Widget? child}) {
   return PopupMenuButton<PopupMenuItemData>(
     enabled: enabled,
     onSelected: (item) {
@@ -108,9 +109,8 @@ Widget menu({
       }
     },
     elevation: kElevation,
-    icon: const Icon(
-      Icons.more_vert_rounded,
-    ),
+    icon: (child == null) ? Icon(icon) : null,
+    child: child,
     itemBuilder: (context) => items.map(
       (menuItem) {
         if (menuItem.isDivider) {

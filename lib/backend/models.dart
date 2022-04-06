@@ -157,7 +157,7 @@ enum CodeStatus {
   created,
   exported,
   scanned,
-  expired,
+  //expired,
 }
 
 extension CodeStatusExtension on CodeStatus {
@@ -169,8 +169,8 @@ extension CodeStatusExtension on CodeStatus {
         return "Exported";
       case CodeStatus.scanned:
         return "Scanned";
-      case CodeStatus.expired:
-        return "Expired";
+      // case CodeStatus.expired:
+      //   return "Expired";
     }
   }
 
@@ -182,8 +182,8 @@ extension CodeStatusExtension on CodeStatus {
         return const Color.fromRGBO(164, 232, 242, 1);
       case CodeStatus.scanned:
         return const Color.fromRGBO(174, 233, 209, 1);
-      case CodeStatus.expired:
-        return const Color.fromARGB(255, 228, 171, 185);
+      // case CodeStatus.expired:
+      //   return const Color.fromARGB(255, 228, 171, 185);
     }
   }
 
@@ -192,7 +192,7 @@ extension CodeStatusExtension on CodeStatus {
       case CodeStatus.created:
       case CodeStatus.exported:
       case CodeStatus.scanned:
-      case CodeStatus.expired:
+        //case CodeStatus.expired:
         return Colors.black;
     }
   }
@@ -305,4 +305,46 @@ class Group {
   DateTime lastModificationDate() => codes
       .map((e) => e.lastScanDate ?? (e.exportDate ?? e.creationDate))
       .reduce((v1, v2) => v1.isAfter(v2) ? v1 : v2);
+}
+
+enum Sorting {
+  dateAsc,
+  dateDesc,
+  scansAsc,
+  scansDesc,
+  scanErrorsAsc,
+  scanErrorsDesc,
+}
+
+extension SortingExt on Sorting {
+  String name() {
+    switch (this) {
+      case Sorting.dateAsc:
+      case Sorting.dateDesc:
+        return "Date";
+      case Sorting.scansAsc:
+      case Sorting.scansDesc:
+        return "Scans";
+      case Sorting.scanErrorsAsc:
+      case Sorting.scanErrorsDesc:
+        return "Scan Errors";
+    }
+  }
+
+  String nameExtension() {
+    switch (this) {
+      case Sorting.dateAsc:
+        return "most old first";
+      case Sorting.dateDesc:
+        return "most recent first";
+      case Sorting.scansAsc:
+        return "ascending";
+      case Sorting.scansDesc:
+        return "descending";
+      case Sorting.scanErrorsAsc:
+        return "ascending";
+      case Sorting.scanErrorsDesc:
+        return "descending";
+    }
+  }
 }

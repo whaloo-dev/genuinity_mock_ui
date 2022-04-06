@@ -18,7 +18,7 @@ Widget smallScreen(GlobalKey<ScaffoldState> key) {
             child: Card(
               elevation: 1,
               margin: const EdgeInsets.only(bottom: kSpacing),
-              color: Get.theme.scaffoldBackgroundColor,
+              color: Get.theme.colorScheme.surface,
               child: localNavigator(),
             ),
           ),

@@ -15,7 +15,7 @@ class CodesPage extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
-          const GroupsToolbar(),
+          GroupsToolbar(product: product),
           Expanded(
             child: Card(
               child: Column(
