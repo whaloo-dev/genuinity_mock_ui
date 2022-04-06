@@ -319,7 +319,6 @@ class CodesCreationForm extends StatelessWidget {
 
   Widget _bulkSizeField() {
     return ListTile(
-      // leading: const Icon(Icons.copy_all_rounded),
       title: TextField(
         controller: controller.bulkSizeController(),
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
