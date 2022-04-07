@@ -19,9 +19,9 @@ largeScreen(GlobalKey<ScaffoldState> key) {
                 topNavigationBar(key),
                 Expanded(
                   child: Card(
-                    elevation: 1,
+                    elevation: 0,
                     margin: const EdgeInsets.only(bottom: kSpacing),
-                    color: Get.theme.scaffoldBackgroundColor,
+                    color: Get.theme.colorScheme.surface,
                     child: localNavigator(),
                   ),
                 ),

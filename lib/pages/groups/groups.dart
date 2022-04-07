@@ -17,7 +17,7 @@ class GroupsPage extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
-          GroupsToolbar(),
+          const FilteringToolbar(),
           (controller.groupsCount() == 0)
               ? const Expanded(child: GroupsTableEmptyWidget())
               : const Expanded(child: GroupsTable()),

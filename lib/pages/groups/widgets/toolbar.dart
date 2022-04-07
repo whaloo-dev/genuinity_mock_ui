@@ -5,14 +5,13 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/widgets/photo_widget.dart';
-import 'package:whaloo_genuinity/widgets/selector.dart';
+import 'package:whaloo_genuinity/pages/product_selector/product_selector_dialog.dart';
 
 final controller = codesFilteringController;
 
-class GroupsToolbar extends StatelessWidget {
+class FilteringToolbar extends StatelessWidget {
   final Product? product;
-  const GroupsToolbar({Key? key, this.product}) : super(key: key);
+  const FilteringToolbar({Key? key, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +63,14 @@ class GroupsToolbar extends StatelessWidget {
                   .map(
                     (timeSpan) => DropdownMenuItem(
                       value: timeSpan,
-                      child: Text(timeSpan.name(),
-                          style: timeSpan == selectedTimeSpan
-                              ? const TextStyle(fontWeight: FontWeight.bold)
-                              : null),
+                      child: Text(
+                        timeSpan.name(),
+                        style: TextStyle(
+                            fontWeight: timeSpan == selectedTimeSpan
+                                ? FontWeight.bold
+                                : null,
+                            color: Get.theme.colorScheme.onBackground),
+                      ),
                     ),
                   )
                   .toList(),
@@ -87,11 +90,11 @@ class GroupsToolbar extends StatelessWidget {
         margin: const EdgeInsets.only(top: kSpacing),
         height: controller.expanded() ? 200 : 0,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             if (product == null) _selectedProduct(),
             if (product != null) _filterByVariant(),
-            //TODO _filterByCodeStatus(),
+            if (product != null) _filterByCodeStatus(),
             _sortBy(),
             const SizedBox(width: kSpacing),
           ],
@@ -110,61 +113,66 @@ class GroupsToolbar extends StatelessWidget {
         TextButton.icon(
           icon: const Icon(Icons.search_rounded),
           label: const Text("SEARCH", style: TextStyle(fontSize: 11)),
-          onPressed: () {},
+          onPressed: () {
+            Get.dialog(ProductSelectorDialog(onSelected: (product) {
+              codesController.open(product);
+            }));
+          },
         )
       ],
     );
   }
 
-  // Widget _filterByCodeStatus() {
-  //   return Obx(() {
-  //     CodeStatus? codeStatus = controller.codeStatus();
-  //     return Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         const Text("STATUS",
-  //             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
-  //         const SizedBox(height: kSpacing),
-  //         ...CodeStatus.values
-  //             .map(
-  //               (status) =>
-  //                   _statusWidget(status, selected: codeStatus == status),
-  //             )
-  //             .toList()
-  //       ],
-  //     );
-  //   });
-  // }
+  Widget _filterByCodeStatus() {
+    return Obx(() {
+      CodeStatus? codeStatus = controller.codeStatus();
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("STATUS",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+          const SizedBox(height: kSpacing),
+          ...CodeStatus.values
+              .map(
+                (status) =>
+                    _statusWidget(status, selected: codeStatus == status),
+              )
+              .toList()
+        ],
+      );
+    });
+  }
 
-  // Widget _statusWidget(CodeStatus status, {required bool selected}) {
-  //   return Container(
-  //     padding: const EdgeInsets.only(top: kSpacing),
-  //     width: 100,
-  //     child: InputChip(
-  //       isEnabled: true,
-  //       selected: selected,
-  //       selectedColor: status.color(),
-  //       backgroundColor: status.color(),
-  //       onPressed: () {
-  //         controller.changeCodeStatus(selected ? null : status);
-  //         Future.delayed(kAnimationDuration, () {
-  //           controller.changeExpanded(false);
-  //         });
-  //       },
-  //       label: SizedBox(
-  //         width: 50,
-  //         child: Text(
-  //           status.name(),
-  //           textAlign: TextAlign.center,
-  //           style: TextStyle(
-  //             color: status.onColor(),
-  //             fontSize: 12,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _statusWidget(CodeStatus status, {required bool selected}) {
+    return Container(
+      padding: const EdgeInsets.only(top: kSpacing),
+      width: 100,
+      child: InputChip(
+        isEnabled: true,
+        selected: selected,
+        selectedColor: status.color(),
+        backgroundColor: status.color(),
+        checkmarkColor: status.onColor(),
+        onPressed: () {
+          controller.changeCodeStatus(selected ? null : status);
+          Future.delayed(kAnimationDuration, () {
+            controller.changeExpanded(false);
+          });
+        },
+        label: SizedBox(
+          width: 50,
+          child: Text(
+            status.name(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: status.onColor(),
+              fontSize: 12,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget _filterByVariant() {
     return Column(
@@ -174,49 +182,56 @@ class GroupsToolbar extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
         const SizedBox(height: kSpacing),
         Obx(
-          () => SizedBox(
-            width: 200,
-            child: Selector<ProductVariant>(
-              value: controller.variant(),
-              prefixIcon: controller.variant()?.image != null
-                  ? photoWidget(controller.variant()?.image,
-                      fixedSize: kSmallImage)
-                  : null,
-              // fieldLabel: const Text("Variant"),
-              options: product!.variants,
-              onSelected: controller.changeVariant,
-              optionToString: (option) => option.title,
-              optionLeadingBuilder: (option) => option.image != null
-                  ? photoWidget(option.image, fixedSize: kSmallImage)
-                  : null,
-              optionTitleBuilder: (option) => Row(
-                children: [
-                  const SizedBox(width: kSpacing),
-                  Flexible(
-                    child: Text(option.title),
-                  ),
-                ],
-              ),
-              optionSubtitleBuilder: (option) {
-                if (option.sku.isEmpty) {
-                  return null;
-                }
-                return Row(
-                  children: [
-                    const SizedBox(width: kSpacing),
-                    Flexible(
-                      child: Text(
-                        "SKU : ${option.sku}",
-                        style: TextStyle(
-                          color: Get.theme.hintColor,
-                          fontSize: 12,
+          () => DropdownButton<ProductVariant>(
+            isDense: true,
+            borderRadius: kBorderRadius,
+            value: controller.variant() != null &&
+                    controller.variant()!.product == product
+                ? controller.variant()
+                : null,
+            style: const TextStyle(fontSize: 12),
+            onChanged: (newValue) {
+              controller.changeVariant(newValue!);
+              Future.delayed(kAnimationDuration, () {
+                controller.changeExpanded(false);
+              });
+            },
+            items: product!.variants
+                .map(
+                  (variant) => DropdownMenuItem(
+                    value: variant,
+                    child: Row(
+                      children: [
+                        const SizedBox(width: kSpacing),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 150),
+                          child: RichText(
+                            text: TextSpan(
+                              text: variant.title,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: variant == controller.variant()
+                                    ? FontWeight.bold
+                                    : null,
+                                color: Get.theme.colorScheme.onBackground,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: "\nSKU : ${variant.sku}",
+                                  style: TextStyle(
+                                    color: Get.theme.hintColor,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                )
+                .toList(),
           ),
         ),
       ],
@@ -253,6 +268,7 @@ class GroupsToolbar extends StatelessWidget {
             controller.changeExpanded(false);
           });
         },
+        borderRadius: kBorderRadius,
         icon: Container(),
         hint: Text(text),
         value: value,
@@ -276,6 +292,7 @@ class GroupsToolbar extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: value != sorting ? null : FontWeight.bold,
+                        color: Get.theme.colorScheme.onBackground,
                       ),
                       children: [
                         TextSpan(

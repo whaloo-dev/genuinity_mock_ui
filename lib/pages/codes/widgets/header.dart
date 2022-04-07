@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
@@ -8,45 +9,44 @@ import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 class CodesHeader extends StatelessWidget {
   final Product product;
 
-  const CodesHeader({
+  final Color color = Get.theme.colorScheme.primary;
+  final Color onColor = Get.theme.colorScheme.onPrimary;
+
+  CodesHeader({
     Key? key,
     required this.product,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Card(
-          margin: const EdgeInsets.all(0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(kBorderRadius.topLeft.x),
-              topRight: Radius.circular(kBorderRadius.topRight.x),
+    return Container(
+      margin: const EdgeInsets.all(1),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(kBorderRadius.topLeft.x),
+          topRight: Radius.circular(kBorderRadius.topRight.x),
+        ),
+      ),
+      child: Column(
+        children: [
+          ListTile(
+            dense: true,
+            contentPadding: const EdgeInsets.symmetric(horizontal: kSpacing),
+            title: _productTileBody(),
+            trailing: codesMenu(product, iconColor: onColor),
+            onTap: () {
+              navigationController.goBack();
+            },
+            subtitle: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              spacing: kSpacing,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: const [],
             ),
           ),
-          child: Column(
-            children: [
-              ListTile(
-                dense: true,
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: kSpacing),
-                title: _productTileBody(),
-                trailing: codesMenu(product),
-                onTap: () {
-                  navigationController.goBack();
-                },
-                subtitle: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  spacing: kSpacing,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: const [],
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
+        ],
+      ),
     );
   }
 
@@ -56,7 +56,10 @@ class CodesHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.arrow_back_ios_new_rounded),
+            Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: onColor,
+            ),
             photoWidget(product.image, fixedSize: kSmallImage),
             const SizedBox(width: kSpacing),
             Expanded(
@@ -76,6 +79,9 @@ class CodesHeader extends StatelessWidget {
         Flexible(
           child: Text(
             product.title,
+            style: TextStyle(
+              color: onColor,
+            ),
           ),
         ),
       ],

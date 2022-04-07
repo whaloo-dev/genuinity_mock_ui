@@ -4,10 +4,14 @@ import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 
-Widget codesMenu(Product product) {
+Widget codesMenu(Product product, {Color? iconColor}) {
   return Obx(
     () => menu(
       enabled: codesController.codesCount() != 0,
+      icon: Icon(
+        Icons.more_vert_rounded,
+        color: iconColor,
+      ),
       items: <PopupMenuItemData>[
         if (codesController.selection().isNotEmpty)
           PopupMenuItemData(

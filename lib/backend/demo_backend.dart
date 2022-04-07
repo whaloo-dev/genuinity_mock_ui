@@ -13,12 +13,12 @@ import 'package:whaloo_genuinity/helpers/extensions.dart';
 //TODO loadProduct returns a structure containing agregates
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
-  // static const _demoStoreName = "ruesco";
+  static const _demoStoreName = "ruesco";
   // static const _demoStoreName = "huel";
   // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
   // static const _demoStoreName = "decathlon";
-  static const _demoStoreName = "thebookbundler";
+  // static const _demoStoreName = "thebookbundler";
   // static const _demoStoreName = "commonfarmflowers";
   // static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";
@@ -64,6 +64,35 @@ class DemoBackend extends GetConnect implements Backend {
       return;
     }
     Get.log("Backend : initializing products data...");
+
+    //Simulate scanning
+    Timer.periodic(const Duration(seconds: 10), (timer) {
+      if (_codes.isEmpty) {
+        return;
+      }
+      final randomProductId =
+          _codes.entries.toList()[Random().nextInt(_codes.entries.length)].key;
+      final candidates = _codes[randomProductId]!
+          .codes
+          .where((code) => code.exportDate != null)
+          .toList();
+      if (candidates.isEmpty) {
+        return;
+      }
+      final randomCode = candidates[Random().nextInt(candidates.length)];
+      if (Random().nextInt(100) > 50) {
+        return;
+      }
+      final scanTime = DateTime.now();
+      if (Random().nextInt(3) == 1) {
+        randomCode.scanErrorsCount = randomCode.scanErrorsCount + 1;
+        randomCode.scans!.add(CodeScan(dateTime: scanTime, isFailed: true));
+      } else {
+        randomCode.scans!.add(CodeScan(dateTime: scanTime, isFailed: false));
+      }
+      randomCode.scanCount = randomCode.scanCount + 1;
+      randomCode.lastScanDate = scanTime;
+    });
 
     final url = "$_assetsPath/demo/data/${_demoStoreName}_products.json";
     final response = await get(url);
@@ -381,17 +410,6 @@ class DemoBackend extends GetConnect implements Backend {
   Future<String> printCode(Code code) async {
     return Future.delayed(Duration.zero, () {
       code.exportDate ??= DateTime.now();
-      for (int i = 0; i < Random().nextInt(50); i++) {
-        final scanTime = DateTime.now();
-        if (Random().nextInt(3) == 1) {
-          code.scanErrorsCount = code.scanErrorsCount + 1;
-          code.scans!.add(CodeScan(dateTime: scanTime, isFailed: true));
-        } else {
-          code.scans!.add(CodeScan(dateTime: scanTime, isFailed: false));
-        }
-        code.scanCount = code.scanCount + 1;
-        code.lastScanDate = scanTime;
-      }
       _doCallbacks(BackendEvent.codeUpdated);
       _doCallbacks(BackendEvent.groupUpdated);
       return _getPrintUrl(code.image);

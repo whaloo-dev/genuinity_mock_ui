@@ -10,7 +10,7 @@ class CodeDetailController extends GetxController {
   Code? code() => _code.value;
 
   open(Code code) {
-    Get.back();
+    Get.closeAllSnackbars();
     _code.value = code;
     Get.dialog(
       const CodeDetail(),
