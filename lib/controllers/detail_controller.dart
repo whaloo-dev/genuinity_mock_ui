@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/pages/detail/detail.dart';
 
-class CodeDetailController extends GetxController {
-  static CodeDetailController instance = Get.find();
+class DetailController extends GetxController {
+  static DetailController instance = Get.find();
 
   final _code = Rx<Code?>(null);
 

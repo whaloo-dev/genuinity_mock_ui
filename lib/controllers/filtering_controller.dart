@@ -3,8 +3,8 @@ import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/backend/models/global.dart';
 import 'package:whaloo_genuinity/backend/models/product.dart';
 
-class CodesFilteringController extends GetxController {
-  static CodesFilteringController instance = Get.find();
+class FilteringController extends GetxController {
+  static FilteringController instance = Get.find();
 
   final _expanded = false.obs;
   final _timeSpan = TimeSpan.sevenDays.obs;
@@ -17,6 +17,18 @@ class CodesFilteringController extends GetxController {
   Sorting sorting() => _sorting.value;
   bool expanded() => _expanded.value;
   ProductVariant? variant() => _variant.value;
+
+  void addFilteringListener(void Function() callback) {
+    _sorting.listen((value) {
+      callback();
+    });
+    _timeSpan.listen((value) {
+      callback();
+    });
+    _codeStatus.listen((value) {
+      callback();
+    });
+  }
 
   void changeTimeSpan(TimeSpan newValue) {
     _timeSpan.value = newValue;

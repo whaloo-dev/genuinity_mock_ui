@@ -2,45 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quiver/core.dart';
 import 'package:whaloo_genuinity/backend/models/product.dart';
 
-enum CodeStatus {
-  created,
-  exported,
-  scanned,
-}
-
-extension CodeStatusExtension on CodeStatus {
-  String name() {
-    switch (this) {
-      case CodeStatus.created:
-        return "New";
-      case CodeStatus.exported:
-        return "Exported";
-      case CodeStatus.scanned:
-        return "Scanned";
-    }
-  }
-
-  Color color() {
-    switch (this) {
-      case CodeStatus.created:
-        return const Color.fromARGB(255, 243, 245, 193);
-      case CodeStatus.exported:
-        return const Color.fromRGBO(164, 232, 242, 1);
-      case CodeStatus.scanned:
-        return const Color.fromRGBO(174, 233, 209, 1);
-    }
-  }
-
-  Color onColor() {
-    switch (this) {
-      case CodeStatus.created:
-      case CodeStatus.exported:
-      case CodeStatus.scanned:
-        return Colors.black;
-    }
-  }
-}
-
 class Code {
   final CodeId id;
   final DateTime creationDate;
@@ -124,6 +85,45 @@ class CodeStyle {
   });
 }
 
+enum CodeStatus {
+  created,
+  exported,
+  scanned,
+}
+
+extension CodeStatusExtension on CodeStatus {
+  String name() {
+    switch (this) {
+      case CodeStatus.created:
+        return "New";
+      case CodeStatus.exported:
+        return "Exported";
+      case CodeStatus.scanned:
+        return "Scanned";
+    }
+  }
+
+  Color color() {
+    switch (this) {
+      case CodeStatus.created:
+        return const Color.fromARGB(255, 243, 245, 193);
+      case CodeStatus.exported:
+        return const Color.fromRGBO(164, 232, 242, 1);
+      case CodeStatus.scanned:
+        return const Color.fromRGBO(174, 233, 209, 1);
+    }
+  }
+
+  Color onColor() {
+    switch (this) {
+      case CodeStatus.created:
+      case CodeStatus.exported:
+      case CodeStatus.scanned:
+        return Colors.black;
+    }
+  }
+}
+
 // TODO add location
 class CodeScan {
   DateTime dateTime;
@@ -145,7 +145,7 @@ class Group {
   int scanCount() => codes.map((e) => e.scanCount).reduce((v1, v2) => v1 + v2);
   int scanErrorsCount() =>
       codes.map((e) => e.scanErrorsCount).reduce((v1, v2) => v1 + v2);
-  DateTime lastModificationDate() => codes
+  DateTime lastModified() => codes
       .map((e) => e.lastScanDate ?? (e.exportDate ?? e.creationDate))
       .reduce((v1, v2) => v1.isAfter(v2) ? v1 : v2);
 }

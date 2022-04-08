@@ -30,15 +30,24 @@ class CodesController extends GetxController {
     }
   }
 
-  CodesController() {
+  @override
+  void onReady() {
+    super.onReady();
     Backend.instance.addListener(BackendEvent.codeAdded, _callback);
     Backend.instance.addListener(BackendEvent.codeRemoved, _callback);
+    filteringController.addFilteringListener(_callback);
   }
 
   Future<void> loadCodes() async {
     _isLoadingData.value = true;
     Future.delayed(Duration.zero, () {
-      Backend.instance.loadCodes(product: _currentProduct.value!).then((codes) {
+      Backend.instance
+          .loadCodes(
+        product: _currentProduct.value!,
+        sorting: filteringController.sorting(),
+        codeStatusFilter: filteringController.codeStatus(),
+      )
+          .then((codes) {
         _codes.value = codes;
         _visibleCodes.value = min(loadingSteps, _codes.length);
         _isLoadingData.value = false;

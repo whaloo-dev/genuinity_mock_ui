@@ -40,7 +40,7 @@ class CodeTile extends StatelessWidget {
           ],
         ),
         onTap: () {
-          codeDetailController.open(code);
+          detailController.open(code);
         },
       ),
     );

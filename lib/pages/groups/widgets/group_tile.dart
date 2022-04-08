@@ -63,7 +63,7 @@ class GroupTile extends StatelessWidget {
           ],
         ),
         _codesCountWidget(codesCount),
-        _updateDateWidget(group.lastModificationDate()),
+        _updateDateWidget(group.lastModified()),
         _codeScanCountWidget(scansCount),
         _codeScanErrorCountWidget(scanErrorsCount),
         const SizedBox(),

@@ -10,7 +10,7 @@ import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/helpers/services.dart';
 import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
-final controller = codeDetailController;
+final controller = detailController;
 
 class DetailBody extends StatelessWidget {
   DetailBody({
@@ -113,7 +113,7 @@ class DetailBody extends StatelessWidget {
             color: Get.theme.hintColor,
           ),
           onPressed: () {
-            codesCreationController.createFrom(code);
+            creationController.createFrom(code);
             navigationController.goBack();
           },
         ),

@@ -10,7 +10,7 @@ Widget codeTileMenu(Code code) {
         text: "Duplicate",
         icon: Icons.copy_rounded,
         handler: () {
-          codesCreationController.createFrom(code);
+          creationController.createFrom(code);
           navigationController.goBack();
         },
       ),

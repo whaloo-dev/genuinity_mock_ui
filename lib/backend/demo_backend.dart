@@ -10,19 +10,17 @@ import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/backend/models/product.dart';
 import 'package:whaloo_genuinity/backend/models/store.dart';
-import 'package:whaloo_genuinity/helpers/extensions.dart';
+import 'package:whaloo_genuinity/backend/models/global.dart';
 
 //TODO loadProduct returns a structure containing agregates
 class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "halloweenmakeup";
-  static const _demoStoreName = "ruesco";
+  // static const _demoStoreName = "ruesco";
   // static const _demoStoreName = "huel";
-  // static const _demoStoreName = "signatureveda";
   // static const _demoStoreName = "locknloadairsoft";
-  // static const _demoStoreName = "decathlon";
   // static const _demoStoreName = "thebookbundler";
   // static const _demoStoreName = "commonfarmflowers";
-  // static const _demoStoreName = "atelierdubraceletparisien";
+  static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";
   // static const _demoStoreName = "seriouswatches";
 
@@ -68,7 +66,7 @@ class DemoBackend extends GetConnect implements Backend {
     Get.log("Backend : initializing products data...");
 
     //Simulate scanning
-    Timer.periodic(const Duration(seconds: 10), (timer) {
+    Timer.periodic(const Duration(seconds: 30), (timer) {
       if (_codes.isEmpty) {
         return;
       }
@@ -251,12 +249,14 @@ class DemoBackend extends GetConnect implements Backend {
   }
 
   @override
-  Future<List<Group>> loadGroups() {
+  Future<List<Group>> loadGroups({
+    required Sorting sorting,
+  }) {
     return Future.delayed(Duration.zero, () {
       Get.log("Backend : loadGroups...");
       final groups = _codes.values.toList();
       groups.sort(
-        (a, b) => -a.lastModificationDate().compareTo(b.lastModificationDate()),
+        sorting.groupsComparator(),
       );
       return groups;
     });
@@ -265,6 +265,8 @@ class DemoBackend extends GetConnect implements Backend {
   @override
   Future<List<Code>> loadCodes({
     required Product product,
+    required Sorting sorting,
+    CodeStatus? codeStatusFilter,
   }) async {
     Get.log("Backend : loadCodes...");
 
@@ -272,9 +274,13 @@ class DemoBackend extends GetConnect implements Backend {
       if (!_codes.containsKey(product.id)) {
         return <Code>[];
       }
-      final codes = _codes[product.id]!.codes;
+      var codes = _codes[product.id]!.codes;
+      if (codeStatusFilter != null) {
+        codes =
+            codes.where((code) => code.status() == codeStatusFilter).toList();
+      }
       codes.sort(
-        (a, b) => -a.lastModified().compareTo(b.lastModified()),
+        sorting.codesComparator(),
       );
       return codes;
     });
@@ -460,5 +466,68 @@ class DemoBackend extends GetConnect implements Backend {
     final start = (md5code.length - codeLength) % serial.hashCode;
     final shortCode = md5code.substring(start, start + codeLength);
     return shortCode;
+  }
+}
+
+extension Search on List<String> {
+  bool startsWithAll(List<String> other) {
+    bool startsWithAll = true;
+    for (var otherItem in other) {
+      bool startsWithItem = false;
+      for (var thisItem in this) {
+        startsWithItem = startsWithItem || thisItem.startsWith(otherItem);
+        if (startsWithItem) {
+          break;
+        }
+      }
+      startsWithAll = startsWithAll && startsWithItem;
+      if (!startsWithAll) {
+        break;
+      }
+    }
+    return startsWithAll;
+  }
+}
+
+extension SortingComparator on Sorting {
+  int Function(Code a, Code b)? codesComparator() {
+    switch (this) {
+      case Sorting.dateAsc:
+        return (Code a, Code b) => a.lastModified().compareTo(b.lastModified());
+      case Sorting.dateDesc:
+        return (Code a, Code b) =>
+            -a.lastModified().compareTo(b.lastModified());
+      case Sorting.scansAsc:
+        return (Code a, Code b) => a.scanCount.compareTo(b.scanCount);
+      case Sorting.scansDesc:
+        return (Code a, Code b) => -a.scanCount.compareTo(b.scanCount);
+      case Sorting.scanErrorsAsc:
+        return (Code a, Code b) =>
+            a.scanErrorsCount.compareTo(b.scanErrorsCount);
+      case Sorting.scanErrorsDesc:
+        return (Code a, Code b) =>
+            -a.scanErrorsCount.compareTo(b.scanErrorsCount);
+    }
+  }
+
+  int Function(Group a, Group b)? groupsComparator() {
+    switch (this) {
+      case Sorting.dateAsc:
+        return (Group a, Group b) =>
+            a.lastModified().compareTo(b.lastModified());
+      case Sorting.dateDesc:
+        return (Group a, Group b) =>
+            -a.lastModified().compareTo(b.lastModified());
+      case Sorting.scansAsc:
+        return (Group a, Group b) => a.scanCount().compareTo(b.scanCount());
+      case Sorting.scansDesc:
+        return (Group a, Group b) => -a.scanCount().compareTo(b.scanCount());
+      case Sorting.scanErrorsAsc:
+        return (Group a, Group b) =>
+            a.scanErrorsCount().compareTo(b.scanErrorsCount());
+      case Sorting.scanErrorsDesc:
+        return (Group a, Group b) =>
+            -a.scanErrorsCount().compareTo(b.scanErrorsCount());
+    }
   }
 }

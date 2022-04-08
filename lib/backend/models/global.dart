@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:whaloo_genuinity/helpers/localization.dart';
+
 enum TimeSpan {
   oneHour,
   oneDay,
@@ -87,5 +90,20 @@ extension SortingExt on Sorting {
       case Sorting.scanErrorsDesc:
         return "descending";
     }
+  }
+}
+
+extension Tokenizer on String {
+  List<String> tokenize() {
+    final _tokens = <String>[];
+    final _searchTextSplitted = toLowerCase()
+        .split(RegExp(r"[\s|\#|\(|\)|\+|\-|\*|\!|\?|\.|\*|\=|\:|\.|\/]"));
+    for (int i = 0; i < _searchTextSplitted.length; i++) {
+      final keyword = _searchTextSplitted[i].trim();
+      if (keyword.isNotEmpty) {
+        _tokens.add(keyword);
+      }
+    }
+    return _tokens;
   }
 }

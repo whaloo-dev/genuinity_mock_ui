@@ -32,7 +32,7 @@ class DetailDialog extends StatelessWidget {
         splashRadius: kSplashRadius,
         icon: const Icon(Icons.close_rounded),
         onPressed: () {
-          codeDetailController.close();
+          detailController.close();
         },
       ),
     );

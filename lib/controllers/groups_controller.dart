@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models/code.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 
 //TODO Codes : add sorting
 //TODO Codes : add search
@@ -11,18 +12,20 @@ class GroupsController extends GetxController {
   static GroupsController instance = Get.find();
 
   static const int _loadingStep = 10;
+  final _isLoadingData = true.obs;
+  final _groups = <Group>[].obs;
+  final _visibleCount = 0.obs;
 
-  GroupsController() {
+  @override
+  void onReady() {
+    super.onReady();
     Backend.instance.addListener(BackendEvent.groupUpdated, ({arguments}) {
       load(showDataLoading: false);
     });
+    filteringController.addFilteringListener(() {
+      load();
+    });
   }
-
-  final _isLoadingData = true.obs;
-
-  final _groups = <Group>[].obs;
-
-  final _visibleCount = 0.obs;
 
   void load({bool showDataLoading = true}) {
     _load(refresh: showDataLoading);
@@ -55,7 +58,7 @@ class GroupsController extends GetxController {
     if (refresh) {
       _isLoadingData.value = true;
     }
-    Backend.instance.loadGroups().then(
+    Backend.instance.loadGroups(sorting: filteringController.sorting()).then(
       (groups) {
         _groups.value = groups;
         if (refresh) {

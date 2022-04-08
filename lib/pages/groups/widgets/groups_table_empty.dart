@@ -48,7 +48,7 @@ class GroupsTableEmptyWidget extends StatelessWidget {
                           FloatingActionButton(
                             child: const Icon(Icons.add),
                             onPressed: () {
-                              codesCreationController.createNew();
+                              creationController.createNew();
                             },
                           ),
                         ],

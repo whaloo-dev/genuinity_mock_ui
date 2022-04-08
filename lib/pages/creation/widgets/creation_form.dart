@@ -11,7 +11,7 @@ import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 import 'package:whaloo_genuinity/widgets/selector.dart';
 import 'package:whaloo_genuinity/widgets/widget_with_overlay.dart';
 
-final controller = codesCreationController;
+final controller = creationController;
 
 class CreationForm extends StatelessWidget {
   const CreationForm({

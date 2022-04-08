@@ -53,8 +53,7 @@ class CodesTableEmptyWidget extends StatelessWidget {
                             heroTag: null,
                             child: const Icon(Icons.add),
                             onPressed: () {
-                              codesCreationController.createNew(
-                                  product: product);
+                              creationController.createNew(product: product);
                             },
                           ),
                         ],

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models/product.dart';
-import 'package:whaloo_genuinity/helpers/extensions.dart';
+import 'package:whaloo_genuinity/backend/models/global.dart';
 
 class ProductsSelectorController extends GetxController {
   static ProductsSelectorController instance = Get.find();

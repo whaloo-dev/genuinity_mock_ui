@@ -24,7 +24,7 @@ class CreationHeader extends StatelessWidget {
         splashRadius: kSplashRadius,
         icon: const Icon(Icons.close_rounded),
         onPressed: () {
-          codesCreationController.cancel();
+          creationController.cancel();
         },
       ),
     );

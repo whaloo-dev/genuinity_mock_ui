@@ -11,8 +11,8 @@ import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/pages/creation/creation.dart';
 
-class CodesCreationController extends GetxController {
-  static CodesCreationController instance = Get.find();
+class CreationController extends GetxController {
+  static CreationController instance = Get.find();
 
   final _product = Rx<Product?>(null);
   bool _isProductPreset = true;
@@ -33,7 +33,7 @@ class CodesCreationController extends GetxController {
       TextEditingController(text: "1");
   final _bulkSizeFieldError = Rx<String?>(null);
 
-  CodesCreationController() {
+  CreationController() {
     _bulkSizeController.addListener(() {
       _bulkSizeFieldError.value = null;
     });

@@ -11,18 +11,18 @@ class NavigationController extends GetxController {
     String routeName, {
     Object? arguments,
   }) {
-    codesFilteringController.reset();
+    filteringController.reset();
     return navigationKey.currentState!
         .pushNamed(routeName, arguments: arguments);
   }
 
   goBack() {
-    codesFilteringController.reset();
+    filteringController.reset();
     return navigationKey.currentState!.pop();
   }
 
   goHome() {
-    codesFilteringController.reset();
+    filteringController.reset();
     navigationKey.currentState!.popUntil((route) => route.isFirst);
   }
 }

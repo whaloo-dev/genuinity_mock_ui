@@ -9,7 +9,7 @@ import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/pages/product_selector/product_selector_dialog.dart';
 
-final controller = codesFilteringController;
+final controller = filteringController;
 
 class FilteringToolbar extends StatelessWidget {
   final Product? product;
