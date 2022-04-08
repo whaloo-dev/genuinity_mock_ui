@@ -7,6 +7,5 @@ shopify_sitemap https://locknloadairsoft.com/   >locknloadairsoft_products.json
 shopify_sitemap https://nixon.com/  >nixon_products.json
 shopify_sitemap https://ruesco.com/     >ruesco_products.json
 shopify_sitemap https://www.seriouswatches.com/     >seriouswatches_products.json
-shopify_sitemap https://www.signatureveda.com/     >signatureveda_products.json
 shopify_sitemap https://www.thebookbundler.com/     >thebookbundler_products.json
     
