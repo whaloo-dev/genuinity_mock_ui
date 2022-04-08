@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
-import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/backend/models/store.dart';
 
 class StoreController extends GetxController {
   static StoreController get instance => Get.find();

@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
-import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/backend/models/product.dart';
+import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/url_launcher.dart';

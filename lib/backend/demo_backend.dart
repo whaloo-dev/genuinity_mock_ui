@@ -7,7 +7,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
-import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/backend/models/code.dart';
+import 'package:whaloo_genuinity/backend/models/product.dart';
+import 'package:whaloo_genuinity/backend/models/store.dart';
 import 'package:whaloo_genuinity/helpers/extensions.dart';
 
 //TODO loadProduct returns a structure containing agregates

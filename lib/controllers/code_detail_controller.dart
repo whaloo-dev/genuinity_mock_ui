@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/pages/detail/detail.dart';
 
 class CodeDetailController extends GetxController {

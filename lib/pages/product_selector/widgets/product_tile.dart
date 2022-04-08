@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/backend/models/product.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/widgets/photo_widget.dart';

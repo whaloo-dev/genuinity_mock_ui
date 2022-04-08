@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
-import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/backend/models/code.dart';
+import 'package:whaloo_genuinity/backend/models/global.dart';
+import 'package:whaloo_genuinity/backend/models/product.dart';
 
 class CodesFilteringController extends GetxController {
   static CodesFilteringController instance = Get.find();

@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
-import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/backend/models/code.dart';
 
 //TODO Codes : add sorting
 //TODO Codes : add search

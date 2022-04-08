@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:whaloo_genuinity/backend/models.dart';
+import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
