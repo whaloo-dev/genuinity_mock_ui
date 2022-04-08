@@ -8,7 +8,7 @@ import 'package:whaloo_genuinity/backend/models.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
-import 'package:whaloo_genuinity/pages/codes_creation/codes_creation.dart';
+import 'package:whaloo_genuinity/pages/creation/creation.dart';
 
 class CodesCreationController extends GetxController {
   static CodesCreationController instance = Get.find();
@@ -89,7 +89,7 @@ class CodesCreationController extends GetxController {
     _bulkSizeController.text = "1";
     _bulkSizeFieldError.value = null;
     Get.dialog(
-      const CodesCreationWizard(),
+      const CodesCreationDialog(),
     );
   }
 
@@ -112,7 +112,7 @@ class CodesCreationController extends GetxController {
     _bulkSizeController.text = "1";
     _bulkSizeFieldError.value = null;
     Get.dialog(
-      const CodesCreationWizard(),
+      const CodesCreationDialog(),
     );
   }
 

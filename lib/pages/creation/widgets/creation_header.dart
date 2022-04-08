@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 
-class CodesCreationHeader extends StatelessWidget {
-  const CodesCreationHeader({
+class CreationHeader extends StatelessWidget {
+  const CreationHeader({
     Key? key,
   }) : super(key: key);
 

@@ -12,8 +12,8 @@ import 'package:whaloo_genuinity/widgets/widget_with_overlay.dart';
 
 final controller = codesCreationController;
 
-class CodesCreationForm extends StatelessWidget {
-  const CodesCreationForm({
+class CreationForm extends StatelessWidget {
+  const CreationForm({
     Key? key,
   }) : super(key: key);
 

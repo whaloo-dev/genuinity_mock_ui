@@ -33,7 +33,6 @@ class FilteringToolbar extends StatelessWidget {
     return Obx(
       () {
         final selectedTimeSpan = controller.timeSpan();
-
         return Row(
           children: [
             TextButton.icon(
@@ -93,8 +92,8 @@ class FilteringToolbar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             if (product == null) _selectedProduct(),
-            if (product != null) _filterByVariant(),
             if (product != null) _filterByCodeStatus(),
+            //TODO if (product != null) _filterByVariant(),
             _sortBy(),
             const SizedBox(width: kSpacing),
           ],
@@ -146,7 +145,7 @@ class FilteringToolbar extends StatelessWidget {
   Widget _statusWidget(CodeStatus status, {required bool selected}) {
     return Container(
       padding: const EdgeInsets.only(top: kSpacing),
-      width: 100,
+      // width: 100,
       child: InputChip(
         isEnabled: true,
         selected: selected,
@@ -174,69 +173,69 @@ class FilteringToolbar extends StatelessWidget {
     );
   }
 
-  Widget _filterByVariant() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("VARIANT",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
-        const SizedBox(height: kSpacing),
-        Obx(
-          () => DropdownButton<ProductVariant>(
-            isDense: true,
-            borderRadius: kBorderRadius,
-            value: controller.variant() != null &&
-                    controller.variant()!.product == product
-                ? controller.variant()
-                : null,
-            style: const TextStyle(fontSize: 12),
-            onChanged: (newValue) {
-              controller.changeVariant(newValue!);
-              Future.delayed(kAnimationDuration, () {
-                controller.changeExpanded(false);
-              });
-            },
-            items: product!.variants
-                .map(
-                  (variant) => DropdownMenuItem(
-                    value: variant,
-                    child: Row(
-                      children: [
-                        const SizedBox(width: kSpacing),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 150),
-                          child: RichText(
-                            text: TextSpan(
-                              text: variant.title,
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: variant == controller.variant()
-                                    ? FontWeight.bold
-                                    : null,
-                                color: Get.theme.colorScheme.onBackground,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: "\nSKU : ${variant.sku}",
-                                  style: TextStyle(
-                                    color: Get.theme.hintColor,
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _filterByVariant() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       const Text("VARIANT",
+  //           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+  //       const SizedBox(height: kSpacing),
+  //       Obx(
+  //         () => DropdownButton<ProductVariant>(
+  //           isDense: true,
+  //           borderRadius: kBorderRadius,
+  //           value: controller.variant() != null &&
+  //                   controller.variant()!.product == product
+  //               ? controller.variant()
+  //               : null,
+  //           style: const TextStyle(fontSize: 12),
+  //           onChanged: (newValue) {
+  //             controller.changeVariant(newValue!);
+  //             Future.delayed(kAnimationDuration, () {
+  //               controller.changeExpanded(false);
+  //             });
+  //           },
+  //           items: product!.variants
+  //               .map(
+  //                 (variant) => DropdownMenuItem(
+  //                   value: variant,
+  //                   child: Row(
+  //                     children: [
+  //                       const SizedBox(width: kSpacing),
+  //                       ConstrainedBox(
+  //                         constraints: const BoxConstraints(maxWidth: 150),
+  //                         child: RichText(
+  //                           text: TextSpan(
+  //                             text: variant.title,
+  //                             style: TextStyle(
+  //                               fontSize: 11,
+  //                               fontWeight: variant == controller.variant()
+  //                                   ? FontWeight.bold
+  //                                   : null,
+  //                               color: Get.theme.colorScheme.onBackground,
+  //                             ),
+  //                             children: [
+  //                               TextSpan(
+  //                                 text: "\nSKU : ${variant.sku}",
+  //                                 style: TextStyle(
+  //                                   color: Get.theme.hintColor,
+  //                                   fontSize: 11,
+  //                                 ),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               )
+  //               .toList(),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _sortBy() {
     return Obx(() {

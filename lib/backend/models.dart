@@ -169,21 +169,17 @@ extension CodeStatusExtension on CodeStatus {
         return "Exported";
       case CodeStatus.scanned:
         return "Scanned";
-      // case CodeStatus.expired:
-      //   return "Expired";
     }
   }
 
   Color color() {
     switch (this) {
       case CodeStatus.created:
-        return const Color.fromARGB(255, 234, 236, 172);
+        return const Color.fromARGB(255, 243, 245, 193);
       case CodeStatus.exported:
         return const Color.fromRGBO(164, 232, 242, 1);
       case CodeStatus.scanned:
         return const Color.fromRGBO(174, 233, 209, 1);
-      // case CodeStatus.expired:
-      //   return const Color.fromARGB(255, 228, 171, 185);
     }
   }
 
@@ -192,7 +188,6 @@ extension CodeStatusExtension on CodeStatus {
       case CodeStatus.created:
       case CodeStatus.exported:
       case CodeStatus.scanned:
-        //case CodeStatus.expired:
         return Colors.black;
     }
   }

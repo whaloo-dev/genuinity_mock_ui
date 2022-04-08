@@ -4,7 +4,7 @@ import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/header.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/table.dart';
 import 'package:whaloo_genuinity/pages/codes/widgets/table_empty.dart';
-import 'package:whaloo_genuinity/pages/groups/widgets/toolbar.dart';
+import 'package:whaloo_genuinity/pages/groups/widgets/filtering_toolbar.dart';
 
 class CodesPage extends StatelessWidget {
   const CodesPage({Key? key}) : super(key: key);

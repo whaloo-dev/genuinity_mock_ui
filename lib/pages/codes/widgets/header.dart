@@ -19,10 +19,11 @@ class CodesHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(1),
-      decoration: BoxDecoration(
-        color: color,
+    return Card(
+      color: color,
+      elevation: 1,
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(kBorderRadius.topLeft.x),
           topRight: Radius.circular(kBorderRadius.topRight.x),

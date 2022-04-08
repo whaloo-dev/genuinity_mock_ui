@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
-import 'package:whaloo_genuinity/pages/codes_creation/widgets/codes_creation_form.dart';
-import 'package:whaloo_genuinity/pages/codes_creation/widgets/codes_creation_header.dart';
+import 'package:whaloo_genuinity/pages/creation/widgets/creation_form.dart';
+import 'package:whaloo_genuinity/pages/creation/widgets/creation_header.dart';
 
-class CodesCreationWizard extends StatelessWidget {
-  const CodesCreationWizard({
+class CodesCreationDialog extends StatelessWidget {
+  const CodesCreationDialog({
     Key? key,
   }) : super(key: key);
 
@@ -14,9 +14,9 @@ class CodesCreationWizard extends StatelessWidget {
       Card(
         child: Column(
           children: const [
-            CodesCreationHeader(),
+            CreationHeader(),
             Expanded(
-              child: CodesCreationForm(),
+              child: CreationForm(),
             ),
           ],
         ),

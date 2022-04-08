@@ -11,8 +11,8 @@ import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
 final controller = codeDetailController;
 
-class CodeDetailBody extends StatelessWidget {
-  CodeDetailBody({
+class DetailBody extends StatelessWidget {
+  DetailBody({
     Key? key,
   }) : super(key: key);
 
