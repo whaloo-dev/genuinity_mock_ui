@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:whaloo_genuinity/helpers/localization.dart';
-
 enum TimeSpan {
   oneHour,
   oneDay,
@@ -27,7 +24,7 @@ extension TimeSpanExt on TimeSpan {
       case TimeSpan.twelveMonthes:
         return "Show the last 12 monthes";
       case TimeSpan.all:
-        return "Show all";
+        return "Show All";
     }
   }
 
@@ -90,6 +87,23 @@ extension SortingExt on Sorting {
       case Sorting.scanErrorsDesc:
         return "descending";
     }
+  }
+
+  bool isAsk() {
+    switch (this) {
+      case Sorting.dateAsc:
+      case Sorting.scanErrorsAsc:
+      case Sorting.scansAsc:
+        return true;
+      case Sorting.dateDesc:
+      case Sorting.scansDesc:
+      case Sorting.scanErrorsDesc:
+        return false;
+    }
+  }
+
+  bool isDesc() {
+    return !isAsk();
   }
 }
 

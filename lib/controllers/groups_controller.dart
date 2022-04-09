@@ -6,8 +6,6 @@ import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 
-//TODO Codes : add sorting
-//TODO Codes : add search
 class GroupsController extends GetxController {
   static GroupsController instance = Get.find();
 

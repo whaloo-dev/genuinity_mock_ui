@@ -79,16 +79,6 @@ class CodeTile extends StatelessWidget {
                       _variantWidget(),
                       _statusWidget(),
                       _lastModifiedDateWidget(),
-                      // TODO cleaning
-                      // code.exportDate != null
-                      //     ? _exportDateWidget()
-                      //     : const SizedBox(),
-                      // code.lastScanDate != null
-                      //     ? _lastScanningDateWidget()
-                      //     : const SizedBox(),
-                      // code.expirationDate != null
-                      // ? _expirationDateWidget()
-                      // : const SizedBox(),
                       _codeScanCountWidget(),
                       _codeScanErrorCountWidget(),
                       const SizedBox(),
@@ -259,68 +249,6 @@ class CodeTile extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _exportDateWidget() {
-  //   return Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-  //     child: Row(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: [
-  //         stackIcon(
-  //           icon1: Icons.calendar_month_rounded,
-  //           icon2: Icons.download_rounded,
-  //         ),
-  //         const SizedBox(width: kSpacing),
-  //         Flexible(
-  //           child: Text(
-  //             "Exported : ${compactDateTimeFormat.format(code.exportDate!)}",
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // Widget _lastScanningDateWidget() {
-  //   return Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-  //     child: Row(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: [
-  //         stackIcon(
-  //           icon1: Icons.calendar_month_rounded,
-  //           icon2: Icons.qr_code_scanner_rounded,
-  //         ),
-  //         const SizedBox(width: kSpacing),
-  //         Flexible(
-  //           child: Text(
-  //             "Last Scanned : ${compactDateTimeFormat.format(code.lastScanDate!)}",
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // Widget _expirationDateWidget() {
-  //   return Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-  //     child: Row(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: [
-  //         stackIcon(
-  //             icon1: Icons.calendar_month_rounded,
-  //             icon2: Icons.recycling_rounded),
-  //         const SizedBox(width: kSpacing),
-  //         Flexible(
-  //           child: Text(
-  //             "Expires : ${dateFormat.format(code.expirationDate!)}",
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget _indexWidget() {
     return Container(

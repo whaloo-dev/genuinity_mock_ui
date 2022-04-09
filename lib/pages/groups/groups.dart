@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/pages/groups/widgets/groups_table.dart';
 import 'package:whaloo_genuinity/pages/groups/widgets/groups_table_empty.dart';
-import 'package:whaloo_genuinity/pages/groups/widgets/filtering_toolbar.dart';
+import 'package:whaloo_genuinity/widgets/filtering_toolbar.dart';
 
 final controller = groupsController;
 

@@ -20,9 +20,10 @@ class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "locknloadairsoft";
   // static const _demoStoreName = "thebookbundler";
   // static const _demoStoreName = "commonfarmflowers";
-  static const _demoStoreName = "atelierdubraceletparisien";
+  // static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";
   // static const _demoStoreName = "seriouswatches";
+  static const _demoStoreName = "simplybagz";
 
   late String _assetsPath;
 

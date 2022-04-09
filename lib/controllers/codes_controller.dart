@@ -9,8 +9,6 @@ import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/url_launcher.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 
-//TODO Codes : add sorting
-//TODO Codes : add search
 //TODO Codes : add test verify code
 class CodesController extends GetxController {
   static CodesController instance = Get.find();

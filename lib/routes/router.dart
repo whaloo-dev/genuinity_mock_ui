@@ -19,7 +19,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case colorsPageRoute:
       return _standardPageRoute(const ColorsPage());
     default:
-      return _standardPageRoute(const DashboardPage());
+      return _standardPageRoute(GroupsPage());
   }
 }
 
