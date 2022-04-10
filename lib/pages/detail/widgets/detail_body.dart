@@ -13,12 +13,9 @@ import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 final controller = detailController;
 
 class DetailBody extends StatelessWidget {
-  DetailBody({
+  const DetailBody({
     Key? key,
   }) : super(key: key);
-
-  final TextStyle? textStyleLabel = Get.theme.textTheme.subtitle2!
-      .copyWith(color: Get.theme.hintColor, fontSize: 12);
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +46,11 @@ class DetailBody extends StatelessWidget {
 
   Widget _qrCodeWidget() {
     Code code = controller.code()!;
+    final TextStyle? textStyleLabel = menuController
+        .theme()
+        .textTheme
+        .subtitle2!
+        .copyWith(color: menuController.theme().hintColor, fontSize: 12);
     return ListTile(
       title: Column(
         children: [
@@ -110,7 +112,7 @@ class DetailBody extends StatelessWidget {
           splashRadius: kSplashRadius,
           icon: Icon(
             Icons.copy_rounded,
-            color: Get.theme.hintColor,
+            color: menuController.theme().hintColor,
           ),
           onPressed: () {
             creationController.createFrom(code);
@@ -122,7 +124,7 @@ class DetailBody extends StatelessWidget {
           splashRadius: kSplashRadius,
           icon: Icon(
             Icons.delete_outline_rounded,
-            color: Get.theme.hintColor,
+            color: menuController.theme().hintColor,
           ),
           onPressed: () {
             codesController.deleteCode(code);
@@ -133,7 +135,7 @@ class DetailBody extends StatelessWidget {
           splashRadius: kSplashRadius,
           icon: Icon(
             Icons.print_outlined,
-            color: Get.theme.hintColor,
+            color: menuController.theme().hintColor,
           ),
           onPressed: () {
             codesController.printCode(code);
@@ -172,7 +174,7 @@ class DetailBody extends StatelessWidget {
                       Text(
                         "SKU : ${variant.sku}",
                         style: TextStyle(
-                          color: Get.theme.hintColor,
+                          color: menuController.theme().hintColor,
                           fontSize: 12,
                         ),
                       ),
@@ -313,6 +315,11 @@ class DetailBody extends StatelessWidget {
     required Widget info,
     String? toClipboard,
   }) {
+    final TextStyle? textStyleLabel = menuController
+        .theme()
+        .textTheme
+        .subtitle2!
+        .copyWith(color: menuController.theme().hintColor, fontSize: 12);
     return Padding(
       padding: const EdgeInsets.only(top: kSpacing),
       child: ListTile(
@@ -347,7 +354,7 @@ class DetailBody extends StatelessWidget {
       icon: Icon(
         Icons.copy,
         size: 15,
-        color: Get.theme.hintColor,
+        color: menuController.theme().hintColor,
       ),
       splashRadius: kSplashRadius,
       onPressed: () {

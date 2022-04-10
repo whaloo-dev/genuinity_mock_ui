@@ -22,67 +22,68 @@ const double kLargeImage = 75;
 const kOptionsMaxHeight = 200.0;
 
 // Theme
-var colorScheme = lightColorScheme;
-// var colorScheme = ColorScheme.fromSeed(
-//     seedColor: Colors.transparent, brightness: Brightness.dark);
+final ThemeData lightThemeData = _createThemeFromSchem(lightColorScheme);
+final ThemeData darkThemeData = _createThemeFromSchem(darkColorScheme);
 
-final ThemeData themeData = ThemeData(
-  colorScheme: colorScheme,
-  inputDecorationTheme: _inputDecorationTheme,
-  cardTheme: _cardTheme,
-  textTheme: _textTheme,
-  pageTransitionsTheme: _pageTransitionsTheme,
-  scrollbarTheme: _scrollbarThemeData,
-  floatingActionButtonTheme: _floatingActionButtonThemeData,
-  listTileTheme: _listTileThemeData,
-  checkboxTheme: _checkboxTheme,
-);
+_createThemeFromSchem(ColorScheme colorScheme) {
+  final _checkboxTheme = CheckboxThemeData(
+    checkColor: MaterialStateProperty.all(colorScheme.onPrimary),
+    fillColor: MaterialStateProperty.all(colorScheme.primary.withOpacity(0.6)),
+    splashRadius: kSplashRadius,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5),
+    ),
+  );
 
-final _checkboxTheme = CheckboxThemeData(
-  checkColor: MaterialStateProperty.all(colorScheme.onPrimary),
-  fillColor: MaterialStateProperty.all(colorScheme.primary.withOpacity(0.6)),
-  splashRadius: kSplashRadius,
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(5),
-  ),
-);
+  final _listTileThemeData = ListTileThemeData(
+    selectedTileColor: colorScheme.primary.withOpacity(0.05),
+    textColor: colorScheme.onBackground,
+  );
 
-final _listTileThemeData = ListTileThemeData(
-  selectedTileColor: colorScheme.primary.withOpacity(0.05),
-  textColor: colorScheme.onBackground,
-);
+  final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderRadius: kBorderRadius,
+    ),
+  );
 
-final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
-  border: OutlineInputBorder(
-    borderRadius: kBorderRadius,
-  ),
-);
+  final CardTheme _cardTheme = CardTheme(
+    elevation: kElevation,
+    shape: RoundedRectangleBorder(
+      borderRadius: kBorderRadius,
+    ),
+  );
 
-final CardTheme _cardTheme = CardTheme(
-  elevation: kElevation,
-  shape: RoundedRectangleBorder(
-    borderRadius: kBorderRadius,
-  ),
-);
+  final TextTheme _textTheme = GoogleFonts.robotoTextTheme().apply(
+    bodyColor: colorScheme.onBackground,
+  );
 
-final TextTheme _textTheme = GoogleFonts.robotoTextTheme().apply(
-  bodyColor: colorScheme.onBackground,
-);
+  final _floatingActionButtonThemeData = FloatingActionButtonThemeData(
+    elevation: kElevation,
+    focusElevation: kElevation + 1,
+    hoverElevation: kElevation + 1,
+    shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+  );
+
+  const ScrollbarThemeData _scrollbarThemeData = ScrollbarThemeData(
+    isAlwaysShown: true,
+  );
+
+  return ThemeData(
+    colorScheme: colorScheme,
+    inputDecorationTheme: _inputDecorationTheme,
+    cardTheme: _cardTheme,
+    textTheme: _textTheme,
+    pageTransitionsTheme: _pageTransitionsTheme,
+    scrollbarTheme: _scrollbarThemeData,
+    floatingActionButtonTheme: _floatingActionButtonThemeData,
+    listTileTheme: _listTileThemeData,
+    checkboxTheme: _checkboxTheme,
+  );
+}
 
 const PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(
   builders: {
     TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
     TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
   },
-);
-
-final _floatingActionButtonThemeData = FloatingActionButtonThemeData(
-  elevation: kElevation,
-  focusElevation: kElevation + 1,
-  hoverElevation: kElevation + 1,
-  shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
-);
-
-const ScrollbarThemeData _scrollbarThemeData = ScrollbarThemeData(
-  isAlwaysShown: true,
 );

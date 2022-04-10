@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
@@ -39,7 +39,7 @@ class SideMenuItemWidget extends StatelessWidget {
               child: Container(
                 width: 6,
                 height: 40,
-                color: colorScheme.onSurface,
+                color: menuController.theme().colorScheme.onSurface,
               ),
               maintainSize: true,
               maintainState: true,

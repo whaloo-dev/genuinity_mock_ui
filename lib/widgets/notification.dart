@@ -1,5 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 
 class NotificationWidget extends StatelessWidget {
@@ -7,30 +9,30 @@ class NotificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Badge(
-      elevation: kElevation,
-      toAnimate: true,
-      shape: BadgeShape.square,
-      borderRadius: BorderRadius.circular(10),
-      badgeContent: Text(
-        "10",
-        style: TextStyle(
-          color: colorScheme.onPrimary,
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      badgeColor: colorScheme.primary,
-      position: const BadgePosition(
-        isCenter: false,
-        end: 0,
-        top: -1,
-      ),
-      child: IconButton(
-        onPressed: () {},
-        splashRadius: kSplashRadius,
-        icon: const Icon(Icons.notifications_none_rounded),
-      ),
-    );
+    return Obx(() => Badge(
+          elevation: kElevation,
+          toAnimate: true,
+          shape: BadgeShape.square,
+          borderRadius: BorderRadius.circular(10),
+          badgeContent: Text(
+            "10",
+            style: TextStyle(
+              color: menuController.theme().colorScheme.onPrimary,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          badgeColor: menuController.theme().colorScheme.primary,
+          position: const BadgePosition(
+            isCenter: false,
+            end: 0,
+            top: -1,
+          ),
+          child: IconButton(
+            onPressed: () {},
+            splashRadius: kSplashRadius,
+            icon: const Icon(Icons.notifications_none_rounded),
+          ),
+        ));
   }
 }

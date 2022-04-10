@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
 
@@ -23,7 +24,8 @@ showActionDoneNotification(
           ? const Duration(milliseconds: 1500)
           : const Duration(seconds: 3),
       animationDuration: kAnimationDuration,
-      backgroundColor: colorScheme.primaryContainer.withOpacity(0.7),
+      backgroundColor:
+          menuController.theme().colorScheme.primaryContainer.withOpacity(0.7),
       barBlur: 1,
       forwardAnimationCurve: Curves.easeInOut,
       reverseAnimationCurve: Curves.easeInBack,
@@ -32,7 +34,7 @@ showActionDoneNotification(
           Text(
             "$text ",
             style: TextStyle(
-              color: colorScheme.onSurface,
+              color: menuController.theme().colorScheme.onSurface,
             ),
           ),
           const SizedBox(width: kSpacing),
@@ -43,20 +45,25 @@ showActionDoneNotification(
                 onCancel();
               },
               style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(colorScheme.primaryContainer),
+                backgroundColor: MaterialStateProperty.all(
+                    menuController.theme().colorScheme.primaryContainer),
               ),
               child: Row(
                 children: [
                   Icon(
                     Icons.undo_outlined,
-                    color: colorScheme.onPrimaryContainer,
+                    color:
+                        menuController.theme().colorScheme.onPrimaryContainer,
                     size: 15,
                   ),
                   const SizedBox(width: kSpacing),
                   Text(
                     "UNDO",
-                    style: TextStyle(color: colorScheme.onPrimaryContainer),
+                    style: TextStyle(
+                        color: menuController
+                            .theme()
+                            .colorScheme
+                            .onPrimaryContainer),
                   )
                 ],
               ),
@@ -196,7 +203,7 @@ Widget childIndicator() {
         Expanded(child: Container()),
         Icon(
           Icons.subdirectory_arrow_right_rounded,
-          color: colorScheme.outline.withOpacity(0.6),
+          color: menuController.theme().colorScheme.outline.withOpacity(0.6),
         ),
       ],
     ),

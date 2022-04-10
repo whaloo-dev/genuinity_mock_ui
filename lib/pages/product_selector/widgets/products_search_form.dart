@@ -145,7 +145,7 @@ class ProductsSearchForm extends StatelessWidget {
             bottom: -2,
             child: Container(
               padding: const EdgeInsets.all(2),
-              color: colorScheme.surface,
+              color: menuController.theme().colorScheme.surface,
               child: const Text(
                 "SKU",
                 style: TextStyle(

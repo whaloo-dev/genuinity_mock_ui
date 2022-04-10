@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whaloo_genuinity/constants/style.dart';
+import 'package:get/get.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 
 class WidgetWithOverlay extends StatefulWidget {
   final bool Function() shouldShowOverlay;
@@ -67,10 +68,11 @@ class WidgetWithOverlayState extends State<WidgetWithOverlay> {
         highlightColor: Colors.transparent,
         focusColor: Colors.transparent,
         hoverColor: Colors.transparent,
-        child: Container(
-          color: widget.outsideColor ?? colorScheme.shadow.withOpacity(0.2),
-          child: child,
-        ),
+        child: Obx(() => Container(
+              color: widget.outsideColor ??
+                  menuController.theme().colorScheme.shadow.withOpacity(0.2),
+              child: child,
+            )),
       ),
     );
   }

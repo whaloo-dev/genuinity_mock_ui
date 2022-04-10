@@ -176,7 +176,7 @@ class CreationForm extends StatelessWidget {
                             child: Text(
                               "SKU : ${option.sku}",
                               style: TextStyle(
-                                color: Get.theme.hintColor,
+                                color: menuController.theme().hintColor,
                                 fontSize: 12,
                               ),
                             ),

@@ -5,6 +5,7 @@ import 'package:whaloo_genuinity/helpers/url_launcher.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 import 'package:whaloo_genuinity/widgets/logo.dart';
 import 'package:whaloo_genuinity/widgets/side_menu_item.dart';
+import 'package:whaloo_genuinity/widgets/theme_switcher.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -16,14 +17,10 @@ class SideMenu extends StatelessWidget {
         const SizedBox(height: kSpacing),
         const Logo(),
         const SizedBox(height: kSpacing),
-        const Divider(
-          thickness: 1,
-          height: 1,
-        ),
+        const Divider(thickness: 1, height: 1),
         const SizedBox(height: kSpacing),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: siteMenuItems
+        Column(mainAxisSize: MainAxisSize.min, children: [
+          ...siteMenuItems
               .map(
                 (item) => SideMenuItemWidget(
                   menuItem: item,
@@ -39,7 +36,13 @@ class SideMenu extends StatelessWidget {
                 ),
               )
               .toList(),
-        )
+          ...<Widget>[
+            const SizedBox(height: kSpacing),
+            const Divider(thickness: 1, height: 1),
+            const SizedBox(height: kSpacing),
+            const ThemeSwitcher(),
+          ],
+        ]),
       ],
     );
   }

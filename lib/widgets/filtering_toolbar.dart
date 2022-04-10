@@ -34,44 +34,47 @@ class FilteringToolbar extends StatelessWidget {
   Widget _header() {
     return Obx(
       () {
-        return Row(
-          children: [
-            TextButton.icon(
-              label: AnimatedSize(
-                duration: kAnimationDuration,
-                child: SizedBox(
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    children: [
-                      if (controller.codeStatus() != null)
-                        _statusWidget(
-                          controller.codeStatus()!,
-                          selected: true,
-                          readOnly: true,
-                        ),
-                      const SizedBox(width: kSpacing),
-                      if (controller.sorting() != Sorting.dateDesc)
-                        Chip(
-                          label: _sortingOption(
-                            controller.sorting(),
-                            isSelected: true,
-                            showNameExtension: false,
+        return Container(
+          margin: const EdgeInsets.only(top: kSpacing),
+          child: Row(
+            children: [
+              TextButton.icon(
+                label: AnimatedSize(
+                  duration: kAnimationDuration,
+                  child: SizedBox(
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [
+                        if (controller.codeStatus() != null)
+                          _statusWidget(
+                            controller.codeStatus()!,
+                            selected: true,
+                            readOnly: true,
                           ),
-                        ),
-                    ],
+                        const SizedBox(width: kSpacing),
+                        if (controller.sorting() != Sorting.dateDesc)
+                          Chip(
+                            label: _sortingOption(
+                              controller.sorting(),
+                              isSelected: true,
+                              showNameExtension: false,
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
+                icon: const Icon(Icons.tune_rounded),
+                onPressed: () {
+                  controller.changeExpanded(!controller.expanded());
+                },
               ),
-              icon: const Icon(Icons.tune_rounded),
-              onPressed: () {
-                controller.changeExpanded(!controller.expanded());
-              },
-            ),
-            Expanded(
-              child: Container(),
-            ),
-            _timeSpanWidget(),
-          ],
+              Expanded(
+                child: Container(),
+              ),
+              _timeSpanWidget(),
+            ],
+          ),
         );
       },
     );
@@ -93,7 +96,7 @@ class FilteringToolbar extends StatelessWidget {
                 style: TextStyle(
                     fontWeight:
                         timeSpan == selectedTimeSpan ? FontWeight.bold : null,
-                    color: Get.theme.colorScheme.onBackground),
+                    color: menuController.theme().colorScheme.onBackground),
               ),
             ),
           )
@@ -282,7 +285,7 @@ class FilteringToolbar extends StatelessWidget {
               style: TextStyle(
                 fontSize: fontSize,
                 fontWeight: isSelected ? FontWeight.bold : null,
-                color: Get.theme.colorScheme.onBackground,
+                color: menuController.theme().colorScheme.onBackground,
               ),
               children: [
                 if (showNameExtension)
@@ -290,7 +293,7 @@ class FilteringToolbar extends StatelessWidget {
                     text: " (${sorting.nameExtension()})",
                     style: TextStyle(
                       fontSize: 11,
-                      color: Get.theme.hintColor,
+                      color: menuController.theme().hintColor,
                     ),
                   ),
               ],

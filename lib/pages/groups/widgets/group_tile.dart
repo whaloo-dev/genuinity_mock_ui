@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models/code.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
@@ -72,19 +73,19 @@ class GroupTile extends StatelessWidget {
   }
 
   Widget _codesCountWidget(int count) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        stackIcon(
-          icon1: Icons.qr_code_rounded,
-          icon1Color: Get.theme.hintColor,
-        ),
-        Text(
-          "Codes : ${numberFormat.format(count)}",
-          style: TextStyle(color: Get.theme.hintColor),
-        ),
-      ],
-    );
+    return Obx(() => Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            stackIcon(
+              icon1: Icons.qr_code_rounded,
+              icon1Color: menuController.theme().hintColor,
+            ),
+            Text(
+              "Codes : ${numberFormat.format(count)}",
+              style: TextStyle(color: menuController.theme().hintColor),
+            ),
+          ],
+        ));
   }
 
   Widget _codeScanCountWidget(int count) {
@@ -97,20 +98,20 @@ class GroupTile extends StatelessWidget {
       maintainSize: true,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            stackIcon(
-              icon1: Icons.qr_code_scanner_rounded,
-              icon1Color: Get.theme.hintColor,
-            ),
-            const SizedBox(width: kSpacing),
-            Text(
-              "Total Scans : ${numberFormat.format(count)}",
-              style: TextStyle(color: Get.theme.hintColor),
-            ),
-          ],
-        ),
+        child: Obx(() => Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                stackIcon(
+                  icon1: Icons.qr_code_scanner_rounded,
+                  icon1Color: menuController.theme().hintColor,
+                ),
+                const SizedBox(width: kSpacing),
+                Text(
+                  "Total Scans : ${numberFormat.format(count)}",
+                  style: TextStyle(color: menuController.theme().hintColor),
+                ),
+              ],
+            )),
       ),
     );
   }
@@ -125,22 +126,22 @@ class GroupTile extends StatelessWidget {
       maintainSize: true,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            stackIcon(
-              icon1: Icons.qr_code_scanner_rounded,
-              icon1Color: Get.theme.hintColor,
-              icon2: FontAwesomeIcons.exclamationCircle,
-              icon2Color: kErrorColor,
-            ),
-            const SizedBox(width: kSpacing),
-            Text(
-              "Total Scan Errors : ${numberFormat.format(count)}",
-              style: TextStyle(color: Get.theme.hintColor),
-            ),
-          ],
-        ),
+        child: Obx(() => Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                stackIcon(
+                  icon1: Icons.qr_code_scanner_rounded,
+                  icon1Color: menuController.theme().hintColor,
+                  icon2: FontAwesomeIcons.exclamationCircle,
+                  icon2Color: kErrorColor,
+                ),
+                const SizedBox(width: kSpacing),
+                Text(
+                  "Total Scan Errors : ${numberFormat.format(count)}",
+                  style: TextStyle(color: menuController.theme().hintColor),
+                ),
+              ],
+            )),
       ),
     );
   }
@@ -148,22 +149,22 @@ class GroupTile extends StatelessWidget {
   Widget _updateDateWidget(DateTime modificationDate) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          stackIcon(
-            icon1: Icons.calendar_month_rounded,
-            icon1Color: Get.theme.hintColor,
-          ),
-          const SizedBox(width: kSpacing),
-          Flexible(
-            child: Text(
-              "Last Modified : ${compactDateTimeFormat.format(modificationDate)}",
-              style: TextStyle(color: Get.theme.hintColor),
-            ),
-          ),
-        ],
-      ),
+      child: Obx(() => Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              stackIcon(
+                icon1: Icons.calendar_month_rounded,
+                icon1Color: menuController.theme().hintColor,
+              ),
+              const SizedBox(width: kSpacing),
+              Flexible(
+                child: Text(
+                  "Last Modified : ${compactDateTimeFormat.format(modificationDate)}",
+                  style: TextStyle(color: menuController.theme().hintColor),
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

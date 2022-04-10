@@ -20,7 +20,7 @@ class ProfileWidget extends StatelessWidget {
                         Container(
                           width: 1,
                           height: 22,
-                          color: colorScheme.outline,
+                          color: menuController.theme().colorScheme.outline,
                         ),
                         const SizedBox(width: kSpacing),
                         Text(

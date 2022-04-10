@@ -20,7 +20,7 @@ Widget topNavigationBar(GlobalKey<ScaffoldState> key) => ListTile(
         children: [
           Obx(
             () => Text(
-              menuController.activeItem.value.name,
+              menuController.activeItem().name,
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -28,7 +28,7 @@ Widget topNavigationBar(GlobalKey<ScaffoldState> key) => ListTile(
             ),
           ),
           Expanded(child: Container()),
-          // const NotificationWidget(),
+          // TODO const NotificationWidget(),
           const SizedBox(width: kSpacing),
           const ProfileWidget(),
         ],

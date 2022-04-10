@@ -9,46 +9,45 @@ import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 class CodesHeader extends StatelessWidget {
   final Product product;
 
-  final Color color = Get.theme.colorScheme.primary;
-  final Color onColor = Get.theme.colorScheme.onPrimary;
-
-  CodesHeader({
+  const CodesHeader({
     Key? key,
     required this.product,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: color,
-      elevation: 1,
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(kBorderRadius.topLeft.x),
-          topRight: Radius.circular(kBorderRadius.topRight.x),
-        ),
-      ),
-      child: Column(
-        children: [
-          ListTile(
-            dense: true,
-            contentPadding: const EdgeInsets.symmetric(horizontal: kSpacing),
-            title: _productTileBody(),
-            trailing: codesMenu(product, iconColor: onColor),
-            onTap: () {
-              navigationController.goBack();
-            },
-            subtitle: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              spacing: kSpacing,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: const [],
+    return Obx(() => Card(
+          color: menuController.theme().colorScheme.primary,
+          elevation: 1,
+          margin: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(kBorderRadius.topLeft.x),
+              topRight: Radius.circular(kBorderRadius.topRight.x),
             ),
           ),
-        ],
-      ),
-    );
+          child: Column(
+            children: [
+              ListTile(
+                dense: true,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: kSpacing),
+                title: _productTileBody(),
+                trailing: codesMenu(product,
+                    iconColor: menuController.theme().colorScheme.onPrimary),
+                onTap: () {
+                  navigationController.goBack();
+                },
+                subtitle: Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  spacing: kSpacing,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: const [],
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 
   Widget _productTileBody() {
@@ -57,10 +56,10 @@ class CodesHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: onColor,
-            ),
+            Obx(() => Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: menuController.theme().colorScheme.onPrimary,
+                )),
             photoWidget(product.image, fixedSize: kSmallImage),
             const SizedBox(width: kSpacing),
             Expanded(
@@ -78,12 +77,12 @@ class CodesHeader extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Flexible(
-          child: Text(
-            product.title,
-            style: TextStyle(
-              color: onColor,
-            ),
-          ),
+          child: Obx(() => Text(
+                product.title,
+                style: TextStyle(
+                  color: menuController.theme().colorScheme.onPrimary,
+                ),
+              )),
         ),
       ],
     );
