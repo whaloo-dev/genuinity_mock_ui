@@ -13,7 +13,7 @@ class DetailDialog extends StatelessWidget {
       Card(
         child: Stack(
           children: [
-            DetailBody(),
+            const DetailBody(),
             Positioned(
               top: 0,
               right: 0,

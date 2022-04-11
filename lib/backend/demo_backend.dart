@@ -22,8 +22,8 @@ class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "commonfarmflowers";
   // static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";
-  // static const _demoStoreName = "seriouswatches";
-  static const _demoStoreName = "simplybagz";
+  static const _demoStoreName = "seriouswatches";
+  // static const _demoStoreName = "simplybagz";
 
   late String _assetsPath;
 
@@ -252,13 +252,18 @@ class DemoBackend extends GetConnect implements Backend {
   @override
   Future<List<Group>> loadGroups({
     required Sorting sorting,
+    required TimeSpan timeSpan,
   }) {
     return Future.delayed(Duration.zero, () {
       Get.log("Backend : loadGroups...");
-      final groups = _codes.values.toList();
-      groups.sort(
-        sorting.groupsComparator(),
-      );
+      var groups = _codes.values.toList();
+      if (timeSpan != TimeSpan.all) {
+        final minDateTime = DateTime.now().subtract(timeSpan.duration()!);
+        groups = groups
+            .where((group) => group.lastModified().isAfter(minDateTime))
+            .toList();
+      }
+      groups.sort(sorting.groupsComparator());
       return groups;
     });
   }
@@ -267,6 +272,7 @@ class DemoBackend extends GetConnect implements Backend {
   Future<List<Code>> loadCodes({
     required Product product,
     required Sorting sorting,
+    required TimeSpan timeSpan,
     CodeStatus? codeStatusFilter,
   }) async {
     Get.log("Backend : loadCodes...");
@@ -279,6 +285,12 @@ class DemoBackend extends GetConnect implements Backend {
       if (codeStatusFilter != null) {
         codes =
             codes.where((code) => code.status() == codeStatusFilter).toList();
+      }
+      if (timeSpan != TimeSpan.all) {
+        final minDateTime = DateTime.now().subtract(timeSpan.duration()!);
+        codes = codes
+            .where((code) => code.lastModified().isAfter(minDateTime))
+            .toList();
       }
       codes.sort(
         sorting.codesComparator(),

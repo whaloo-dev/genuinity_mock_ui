@@ -43,6 +43,7 @@ class CodesController extends GetxController {
           .loadCodes(
         product: _currentProduct.value!,
         sorting: filteringController.sorting(),
+        timeSpan: filteringController.timeSpan(),
         codeStatusFilter: filteringController.codeStatus(),
       )
           .then((codes) {

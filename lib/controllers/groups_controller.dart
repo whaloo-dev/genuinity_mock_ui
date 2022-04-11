@@ -18,10 +18,10 @@ class GroupsController extends GetxController {
   void onReady() {
     super.onReady();
     Backend.instance.addListener(BackendEvent.groupUpdated, ({arguments}) {
-      load(showDataLoading: false);
+      _load(refresh: false);
     });
     filteringController.addFilteringListener(() {
-      load();
+      _load(refresh: true);
     });
   }
 
@@ -56,7 +56,12 @@ class GroupsController extends GetxController {
     if (refresh) {
       _isLoadingData.value = true;
     }
-    Backend.instance.loadGroups(sorting: filteringController.sorting()).then(
+    Backend.instance
+        .loadGroups(
+      sorting: filteringController.sorting(),
+      timeSpan: filteringController.timeSpan(),
+    )
+        .then(
       (groups) {
         _groups.value = groups;
         if (refresh) {

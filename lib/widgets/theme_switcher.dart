@@ -11,29 +11,36 @@ class ThemeSwitcher extends StatelessWidget {
     return Obx(
       () {
         final isDark = menuController.theme().brightness == Brightness.dark;
-        return Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              isDark ? Icons.light_mode : Icons.light_mode_outlined,
-              size: 20,
-            ),
-            Switch(
-              value: isDark,
-              onChanged: (isDark) {
-                if (isDark) {
-                  menuController.changeTheme(darkThemeData);
-                } else {
-                  menuController.changeTheme(lightThemeData);
-                }
-              },
-            ),
-            Icon(
-              isDark ? Icons.dark_mode_outlined : Icons.dark_mode,
-              size: 20,
-            ),
-          ],
+        return TextButton(
+          onPressed: () {
+            if (isDark) {
+              menuController.changeTheme(lightThemeData);
+            } else {
+              menuController.changeTheme(darkThemeData);
+            }
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                isDark ? Icons.light_mode_outlined : Icons.light_mode,
+              ),
+              Switch(
+                value: isDark,
+                onChanged: (isDark) {
+                  if (isDark) {
+                    menuController.changeTheme(darkThemeData);
+                  } else {
+                    menuController.changeTheme(lightThemeData);
+                  }
+                },
+              ),
+              Icon(
+                isDark ? Icons.dark_mode : Icons.dark_mode_outlined,
+              ),
+            ],
+          ),
         );
       },
     );

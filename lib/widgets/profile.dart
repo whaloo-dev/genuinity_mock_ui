@@ -32,6 +32,7 @@ class ProfileWidget extends StatelessWidget {
                     ),
                   Card(
                     elevation: 1,
+                    color: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),

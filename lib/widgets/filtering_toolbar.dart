@@ -111,12 +111,12 @@ class FilteringToolbar extends StatelessWidget {
     return Obx(
       () => Container(
         margin: const EdgeInsets.only(top: kSpacing),
-        height: controller.expanded() ? 200 : 0,
+        height: controller.expanded() ? 175 : 0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _selectedProduct(),
-            _filterByCodeStatus(),
+            //TODO _filterByCodeStatus(),
             _sortBy(),
             const SizedBox(width: kSpacing),
           ],
@@ -146,34 +146,34 @@ class FilteringToolbar extends StatelessWidget {
     );
   }
 
-  Widget _filterByCodeStatus() {
-    return Obx(() {
-      CodeStatus? codeStatus = controller.codeStatus();
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text("FILTER BY STATUS",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
-          const SizedBox(height: kSpacing),
-          ...CodeStatus.values
-              .map(
-                (status) => _statusWidget(
-                  status,
-                  selected: codeStatus == status,
-                  onPressed: () {
-                    controller
-                        .changeCodeStatus(codeStatus == status ? null : status);
-                    Future.delayed(kAnimationDuration, () {
-                      controller.changeExpanded(false);
-                    });
-                  },
-                ),
-              )
-              .toList()
-        ],
-      );
-    });
-  }
+  // Widget _filterByCodeStatus() {
+  //   return Obx(() {
+  //     CodeStatus? codeStatus = controller.codeStatus();
+  //     return Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         const Text("FILTER BY STATUS",
+  //             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+  //         const SizedBox(height: kSpacing),
+  //         ...CodeStatus.values
+  //             .map(
+  //               (status) => _statusWidget(
+  //                 status,
+  //                 selected: codeStatus == status,
+  //                 onPressed: () {
+  //                   controller
+  //                       .changeCodeStatus(codeStatus == status ? null : status);
+  //                   Future.delayed(kAnimationDuration, () {
+  //                     controller.changeExpanded(false);
+  //                   });
+  //                 },
+  //               ),
+  //             )
+  //             .toList()
+  //       ],
+  //     );
+  //   });
+  // }
 
   Widget _statusWidget(
     CodeStatus status, {

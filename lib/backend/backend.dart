@@ -37,11 +37,13 @@ abstract class Backend {
 
   Future<List<Group>> loadGroups({
     required Sorting sorting,
+    required TimeSpan timeSpan,
   });
 
   Future<List<Code>> loadCodes({
     required Product product,
     required Sorting sorting,
+    required TimeSpan timeSpan,
     CodeStatus? codeStatusFilter,
   });
 

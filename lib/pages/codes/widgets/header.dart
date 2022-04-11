@@ -77,12 +77,15 @@ class CodesHeader extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Flexible(
-          child: Obx(() => Text(
-                product.title,
-                style: TextStyle(
-                  color: menuController.theme().colorScheme.onPrimary,
-                ),
-              )),
+          child: Obx(
+            () => Text(
+              product.title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: menuController.theme().colorScheme.onPrimary,
+              ),
+            ),
+          ),
         ),
       ],
     );
