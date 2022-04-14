@@ -13,42 +13,55 @@ const colorsPageRoute = "/main/colors";
 const shopifyPageRoute = "/main/shopify";
 
 //Menu Items
-final productsPageItem =
-    MainMenuItem(groupsPageRoute, "Codes", Icons.qr_code_rounded);
+final productsPageItem = MainMenuItem(
+  groupsPageRoute,
+  "Codes",
+  Icons.qr_code_rounded,
+  Icons.qr_code_rounded,
+);
 
-final dashboardPageItem =
-    MainMenuItem(dashboardPageRoute, "Statistics", Icons.area_chart_outlined);
+final dashboardPageItem = MainMenuItem(
+  dashboardPageRoute,
+  "Dashboard",
+  Icons.area_chart_outlined,
+  Icons.area_chart,
+);
 
 final reportsPageItem = MainMenuItem(
   reportsPageRoute,
   "Reports",
-  Icons.mail_outline_rounded,
+  Icons.flag_outlined,
+  Icons.flag,
 );
 
 final settingsPageItem = MainMenuItem(
   settingsPageRoute,
   "Settings",
   Icons.settings_outlined,
+  Icons.settings,
 );
 
 final colorsPageItem = MainMenuItem(
   colorsPageRoute,
   "Colors (Dev)",
   Icons.color_lens_outlined,
+  Icons.color_lens,
 );
 
 final shopifyPageItem = MainMenuItem(
   shopifyPageRoute,
   "Shopify Admin",
   Icons.shopify_outlined,
+  Icons.shopify,
 );
 
-final nonePageItem = MainMenuItem("", "", Icons.not_accessible);
+final nonePageItem =
+    MainMenuItem("", "", Icons.not_accessible, Icons.not_accessible);
 
 List<MainMenuItem> siteMenuItems = [
+  dashboardPageItem,
   productsPageItem,
   reportsPageItem,
-  dashboardPageItem,
   settingsPageItem,
   if (kDebugMode) colorsPageItem,
   if (kIsWeb) shopifyPageItem,
@@ -57,13 +70,22 @@ List<MainMenuItem> siteMenuItems = [
 class MainMenuItem {
   final String name;
   final String route;
+  final IconData outlinedIconData;
   final IconData iconData;
 
-  Widget icon() {
+  Widget icon(bool selected) {
+    if (selected) {
+      return Icon(iconData);
+    }
     return Icon(
-      iconData,
+      outlinedIconData,
     );
   }
 
-  MainMenuItem(this.route, this.name, this.iconData);
+  MainMenuItem(
+    this.route,
+    this.name,
+    this.outlinedIconData,
+    this.iconData,
+  );
 }

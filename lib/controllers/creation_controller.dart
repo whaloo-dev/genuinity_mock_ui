@@ -9,7 +9,7 @@ import 'package:whaloo_genuinity/backend/models/product.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
-import 'package:whaloo_genuinity/pages/creation/creation.dart';
+import 'package:whaloo_genuinity/pages/codes/creation/creation.dart';
 
 class CreationController extends GetxController {
   static CreationController instance = Get.find();

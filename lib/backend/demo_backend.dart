@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/backend.dart';
 import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/backend/models/product.dart';
+import 'package:whaloo_genuinity/backend/models/reports.dart';
 import 'package:whaloo_genuinity/backend/models/store.dart';
 import 'package:whaloo_genuinity/backend/models/global.dart';
 
@@ -22,8 +23,9 @@ class DemoBackend extends GetConnect implements Backend {
   // static const _demoStoreName = "commonfarmflowers";
   // static const _demoStoreName = "atelierdubraceletparisien";
   // static const _demoStoreName = "nixon";
-  static const _demoStoreName = "seriouswatches";
+  // static const _demoStoreName = "seriouswatches";
   // static const _demoStoreName = "simplybagz";
+  static const _demoStoreName = "woodstockchimes";
 
   late String _assetsPath;
 
@@ -36,6 +38,7 @@ class DemoBackend extends GetConnect implements Backend {
   final _products = <Product>[];
   final _codes = <ProductId, Group>{};
   final _deletedCodes = <Code>[];
+  final _reports = <Report>[];
 
   bool _isStoreDataInitialized = false;
   bool _isProductDataInitialized = false;
@@ -138,6 +141,48 @@ class DemoBackend extends GetConnect implements Backend {
 
       _products.add(product);
     }
+
+    DateTime start = DateTime.now();
+    final locations = <String>[
+      "Boston, Massachusetts",
+      "Amsterdam, Netherlands",
+      "Shanghai, China",
+      "Moscow, Russia",
+      "Toronto, Canada",
+      "Melbourne, Australia",
+      "Madrid, Spain",
+      "Berlin, Germany",
+      "Seoul, South Korea",
+      "Brussels, Belgium",
+      "Sydney, Australia",
+      "Washington, D.C.",
+      "Beijing, China",
+      "Chicago, Illinois",
+      "Los Angeles, California",
+      "Singapore",
+      "Hong Kong",
+      "Tokyo, Japan",
+      "Paris, France",
+      "London, UK",
+      "New York City, New York"
+    ];
+    for (int i = 0; i < 100; i++) {
+      Report report = Report(
+        id: ReportId(i.toString()),
+        isRead: false,
+        location: locations[i % locations.length],
+        message: "Message n°${i + 1}",
+        reporter: Reporter(
+          name: "Reporter ${i + 1}",
+          email: "reporter${i + 1}@gmail.com",
+        ),
+        timestamp: start.subtract(Duration(days: i * 14)),
+        product: (i % 3 == 0) ? _products[i % _products.length] : null,
+        salesChannel: (i % 2 == 0) ? "sales channel ${i + 1}" : null,
+      );
+      _reports.add(report);
+    }
+
     _isProductDataInitialized = true;
   }
 
@@ -253,7 +298,9 @@ class DemoBackend extends GetConnect implements Backend {
   Future<List<Group>> loadGroups({
     required Sorting sorting,
     required TimeSpan timeSpan,
-  }) {
+  }) async {
+    await _initProductsData();
+
     return Future.delayed(Duration.zero, () {
       Get.log("Backend : loadGroups...");
       var groups = _codes.values.toList();
@@ -306,7 +353,6 @@ class DemoBackend extends GetConnect implements Backend {
     String? description,
     DateTime? expirationDate,
     int blukSize = 1,
-    Map<String, String> tags = const <String, String>{},
   }) async {
     Get.log("Backend : createCode...");
 
@@ -449,11 +495,31 @@ class DemoBackend extends GetConnect implements Backend {
     });
   }
 
+  @override
+  Future<List<Report>> loadReports({
+    required TimeSpan timeSpan,
+    required Sorting reportsSorting,
+  }) async {
+    Get.log("Backend : loadReports... $timeSpan");
+
+    return Future.delayed(const Duration(milliseconds: 100), () {
+      var reports = _reports;
+      if (timeSpan != TimeSpan.all) {
+        final minDateTime = DateTime.now().subtract(timeSpan.duration()!);
+        reports = reports
+            .where((report) => report.timestamp.isAfter(minDateTime))
+            .toList();
+      }
+      reports.sort(reportsSorting.reportsComparator());
+      return reports;
+    });
+  }
+
   String _getPrintUrl(String image) {
     final uriBase = Uri.base;
     final basePath =
         "${uriBase.scheme}://${uriBase.host}${uriBase.hasPort ? ':' + uriBase.port.toString() : ''}";
-    final printUrl = "$basePath/$_assetsPath/demo/print.html#$basePath/$image";
+    final printUrl = "$basePath/$_assetsPath/print.html#$basePath/$image";
     return printUrl;
   }
 
@@ -541,6 +607,17 @@ extension SortingComparator on Sorting {
       case Sorting.scanErrorsDesc:
         return (Group a, Group b) =>
             -a.scanErrorsCount().compareTo(b.scanErrorsCount());
+    }
+  }
+
+  int Function(Report a, Report b)? reportsComparator() {
+    switch (this) {
+      case Sorting.dateAsc:
+        return (Report a, Report b) => a.timestamp.compareTo(b.timestamp);
+      case Sorting.dateDesc:
+        return (Report a, Report b) => -a.timestamp.compareTo(b.timestamp);
+      default:
+        (Report a, Report b) => 0;
     }
   }
 }

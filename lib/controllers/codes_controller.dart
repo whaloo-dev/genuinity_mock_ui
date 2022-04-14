@@ -42,7 +42,7 @@ class CodesController extends GetxController {
       Backend.instance
           .loadCodes(
         product: _currentProduct.value!,
-        sorting: filteringController.sorting(),
+        sorting: filteringController.codesSorting(),
         timeSpan: filteringController.timeSpan(),
         codeStatusFilter: filteringController.codeStatus(),
       )

@@ -55,7 +55,7 @@ class SideMenuItemWidget extends StatelessWidget {
                   const SizedBox(width: kSpacing),
                   Padding(
                     padding: const EdgeInsets.all(16),
-                    child: menuItem.icon(),
+                    child: menuItem.icon(menuController.isActive(menuItem)),
                   ),
                   if (!menuController.isActive(menuItem))
                     Flexible(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/groups/widgets/group_tile.dart';
+import 'package:whaloo_genuinity/pages/codes/groups/widgets/group_tile.dart';
 
 class GroupsTable extends StatelessWidget {
   const GroupsTable({Key? key}) : super(key: key);

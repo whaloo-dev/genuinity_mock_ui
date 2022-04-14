@@ -6,7 +6,7 @@ import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/backend/models/product.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/tile.dart';
+import 'package:whaloo_genuinity/pages/codes/list/widgets/tile.dart';
 
 class CodesTable extends StatelessWidget {
   final Product product;

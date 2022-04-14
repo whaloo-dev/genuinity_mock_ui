@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
-import 'package:whaloo_genuinity/pages/groups/widgets/groups_table.dart';
-import 'package:whaloo_genuinity/pages/groups/widgets/groups_table_empty.dart';
-import 'package:whaloo_genuinity/widgets/filtering_toolbar.dart';
+import 'package:whaloo_genuinity/pages/codes/groups/widgets/groups_table.dart';
+import 'package:whaloo_genuinity/pages/codes/groups/widgets/groups_table_empty.dart';
+import 'package:whaloo_genuinity/pages/codes/widgets/codes_filtering_toolbar.dart';
 
 final controller = groupsController;
 
 class GroupsPage extends StatelessWidget {
-  GroupsPage({Key? key}) : super(key: key) {
-    controller.load();
-  }
+  const GroupsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Column(
         children: [
-          const FilteringToolbar(),
+          const CodesToolbar(),
           (controller.groupsCount() == 0)
               ? const Expanded(child: GroupsTableEmptyWidget())
               : const Expanded(child: GroupsTable()),

@@ -7,7 +7,7 @@ import 'package:whaloo_genuinity/helpers/custom.dart';
 import 'package:whaloo_genuinity/helpers/localization.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/responsiveness.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/tile_menu.dart';
+import 'package:whaloo_genuinity/pages/codes/list/widgets/tile_menu.dart';
 import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
 class CodeTile extends StatelessWidget {

@@ -214,6 +214,7 @@ class DetailBody extends StatelessWidget {
     );
   }
 
+  // TODO Show a preview of logs if the number of lines is > 10 + show more button
   Widget _logField() {
     final code = controller.code()!;
 

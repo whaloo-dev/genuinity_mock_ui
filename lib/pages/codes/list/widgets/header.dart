@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models/product.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/global_menu.dart';
+import 'package:whaloo_genuinity/pages/codes/list/widgets/global_menu.dart';
 import 'package:whaloo_genuinity/widgets/photo_widget.dart';
 
 class CodesHeader extends StatelessWidget {

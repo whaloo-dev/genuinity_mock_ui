@@ -6,6 +6,7 @@ import 'package:whaloo_genuinity/controllers/menu_controller.dart';
 import 'package:whaloo_genuinity/controllers/navigation_controller.dart';
 import 'package:whaloo_genuinity/controllers/creation_controller.dart';
 import 'package:whaloo_genuinity/controllers/products_selector_controller.dart';
+import 'package:whaloo_genuinity/controllers/reports_controller.dart';
 import 'package:whaloo_genuinity/controllers/store_controller.dart';
 
 MenuController menuController = MenuController.instance;
@@ -18,3 +19,4 @@ ProductsSelectorController productSelectorController =
 CodesController codesController = CodesController.instance;
 CreationController creationController = CreationController.instance;
 DetailController detailController = DetailController.instance;
+ReportsController reportsController = ReportsController.instance;

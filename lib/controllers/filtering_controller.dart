@@ -9,17 +9,22 @@ class FilteringController extends GetxController {
   final _expanded = false.obs;
   final _timeSpan = TimeSpan.sevenDays.obs;
   final _codeStatus = Rx<CodeStatus?>(null);
-  final _sorting = Sorting.dateDesc.obs;
+  final _codesSorting = Sorting.dateDesc.obs;
+  final _reportsSorting = Sorting.dateDesc.obs;
   final _variant = Rx<ProductVariant?>(null);
 
   TimeSpan timeSpan() => _timeSpan.value;
   CodeStatus? codeStatus() => _codeStatus.value;
-  Sorting sorting() => _sorting.value;
+  Sorting codesSorting() => _codesSorting.value;
+  Sorting reportsSorting() => _reportsSorting.value;
   bool expanded() => _expanded.value;
   ProductVariant? variant() => _variant.value;
 
   void addFilteringListener(void Function() callback) {
-    _sorting.listen((value) {
+    _codesSorting.listen((value) {
+      callback();
+    });
+    _reportsSorting.listen((value) {
       callback();
     });
     _timeSpan.listen((value) {
@@ -38,8 +43,12 @@ class FilteringController extends GetxController {
     _codeStatus.value = newValue;
   }
 
-  void changeSorting(Sorting newValue) {
-    _sorting.value = newValue;
+  void changeCodesSorting(Sorting newValue) {
+    _codesSorting.value = newValue;
+  }
+
+  void changeReportsSorting(Sorting newValue) {
+    _reportsSorting.value = newValue;
   }
 
   void changeExpanded(bool newValue) {

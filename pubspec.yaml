@@ -72,7 +72,7 @@ flutter:
     - assets/images/
     - assets/demo/data/
     - assets/demo/images/
-    - assets/demo/print.html
+    - assets/print.html
     
 
 

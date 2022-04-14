@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:whaloo_genuinity/pages/codes/codes.dart';
+import 'package:whaloo_genuinity/constants/controllers.dart';
+import 'package:whaloo_genuinity/pages/codes/list/codes.dart';
 import 'package:whaloo_genuinity/pages/colors/colors.dart';
 import 'package:whaloo_genuinity/pages/dashboard/dashoboard.dart';
-import 'package:whaloo_genuinity/pages/groups/groups.dart';
 import 'package:whaloo_genuinity/pages/reports/reports.dart';
+import 'package:whaloo_genuinity/pages/codes/groups/groups.dart';
 import 'package:whaloo_genuinity/pages/settings/settings.dart';
 import 'package:whaloo_genuinity/routes/routes.dart';
 
@@ -12,17 +13,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case dashboardPageRoute:
       return _standardPageRoute(const DashboardPage());
     case groupsPageRoute:
-      return _standardPageRoute(GroupsPage());
+      groupsController.load();
+      return _standardPageRoute(const GroupsPage());
     case codesPageRoute:
       return _noTransitionPageRoute(const CodesPage());
     case reportsPageRoute:
+      reportsController.loadReports();
       return _standardPageRoute(const ReportsPage());
     case settingsPageRoute:
       return _standardPageRoute(const SettingsPage());
     case colorsPageRoute:
       return _standardPageRoute(const ColorsPage());
     default:
-      return _standardPageRoute(GroupsPage());
+      return _standardPageRoute(Container());
   }
 }
 

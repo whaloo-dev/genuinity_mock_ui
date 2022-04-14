@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/header.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/table.dart';
-import 'package:whaloo_genuinity/pages/codes/widgets/table_empty.dart';
-import 'package:whaloo_genuinity/widgets/filtering_toolbar.dart';
+import 'package:whaloo_genuinity/pages/codes/list/widgets/header.dart';
+import 'package:whaloo_genuinity/pages/codes/list/widgets/table.dart';
+import 'package:whaloo_genuinity/pages/codes/list/widgets/table_empty.dart';
+import 'package:whaloo_genuinity/pages/codes/widgets/codes_filtering_toolbar.dart';
 
 class CodesPage extends StatelessWidget {
   const CodesPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class CodesPage extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
-          FilteringToolbar(product: product),
+          CodesToolbar(product: product),
           Expanded(
             child: Card(
               child: Column(

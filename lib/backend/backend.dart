@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:whaloo_genuinity/backend/models/code.dart';
 import 'package:whaloo_genuinity/backend/models/global.dart';
 import 'package:whaloo_genuinity/backend/models/product.dart';
+import 'package:whaloo_genuinity/backend/models/reports.dart';
 import 'package:whaloo_genuinity/backend/models/store.dart';
 
 typedef BackendCallback<T> = void Function({T? arguments});
@@ -13,6 +14,7 @@ enum BackendEvent {
   codeAdded,
   codeUpdated,
   codeRemoved,
+  reportsUpdated,
 }
 
 abstract class Backend {
@@ -55,7 +57,6 @@ abstract class Backend {
     String? description,
     DateTime? expirationDate,
     int blukSize = 1,
-    Map<String, String> tags = const <String, String>{},
   });
 
   Future<void> deleteCode(Code code);
@@ -64,6 +65,12 @@ abstract class Backend {
   Future<void> deleteCodes(List<Code> codes);
   Future<void> undeleteCodes(List<Code> codes);
 
+  // TODO Add test mode to printing (no export data is set)
   Future<String> printCode(Code code);
   Future<String> printCodes(List<Code> codes);
+
+  Future<List<Report>> loadReports({
+    required TimeSpan timeSpan,
+    required Sorting reportsSorting,
+  });
 }

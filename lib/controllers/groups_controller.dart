@@ -58,7 +58,7 @@ class GroupsController extends GetxController {
     }
     Backend.instance
         .loadGroups(
-      sorting: filteringController.sorting(),
+      sorting: filteringController.codesSorting(),
       timeSpan: filteringController.timeSpan(),
     )
         .then(

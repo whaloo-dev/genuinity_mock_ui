@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whaloo_genuinity/constants/controllers.dart';
 import 'package:whaloo_genuinity/constants/style.dart';
 import 'package:whaloo_genuinity/helpers/custom.dart';
-import 'package:whaloo_genuinity/pages/detail/widgets/detail_body.dart';
+import 'package:whaloo_genuinity/pages/codes/detail/widgets/detail_body.dart';
 
 class DetailDialog extends StatelessWidget {
   const DetailDialog({Key? key}) : super(key: key);

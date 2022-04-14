@@ -12,6 +12,7 @@ import 'package:whaloo_genuinity/controllers/groups_controller.dart';
 import 'package:whaloo_genuinity/controllers/menu_controller.dart';
 import 'package:whaloo_genuinity/controllers/navigation_controller.dart';
 import 'package:whaloo_genuinity/controllers/products_selector_controller.dart';
+import 'package:whaloo_genuinity/controllers/reports_controller.dart';
 import 'package:whaloo_genuinity/controllers/store_controller.dart';
 import 'package:whaloo_genuinity/layout.dart';
 import 'package:whaloo_genuinity/pages/errors/error_404.dart';
@@ -29,9 +30,11 @@ void main() {
   Get.put(DetailController());
   Get.put(ProductsSelectorController());
   Get.put(FilteringController());
+  Get.put(ReportsController());
   storeController.onReady();
   groupsController.onReady();
   codesController.onReady();
+  reportsController.onReady();
   runApp(const App());
 }
 
